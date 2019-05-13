@@ -8,7 +8,7 @@ class CommandInventory extends Command{
 	
 	constructor(){
 		super();
-		this.wip = true;
+		//this.wip = true;
 	}
 
 	get botAdminOnly(){ return false; }
