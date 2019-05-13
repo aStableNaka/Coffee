@@ -1,0 +1,99 @@
+{
+    "pickaxe":{
+        "descriptions":[
+            "A poorly maintained pickaxe with it's head barely held on to it's body by a few pieces of duct tape.",
+            "A gift from the grandmaster blacksmith himself as a show of respect for a cetain lad's dedication.",
+            "A finely crafted pickaxe with a signature on it's handle, \"Made by %c.\"",
+            "Legend says that this pickaxe swings so fast, it hits every target and no targets at the same time.",
+            "Only given to those who deserve it, this pickaxe is as much a trophy to it's wielder as it is their companion.",
+            "An old book. Who knows what sorts of ancient secrets lie inside?",
+            "A book. What knowledge or power could this book hold?",
+            "Legends speak of the unspeakable hidden inside this tome."
+        ]
+    },
+    "notes":{
+        "last":[]
+    },
+    "messages":[
+        "This is a message bar.",
+        "There is nothing important to know at the moment.",
+        "I hope you're having a good day.",
+        "Nice weather we're having, yeah?",
+        "How's the family? Hope they're doing great.",
+        "Message Message Message Message Message Message Message Message",
+        "Discord Formatting sucks. That's why this bar exists.",
+        "Are you excited for the new Marvel movie?"
+    ],
+    "bp":{
+        "help":{
+            "field":{
+                "name": "BP Group",
+                "value": "**BP is the form of currency this bot uses**\nHere's a list of BP commands"
+            },
+            "summary":{
+                "base":"The general bp command. Used with no parameters will show your BP balance",
+                "bal":"View your current BP Balance (With live updates)",
+                "shop":"View the BP generator shop.",
+                "buy": "Buy an generator that will passively produce BP.",
+                "leaderboards":"View the global leaderboards!"
+            }
+        }
+    },
+    "views":{
+        "authors":{
+            "coffee":{
+				"name":"Coffee",
+				"icon_url": "https://i.imgur.com/Rx4eoje.png"
+			}
+        }
+    },
+    "footers":{
+        "tips":{
+            "view_catalogue":{
+
+            }
+        }
+    },
+    "itemutils":{
+        
+    },
+    "perks":{
+        "matts_charity":{
+            "name":"Matt's Charity",
+            "desc":"As long as your income remains at 0, you will recieve a massive increase in mining profits that scale with your pickaxe level. Boost range increases by [ ***x8*** ] per pickaxe level."
+        }
+    },
+    "changelogs":[
+        [
+            "1.1.4",
+            "Changes",
+            "+ New item [ Foxtail Amulet ]!",
+            "1.1.3",
+            "Changes",
+            "+ *New* page buttons",
+            "You you can now use reactions to change the pages for certain commands.",
+            "+ Pages for `~help`",
+            "+ Pages for `~shop`",
+            "+ Pages for `~leaders <page>`",
+            "*more to come*",
+            "1.1.1",
+            "Changes",
+            "+ Gold can now be used. Each piece of Gold will give you an additional +7% of your current balance.",
+            "+ Added the changelog command",
+            "Minor Changes",
+            "+ Added the ability to look at other people's inventories (the same way you'd view other people's profiles)",
+            "~ Fixed a typo",
+            "~ Fixed bug where you couldn't use more than 1 Gold at a time"
+        ]
+    ],
+    "secret_changelogs":[
+        "1.1.5",
+        "Fixed bug where foxtail amulet gave only 1 lunchbox instead of the amount it should have gave",
+        "Nerfed Foxtail amulet's lootbox drop amount from 5-10 to 2-5",
+        "1.1.2",
+        "Changes",
+        "+ Added ~admin global_lock and ~admin global_unlock",
+        "which disables the bot for any user that is not a bot admin",
+        "+ Code migrations"
+    ]
+}

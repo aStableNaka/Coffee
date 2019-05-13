@@ -1,0 +1,424 @@
+{
+	"catalogue":[
+		{
+			"name":"MySpace Stocks",
+			"desc":"It won't make you rich, but it's a start.",
+			"baseCost":800,
+			"baseCostv2":900,
+			"baseIncome":2,
+			"baseGrowth":1.0143,
+			"id":"BP_Item_myspaceStocks",
+			"alias": "MSPS",
+			"emoji":":chart_with_downwards_trend:",
+			"available":true
+		},
+		{
+			"name":"Cat Videos",
+			"desc":"Rack in that youtube ad-revenue.",
+			"baseCost":4500,
+			"baseCostv2":6700,
+			"baseIncome":7,
+			"baseGrowth":1.03,
+			"id":"BP_Item_catVideos",
+			"alias": "CATV",
+			"emoji":":joy_cat:",
+			"available":true
+		},
+		{
+			"name":"Trained Monkies",
+			"desc":"These primates are primed BP hunters.",
+			"baseCost":7000,
+			"baseIncome":20,
+			"baseGrowth":1.04,
+			"id":"BP_Item_trainedMonkies",
+			"alias": "MONK",
+			"emoji":":monkey:",
+			"available":true
+		},
+		{
+			"name":"Chinese T-Shirt Company",
+			"desc":"Cheap labor, not so cheap returns!",
+			"baseCost":11020,
+			"baseIncome":34,
+			"baseGrowth":1.1,
+			"id":"BP_Item_chineeseTshirtCompany",
+			"alias": "CTSH",
+			"emoji":":shirt:",
+			"available":true
+		},
+		{
+			"name":"Horse that poops weapons",
+			"desc":"From a land far far away.",
+			"baseCost":86400,
+			"baseIncome":98,
+			"baseGrowth":1.11,
+			"id":"BP_Item_weaponHorse",
+			"alias": "BSTA",
+			"emoji":":racehorse:",
+			"available":true
+		},
+		{
+			"name":"Hydrogen Blockchain Supercapacitor",
+			"desc":"Useless, but shareholders love the idea!",
+			"alias": "HBSC",
+			"baseCost":126700,
+			"baseIncome":128,
+			"baseGrowth":1.115,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":money_mouth:",
+			"available":true
+		},
+		{
+			"name":"North Korea's credit card",
+			"desc":"Brought to you by sony hackers!",
+			"alias": "NKCC",
+			"baseCost":3726700,
+			"baseIncome":880,
+			"baseGrowth":1.118,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":credit_card:",
+			"available":true
+		},
+		{
+			"name":"Boogle Spaceship",
+			"desc":"It's to get you know you better.",
+			"alias": "BGSS",
+			"baseCost":26020700,
+			"baseIncome":4203,
+			"baseGrowth":1.12,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":rocket:",
+			"available":true
+		},
+		{
+			"name":"iMelon 9s",
+			"desc":"An innovation from the iMelon 9.",
+			"alias": "IM9S",
+			"baseCost":189030600,
+			"baseIncome":10080,
+			"baseGrowth":1.13,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"Alien Coffee Beans",
+			"desc":"Coffee that's out of this world",
+			"alias": "ACFB",
+			"baseCost":1377077600,
+			"baseIncome":190502,
+			"baseGrowth":1.14,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"Hardit's Tears",
+			"desc":"Got scammed for 40 Quadrillion.",
+			"alias": "HARD",
+			"baseCost":14378073002,
+			"baseIncome":2380000,
+			"baseGrowth":1.15,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"HappyFakeBoulde",
+			"desc":"His presence is ceased :(",
+			"alias": "HFB",
+			"baseCost":121121073322,
+			"baseIncome":31010020,
+			"baseGrowth":1.2,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"Vape Trickster",
+			"desc":"He does weddings and kids parties.",
+			"alias": "VAPE",
+			"baseCost":2100021019700,
+			"baseIncome":450100777,
+			"baseGrowth":1.21,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"Chicken Bones Factory",
+			"desc":"All natural, organic, free-range chicken bones.",
+			"alias": "CHBF",
+			"baseCost":22331300000209,
+			"baseIncome":2223510020,
+			"baseGrowth":1.22,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"Russian Hacker",
+			"desc":"Trained BP Hunter (A real upgrade from a monkey)",
+			"alias": "HACK",
+			"baseCost":252222101010100,
+			"baseIncome":31110010020,
+			"baseGrowth":1.23,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"Smart Mirror",
+			"desc":"Watching you as you watch yourself.",
+			"alias": "SMRT",
+			"baseCost":2155552103055555,
+			"baseIncome":355590918372,
+			"baseGrowth":1.24,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"Actual Database",
+			"desc":"Oopsie-tolerant.",
+			"alias": "ATDB",
+			"baseCost":39287482715102935,
+			"baseIncome":2002812882712,
+			"baseGrowth":1.25,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"Monkey Warloard",
+			"desc":"Chimps up the competition.",
+			"alias": "WARL",
+			"baseCost":293849384282761910,
+			"baseIncome":37762100000157,
+			"baseGrowth":1.3,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"Fallen Atlas",
+			"desc":"Used to hold up every man's sky.",
+			"alias": "FATL",
+			"baseCost":5000009672538327132,
+			"baseIncome":248912437824389,
+			"baseGrowth":1.31,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+			"name":"Cybernetic Cornflakes",
+			"desc":"H A C K E D T H E K E R N E L",
+			"alias": "CORN",
+			"baseCost":33125657834538941203,
+			"baseIncome":4319204561253478,
+			"baseGrowth":1.32,
+			"id":"BP_Item_weaponHorse",
+			"emoji":":iphone:",
+			"available":true
+		},
+		{
+            "name":"Moocroosoft",
+            "desc": "Farming since 1967 ",
+            "alias": "MCFT",
+            "baseCost": 1279990434676112300000 ,
+            "baseIncome": 30319204561253478,
+            "baseGrowth":1.11,
+            "available":true
+		},
+		{
+            "name":"Siberian Mobsters",
+            "desc": "Мы гопники!",
+            "alias": "GOPN",
+            "baseCost": 13292839928817491820928 ,
+            "baseIncome": 156268273827300008,
+            "baseGrowth":1.12,
+            "available":true
+        },
+		{
+            "name":"Baco Tell",
+            "desc": "Finest Mexican cusine!",
+            "alias": "BCTL",
+            "baseCost": 231279990434676112300000 ,
+            "baseIncome": 1130319204561253478,
+            "baseGrowth":1.11,
+            "available":true
+        },
+		{
+            "name":"Flying Jackals",
+            "desc": "Move in swarms",
+            "alias": "JACK",
+            "baseCost": 1331000000827634112300000 ,
+            "baseIncome": 6e+19,
+            "baseGrowth":1.12,
+            "available":true
+        },
+		{
+            "name":"Pizza Bagel Dogs",
+            "desc": "The newest innovation in junk foods",
+            "alias": "PBG",
+            "baseCost": 31331000000827634112300000 ,
+            "baseIncome": 783728491827438467239,
+            "baseGrowth":1.13,
+            "available":true
+        },
+		{
+            "name":"Post Falone",
+            "desc": "A true rockstar.",
+            "alias": "POST",
+            "baseCost": 921339827368882714112372834 ,
+            "baseIncome": 6928379283799928182739,
+            "baseGrowth":1.14,
+            "available":true
+        },
+		{
+            "name":"Skype Premium",
+            "desc": "Now with video calls that work!",
+            "alias": "SKYP",
+            "baseCost": 2538294330464173257874720017 ,
+            "baseIncome": 16219499417728843239008,
+            "baseGrowth":1.15,
+            "available":true
+        },
+		{
+            "name":"Abnormally Large Frog",
+            "desc": "With a small brain.",
+            "alias": "FROG",
+            "baseCost": 82566158664158389734694936175 ,
+            "baseIncome": 726395159367971588018855,
+            "baseGrowth":1.21,
+            "available":true
+        },
+		{
+            "name":"Gravy Lake",
+            "desc": "Umami paradise.",
+            "alias": "GRAV",
+            "baseCost": 682979746710324658445355301276 ,
+            "baseIncome": 6580283952929856502584367,
+            "baseGrowth":1.22,
+            "available":true
+		},
+		{
+            "name":"Senile Grandfather",
+            "desc": "His war stories turned hollywood hits.",
+            "alias": "SENG",
+            "baseCost": 3292899387163726377260191222122 ,
+            "baseIncome": 39888228122934481222802937,
+            "baseGrowth":1.23,
+            "available":true
+		},
+		{
+            "name":"Blue ruse rus",
+            "desc": "He's a commrade with a steady growing business.",
+            "alias": "BRUS",
+            "baseCost": 15763748882039428340029227184931 ,
+            "baseIncome": 134327312041823291467100001,
+            "baseGrowth":1.24,
+            "available":true
+        },
+		{
+            "name":"Dystopian Bounce House",
+            "desc": "A place where happiness is enforced.",
+            "alias": "DYST",
+            "baseCost": "215763748882039428340029227184931" ,
+            "baseIncome": "1111301621698502879347985554",
+            "baseGrowth":1.26,
+            "available":true
+        },
+		{
+            "name":"Geothermal Goat Facility",
+            "desc": "Warming the hearts and homes of many.",
+            "alias": "GOAT",
+            "baseCost": "215061706407524932482953593276015" ,
+            "baseIncome": "11554687599835073887955707542",
+            "baseGrowth":1.28,
+            "available":true
+        },
+		{
+            "name":"Weaponized Mass Destruction",
+            "desc": "Every casualty packed into a neat little package.",
+            "alias": "WMDS",
+            "baseCost": "2278593367416388744237713155363566" ,
+            "baseIncome": "132809231481080236846189889398",
+            "baseGrowth":1.3,
+            "available":true
+        },
+		{
+            "name":"The RMS Gigantic",
+            "desc": "The world's largest unsinkable iceberg.",
+            "alias": "RMSG",
+            "baseCost": "19612485119584165126130724896270585" ,
+            "baseIncome": "1524446834101898252235869432704",
+            "baseGrowth":1.32,
+            "available":true
+        },
+		{
+            "name":"Pluto's Moon",
+            "desc": "It's worth its weight in BP!",
+            "alias": "PLUT",
+            "baseCost": "145684601339121787985651459825741687" ,
+            "baseIncome": "12206491294407526049363587195705",
+            "baseGrowth":1.34,
+            "available":true
+        },
+		{
+            "name":"A Bloody Arrow",
+            "desc": "Pulled from an Liam Neeson's niece's son's knee.",
+            "alias": "ARRW",
+            "baseCost": "1917621816947956503322890664906152738" ,
+            "baseIncome": "172891944188829751938317282051587",
+            "baseGrowth":1.36,
+            "available":true
+		},
+		{
+            "name":"Mars One's Debt",
+            "desc": "It only took 6 years to realize it was too ambitious.",
+            "alias": "MARS",
+            "baseCost": "18182682946339895927290578982660499365" ,
+            "baseIncome": "1367553589986601741258929537364678",
+            "baseGrowth":1.38,
+            "available":true
+        },
+		{
+            "name":"Virtual Pasta",
+            "desc": "Just like real pasta, but online!",
+            "alias": "VIPA",
+            "baseCost": "100697387120761759486777601657838428431" ,
+            "baseIncome": "16185884065694592248261037431657092",
+            "baseGrowth":1.4,
+            "available":true
+        },
+		{
+            "name":"Shapeshifting Dolphin",
+            "desc": "It can only shapeshift into a dolphin.",
+            "alias": "SSDO",
+            "baseCost": "1464719394424933548271868949270863522025" ,
+            "baseIncome": "169366220266741984775107115629358726",
+            "baseGrowth":1.45,
+            "available":true
+        },
+		{
+            "name":"Somalian Knock-off Chinese Tech Co.",
+            "desc": "They've managed to pirate China's industries.",
+            "alias": "SOML",
+            "baseCost": "11704655751185556952249429185263525936002" ,
+            "baseIncome": "1055884057785865022349534943895254782",
+            "baseGrowth":1.5,
+            "available":true
+        },
+		{
+            "name":"Amalgamation of Half a Million Cats",
+            "desc": "Who would do such a thing...",
+            "alias": "ACAT",
+            "baseCost": "182205062196945630615042143909730345419465" ,
+            "baseIncome": "15621088210944213853097932468657941880",
+            "baseGrowth":1.42,
+            "available":true
+        }
+	]
+}
