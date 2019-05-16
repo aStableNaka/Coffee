@@ -86,28 +86,23 @@ class CommandBlobPoints extends Command {
 
 	// Display the overview
 	execOverview(lToken, bal, income) {
-		if(lToken.mentions[0]){
-			// Emulate the call from the first mentioned user
-			var self = this;
-			function onFoundOne( snowflake ){
-				lToken.database.get( snowflake, ( userData )=>{
-					lToken.userData = userData;
-					let income = calcIncome(lToken);
-					let bal = Math.floor(getCurrentBPBal(lToken));  // BINTCONV
-					lToken.shared.modules.db.updateLeaderboards( lToken.userData );
-					self.sendOverview( lToken, bal, income );
-				} );
-			}
-
-			function onFoundNone(){
-				this.sendOverview( lToken, bal, income );
-			}
-			lToken.queryUser( lToken.mArgs.userQuery, onFoundOne, onFoundNone, onFoundNone )
-			lToken.author = lToken.mentions[0]
-			
-		}else{
-			this.sendOverview( lToken, bal, income );
+		var self = this;
+		function onFoundOne( snowflake ){
+			lToken.database.get( snowflake, ( userData )=>{
+				lToken.userData = userData;
+				let income = calcIncome(lToken);
+				let bal = Math.floor(getCurrentBPBal(lToken));  // BINTCONV
+				lToken.shared.modules.db.updateLeaderboards( lToken.userData );
+				self.sendOverview( lToken, bal, income );
+			} );
 		}
+
+		function onFoundNone(){
+			self.sendOverview( lToken, bal, income );
+		}
+		
+		lToken.queryUser( lToken.mArgs.userQuery, onFoundOne, onFoundNone, onFoundNone )
+		lToken.author = lToken.mentions[0];
 	}
 
 	sendOverview( lToken, bal, income ){
