@@ -1,6 +1,8 @@
 # Coffee
 A charming idle game Discord bot.
 
+![Screenshot](https://i.imgur.com/xUxSmx2.png)
+
 ## Try it out
 Want to try Coffee? [Join our discord](https://discord.gg/m7XztD)!
 
