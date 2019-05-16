@@ -71,7 +71,7 @@ class CommandBlobPoints extends Command {
 			}
 			return { type: args[0] }
 		}
-		return { type: "overview" };
+		return { type: "overview", userQuery: args.join(" ") };
 	}
 
 	execGens( lToken ){
@@ -89,14 +89,22 @@ class CommandBlobPoints extends Command {
 		if(lToken.mentions[0]){
 			// Emulate the call from the first mentioned user
 			var self = this;
+			function onFoundOne( snowflake ){
+				lToken.database.get( snowflake, ( userData )=>{
+					lToken.userData = userData;
+					let income = calcIncome(lToken);
+					let bal = Math.floor(getCurrentBPBal(lToken));  // BINTCONV
+					lToken.shared.modules.db.updateLeaderboards( lToken.userData );
+					self.sendOverview( lToken, bal, income );
+				} );
+			}
+
+			function onFoundNone(){
+				this.sendOverview( lToken, bal, income );
+			}
+			lToken.queryUser( lToken.mArgs.userQuery, onFoundOne, onFoundNone, onFoundNone )
 			lToken.author = lToken.mentions[0]
-			lToken.database.get( `${lToken.mentions[0].id}`, ( userData )=>{
-				lToken.userData = userData;
-				let income = calcIncome(lToken);
-				let bal = Math.floor(getCurrentBPBal(lToken));  // BINTCONV
-				lToken.shared.modules.db.updateLeaderboards( lToken.userData );
-				self.sendOverview( lToken, bal, income );
-			} )
+			
 		}else{
 			this.sendOverview( lToken, bal, income );
 		}
