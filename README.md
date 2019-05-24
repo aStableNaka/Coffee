@@ -6,7 +6,7 @@ A charming idle game Discord bot.
 ## Try it out
 Want to try Coffee? [Join our discord](https://discord.gg/m7XztD)!
 
-# Gameplay Mechanisms
+# Gameplay
 ### BP
 The main idle game. Buy generators that generate BP. Use the BP to buy more generators. Climb the BP ladder!
 - Features a global leaderboard
