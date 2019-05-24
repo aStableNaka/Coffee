@@ -19,7 +19,6 @@ class ItemFoxtailAmulet extends Item{
 		this.boost = 18500;
 		this.effect = `Your next mine will produce ${ ufmt.block(this.boost) }%. Also, you will attract nearby lunchboxes.`;
 		this.useDialogue = `You activate the ${ufmt.block('Foxtail Amulet')}.`;
-		this.isDroppedByLunchbox = true;
 		this.isDroppedByLootbox = true;
 	}
 

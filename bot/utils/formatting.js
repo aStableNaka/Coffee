@@ -149,7 +149,8 @@ function capitalize( text ){
  * @param {*} styleString "***"
  * @param {*} brackets true
  */
-function item( itemData, amount=1, styleString='***', brackets=true, namePadding=0, amountPadding=0 ){
+function item( itemData, amount, styleString='***', brackets=true, namePadding=0, amountPadding=0 ){
+	if(!amount){amount=itemData.amount;}
 	let itemObject = itemUtils.getItemObject( itemData );
 	var name;
 	if(itemObject){
@@ -272,7 +273,16 @@ function itemNameNoBlock( string, styleString="**" ){
 	return string.split("_").map( (x)=>{ return capitalize(x);} ).join(" ");
 }
 
+function joinGrid( arr, sep=',', cols ){
+	let out = [];
+	let input = [...arr]; // Copy the array for safety
+	while(input.length>0){
+		out.push( input.splice(0, cols).join(sep) );
+	}
+	return out.join(sep+'\n');
+}
 
+module.exports.joinGrid = joinGrid;
 module.exports.itemNameNoBlock = itemNameNoBlock;
 module.exports.code = code;
 module.exports.charLimitSplit = charLimitSplit;

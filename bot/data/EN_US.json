@@ -65,9 +65,17 @@
     },
     "changelogs":[
         [
+            "1.1.7",
+            "Changes",
+            "+ New lootboxes",
+            "   + `[ Daily box ]`",
+            "   + `[ Lootbox ]` (Different from lunchboxes)",
+            "   + `[ Goldbox ]`",
+            "+ Each box drops its own type of items.",
+            "+ `~daily` now gives `[ Daily Boxes ] x2` instead of `[ Lunch Boxes ] x2`",
             "1.1.4",
             "Changes",
-            "+ New item [ Foxtail Amulet ]!",
+            "+ New item `[ Foxtail Amulet ]`!",
             "1.1.3",
             "Changes",
             "+ *New* page buttons",
@@ -75,15 +83,7 @@
             "+ Pages for `~help`",
             "+ Pages for `~shop`",
             "+ Pages for `~leaders <page>`",
-            "*more to come*",
-            "1.1.1",
-            "Changes",
-            "+ Gold can now be used. Each piece of Gold will give you an additional +7% of your current balance.",
-            "+ Added the changelog command",
-            "Minor Changes",
-            "+ Added the ability to look at other people's inventories (the same way you'd view other people's profiles)",
-            "~ Fixed a typo",
-            "~ Fixed bug where you couldn't use more than 1 Gold at a time"
+            "*more to come*"
         ]
     ],
     "secret_changelogs":[
@@ -94,6 +94,14 @@
         "Changes",
         "+ Added ~admin global_lock and ~admin global_unlock",
         "which disables the bot for any user that is not a bot admin",
-        "+ Code migrations"
+        "+ Code migrations",
+        "1.1.1",
+        "Changes",
+        "+ Gold can now be used. Each piece of Gold will give you an additional +7% of your current balance.",
+        "+ Added the changelog command",
+        "Minor Changes",
+        "+ Added the ability to look at other people's inventories (the same way you'd view other people's profiles)",
+        "~ Fixed a typo",
+        "~ Fixed bug where you couldn't use more than 1 Gold at a time"
     ]
 }

@@ -68,8 +68,8 @@ class CommandInventory extends Command{
 
 	execDaily(lToken){
 		if(new Date().getTime() - lToken.userData.daily >= 22*60*60*1000 ){
-			let itemData = itemUtils.addItemObjectToInventory(lToken.userData,itemUtils.items.lootbox,2,"lunchbox","lunchbox");
-			lToken.send( `${ufmt.name(lToken.userData)}, here's your daily reward: ${ ufmt.itemName("lunchbox", 2) }` );
+			let itemData = itemUtils.addItemToInventory(lToken.userData,itemUtils.items.lootbox.createItemData(2, 'daily_box'));
+			lToken.send( `${ufmt.name(lToken.userData)}, here's your daily reward: ${ ufmt.item(itemData) }` );
 			lToken.userData.daily = new Date().getTime();
 		}else{
 			lToken.send( `${ufmt.name(lToken.userData)}, you've already claimed your daily reward! You can claim one again in ${ufmt.timeLeft( new Date().getTime() - lToken.userData.daily, 22*60*60*1000 )}.` )

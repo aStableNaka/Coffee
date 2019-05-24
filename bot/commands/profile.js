@@ -22,6 +22,7 @@ class CommandTemplate extends Command{
 	async execute( lToken ){
 		if(lToken.mentions[0]){
 			lToken.database.get( String( lToken.mentions[0].id ), ( userData )=>{
+				lToken.shared.modules.db.updateLeaderboards( userData );
 				lToken.send( views.overview(lToken, lToken.mentions[0], userData) );
 			});
 		}else{
@@ -30,8 +31,8 @@ class CommandTemplate extends Command{
 				let userQuery = lToken.args.join(" ");
 				let searchStatus = lToken.queryUser( userQuery, ( snowflake )=>{
 					lToken.database.get( snowflake, ( userData )=>{
-						lToken.send( views.overview(lToken, lToken.mentions[0], userData) );
 						lToken.shared.modules.db.updateLeaderboards( userData );
+						lToken.send( views.overview(lToken, lToken.mentions[0], userData) );
 					});
 				}, ( results )=>{
 					lToken.send( views.found(lToken, results) );

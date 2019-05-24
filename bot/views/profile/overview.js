@@ -28,7 +28,7 @@ module.exports = function( lToken, user, userData ){
 				{
 					"name": ufmt.block( "General" ),
 					"value": [
-						ufmt.denote('Rank', ufmt.block(lToken.database.global.leaderboards[String(userData.id)].rank+1)),
+						ufmt.denote('Rank', ufmt.block(lToken.database.global.leaderboards[String(userData.id)].rank)),
 						ufmt.denote('First Use', `${ ufmt.block(firstUseDay) } days ago`),
 						ufmt.denote('Badges', badges),
 						ufmt.denote('Commands Used', ufmt.block(userData.cmdcount)),

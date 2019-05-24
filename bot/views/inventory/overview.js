@@ -11,7 +11,7 @@ module.exports = function( lToken, page, userData ){
 	let itemAccessors = Object.keys( userData.items );
 	let listOfTruths = itemAccessors.filter((itemAccessor)=>{ // Only show items that aren't amount 0
 		return userData.items[itemAccessor].amount > 0;
-	}).slice(0, 15);
+	}).slice(0, 25);
 
 	//embed+='```';
 	if(listOfTruths.length == 0){

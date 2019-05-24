@@ -27,7 +27,7 @@ function getItemObjectByAccessor( itemAccessor ){
 
 // Determines the itemKey, userData.items[itemKey]
 function getItemLookupKey( itemData, itemName = null ){
-	return (itemName || itemData.accessor).toLowerCase().split(" ").join("_");
+	return (itemName || itemData.name || itemData.accessor).toLowerCase().split(" ").join("_");
 }
 
 /**
@@ -38,7 +38,8 @@ function getItemLookupKey( itemData, itemName = null ){
  * @param {Number} amount 
  * @param {String} itemName 
  */
-function addItemToInventory( userData, itemData, amount = 1, itemName = null ){
+function addItemToInventory( userData, itemData, amount, itemName = null ){
+	if(!amount){amount=itemData.amount}
 	let itemKey = getItemLookupKey(itemData, itemName );  // Special inventory itemKey or default
 	if( userData.items[ itemKey ] ){
 		userData.items[ itemKey ].amount+=amount;
@@ -202,7 +203,7 @@ let dropProbabilities = [
 	25,
 	10,
 	3,
-	1.9,
+	0.9,
 	0.0997,
 	0.0003
 ]
@@ -218,12 +219,13 @@ dropProbabilities.map((p, itemRank)=>{
 })
 
 let lunchboxDropStoch = [];
+let lootboxDropStoch = [];
 // Lunchbox stochiometry
-[ 6000, 2500, 1000, 300, 190 ].map((p, itemRank)=>{
+[ 6000, 2500, 1000, 300 ].map((p, itemRank)=>{
 	new Array(Math.ceil( p )).fill(itemRank).map((rank)=>{
 		lunchboxDropStoch.push(rank);
-	})
-})
+	});
+});
 
 // Categorizes items by their rank
 let dropsByRank = new Array(7).fill(1).map(x=>new Array());
@@ -235,7 +237,7 @@ Object.values(items).map( ( itemObject )=>{
 module.exports.items = items;
 module.exports.Item = Item;
 module.exports.drops_lootbox_lunchbox = Object.values(items).filter( lunchboxDropFilter );
-module.exports.drops_lootbox_common = Object.values(items).filter( lootboxDropFilter );
+module.exports.drops_lootbox_lootbox = Object.values(items).filter( lootboxDropFilter );
 module.exports.rankNames = Item.ranks;
 module.exports.rankColors = Item.rankColors;
 module.exports.lunchboxDropFilter = lunchboxDropFilter;

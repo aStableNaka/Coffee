@@ -272,6 +272,7 @@ function lTokenParseArguments(lToken){
  * Provided fields
  * - lToken.send()
  * - lToken.prompt()
+ * - lToken.messageAdmin();
  * @param {*} lToken 
  */
 function lTokenProvideResponseHelpers(lToken){
@@ -294,6 +295,10 @@ function lTokenProvideResponseHelpers(lToken){
 	lToken.prompt = (data, onNextMessage) => {
 		prompts[lToken.author.id] = onNextMessage;
 		return lToken.channel.send(data);
+	}
+
+	lToken.messageAdmin = ( data )=>{
+		modules.client.users.find("id", "133169572923703296").send(data);
 	}
 }
 
@@ -574,7 +579,16 @@ function executelToken(lToken) {
 		});
 	} else {
 		lToken.cmd.execute(lToken).then(() => {}).catch((e) => {
-			lToken.send(`\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,500) }\`\`\` `);
+			let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,500) }\`\`\` `;
+			lToken.send(errorMessage);
+			lToken.messageAdmin(
+				ufmt.join([
+					ufmt.denote( 'Type', 'Command Execution Error' ),
+					ufmt.denote( 'User', ufmt.name(lToken.userData) ),
+					ufmt.denote( 'Command', `\`${lToken.message}\``),
+					errorMessage
+				])
+			)
 		});
 	}
 }
@@ -619,5 +633,6 @@ module.exports.loadCommands = loadCommands;
  * - lToken.addReactionHook
  * - lToken.userIsBotAdmin
  * - lToken.rawHooks
+ * - lToken.messageAdmin()
  * 
 */

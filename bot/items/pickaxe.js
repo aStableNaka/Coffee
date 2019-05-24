@@ -12,7 +12,7 @@ class ItemPickaxe extends Item{
 
 		this.consumable = false;
 		this.value = 0;
-		this.rank = 3;
+		this.rank = 6;
 		this.meta = {
             name: "Shifty Pickaxe",
             accessor: "shifty_pickaxe",

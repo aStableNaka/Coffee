@@ -10,7 +10,7 @@ class ItemMineAlert extends Item{
 		this.consumable = true;
 		this.persistent = true;
 		this.value = 0;
-		this.rank = 3;
+		this.rank = 6;
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";

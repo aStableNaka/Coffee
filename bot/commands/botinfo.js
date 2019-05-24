@@ -41,7 +41,7 @@ class CommandTemplate extends Command{
 		if(lToken.args[0]=='status'){
 			lToken.send( views.status( lToken ) );
 		}else if(lToken.args[0]=='src'){
-			lToken.send( `<${url}>` );
+			lToken.send( `<${url}>\nhttps://github.com/aStableNaka/Coffee` );
 		}
 		else if(lToken.args[0]=='contributors'){
 			lToken.send( views.contributors( lToken ) );
