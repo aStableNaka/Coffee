@@ -19,6 +19,7 @@ class CommandInventory extends Command{
 	get mimics(){ return [
 		{name:"iteminfo",cmd:"inv info"},
 		{name:"info",cmd:"inv info"},
+		{name:"ii",cmd:"inv info"},
 		{name:"use", cmd:"inv use"},
 		{name:"give", cmd:"inv give"},
 		{name:"daily", cmd:"inv daily"}
@@ -34,7 +35,7 @@ class CommandInventory extends Command{
 		["daily", '', 'Claim your daily reward!'],
 		["use", '< item name > < amount >', 'Use an item in your inventory, example "~use apple"'],
 		["give", '< @user > < item name >', 'Give somebody one of your items!'],
-		["info", '< item name >', 'View an item\'s information. (Only works if you own the item)']
+		["ii", '< item name >', 'View an item\'s information. (Only works if you own the item)']
 	];}
 
 	get helpName(){ return "Inventory/Items"; }
@@ -116,7 +117,7 @@ class CommandInventory extends Command{
 			var useStatus = itemObject.use( lToken, itemData );
 
 			// If the item is consumable, non-persistent and doesn't pass the NO_CONSUME status when used
-			if( itemObject.consumable && !itemObject.persistent && itemUtils.Item.useStatus[useStatus] != itemUtils.Item.useStatus.NO_CONSUME ){
+			if( itemObject.consumable && !itemObject.persistent && useStatus != "NO_CONSUME" ){
 				itemData.amount-=lToken.mArgs.amount;
 			}
 

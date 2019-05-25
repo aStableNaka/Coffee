@@ -74,6 +74,14 @@
 
     "changelogs":[
         [
+            "1.1.9",
+            "+ Lootboxes now drop 3 items instead of 2",
+            "+ Limited time event: May 25-28 Chances of finding Box Boxes when mining are increased!",
+            "+ New PickPerk item (PP)",
+            "   + `[ PP Perk ]` Ultra Rare",
+            "Each pickaxe now has a number of upgrade slots (2 by default)",
+            "Perks are dropped through lootboxes and can be used to upgrade",
+            "your active pickaxe.",
             "1.1.7",
             "Changes",
             "+ New lootboxes",
@@ -84,16 +92,18 @@
             "+ Each box drops its own type of items.",
             "+ Buffed gold - Now gives 8% instead of 7%",
             "+ `~daily` now gives `[ Daily Boxes ] x2` instead of `[ Lunch Boxes ] x2`",
+            "+ Fixed `~contributors` issue",
             "~ Inventory view is now sorted by item rank",
-            "1.1.4",
-            "Changes",
-            "+ New item `[ Foxtail Amulet ]`!"
+            "- `[ Lunchboxes ]` no longer drop: Foxtail amulets"
         ]
     ],
     "secret_changelogs":[
         "1.1.5",
         "Fixed bug where foxtail amulet gave only 1 lunchbox instead of the amount it should have gave",
         "Nerfed Foxtail amulet's lootbox drop amount from 5-10 to 2-5",
+        "1.1.4",
+        "Changes",
+        "+ New item `[ Foxtail Amulet ]`!",
         "1.1.3",
         "Changes",
         "+ *New* page buttons",

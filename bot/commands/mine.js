@@ -14,7 +14,7 @@ function createOutcome( amount=new BigInt(0), desc="" ){
 	return {amount: amount, desc: desc};
 }
 
-let perks = itemUtils.minePerks;
+let perks = itemUtils.pickPerks;
 class CommandMine extends Command{
 	constructor(){
 		super();
@@ -52,8 +52,9 @@ class CommandMine extends Command{
 				lToken.database.temp.blessings++;
 			}
 
+			// TODO may 29 change this back to 1/10
 			// Found treasure
-			if(Math.random() < 1/10){
+			if(Math.random() < 1/3){
 				bonusPerks.push("treasure_luck");
 				//lToken.database.temp.blessings++;
 			}

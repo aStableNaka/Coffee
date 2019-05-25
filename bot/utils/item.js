@@ -16,6 +16,9 @@ function lunchboxDropFilter(itemObject){
 function lootboxDropFilter(itemObject){
 	return itemObject.isDroppedByLootbox;
 }
+function testboxDropFilter(itemObject){
+	return !itemObject.testboxRestricted;
+}
 
 // Raw item utilities
 function getItemObject( itemData ){
@@ -40,7 +43,7 @@ function getItemLookupKey( itemData, itemName = null ){
  * @param {String} itemName 
  */
 function addItemToInventory( userData, itemData, amount, itemName = null ){
-	if(!amount){amount=itemData.amount}
+	if(typeof(amount)=='undefined'){amount=itemData.amount||1}
 	let itemKey = getItemLookupKey(itemData, itemName );  // Special inventory itemKey or default
 	if( userData.items[ itemKey ] ){
 		userData.items[ itemKey ].amount+=amount;
@@ -65,7 +68,8 @@ module.exports.addItemToInventory = addItemToInventory;
  * @param {String} itemName 
  * @param {Any} itemMeta 
  */
-function addItemObjectToInventory( userData, itemObject, amount = 1, itemName = null, itemMeta = null ){
+function addItemObjectToInventory( userData, itemObject, amount, itemName = null, itemMeta = null ){
+	if(typeof(amount)=='undefined'){amount=1;} // Unless stated, amount defaults to 1
 	let itemData = itemObject.createItemData( amount, itemMeta );
 	return addItemToInventory( userData, itemData, amount, itemName );
 }
@@ -116,7 +120,7 @@ function perkTreasureHelper( userData ){
 	return itemData;
 }
 
-const minePerks = {
+const pickPerks = {
 	"matts_charity":{
 		name:locale.perks.matts_charity.name,
 		desc:locale.perks.matts_charity.desc,
@@ -258,7 +262,7 @@ const minePerks = {
 		onMine:( lToken )=>{
 			if( !(lToken.userData.pickaxe_exp%4) ){
 				let itemData = items.gold.createItemData(1);
-				addItemToInventory( itemData );
+				addItemToInventory( lToken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Gold Digger',
 					`You found ${ufmt.item(itemData)} while mining!`
 				);
@@ -274,19 +278,71 @@ const minePerks = {
 		}
 	},
 
+	"scrapper":{
+		name:"Scrapper",
+		desc:`You have a chance to find [ **Crafting Materials** ] x1 whenever you mine!`,
+		onMine:( lToken )=>{
+			if( (Math.random()<1/5) ){
+				let itemData = itemUtils.items.crafting_materials.createItemData(1);
+				addItemToInventory( lToken.userData, itemData );
+				return ufmt.perkMessage('Perk', 'Scrapper',
+					`You found ${ufmt.item(itemData)} while mining!`
+				);
+			}
+		}
+	},
+
+	"hungry":{
+		name:"Hungry",
+		desc:`Your pickaxe will produce 35% more profit if you have an active mine boost.`,
+		onMine:( lToken, outcome )=>{
+			if(lToken.userData.mineboostcharge==0){return;}
+			let coefficient = 35;
+			let boost = outcome.divide(100).multiply( coefficient );
+			bp.addBP( lToken, boost );
+			return ufmt.perkMessage( 'Perk', 'Hungry', 
+				`Your sated belly has increased profits by ${coefficient}%\n+ ${ufmt.bp(boost)}`
+			);
+		}
+	},
+
+	"starved":{
+		name:"Starved",
+		desc:`Your pickaxe will produce 3% More profit per LvL. if you have an active mine boost`,
+		onMine:( lToken, outcome )=>{
+			if(lToken.userData.mineboostcharge==0){return;}
+			let level = bp.pickaxeLevelUD( lToken.userData );
+			let coefficient = 3;
+			let boost = outcome.divide(100).multiply( coefficient*level );
+			bp.addBP( lToken, boost );
+			return ufmt.perkMessage( 'Perk', 'Starved', 
+				`Your sated belly has increased profits by ${coefficient}%\n+ ${ufmt.bp(boost)}`
+			);
+		}
+	},
+
+	"badperk":{
+		name:"Bad Perk",
+		desc:"The monkey that wrote this code gave you this useless perk. It does nothing.",
+		onMine:()=>{}
+	},
+
 	"veteran":{
 		name:"Veteran",
 		desc:"Mining profits"
 	}
 };
 
-const perkEnum = [
+const availablePerks = [
 	'determined_endurance',
 	'dumb_luck',
 	'treasure_hunter',
 	'soft_handle',
 	'gold_digger',
-	'adaptable'
+	'adaptable',
+	'scrapper',
+	'hungry',
+	'starved'
 ]
 
 /**
@@ -310,9 +366,9 @@ let dropProbabilities = [
 	10,
 	3,
 	0.9,
-	0.0997,
-	0.0003,
-	0.00001
+	0.197,
+	0.03,
+	0.001
 ]
 
 let dropDistribution = dropProbabilities.map(x=>x*1000000);
@@ -365,22 +421,47 @@ function pickFromDistribution( distribution, amount){
 	return new Array(amount).fill(0).map( doPick );
 }
 
+/**
+ * Changes the name of an item
+ * @param {userData} userData 
+ * @param {String} itemName 
+ * @param {String} newItemName 
+ */
+function migrateItem( userData, itemName, newItemName ){
+	let itemData = userData.items[itemName];
+	itemData.name = newItemName;
+	userData.items[newItemName] = itemData;
+	delete userData.items[itemName];
+	return itemData;
+}
+
+/**
+ * Adds a perk to a user's active pickaxe
+ * @param {*} userData 
+ * @param {*} perkName 
+ */
+function addActivePickaxePerk( userData, perkName ){
+	userData.pickaxe_perks.push(perkName);
+}
+
+module.exports.availablePerks = availablePerks;
+module.exports.addActivePickaxePerk = addActivePickaxePerk;
+module.exports.migrateItem = migrateItem;
 module.exports.pickFromDistribution = pickFromDistribution;
 module.exports.items = items;
 module.exports.Item = Item;
-module.exports.drops_lootbox_lunchbox = Object.values(items).filter( lunchboxDropFilter );
-module.exports.drops_lootbox_lootbox = Object.values(items).filter( lootboxDropFilter );
 module.exports.rankNames = Item.ranks;
 module.exports.rankColors = Item.rankColors;
 module.exports.lunchboxDropFilter = lunchboxDropFilter;
 module.exports.lootboxDropFilter = lootboxDropFilter;
-
+module.exports.testboxDropFilter = testboxDropFilter;
 module.exports.getItemObject = getItemObject;
 module.exports.getItemObjectByAccessor = getItemObjectByAccessor;
-
-module.exports.minePerks = minePerks;
-
+module.exports.pickPerks = pickPerks;
 module.exports.dropProbabilities = dropProbabilities;
 module.exports.globalDropStoch = globalDropStoch;
 module.exports.lunchboxDropStoch = lunchboxDropStoch;
 module.exports.dropsByRank = dropsByRank;
+
+module.exports.drops_lootbox_lunchbox = Object.values(items).filter( lunchboxDropFilter );
+module.exports.drops_lootbox_lootbox = Object.values(items).filter( lootboxDropFilter );

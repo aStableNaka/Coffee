@@ -16,6 +16,8 @@ class ItemBook extends Item{
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
 		this.effect = `Your next ${ufmt.block(this.charge)} mines will produce ${ufmt.block(this.boost)} % more profit.`;
 		this.useDialogue = `You eat an apple!`;
+
+		this.testboxRestricted = true;
 		this.isDroppedByLunchbox = false;
 		this.isDroppedByLootbox = false;
 	}

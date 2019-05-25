@@ -4,15 +4,40 @@ const bp = require("../utils/bp.js");
 const locale = require("../data/EN_US");
 const itemUtils = require("../utils/item.js");
 
+/**
+ * Clones objects with recursive capabilities
+ * @param {Object} object
+ * @param {Number} depth Leave at 0 for shallow copy
+ */
+Object.clone = function( object, depth=0 ){
+    let out = {};
+    if(typeof(object)!='object'){return object;}
+    Object.keys(object).map( (key)=>{
+        if(typeof(object[key])=='object'){
+            if(depth>0){
+                if(Array.isArray( object[key] )){
+                    out[key] = object[key].map(x=>Object.clone(x, depth-1));
+                }else{
+                    out[key] = Object.clone( object[key], depth-1 );
+                }
+            }
+        }else{
+            out[key] = object[key];
+        }
+    });
+    return out;
+};
+
 class ItemPickaxe extends Item{
 	constructor(){
-		super();
+		super( false );
 		this.name = "Pickaxe"; // Required
 		this.accessor = "pickaxe"; // Virtural
 
 		this.consumable = false;
 		this.value = 0;
-		this.rank = 6;
+        this.rank = 6;
+        this.isUnique = true;
 		this.meta = {
             name: "Shifty Pickaxe",
             accessor: "shifty_pickaxe",
@@ -21,7 +46,8 @@ class ItemPickaxe extends Item{
             time: 5,
             multiplier: 0,
             creator:"Grandmaster Blacksmith",
-            imgIndex:0
+            imgIndex:0,
+            maxPerkSlots:2
         };
         //this.isUnique = true;
 		this.icon = "https://i.imgur.com/miBhBjt.png";
@@ -29,14 +55,16 @@ class ItemPickaxe extends Item{
 		this.isDroppedByLootbox = false;
     }
 
-    createItemData(){}
+    createItemData(amount, meta, name){
+        return { accessor:this.accessor, amount: amount, name:name || this.accessor, meta:meta || Object.clone( this.meta ) } 
+    }
     
-    getAmountOfPerkSlots( itemData ){
-        return itemData.meta.maxPerkSlots||1;
+    getMaxPerkSlots( itemData ){
+        return itemData.meta.maxPerkSlots||2;
     }
 
     getUniqueRank( itemData ){
-		return Math.max( this.getAmountOfPerkSlots( itemData ) * 2, Item.ranks.length ) ;
+		return Math.max( this.getMaxPerkSlots( itemData ) * 2, Item.ranks.length ) ;
 	}
 
     addPerk( itemData, perkName ){
@@ -46,27 +74,44 @@ class ItemPickaxe extends Item{
         itemData.meta.perks.push(perkName);
     }
 
-	// Virural function
-	use( lToken, itemData ){
-        // Create shifty pickaxe item if it didn't already exist
-        if(!lToken.userData.items.shifty_pickaxe && lToken.userData.pickaxe_accessor=="shifty_pickaxe"){
-            itemUtils.addItemObjectToInventory( lToken.userData, this, 1, "Shifty Pickaxe", {
+    ensureUserHasDefaultPickaxe( userData ){
+        if(!userData.hasFirstPickaxe && userData.pickaxe_accessor=="shifty_pickaxe"){
+            itemUtils.addItemObjectToInventory( userData, this, 0, "Shifty Pickaxe", {
                 name: "Shifty Pickaxe",
                 accessor:"shifty_pickaxe",
                 perks:[],
-                exp: lToken.userData.pickaxe_exp,
+                exp: userData.pickaxe_exp,
                 time: 5,
                 multiplier: 0,
                 lDescIndex:0,
                 creator:"Grandmaster Blacksmith",
                 imgIndex:0,
-                maxPerkSlots:1,
+                maxPerkSlots:2,
             });
+            userData.hasFirstPickaxe = true;
         }
+    }
+
+    // TODO change tag if an item with the same name is given to a player
+    migrateItem( itemData, newName ){
+        let newAccessor = newName.toLowerCase().split(" ").join(" ");
+        itemData.name = newName;
+        itemData.meta.accessor = newAccessor;
+        itemData.meta.name = newName;
+    }
+
+    getActivePickaxeItemData( userData ){
+        this.ensureUserHasDefaultPickaxe( userData );
+        return userData.items[userData.pickaxe_accessor];
+    }
+
+	// Virural function
+	use( lToken, itemData ){
+        // Create shifty pickaxe item if it didn't already exist
+        this.ensureUserHasDefaultPickaxe( lToken.userData );
 
         // Unequip the pickaxe, save it's exp
         let oldItemData = lToken.userData.items[ lToken.userData.pickaxe_accessor ];
-        //console.log(oldItemData);
         oldItemData.meta.exp = lToken.userData.pickaxe_exp;
         oldItemData.amount++;
 
@@ -106,7 +151,7 @@ class ItemPickaxe extends Item{
             `**Exp**: ${ufmt.itemName(itemData.meta.exp || 1, 0, "***")} mines`,
             `**Cooldown**: ${ufmt.itemName(itemData.meta.time*60 || 1, 0, "***")} seconds`,
             `**Perks**:\n${itemData.meta.perks.map((x)=>{
-                let perk = itemUtils.minePerks[ x ];
+                let perk = itemUtils.pickPerks[ x ];
                 return `- ${ufmt.itemName(perk.name, 0, "***")}: *${perk.desc || "No description"}*`;
             })}`,
             `**Creator**: ${ufmt.itemName( itemData.meta.creator, 0, "***" )}`

@@ -25,6 +25,8 @@ class ItemCommonPickaxe extends Item{
             creator:"Grandmaster Blacksmith",
             imgIndex:0
         };
+
+        this.testboxRestricted = true;
 		this.isDroppedByLootbox = false;
 	}
 

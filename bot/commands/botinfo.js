@@ -7,7 +7,7 @@ const url = "https://repl.it/@DrankArizonaIce/coffee";
 const serverURL = "https://discord.gg/5caakFA";
 const locale = require("../data/EN_US");
 
-class CommandTemplate extends Command{
+class CommandBotinfo extends Command{
 	constructor(){
 		super();
 	}
@@ -59,4 +59,4 @@ class CommandTemplate extends Command{
 	}
 }
 
-module.exports = new CommandTemplate();
+module.exports = new CommandBotinfo();

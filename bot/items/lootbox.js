@@ -37,7 +37,7 @@ const uniqueRankings = {
 
 class ItemLootbox extends Item{
 	constructor(){
-		super();
+		super( false );
 		this.name = "Lootbox"; // Required
 		this.accessor = "lootbox"; // Virtural
 
@@ -159,9 +159,32 @@ class ItemLootbox extends Item{
 	 * @param {*} itemData 
 	 */
 	meta_lootbox( lToken, itemData ){
-		let formattedTallies = this.processLootboxOutcomes( lToken, itemUtils.dropDistribution, 2*lToken.mArgs.amount, itemUtils.lootboxDropFilter );
+		let formattedTallies = this.processLootboxOutcomes( lToken, itemUtils.dropDistribution, 3*lToken.mArgs.amount, itemUtils.lootboxDropFilter );
 		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
 		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
+	}
+
+	meta_testbox( lToken, itemData ){
+		let formattedTallies = this.processLootboxOutcomes( lToken, itemUtils.dropDistribution, 10*lToken.mArgs.amount, itemUtils.testboxDropFilter );
+		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
+		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
+	}
+
+	/**
+	 * Drops crafting materials
+	 * @param {*} lToken 
+	 * @param {*} itemData 
+	 */
+	meta_materialsbox( lToken, itemData ){
+		let amount = lToken.mArgs.amount;
+		let outcome = 0;
+		new Array(amount).fill(0).map( ()=>{
+			outcome += Math.ceil( Math.random()*2 );
+		})
+		let dropItemData = itemUtils.items.crafting_materials.createItemData( outcome );
+		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
+		lToken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
+		itemUtils.addItemToInventory( lToken.userData, dropItemData );
 	}
 
 	/**
@@ -209,7 +232,7 @@ class ItemLootbox extends Item{
 		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
 	}
 
-	meta_testbox( lToken, itemData ){
+	meta_badbox( lToken, itemData ){
 		//lToken.send(":D how did you find me?");
 		lToken.messageAdmin( ufmt.join([
 			ufmt.denote('Type','Invalid Lootbox used'),
@@ -272,7 +295,7 @@ class ItemLootbox extends Item{
 		if(this[`meta_${itemData.meta}`]){
 			this[`meta_${itemData.meta}`](lToken, itemData);
 		} else {
-			this.meta_testbox(lToken, itemData);
+			this.meta_badbox(lToken, itemData);
 		}
 		
 	}

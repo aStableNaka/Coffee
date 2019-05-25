@@ -2,7 +2,7 @@ let ezhash = require("../modules/ezhash");
 let ufmt = require("../utils/formatting");
 
 class Item{
-	constructor(){
+	constructor( createInstance ){
 		this.name = "Item"; // Required
 		this.accessor = "item"; // Virtural
 
@@ -12,6 +12,9 @@ class Item{
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/Sw5XtmO.png";
+
+		if(!createInstance){ return; }
+		this.instance = this.createItemData();
 	}
 
 	computeMetaString( meta=null ){
@@ -31,6 +34,10 @@ class Item{
 
 	getUniqueRank( itemData ){
 		return itemData.rank || this.rank;
+	}
+
+	migrateItem( itemData, newName ){
+		itemData.name=newName;
 	}
 
 	// Item name modifier
@@ -90,7 +97,7 @@ Drop		Rank	Label
 
 	static get useStatus(){
 		return {
-			"NO_CONSUME":Symbol()
+			"NO_CONSUME":"NO_CONSUME"
 		}
 	}
 
