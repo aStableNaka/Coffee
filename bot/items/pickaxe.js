@@ -27,7 +27,24 @@ class ItemPickaxe extends Item{
 		this.icon = "https://i.imgur.com/miBhBjt.png";
 		
 		this.isDroppedByLootbox = false;
+    }
+
+    createItemData(){}
+    
+    getAmountOfPerkSlots( itemData ){
+        return itemData.meta.maxPerkSlots||1;
+    }
+
+    getUniqueRank( itemData ){
+		return Math.max( this.getAmountOfPerkSlots( itemData ) * 2, Item.ranks.length ) ;
 	}
+
+    addPerk( itemData, perkName ){
+        if(!itemUtils.perks[perkName]){
+            console.warn(`[Pickaxe] perk ${perkName} is not a valid perk!`);
+        }
+        itemData.meta.perks.push(perkName);
+    }
 
 	// Virural function
 	use( lToken, itemData ){
@@ -42,7 +59,8 @@ class ItemPickaxe extends Item{
                 multiplier: 0,
                 lDescIndex:0,
                 creator:"Grandmaster Blacksmith",
-                imgIndex:0
+                imgIndex:0,
+                maxPerkSlots:1,
             });
         }
 

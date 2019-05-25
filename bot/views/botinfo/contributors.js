@@ -1,3 +1,5 @@
+const ufmt = require("../../utils/formatting.js");
+
 module.exports = function( lToken ){
     return {
         embed:{
@@ -5,11 +7,14 @@ module.exports = function( lToken ){
             fields:[
                 {
 					"name": "Author",
-					"value": `${ufmt.block("Naka")} <https://repl.it/@DrankArizonaIce>`
+					"value": `${ufmt.block("Naka")}\n${ufmt.join([
+                        ufmt.denote('Repl.it','<https://repl.it/@DrankArizonaIce>'),
+                        ufmt.denote('Github','<https://github.com/aStableNaka>')
+                    ])}`
                 },
                 {
                     "name":"Contributors",
-                    "value":`[ Database ] ${ufmt.block("Kpostal")} <https://repl.it/@kpostal10>`
+                    "value":`${ufmt.block("Kpostal")} [ Database ]\n${ufmt.denote('Repl.it','<https://repl.it/@kpostal10>')}`
                 },
                 {
 					"name": "System Info",

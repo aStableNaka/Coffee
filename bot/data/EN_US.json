@@ -63,6 +63,15 @@
             "desc":"As long as your income remains at 0, you will recieve a massive increase in mining profits that scale with your pickaxe level. Boost range increases by [ ***x8*** ] per pickaxe level."
         }
     },
+    "prestige":{
+        "warningSection":[
+            "```diff\n- WARNING!!! PRESTIGE WILL RESET YOUR BP PROGRESS -```",
+            "This includes all generators you own and your current BP bal.",
+            "But in return, you get the rewards shown above.",
+            "When you're ready to prestige, use the `~prestige confirm` command"
+        ]
+    },
+
     "changelogs":[
         [
             "1.1.7",
@@ -70,26 +79,29 @@
             "+ New lootboxes",
             "   + `[ Daily box ]`",
             "   + `[ Lootbox ]` (Different from lunchboxes)",
-            "   + `[ Goldbox ]`",
+            "   + `[ Goldbox ]` - Drops Gold",
+            "   + `[ Box Box ]` - Drops boxes",
             "+ Each box drops its own type of items.",
+            "+ Buffed gold - Now gives 8% instead of 7%",
             "+ `~daily` now gives `[ Daily Boxes ] x2` instead of `[ Lunch Boxes ] x2`",
+            "~ Inventory view is now sorted by item rank",
             "1.1.4",
             "Changes",
-            "+ New item `[ Foxtail Amulet ]`!",
-            "1.1.3",
-            "Changes",
-            "+ *New* page buttons",
-            "You you can now use reactions to change the pages for certain commands.",
-            "+ Pages for `~help`",
-            "+ Pages for `~shop`",
-            "+ Pages for `~leaders <page>`",
-            "*more to come*"
+            "+ New item `[ Foxtail Amulet ]`!"
         ]
     ],
     "secret_changelogs":[
         "1.1.5",
         "Fixed bug where foxtail amulet gave only 1 lunchbox instead of the amount it should have gave",
         "Nerfed Foxtail amulet's lootbox drop amount from 5-10 to 2-5",
+        "1.1.3",
+        "Changes",
+        "+ *New* page buttons",
+        "You you can now use reactions to change the pages for certain commands.",
+        "+ Pages for `~help`",
+        "+ Pages for `~shop`",
+        "+ Pages for `~leaders <page>`",
+        "*more to come*",
         "1.1.2",
         "Changes",
         "+ Added ~admin global_lock and ~admin global_unlock",

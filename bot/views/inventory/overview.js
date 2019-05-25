@@ -8,6 +8,24 @@ module.exports = function( lToken, page, userData ){
 			"description":""
 		}
 	};
+	let formattedInventory = ufmt.inventory( userData.items, 25, 0 );
+	if(!formattedInventory){ 
+		embed = "You have no items in your inventory.";
+		return embed;
+	}
+	embed.embed.description = formattedInventory;
+	return embed;
+}
+
+/*
+module.exports = function( lToken, page, userData ){
+	userData = userData || lToken.userData;
+	let embed = {
+		"embed":{
+			"title":`${ufmt.name( userData )}'s inventory`,
+			"description":""
+		}
+	};
 	let itemAccessors = Object.keys( userData.items );
 	let listOfTruths = itemAccessors.filter((itemAccessor)=>{ // Only show items that aren't amount 0
 		return userData.items[itemAccessor].amount > 0;
@@ -41,3 +59,5 @@ module.exports = function( lToken, page, userData ){
 	
 	return embed;
 }
+
+*/

@@ -330,7 +330,7 @@ function lTokenQueryUser(
 
 	// Search for userQuery matches in the leaderboards user cache
 	let results = Object.values( lToken.database.global.leaderboards ).filter((ldata)=>{
-		return ldata.name.toLowerCase().includes( userQuery.toLowerCase() );
+		return ldata.name.toLowerCase().includes( userQuery.toLowerCase() ) || ldata.id == userQuery.replace('@','');
 	});
 
 	// If there is only one query result...

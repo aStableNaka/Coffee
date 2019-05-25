@@ -9,7 +9,7 @@ class ItemCraftingMaterials extends Item{
 
 		this.consumable = false;
 		this.value = 0;
-		this.rank = 3;
+		this.rank = 2;
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";

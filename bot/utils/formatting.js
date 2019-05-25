@@ -20,6 +20,7 @@ const illionaireLabels = [
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 const itemUtils = require("./item.js");
+const ufmt = module.exports;
 // Adds commas to numbers
 
 const embedWS = " ";
@@ -282,6 +283,47 @@ function joinGrid( arr, sep=',', cols ){
 	return out.join(sep+'\n');
 }
 
+function inventory( inventoryObject, entriesPerPage=20, page=0 ){
+	let out = "";
+	let itemAccessors = Object.keys( inventoryObject );
+	// Only show items that aren't amount 0
+	let listOfTruths = itemAccessors.filter((itemAccessor)=>{ 
+		return inventoryObject[itemAccessor].amount > 0;
+	}).sort(( itemAccessorA, itemAccessorB )=>{
+		let itemDataA = inventoryObject[itemAccessorA];
+		let itemDataB = inventoryObject[itemAccessorB];
+		let itemRankA = itemUtils.getItemObject( itemDataA ).getUniqueRank( itemDataA );
+		let itemRankB = itemUtils.getItemObject( itemDataB ).getUniqueRank( itemDataB );
+		return itemRankA - itemRankB;
+	}).slice(page*entriesPerPage, entriesPerPage);
+	if(listOfTruths.length==0){ return null; }
+	let itemNamePaddingLength = listOfTruths.map(x=>x.length).reduce( (acc, val)=>{ return Math.max(acc, val); } )+2;
+	let itemAmountPaddingLength = listOfTruths.map((itemAccessor)=>{
+		let itemData = inventoryObject[itemAccessor];
+		return String( itemData.amount ).length;
+	}).reduce( (acc, val)=>{ return Math.max(acc, val); } )+2;
+
+	return ufmt.join(listOfTruths.map( ( itemAccessor )=>{
+		let itemData = inventoryObject[itemAccessor];
+		let itemObject = itemUtils.getItemObject( itemData );
+		// ${ itemObject.consumable? "< usable >" : '' }
+		// add back for usable label
+
+		// Add back for rank
+		//  (${new Array( itemObject.rank+1 ).fill('⭐').join("")})
+		return `\`${ ufmt.item(itemData, itemData.amount, '', true, itemNamePaddingLength, itemAmountPaddingLength) }\` *${(itemUtils.rankNames[ itemObject.getUniqueRank( itemData ) ]||"Unranked").toLowerCase()}*`;
+	}));
+}
+
+function perkMessage( perkType, perkName, desc ){
+	return {
+		name:`${ufmt.block( perkType )} ${perkName}`,
+		value:desc
+	};
+}
+
+module.exports.perkMessage = perkMessage;
+module.exports.inventory = inventory;
 module.exports.joinGrid = joinGrid;
 module.exports.itemNameNoBlock = itemNameNoBlock;
 module.exports.code = code;

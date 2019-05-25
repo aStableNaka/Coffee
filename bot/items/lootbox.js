@@ -21,6 +21,13 @@ function fmtLootboxOutcome( outcomes, mobile ){
 
 const enabledLootboxes = ['lootbox', 'lunchbox'];
 const allLootboxes = ['lootbox', 'lunchbox', 'daily_box', 'box_box', 'pick_box', 'goldbox', 'testbox'];
+const uniqueRankings = {
+	'goldbox':2,
+	'box_box':3,
+	'pickbox':4,
+	'adminbox1000':11,
+	'testbox':11,
+}
 
 /**
  * Why are the lootbox helpers located under itemUtils and not here?
@@ -52,6 +59,13 @@ class ItemLootbox extends Item{
 
 	/**
 	 * Override
+	 */
+	getUniqueRank( itemData ){
+		return uniqueRankings[itemData.meta] || this.rank;
+	}
+
+	/**
+	 * Override
 	 * @param {*} amount 
 	 * @param {*} meta 
 	 * @param {*} name 
@@ -65,9 +79,10 @@ class ItemLootbox extends Item{
 		return { accessor:'lootbox', amount: amount, name:meta, meta:meta }
 	}
 	
-	pickItemsFromStoch( stoch, amount, dropFilter=itemUtils.lunchboxDropFilter ){
-		let stochasticOutcomes = ufmt.pick( stoch, amount );
-		let itemObjectOutcomes = stochasticOutcomes.map(( rank, i )=>{
+	pickItemsFromDistribution( distribution, amount, dropFilter=itemUtils.lunchboxDropFilter ){
+		// Picks indecies based on distribution defined by the element at a given index
+		let indexSamples = itemUtils.pickFromDistribution( distribution, amount );
+		let itemObjectOutcomes = indexSamples.map(( rank, i )=>{
 			// Might want to cache this for performance increase
 
 			// If there is available drop for this rank, try for the rank directly below it.
@@ -107,8 +122,8 @@ class ItemLootbox extends Item{
 		} );
 	}
 
-	processLootboxOutcomes( lToken, stoch, amount, dropFilter ){
-		let outcomes = this.pickItemsFromStoch( stoch, amount, dropFilter );
+	processLootboxOutcomes( lToken, distribution, amount, dropFilter ){
+		let outcomes = this.pickItemsFromDistribution( distribution, amount, dropFilter );
 		let itemDatas = outcomes.map( ( itemObject )=>{
 			// Since it's generated, we let the item decide how its going to generate its itemdata
 			return itemObject.createItemData();
@@ -133,7 +148,7 @@ class ItemLootbox extends Item{
 	 * @param {*} itemData 
 	 */
 	meta_lunchbox( lToken, itemData ){
-		let formattedTallies = this.processLootboxOutcomes( lToken, itemUtils.lunchboxDropStoch, 2*lToken.mArgs.amount, itemUtils.lunchboxDropFilter );
+		let formattedTallies = this.processLootboxOutcomes( lToken, itemUtils.dropDistribution, 2*lToken.mArgs.amount, itemUtils.lunchboxDropFilter );
 		let useDialogue = `You open up your home-made ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
 		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
 	}
@@ -144,7 +159,7 @@ class ItemLootbox extends Item{
 	 * @param {*} itemData 
 	 */
 	meta_lootbox( lToken, itemData ){
-		let formattedTallies = this.processLootboxOutcomes( lToken, itemUtils.globalDropStoch, 2*lToken.mArgs.amount, itemUtils.lootboxDropFilter );
+		let formattedTallies = this.processLootboxOutcomes( lToken, itemUtils.dropDistribution, 2*lToken.mArgs.amount, itemUtils.lootboxDropFilter );
 		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
 		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
 	}

@@ -15,7 +15,7 @@ module.exports = function( lToken, user, userData ){
 	let pickaxeIncome = ufmt.bp(BigInt.max( 1, calcIncome_UD(userData) ).multiply(60).multiply( 20 + 10 * pickaxeLevelUD( userData )) );
 	let perkDescriptions = userData.pickaxe_perks.map((x)=>{
 		let perk = itemUtils.minePerks[ x ];
-		return `\n- ${ufmt.itemName(perk.name, 0, "***")}: *${perk.desc || "No description"}*`;
+		return `\n- ${ufmt.block(perk.name, "***")}: *${perk.desc || "No description"}*`;
 	});
 
 	return {

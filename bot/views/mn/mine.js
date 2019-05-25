@@ -1,4 +1,5 @@
 const ufmt = require("../../utils/formatting.js");
+const bp = require("../../utils/bp.js");
 const pN = ufmt.numPretty;
 const fBP = ufmt.formatBP;
 var bpUtils = require("../../utils/bp");
@@ -12,7 +13,10 @@ module.exports = function( lToken, outcome, perkMessages, boost ){
 				"name":"Mr. M. Iner",
 				"icon_url": "https://i.imgur.com/Uuo8HMu.png"
 			},
-			"fields": []
+			"fields": [],
+			"footer":{
+				"text":`[ ${lToken.userData.pickaxe_name} ] LvL ${ bp.pickaxeLevelExp( lToken.userData.pickaxe_exp ) }`
+			}
 		}
 	}
 

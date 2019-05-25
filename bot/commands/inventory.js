@@ -106,14 +106,20 @@ class CommandInventory extends Command{
 			return;
 		}
 		let itemObject = itemUtils.getItemObject( itemData );
+
+		// If the item can't be stacked
 		if(!itemObject.canUseMulti){
 			lToken.mArgs.amount = 1;
 		}
+
 		if(itemData.amount >= lToken.mArgs.amount && itemObject){
-			itemObject.use( lToken, itemData );
-			if(itemObject.consumable && ! itemObject.persistent){
+			var useStatus = itemObject.use( lToken, itemData );
+
+			// If the item is consumable, non-persistent and doesn't pass the NO_CONSUME status when used
+			if( itemObject.consumable && !itemObject.persistent && itemUtils.Item.useStatus[useStatus] != itemUtils.Item.useStatus.NO_CONSUME ){
 				itemData.amount-=lToken.mArgs.amount;
 			}
+
 		}else{
 			lToken.send( views.item_not_owned( lToken, lToken.mArgs.amount ) );
 		}
@@ -175,23 +181,24 @@ class CommandInventory extends Command{
 					return;
 				}
 			}
-			
+
 			// Checkpoint 3, continue on with the itemObject and itemData
-			if(option == 'use'){
-				this.execUse( lToken, itemData );
-			}else if(option == 'give'){
-				this.execGive( lToken, itemData );
-			}else if(option == 'trade'){
-				this.execTrade( lToken, itemData );
-			}else if( option == 'info'){
-				if(!itemObject){
-					itemObject = itemUtils.getItemObject( itemData );
-				}
-				if(!itemObject){
-					lToken.send( views.item_not_found(lToken) );
-					return;
-				}
-				this.execInfo(lToken, itemObject, itemData );
+			switch( option ){
+				case 'use':
+					return this.execUse( lToken, itemData );
+				case 'give':
+					return this.execGive( lToken, itemData );
+				case 'trade':
+					return this.execTrade( lToken, itemData );
+				case 'info':
+					if(!itemObject){
+						itemObject = itemUtils.getItemObject( itemData );
+					}
+					if(!itemObject){
+						lToken.send( views.item_not_found(lToken) );
+						return;
+					}
+					this.execInfo(lToken, itemObject, itemData );
 			}
 		}
 	}

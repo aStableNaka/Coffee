@@ -6,6 +6,7 @@ const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 
 let {getCurrentBPBal, addBP, calcIncome, pickaxeLevelUD} = require("../utils/bp");
+let bp =require("../utils/bp");
 let ufmt = require("../utils/formatting");
 let itemUtils = require("../utils/item");
 
@@ -43,18 +44,22 @@ class CommandMine extends Command{
 			let blessing;
 			let boost = false;
 			let perkMessages = [];
-			let luckPerks = [];
+			let bonusPerks = [];
 			
 			// Miner's blessing
 			if(Math.random() < 1/20){
-				luckPerks.push("miners_blessing_luck");
+				bonusPerks.push("miners_blessing_luck");
 				lToken.database.temp.blessings++;
 			}
 
 			// Found treasure
 			if(Math.random() < 1/10){
-				luckPerks.push("treasure_luck");
+				bonusPerks.push("treasure_luck");
 				//lToken.database.temp.blessings++;
+			}
+
+			if(bp.pickaxeExpProgress(lToken.userData.pickaxe_exp)==0){
+				bonusPerks.push('level_up');
 			}
 
 			// Food boosts
@@ -64,8 +69,11 @@ class CommandMine extends Command{
 			}
 
 			// Pickaxe perks
-			[...luckPerks, ...lToken.userData.pickaxe_perks].map( ( perkAccessor )=>{
-				perkMessages.push( perks[perkAccessor].onMine( lToken, outcome ) );
+			[...bonusPerks, ...lToken.userData.pickaxe_perks].map( ( perkAccessor )=>{
+				let messageField = perks[perkAccessor].onMine( lToken, outcome );
+				if(messageField){
+					perkMessages.push( messageField );
+				}
 			});
 
 			addBP( lToken, outcome.add( boost ? boost : 0 ) );

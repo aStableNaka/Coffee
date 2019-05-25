@@ -2,15 +2,15 @@ let Item = require("../class/item");
 const ufmt = require("../utils/formatting.js");
 const locale = require("../data/EN_US");
 
-class ItemPickaxeEnchant extends Item{
+class ItemPickPerk extends Item{
 	constructor(){
 		super();
-		this.name = "Pickaxe Enchantment"; // Required
-		this.accessor = "pickaxe_enchantment"; // Virtural
+		this.name = "PickPerk"; // Required
+		this.accessor = "pickperk"; // Virtural
 
 		this.consumable = true;
 		this.value = 0;
-		this.rank = 5;
+		this.rank = 6;
 		this.meta = {};
 
         this.icon = "https://i.imgur.com/fT8lZ9R.png";
@@ -47,4 +47,4 @@ class ItemPickaxeEnchant extends Item{
 	}
 }
 
-module.exports = new ItemPickaxeEnchant();
+module.exports = new ItemPickPerk();

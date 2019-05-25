@@ -12,7 +12,7 @@ class ItemCraftingMaterials extends Item{
 
 		this.consumable = true;
 		this.value = 1;
-		this.rank = 1;
+		this.rank = 2;
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
@@ -20,18 +20,20 @@ class ItemCraftingMaterials extends Item{
         this.isDroppedByLootbox = true;
 		this.isDroppedByLunchbox = true;
 		this.canUseMulti = true;
+
+		this.increaseValue = 8;
 	}
 
 	// Virural function
 	use( lToken, itemData ){
 		let amount = lToken.mArgs.amount || 1;
-		let outcome = new BigInt( bpUtils.getCurrentBPBal( lToken ) ).divide( 100 ).multiply(7*(amount));
+		let outcome = new BigInt( bpUtils.getCurrentBPBal( lToken ) ).divide( 100 ).multiply(this.increaseValue*(amount));
 		bpUtils.addBP( lToken, outcome );
         lToken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gold", amount)} for BP!`,[`+ ${ ufmt.numPretty( outcome ) } BP \n( + ${ufmt.numPretty( 7*(amount) )}% )`]) );
     }
 
 	desc( lToken, itemData ){
-		return `A shiny metal coin worth 7% of your current BP bal.`;
+		return `A shiny metal coin worth ${this.increaseValue}% of your current BP bal.`;
 	}
 }
 

@@ -19,7 +19,8 @@ class CommandTemplate extends Command{
 		{name:"status", cmd:"botinfo status"},
 		{name:"support", cmd:"botinfo support"},
 		{name:"changelogs", cmd:"botinfo changelogs"},
-		{name:"changelog", cmd:"botinfo changelogs"}
+		{name:"changelog", cmd:"botinfo changelogs"},
+		{name:"contributors", cmd:"botinfo contributors"}
 	];}
 	get help(){ return {
 		name:"Bot Info",

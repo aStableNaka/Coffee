@@ -11,7 +11,7 @@ class ItemFoxtailAmulet extends Item{
 
 		this.consumable = true;
 		this.value = 0;
-		this.rank = 4;
+		this.rank = 5;
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";

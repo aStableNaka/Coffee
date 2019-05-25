@@ -140,6 +140,11 @@ function pickaxeLevelExp( exp ){
 }
 module.exports.pickaxeLevelExp = pickaxeLevelExp;
 
+function pickaxeExpProgress( exp ){
+	return (exp+1) % 16;
+}
+module.exports.pickaxeExpProgress = pickaxeExpProgress;
+
 function calcMax( itemAlias, c, owned ){
 	let item = getItemByAlias( itemAlias );
 	let r = item.baseGrowth;
@@ -166,13 +171,18 @@ function getCurrentBPBal( lToken ){
 }
 
 function calcPrestigeGoldReward( userData ){
-	return Math.floor((calcBal_UD( userData ).toString().length * 14));
+	return Math.floor((calcBal_UD( userData ).toString().length * 5));
 }
 
 function calcPrestigeBonusReward( userData ){
-	return Math.floor( Math.sqrt(( new BigInt( userData.bptotal ).divide(Math.pow(10,(11.4*3))) )) );
+	return new BigInt( new BigNum(( new BigInt( userData.bptotal ).divide( Math.pow(10,(11.4*3))).toString() )).sqrt().integerValue() );
 }
 
+function calcPrestigeBoxReward( userData ){
+	return Math.floor((calcBal_UD( userData ).toString().length ));
+}
+
+module.exports.calcPrestigeBoxReward = calcPrestigeBoxReward;
 module.exports.calcPrestigeBonusReward = calcPrestigeBonusReward;
 module.exports.calcPrestigeGoldReward = calcPrestigeGoldReward;
 module.exports.addBP = addBP;

@@ -38,6 +38,22 @@ class Item{
 		return null;
 	}
 
+/**
+Drop		Rank	Label
+60% 		0 		Common
+25% 		1 		Uncommon
+10% 		2 		RARE
+3% 			3 		SUPER RARE
+0.9% 		4 		ULTRA RARE
+0.0997% 	5 		LEGENDARY
+0.0003% 	6 		EXOTIC
+0.00001%	7 		RELIC
+0%			8 		HARMONIC
+0%			9 		GIFTED
+0%			10		ADMIN
+0%			11		DEBUG
+ */
+
 	static get ranks(){
 		return [
 			"COMMON", // 0
@@ -46,7 +62,12 @@ class Item{
 			"SUPER-RARE", // 3
 			"ULTRA-RARE", // 4
 			"LEGENDAY", // 5
-			"EXOTIC" // 6
+			"EXOTIC", // 6
+			"RELIC",
+			"HARMONIC",
+			"GIFTED",
+			"ADMIN",
+			"DEBUG"
 		];
 	}
 
@@ -58,8 +79,19 @@ class Item{
 			0xffe260,
 			0xbc70ff,
 			0xce5ce8,
+			0xffc472,
+			0xffc472,
+			0xffc472,
+			0xffc472,
+			0xffc472,
 			0xffc472
 		]
+	}
+
+	static get useStatus(){
+		return {
+			"NO_CONSUME":Symbol()
+		}
 	}
 
 	static fmtUseMsg( title, descArray, name ){
