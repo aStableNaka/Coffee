@@ -157,7 +157,7 @@ function item( itemData, amount, styleString='***', brackets=true, namePadding=0
 	if(itemObject){
 		name = itemObject.formatName( itemData );
 	}
-	name = name || itemData.name || itemObject.name;
+	name = ( name || itemData.name || itemObject.name || `noname#${itemObject.computeMetaHash( itemData )}` || "broken" );
 	name = name.split("_").map( capitalize ).join(" ");
 	if(namePadding){
 		name = padCenter( name, namePadding );

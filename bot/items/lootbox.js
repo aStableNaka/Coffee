@@ -19,7 +19,7 @@ function fmtLootboxOutcome( outcomes, mobile ){
 	return `${spoilers}${content.join("\n")}${spoilers}`;
 }
 
-const enabledLootboxes = ['lootbox', 'lunchbox'];
+const enabledLootboxes = ['lootbox', 'lunchbox', 'goldbox'];
 const allLootboxes = ['lootbox', 'lunchbox', 'daily_box', 'box_box', 'pick_box', 'goldbox', 'testbox'];
 const uniqueRankings = {
 	'goldbox':2,
@@ -72,7 +72,7 @@ class ItemLootbox extends Item{
 	 * @param {*} adminRigs 
 	 */
 	createItemData( amount=1, meta, name, adminRigs ){
-		let drops = adminRigs || ['lootbox', 'lunchbox'];
+		let drops = adminRigs || enabledLootboxes;
 		if(!meta){
 			meta = ufmt.pick(drops, 1)[0];
 		}
@@ -205,7 +205,7 @@ class ItemLootbox extends Item{
 		let amount = lToken.mArgs.amount;
 		let outcome = 0;
 		new Array(amount).fill(0).map( ()=>{
-			outcome += Math.ceil( Math.random()*3 );
+			outcome += Math.ceil( Math.random()*1 );
 		})
 		let dropItemData = itemUtils.items.gold.createItemData( outcome );
 		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
@@ -321,8 +321,8 @@ class ItemLootbox extends Item{
 			case 'goldbox':
 				return ufmt.join([
 					`*A box full of gold*`,
-					ufmt.denote("Usage",`Drops ${ufmt.block('1-3')} gold.` ),
-					ufmt.denote("Possible Drops", `\n${ufmt.block( itemObject.name )}`)
+					ufmt.denote("Usage",`Drops ${ufmt.block('1')} gold.` ),
+					ufmt.denote("Possible Drops", `\n${ufmt.block( "gold" )}`)
 				]);
 			case 'daily box':
 				return ufmt.join([
@@ -338,7 +338,7 @@ class ItemLootbox extends Item{
 				return ufmt.join([
 					`Lootboxes contain loot!`,
 					`There are several types of lootboxes...`,
-					(['Lunchbox', 'Large Lunchbox']).map((x)=>{return ufmt.block(x);}).join(", ")
+					(enabledLootboxes).map((x)=>{return ufmt.block(x);}).join(", ")
 				]);
 
 		}		

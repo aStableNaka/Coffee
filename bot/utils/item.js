@@ -172,10 +172,10 @@ const pickPerks = {
 	},
 	"determined_endurance":{
 		name:"Determined Endurance",
-		desc:"Your recovery time between mines reduces as your pickaxe gains experience. [ **-3.5 sec/lvl** ] with a hard cap of 30 seconds.",
+		desc:"Your recovery time between mines reduces as your pickaxe gains experience. [ **-3.5 sec/lvl** ] with a hard cap of 120 seconds.",
 		onMine:( lToken, outcome )=>{
 			let lvl = bp.pickaxeLevelExp(lToken.userData.pickaxe_exp);
-			let reduction = Math.floor(Math.min( (lToken.userData.pickaxe_time-0.5) * 60 * 1000, 3.5 * lvl * 1000 ));
+			let reduction = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 3.5 * lvl * 1000 ));
 			lToken.userData.lastmine-=reduction;
 			//lToken.send(lvl);
 			return {
@@ -235,7 +235,7 @@ const pickPerks = {
 		name:"Dumb Luck",
 		desc:"Your pickaxe is more likely to find treasure.",
 		onMine:( lToken )=>{
-			if( Math.random > 1/8 ){ return; }
+			if( Math.random() > 1/8 ){ return; }
 			let itemData = perkTreasureHelper( lToken.userData );
 			return ufmt.perkMessage('Perk', 'Dumb Luck',
 				`You randomly trip on something... It's a ${ ufmt.item(itemData) }!`

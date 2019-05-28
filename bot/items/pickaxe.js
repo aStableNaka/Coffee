@@ -3,6 +3,7 @@ const ufmt = require("../utils/formatting.js");
 const bp = require("../utils/bp.js");
 const locale = require("../data/EN_US");
 const itemUtils = require("../utils/item.js");
+let ezhash = require("../modules/ezhash");
 
 /**
  * Clones objects with recursive capabilities
@@ -51,9 +52,13 @@ class ItemPickaxe extends Item{
         };
         //this.isUnique = true;
 		this.icon = "https://i.imgur.com/miBhBjt.png";
-		
+
 		this.isDroppedByLootbox = false;
     }
+
+    computeMetaHash( itemData ){
+		return ezhash( `${this.name}_${this.computeMetaString( itemData.meta )}` )
+	}
 
     createItemData(amount, meta, name){
         return { accessor:this.accessor, amount: amount, name:name || this.accessor, meta:meta || Object.clone( this.meta ) } 
@@ -144,18 +149,19 @@ class ItemPickaxe extends Item{
         if(itemData.meta.accessor == lToken.userData.pickaxe_accessor){
             itemData.meta.exp = lToken.userData.pickaxe_exp;
         }
-        return [
+        return ufmt.join([
             pickaxeDescription,
-            `**Name**: ${ufmt.itemName(itemData.name, 0, "***")}`,
-            `**LvL**: ${ufmt.itemName(bp.pickaxeLevelExp(itemData.meta.exp), 0, "***")}`,
-            `**Exp**: ${ufmt.itemName(itemData.meta.exp || 1, 0, "***")} mines`,
-            `**Cooldown**: ${ufmt.itemName(itemData.meta.time*60 || 1, 0, "***")} seconds`,
-            `**Perks**:\n${itemData.meta.perks.map((x)=>{
+            `**Name**: ${ufmt.block(itemData.name)}`,
+            `**Creator**: ${ufmt.block( itemData.meta.creator )}`,
+            `**LvL**: ${ufmt.block(bp.pickaxeLevelExp(itemData.meta.exp))}`,
+            `**Exp**: ${ufmt.block(itemData.meta.exp || 1)} mines`,
+            `**Cooldown**: ${ufmt.block(itemData.meta.time*60 || 1)} seconds`,
+            `**Perks**:\n${ufmt.join(itemData.meta.perks.map((x)=>{
                 let perk = itemUtils.pickPerks[ x ];
-                return `- ${ufmt.itemName(perk.name, 0, "***")}: *${perk.desc || "No description"}*`;
-            })}`,
-            `**Creator**: ${ufmt.itemName( itemData.meta.creator, 0, "***" )}`
-        ].join("\n");
+                return `- ${ufmt.block(perk.name)}: *${perk.desc || "No description"}*`;
+            }))}`,
+            '\n',ufmt.denote('Unique ID', '`#'+this.computeMetaHash(itemData)+'`')
+        ]);
 	}
 }
 

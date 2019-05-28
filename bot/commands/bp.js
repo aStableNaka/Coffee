@@ -68,6 +68,8 @@ class CommandBlobPoints extends Command {
 					type:'gens',
 					user: lToken.mentions[0]
 				}
+			}else if( args[0]='leaderboards' ){
+				return {type:'leaderboards', local:lToken.words.indexOf('local')>-1, page:lToken.numbers[0]}
 			}
 			return { type: args[0] }
 		}
@@ -351,6 +353,7 @@ class CommandBlobPoints extends Command {
 		}else if (type=="gens"){
 			this.execGens( lToken );
 		}
+		console.log(lToken.mArgs);
 		lToken.shared.modules.db.updateLeaderboards( lToken.userData );
 	}
 }

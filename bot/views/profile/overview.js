@@ -16,7 +16,7 @@ module.exports = function( lToken, user, userData ){
 	let perkDescriptions = userData.pickaxe_perks.map((x)=>{
 		let perk = itemUtils.pickPerks[ x ];
 		return `\n- ${ufmt.block(perk.name, "***")}: *${perk.desc || "No description"}*`;
-	});
+	}).join('');
 
 	return {
 		"embed": {

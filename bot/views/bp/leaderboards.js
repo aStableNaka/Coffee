@@ -6,7 +6,7 @@ const fBPs = ufmt.formatBPsi;
 const illionaire = ufmt.illionaire;
 const fmtName = ufmt.name;
 
-function fmtDefault( embed, sorted, globals, position, amount ){
+function fmtDefault( embed, sorted, globals, position, amount, lToken ){
 	sorted.slice( 0, amount ).map( ( lbData, i )=>{
 		embed.embed.fields.push( {
 			name:`[ ${i+1} ] ${ fmtName( lbData ) } [ ${( lbData.bal / globals.pot * 100).toFixed(2)}% ]`,
@@ -37,6 +37,6 @@ module.exports = function( lToken, globals, amount = 5 ){
 	if(position!=-1){
 		embed.embed.footer = {"icon_url": "https://i.imgur.com/G1k7gZM.png",text:`${ufmt.name( lToken, {styleString:''} )}, you are rank ${position+1} of ${sorted.length}`};
 	}
-	fmtter( embed, sorted, globals, position, amount );
+	fmtter( embed, sorted, globals, position, amount, lToken );
 	return embed; 
 }

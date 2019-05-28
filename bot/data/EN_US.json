@@ -74,6 +74,14 @@
 
     "changelogs":[
         [
+            "1.1.11",
+            "- Fixed a bug with the [ Dumb Luck ] Perk that made its chances of dropping a box higher than it was supposed to be",
+            "- Added local leaderboards, use `~leaderboards local 1` to view the local leaderboards.",
+            "- Increased [ **Determined Endurance** ] perk's cooldown hard cap from 30 to 120 seconds.",
+            "- Fixed bug where using multiple gold did not compound, `~use gold n` works the same as spamming `~use gold`",
+            "1.1.10",
+            "- Gold return value increased from 7% to 8%",
+            "- Bacon charge increased from 2 to 4",
             "1.1.9",
             "+ Lootboxes now drop 3 items instead of 2",
             "+ Limited time event: May 25-28 Chances of finding Box Boxes when mining are increased!",

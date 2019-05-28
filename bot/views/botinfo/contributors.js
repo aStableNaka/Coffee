@@ -14,7 +14,10 @@ module.exports = function( lToken ){
                 },
                 {
                     "name":"Contributors",
-                    "value":`${ufmt.block("Kpostal")} [ Database ]\n${ufmt.denote('Repl.it','<https://repl.it/@kpostal10>')}`
+                    "value":ufmt.join([
+                        `${ufmt.block("Kpostal")} [ Database ]\n${ufmt.denote('Repl.it','<https://repl.it/@kpostal10>')}`,
+                        `${ufmt.block("HarditS")} [ Beta Tester ] In memory of our first beta tester.`
+                    ])
                 },
                 {
 					"name": "System Info",

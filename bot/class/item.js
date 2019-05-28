@@ -68,7 +68,7 @@ Drop		Rank	Label
 			"RARE", // 2
 			"SUPER-RARE", // 3
 			"ULTRA-RARE", // 4
-			"LEGENDAY", // 5
+			"LEGENDARY", // 5
 			"EXOTIC", // 6
 			"RELIC",
 			"HARMONIC",

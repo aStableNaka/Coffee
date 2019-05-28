@@ -14,7 +14,7 @@ class ItemBacon extends Item{
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
-		this.charge = 2;
+		this.charge = 4;
 		this.boost = 20;
 		this.effect = `Your next ${ufmt.block(this.charge)} mines will produce ${ufmt.block(this.boost)} % more profit.`;
         this.useDialogue = `You eat a slice of bacon!`

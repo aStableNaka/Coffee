@@ -14,10 +14,7 @@ class CommandCraft extends Command{
 	get usesDatabase(){ return false; }
 	get accessors(){ return ['craft']; }
 	get mimics(){ return [];}
-	get help(){ return {
-		name:"Crafting",
-		value:"View my info!"
-	};}
+	get help(){ return null;}
 	get helpExamples(){ return [
         ['craft', '', 'View a list of available crafting options!'],
         ['craft', '< item name >', 'craft an item!']

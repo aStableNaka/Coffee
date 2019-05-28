@@ -10,7 +10,7 @@ class ItemApple extends Item{
 
 		this.consumable = true;
 		this.value = 0;
-		this.rank = 0;
+		this.rank = 1;
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
