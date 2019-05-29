@@ -1,14 +1,16 @@
 const itemUtils = require("../../utils/item.js");
 const ufmt = require("../../utils/formatting.js");
-module.exports = function( lToken, page, userData ){
+module.exports = function( lToken, page, userData, numberOfItems, itemsPerPage, numberOfPages ){
 	userData = userData || lToken.userData;
 	let embed = {
 		"embed":{
 			"title":`${ufmt.name( userData )}'s inventory`,
-			"description":""
+			"description":"",
+			"footer":{text:`Page ${(page+1)}/${numberOfPages} - Showing ${itemsPerPage} items`}
 		}
 	};
-	let formattedInventory = ufmt.inventory( userData.items, 25, 0 );
+	//console.log(page);
+	let formattedInventory = ufmt.inventory( userData.items, itemsPerPage, page );
 	if(!formattedInventory){ 
 		embed = "You have no items in your inventory.";
 		return embed;

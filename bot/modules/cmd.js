@@ -332,7 +332,10 @@ function lTokenQueryUser(
 	let results = Object.values( lToken.database.global.leaderboards ).filter((ldata)=>{
 		return ldata.name.toLowerCase().includes( userQuery.toLowerCase() ) || ldata.id == userQuery.replace('@','');
 	});
-
+	if(lToken.mentions[0]){
+		onFoundOne( lToken.mentions[0].id );
+		return true;
+	}
 	// If there is only one query result...
 	if(results.length==1){
 		let snowflake = results[0].id;

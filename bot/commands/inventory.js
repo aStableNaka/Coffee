@@ -2,8 +2,11 @@ var Command = require("../class/command");
 const env = require("../env");
 const loader = require("../loader");
 const views = loader( "./bot/views/inventory", "./views/inventory" );
+const data = loader( "./bot/data", "./data" );
 const itemUtils = require("../utils/item.js");
 const ufmt = require("../utils/formatting.js");
+var emojis = require("../utils/emojis");
+var pages = require("../utils/page");
 class CommandInventory extends Command{
 	
 	constructor(){
@@ -62,7 +65,8 @@ class CommandInventory extends Command{
 		}else{
 			
 			// Used to look up other people's invs
-			mArgs.userQuery = lToken.args.join(" ");
+			mArgs.userQuery = lToken.words.join(" ");
+			mArgs.page = Math.max(0, lToken.numbers[0]-1||0);
 		}
 		return mArgs;
 	}
@@ -130,14 +134,64 @@ class CommandInventory extends Command{
 		lToken.send(views.info( lToken, itemObject, itemData ));
 	}
 
+	execOverview( lToken, userData ){
+		if(!userData){userData = lToken.userData}
+		let numberOfItems = Object.values( userData.items ).filter( ( itemData )=>{ return itemData.amount > 0 } ).length;
+		let itemsPerPage = 20;
+		let numberOfPages = Math.ceil( numberOfItems/itemsPerPage );
+
+		function send(){
+			lToken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, lToken.mArgs.page||lToken.numbers[0]-1||0) );
+			lToken.send( views.overview(lToken, lToken.mArgs.page, userData, numberOfItems, itemsPerPage, numberOfPages) ).then( pageThing );
+		}
+
+		function pageThing( hookMsg ){
+			// Starting conditions
+			let pageOperators = [];
+
+			numberOfItems = Object.values( userData.items ).filter( ( itemData )=>{ return itemData.amount > 0 } ).length;
+			itemsPerPage = 20;
+			numberOfPages = Math.ceil( numberOfItems/itemsPerPage );
+
+			lToken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, lToken.mArgs.page||lToken.numbers[0]-1||0) );
+			
+			
+			if(lToken.mArgs.page > 0){
+				pageOperators.push(
+					pages.createPageOperator( emojis.arrow_left, ()=>{
+
+						// Backwards operation
+						lToken.mArgs.page--;
+						send();
+					} )
+				);
+			}
+			if( lToken.mArgs.page < numberOfPages-1 ){
+				pageOperators.push(
+					pages.createPageOperator( emojis.arrow_right,
+					()=>{
+	
+						// Forewards operation
+						lToken.mArgs.page++;
+						send();
+					} )
+				)
+			}
+			
+			pages.createPageManager( lToken, hookMsg, pageOperators );
+		}
+		send();
+	}
+
 	async execute( lToken ){ 
 		let option = lToken.mArgs.option;
 		if(!option){
 			if( lToken.args[0] ){
-				let userQuery = lToken.args.join(" ");
+				let userQuery = lToken.words.join(" ");
 				let searchStatus = lToken.queryUser( userQuery, ( snowflake )=>{
 					lToken.database.get( snowflake, ( userData )=>{
-						lToken.send( views.overview(lToken, 0, userData) );
+						
+						this.execOverview( lToken, userData )
 						lToken.shared.modules.db.updateLeaderboards( userData );
 					});
 				}, ( results )=>{
@@ -147,7 +201,8 @@ class CommandInventory extends Command{
 				// If the search succeeds, theres no need to continue
 				if( searchStatus ){ return; }
 			}
-			lToken.send( views.overview( lToken ) );
+			this.execOverview( lToken )
+			
 		}else{
 			if(option == 'daily'){
 				this.execDaily( lToken );

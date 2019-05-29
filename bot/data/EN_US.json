@@ -74,6 +74,12 @@
 
     "changelogs":[
         [
+            "1.1.13",
+            "+ Added [ ***Kingstone's Stone*** ] item",
+            "- Fixed an issue with the [ **Hungry** ] and [ **Starved** ] perks",
+            "1.1.12",
+            "+ Added inventory pages, `~inv 1` or `~inv user 1`",
+            "- Fixed bug where mentioning a user for some commands wouldn't work",
             "1.1.11",
             "- Fixed a bug with the [ Dumb Luck ] Perk that made its chances of dropping a box higher than it was supposed to be",
             "- Added local leaderboards, use `~leaderboards local 1` to view the local leaderboards.",

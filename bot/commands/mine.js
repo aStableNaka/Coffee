@@ -63,12 +63,6 @@ class CommandMine extends Command{
 				bonusPerks.push('level_up');
 			}
 
-			// Food boosts
-			if( lToken.userData.mineboostcharge > 0 ){
-				 boost = outcome.divide(100).multiply( lToken.userData.mineboost );
-				 lToken.userData.mineboostcharge--;
-			}
-
 			// Pickaxe perks
 			[...bonusPerks, ...lToken.userData.pickaxe_perks].map( ( perkAccessor )=>{
 				let messageField = perks[perkAccessor].onMine( lToken, outcome );
@@ -76,6 +70,12 @@ class CommandMine extends Command{
 					perkMessages.push( messageField );
 				}
 			});
+
+			// Food boosts
+			if( lToken.userData.mineboostcharge > 0 ){
+				boost = outcome.divide(100).multiply( lToken.userData.mineboost );
+				lToken.userData.mineboostcharge--;
+		   }
 
 			addBP( lToken, outcome.add( boost ? boost : 0 ) );
 			lToken.userData.pickaxe_exp++;

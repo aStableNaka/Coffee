@@ -295,7 +295,7 @@ function inventory( inventoryObject, entriesPerPage=20, page=0 ){
 		let itemRankA = itemUtils.getItemObject( itemDataA ).getUniqueRank( itemDataA );
 		let itemRankB = itemUtils.getItemObject( itemDataB ).getUniqueRank( itemDataB );
 		return itemRankA - itemRankB;
-	}).slice(page*entriesPerPage, entriesPerPage);
+	}).slice(page*entriesPerPage, page*entriesPerPage+entriesPerPage);
 	if(listOfTruths.length==0){ return null; }
 	let itemNamePaddingLength = listOfTruths.map(x=>x.length).reduce( (acc, val)=>{ return Math.max(acc, val); } )+2;
 	let itemAmountPaddingLength = listOfTruths.map((itemAccessor)=>{
