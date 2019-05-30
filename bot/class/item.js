@@ -59,6 +59,7 @@ Drop		Rank	Label
 0%			9 		GIFTED
 0%			10		ADMIN
 0%			11		DEBUG
+0%			12		PICKAXE
  */
 
 	static get ranks(){
@@ -74,7 +75,8 @@ Drop		Rank	Label
 			"HARMONIC",
 			"GIFTED",
 			"ADMIN",
-			"DEBUG"
+			"DEBUG",
+			"PICKAXE"
 		];
 	}
 
@@ -86,6 +88,7 @@ Drop		Rank	Label
 			0xffe260,
 			0xbc70ff,
 			0xce5ce8,
+			0xffc472,
 			0xffc472,
 			0xffc472,
 			0xffc472,

@@ -398,6 +398,7 @@ let lootboxDropStoch = [];
 // Categorizes items by their rank
 let dropsByRank = new Array(dropProbabilities.length).fill(0).map(x=>new Array());
 Object.values(items).map( ( itemObject )=>{
+	if(!dropsByRank[itemObject.rank]){return;}
 	return dropsByRank[itemObject.rank].push(itemObject);
 });
 

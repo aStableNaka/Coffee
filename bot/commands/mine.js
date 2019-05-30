@@ -54,7 +54,7 @@ class CommandMine extends Command{
 
 			// TODO may 29 change this back to 1/10
 			// Found treasure
-			if(Math.random() < 1/3){
+			if(Math.random() < 1/10){
 				bonusPerks.push("treasure_luck");
 				//lToken.database.temp.blessings++;
 			}

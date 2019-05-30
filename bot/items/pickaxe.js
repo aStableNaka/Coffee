@@ -37,7 +37,7 @@ class ItemPickaxe extends Item{
 
 		this.consumable = false;
 		this.value = 0;
-        this.rank = 6;
+        this.rank = 12;
         this.isUnique = true;
 		this.meta = {
             name: "Shifty Pickaxe",

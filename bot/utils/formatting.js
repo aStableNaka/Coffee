@@ -46,10 +46,12 @@ function numPrettyIllion(n, t = 20){
 	let f = figures( n );
 	//if(!Number.isInteger(n)){ return String(n); }
 	if(n.gt("10e+"+t)){
-		if( illionLabels[ Math.floor( (f+2)/3 ) ] ){
-			let rollOver = (f+2) % 3 + 1;
+		let l = 2;
+		let zed = f+l;
+		if( illionLabels[ Math.floor( zed/3 ) ] ){
+			let rollOver = zed % 3 + 1;
 			let p = String( n ).split('.').join('').slice(0,rollOver);
-			return `${ p } ${ illionLabels[ Math.floor( (f+2)/3 ) ] }`;
+			return `${ p } ${ illionLabels[ Math.floor( zed/3 )-1 ] }`;
 		}
 		return String( n );
 	}
@@ -88,7 +90,7 @@ function figures( amount ){
 }
 
 function illionaire( amount ){
-	return illionaireLabels[ Math.max(0, Math.ceil( (figures(amount)-3) /3 ))] || "Super Freaking Rich";
+	return illionaireLabels[ Math.max(0, Math.floor( (figures(amount)-3) /3 ))] || "Super Freaking Rich";
 }
 
 const progressCharacter = "▮";

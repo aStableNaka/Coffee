@@ -19,9 +19,13 @@ class ItemKingstonsStone extends Item{
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
         this.isDroppedByLootbox = true;
         this.canUseMulti = true;
-        
+
         this.increaseValue = 2;
         this.effect = `Using this will add ${ this.increaseValue } LvLs to your active pickaxe`;
+    }
+    
+    formatName( itemData ){
+		return "Kingstone's Stone";
 	}
 
 	// Virural function

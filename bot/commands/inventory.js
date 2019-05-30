@@ -123,6 +123,10 @@ class CommandInventory extends Command{
 			// If the item is consumable, non-persistent and doesn't pass the NO_CONSUME status when used
 			if( itemObject.consumable && !itemObject.persistent && useStatus != "NO_CONSUME" ){
 				itemData.amount-=lToken.mArgs.amount;
+				if(!itemData.used){
+					itemData.used=0;
+				}
+				itemData.used++;
 			}
 
 		}else{
