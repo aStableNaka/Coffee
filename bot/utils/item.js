@@ -29,9 +29,27 @@ function getItemObjectByAccessor( itemAccessor ){
 	return items[ itemAccessor ];
 }
 
+const trialDiscriminator = "_no.";
+
 // Determines the itemKey, userData.items[itemKey]
-function getItemLookupKey( itemData, itemName = null ){
-	return (itemName || itemData.name || itemData.accessor).toLowerCase().split(" ").join("_");
+function getItemLookupKey( itemData, itemName, trial ){
+	let firstSection = (itemName || itemData.name || itemData.accessor || "unnamed item").split(trialDiscriminator)[0]; // removes trial marker
+	return (`${firstSection}${(()=>{if(trial){return `${trialDiscriminator}${trial}`;}else{return '';}})()}`).toLowerCase().split(" ").join("_");
+}
+
+/**
+ * Empty in this case means the meta is either
+ * a string
+ * a null value
+ * or an empty object
+ * @param {*} meta 
+ */
+function itemMetaIsEmpty( meta ){
+	// Makes sure the meta is an object
+	if(meta.toString()=="[object Object]"){
+		return Object.keys(meta).length == 0;
+	}
+	return true;
 }
 
 /**
@@ -42,12 +60,23 @@ function getItemLookupKey( itemData, itemName = null ){
  * @param {Number} amount 
  * @param {String} itemName 
  */
-function addItemToInventory( userData, itemData, amount, itemName = null ){
+function addItemToInventory( userData, itemData, amount, itemName = null, trial=0 ){
 	if(typeof(amount)=='undefined'){amount=itemData.amount||1}
-	let itemKey = getItemLookupKey(itemData, itemName );  // Special inventory itemKey or default
-	if( userData.items[ itemKey ] ){
-		userData.items[ itemKey ].amount+=amount;
+	let itemKey = getItemLookupKey(itemData, itemName, trial );  // Special inventory itemKey or default
+	let itemObject = getItemObject(itemData);
+	let existingItemData = userData.items[ itemKey ];
+	if( existingItemData ){
+
+		// If item meta doesn't match, and the meta is not empty (metas are either strings or objects)
+		// rename the item recursively
+		if(((existingItemData.meta!=itemData.meta || itemObject.isUnique) && !itemMetaIsEmpty(itemData.meta))){
+			addItemToInventory( userData, itemData, amount, itemName, trial+1 );
+			console.warn(`itemname collision ${itemData.name} ${existingItemData.name}`)
+			return;
+		}
+		existingItemData.amount+=amount;
 	}else{
+		itemData.name = itemKey.split("_").join(' ');
 		userData.items[ itemKey ] = itemData;
 	}
 	if(!itemName){ itemName = itemData.name; } // Undefined or whatever
@@ -99,6 +128,7 @@ function transferItemToInventory( userData, toUserData, itemData, amount = 1 ){
 		itemDataClone.amount=amount;
 		addItemToInventory( toUserData, itemDataClone, amount, itemKey );
 		itemData.amount-=amount;
+		if(itemData.amount==0){}
 	}	
 }
 module.exports.transferItemToInventory = transferItemToInventory;

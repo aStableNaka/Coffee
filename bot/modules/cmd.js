@@ -171,6 +171,7 @@ async function lTokenGroupArguments(lToken, msg){ // jshint ignore:line
 	lToken.words = msg.content.match(/([A-z])\w+/gi);
 	lToken.quotes = msg.content.match(/"[^"]*"/gi);
 	lToken.max = lToken.args.includes('max');
+	lToken.wordsPlus = msg.content.match(/(#?[A-z]?[0-9]?)\w+/gi);
 
 	if(msg.content.indexOf("<@350823530377773057>") == 0){
 		lToken.mentions = lToken.mentions.slice(1);
@@ -332,10 +333,7 @@ function lTokenQueryUser(
 	let results = Object.values( lToken.database.global.leaderboards ).filter((ldata)=>{
 		return ldata.name.toLowerCase().includes( userQuery.toLowerCase() ) || ldata.id == userQuery.replace('@','');
 	});
-	if(lToken.mentions[0]){
-		onFoundOne( lToken.mentions[0].id );
-		return true;
-	}
+	
 	// If there is only one query result...
 	if(results.length==1){
 		let snowflake = results[0].id;
@@ -344,6 +342,9 @@ function lTokenQueryUser(
 	}else if(results.length){
 		// If there are multiple query results
 		onFoundMany( results );
+		return true;
+	}else if(lToken.mentions[0]){
+		onFoundOne( lToken.mentions[0].id );
 		return true;
 	}else{
 		// No results found

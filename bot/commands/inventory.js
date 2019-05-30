@@ -55,7 +55,7 @@ class CommandInventory extends Command{
 			mArgs.option = option;
 			
 			if(option=='give'||option=='trade'){
-				mArgs.itemAccessor = lToken.words.slice(1).join("_").toLowerCase();
+				mArgs.itemAccessor = args.slice(1).join(' ').match(/([^@\d\s])[\d?\w?\.?]+/gi).join("_");
 				mArgs.to = lToken.mentions[0] || null;
 				mArgs.amount = Math.abs( lToken.numbers[0] || 1);
 			}else{

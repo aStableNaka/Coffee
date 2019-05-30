@@ -56,12 +56,17 @@ class ItemPickaxe extends Item{
 		this.isDroppedByLootbox = false;
     }
 
+    formatName( itemData ){
+        return itemData.name;
+    }
+
     computeMetaHash( itemData ){
 		return ezhash( `${this.name}_${this.computeMetaString( itemData.meta )}` )
 	}
 
     createItemData(amount, meta, name){
-        return { accessor:this.accessor, amount: amount, name:name || this.accessor, meta:meta || Object.clone( this.meta ) } 
+        meta = meta || Object.clone( this.meta );
+        return { accessor:this.accessor, amount: amount, name: meta.name || name || this.accessor, meta:meta } 
     }
     
     getMaxPerkSlots( itemData ){
@@ -123,14 +128,11 @@ class ItemPickaxe extends Item{
         // Equip the new pickaxe
         Object.keys( itemData.meta ).map( ( key )=>{
             lToken.userData[`pickaxe_${key}`] = itemData.meta[key];
+            console.log(key);
         });
         itemData.amount--;
 
         lToken.send(`You've swapped your ${ ufmt.itemName(oldItemData.name, 0, "***") } for your ${ ufmt.itemName(itemData.name, 0, "***") }`)
-    }
-
-    formatName(itemData){
-        return itemData.meta.name;
     }
 
 	desc( lToken, itemData ){

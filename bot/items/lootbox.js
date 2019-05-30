@@ -20,7 +20,7 @@ function fmtLootboxOutcome( outcomes, mobile ){
 }
 
 const enabledLootboxes = ['lootbox', 'lunchbox', 'goldbox'];
-const allLootboxes = ['lootbox', 'lunchbox', 'daily_box', 'box_box', 'pick_box', 'goldbox', 'testbox'];
+const allLootboxes = ['lootbox', 'lunchbox', 'daily_box', 'box_box', 'pickbox', 'goldbox', 'testbox'];
 const uniqueRankings = {
 	'goldbox':2,
 	'box_box':3,
@@ -193,7 +193,10 @@ class ItemLootbox extends Item{
 	 * @param {*} itemData 
 	 */
 	meta_pickbox( lToken, itemData ){
-
+		let dropItemData = itemUtils.items.pickaxe.createItemData( 1 );
+		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
+		lToken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
+		itemUtils.addItemToInventory( lToken.userData, dropItemData );
 	}
 
 	/**
