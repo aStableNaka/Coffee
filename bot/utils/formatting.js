@@ -90,7 +90,7 @@ function figures( amount ){
 }
 
 function illionaire( amount ){
-	return illionaireLabels[ Math.max(0, Math.floor( (figures(amount)-3) /3 ))] || "Super Freaking Rich";
+	return illionaireLabels[ Math.max(0, Math.ceil( (figures(amount)) /3 )-1)] || "Super Freaking Rich";
 }
 
 const progressCharacter = "▮";

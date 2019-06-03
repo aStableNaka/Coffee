@@ -1,7 +1,7 @@
-var Command = require("../class/command");
+const Command = require("../class/command");
 const env = require("../env");
 const loader = require("../loader");
-const views = loader( "./bot/views/mn", "./views/mn" );
+const views = loader( "./bot/views/mine", "./views/mine" );
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 
@@ -90,7 +90,7 @@ class CommandMine extends Command{
 				let initialCmdcount = lToken.userData.cmdcount;
 				function resend( first ){
 					if(!first&&lastMsg.id != lToken.userData.msg_m){
-						msg.delete();
+						msg.delete().catch((e)=>{console.log(`[DiscordMessage] [DeleteError] [mine@93] ${e}`);});
 						return;
 					}
 					if(timeSinceLastMine/1000/60 < lToken.userData.pickaxe_time){

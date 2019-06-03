@@ -1,5 +1,5 @@
 const url = "https://repl.it/@DrankArizonaIce/coffee";
-var Command = require("../class/command");
+const Command = require("../class/command");
 const env = require("../env");
 
 class CommandSrc extends Command{

@@ -2,21 +2,20 @@ const Command = require("../class/command");
 const env = require("../env");
 const loader = require("../loader");
 const views = loader("./bot/views/botinfo", "./views/botinfo");
-//const localeReload = loader("./bot/data", "./data");
 const locale = require("../data/EN_US");
 
-class CommandCraft extends Command{
+class CommandPreference extends Command{
 	constructor(){
         super();
         this.wip = true;
 	}
 	get botAdminOnly(){ return false; }
 	get usesDatabase(){ return false; }
-	get accessors(){ return ['craft']; }
+	get accessors(){ return ['pref', 'preference']; }
 	get mimics(){ return [];}
 	get help(){ return null;}
 	get helpExamples(){ return [
-        ['craft', '', 'View a list of available crafting options!'],
+        ['pref', '', 'View a list of available crafting options!'],
         ['craft', '< item name >', 'craft an item!']
 	];}
 	get helpGroup(){ return "Crafting"; }
@@ -28,4 +27,4 @@ class CommandCraft extends Command{
 	}
 }
 
-module.exports = new CommandCraft();
+module.exports = new CommandPreference();

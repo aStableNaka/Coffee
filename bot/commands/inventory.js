@@ -1,4 +1,4 @@
-var Command = require("../class/command");
+const Command = require("../class/command");
 const env = require("../env");
 const loader = require("../loader");
 const views = loader( "./bot/views/inventory", "./views/inventory" );
@@ -53,13 +53,16 @@ class CommandInventory extends Command{
 		}
 		if((['use', 'info', 'give', 'daily', 'trade'].includes(option))){
 			mArgs.option = option;
+			if(args[1]){
+				var itemAccessor = args.slice(1).join(' ').match(/([^@\d\s])[\d?\w?\.?]+/gi).join("_").toLowerCase();
+			}
 			
 			if(option=='give'||option=='trade'){
-				mArgs.itemAccessor = args.slice(1).join(' ').match(/([^@\d\s])[\d?\w?\.?]+/gi).join("_");
+				mArgs.itemAccessor = itemAccessor;
 				mArgs.to = lToken.mentions[0] || null;
 				mArgs.amount = Math.abs( lToken.numbers[0] || 1);
 			}else{
-				mArgs.itemAccessor = lToken.words.slice(1).join("_").toLowerCase();
+				mArgs.itemAccessor = itemAccessor;
 				mArgs.amount = Math.abs( lToken.numbers[0] || 1 );
 			}
 		}else{
@@ -87,6 +90,10 @@ class CommandInventory extends Command{
 				lToken.database.get( lToken.mArgs.to.id.toString(), ( toUserData )=>{
 					itemUtils.transferItemToInventory( lToken.userData, toUserData, itemData, lToken.mArgs.amount );
 					lToken.send( `You've given ${ ufmt.nameMention( lToken.mArgs.to ) } ${ ufmt.item( itemData,lToken.mArgs.amount ) }` );
+					let itemObject = itemUtils.getItemObject( itemData );
+					if(itemObject.isUnique){
+						itemObject.cleanup( lToken.userData, itemData )
+					}
 					//console.log("SUPER WASABI")
 				});
 				//console.log("GUUAWUU")

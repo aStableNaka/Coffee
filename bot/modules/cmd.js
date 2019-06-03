@@ -11,7 +11,7 @@ module.exports.linkModule = function (m) {
 var ready = false;
 
 var sources = {}
-var commands = {};
+const commands = {};
 var mimics = {};
 var helps = {};
 var shared = {};
@@ -560,13 +560,24 @@ function executelToken(lToken) {
 			}*/
 			// Temporary
 
+			// TODO guildData
+			lToken.guildData = {};
 			lToken.userData = userData;
 			if (userData.blacklisted) {
 				lToken.send(views.blacklist(lToken));
 				return;
 			}
 			lToken.cmd.execute(lToken).then(() => {}).catch((e) => {
+				let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,500) }\`\`\` `;
 				lToken.send(`<@133169572923703296>\n\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,500) }\`\`\` `);
+				lToken.messageAdmin(
+					ufmt.join([
+						ufmt.denote( 'Type', 'Command Execution Error' ),
+						ufmt.denote( 'User', ufmt.name(lToken.userData) ),
+						ufmt.denote( 'Command', `\`${lToken.message}\``),
+						errorMessage
+					])
+				)
 			});
 			lToken.userData.cmdcount++;
 			lToken.userData.lastuse = new Date().getTime();
@@ -638,5 +649,5 @@ module.exports.loadCommands = loadCommands;
  * - lToken.userIsBotAdmin
  * - lToken.rawHooks
  * - lToken.messageAdmin()
- * 
+ * - lToken.guildData
 */

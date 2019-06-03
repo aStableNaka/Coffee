@@ -1,4 +1,4 @@
-var Command = require("../class/command.js");
+const Command = require("../class/command.js");
 const env = require("../env.js");
 const loader = require("../loader");
 const views = loader("./bot/views/bp", "./views/bp");
@@ -6,12 +6,12 @@ delete require.cache[require.resolve("../data/shop.json")];
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 const locale = require("../data/EN_US.json");
-var {
+const {
 	dataShop, dataShopCatalogue, getItemByAlias, confirmBuy, calcIncome, getAmountOwned, calcMax, calcNextCost, getCurrentBPBal
 } = require("../utils/bp");
-var bpUtils = require("../utils/bp");
-var emojis = require("../utils/emojis");
-var pages = require("../utils/page");
+const bpUtils = require("../utils/bp");
+const emojis = require("../utils/emojis");
+const pages = require("../utils/page");
 
 class CommandBlobPoints extends Command {
 	constructor() {
@@ -125,7 +125,7 @@ class CommandBlobPoints extends Command {
 					newBal = getCurrentBPBal(lToken);  // BINTCONV
 					let currentIncome = calcIncome(lToken);
 					if (sameMsg.id != lToken.userData.lastbpcheckmsgid) {
-						msg.delete();
+						msg.delete().catch((e)=>{console.log(`[DiscordMessage] [DeleteError] [bp@128] ${e}`);});
 						return;
 					}
 					msg.edit(

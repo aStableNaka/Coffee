@@ -233,13 +233,13 @@ const pickPerks = {
 	},
 	"treasure_hunter":{
 		name:"Treasure Hunter",
-		desc:`You gain [ **Box Box** ] x4 every time your pickaxe levels up!`,
+		desc:`You gain [ **Box Box** ] x3 every time your pickaxe levels up!`,
 		onMine:( lToken )=>{
 			let expProgress = bp.pickaxeExpProgress(lToken.userData.pickaxe_exp);
 
 			// If the progress is at 0
 			if(!expProgress){
-				let itemData = itemUtils.items.lootbox.createItemData(4, 'box_box');
+				let itemData = itemUtils.items.lootbox.createItemData(3, 'box_box');
 				itemUtils.addItemToInventory( lToken.userData, itemData );
 				return {
 					"name":`${ufmt.block( 'Perk' )} Treasure Hunter`,
@@ -460,9 +460,13 @@ function pickFromDistribution( distribution, amount){
  */
 function migrateItem( userData, itemName, newItemName ){
 	let itemData = userData.items[itemName];
+	let itemObject = getItemObject( itemData );
+
+	itemObject.migrateItem( itemData, newItemName );
+
 	itemData.name = newItemName;
-	userData.items[newItemName] = itemData;
 	delete userData.items[itemName];
+	addItemToInventory( userData, itemData );
 	return itemData;
 }
 

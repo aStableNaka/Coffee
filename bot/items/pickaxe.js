@@ -10,9 +10,15 @@ let ezhash = require("../modules/ezhash");
  * @param {Object} object
  * @param {Number} depth Leave at 0 for shallow copy
  */
-Object.clone = function( object, depth=0 ){
+Object.clone = function( object, depth=5 ){
     let out = {};
     if(typeof(object)!='object'){return object;}
+    
+    if(Array.isArray( object )){
+        
+        if(Array.isEmpty(object)){return [];}
+        return object.map(x=>Object.clone(x, depth-1));;
+    }
     Object.keys(object).map( (key)=>{
         if(typeof(object[key])=='object'){
             if(depth>0){
@@ -28,6 +34,15 @@ Object.clone = function( object, depth=0 ){
     });
     return out;
 };
+
+// similar to object.assign, but only acts if a field does not exist
+Object.ensure = function( target, source ){
+    Object.keys(source).map( (key)=>{
+        if(typeof(target[key])=='undefined'){
+            target[key] = source[key];
+        }
+    })
+}
 
 class ItemPickaxe extends Item{
 	constructor(){
@@ -50,7 +65,7 @@ class ItemPickaxe extends Item{
             imgIndex:0,
             maxPerkSlots:2
         };
-        //this.isUnique = true;
+
 		this.icon = "https://i.imgur.com/miBhBjt.png";
 
 		this.isDroppedByLootbox = false;
@@ -59,6 +74,11 @@ class ItemPickaxe extends Item{
     formatName( itemData ){
         return itemData.name;
     }
+
+    cleanup( userData, itemData ){
+        delete userData.items[itemData.meta.accessor];
+		return;
+	}
 
     computeMetaHash( itemData ){
 		return ezhash( `${this.name}_${this.computeMetaString( itemData.meta )}` )
@@ -86,26 +106,15 @@ class ItemPickaxe extends Item{
 
     ensureUserHasDefaultPickaxe( userData ){
         if(!userData.hasFirstPickaxe && userData.pickaxe_accessor=="shifty_pickaxe"){
-            itemUtils.addItemObjectToInventory( userData, this, 0, "Shifty Pickaxe", {
-                name: "Shifty Pickaxe",
-                accessor:"shifty_pickaxe",
-                perks:[],
-                exp: userData.pickaxe_exp,
-                time: 5,
-                multiplier: 0,
-                lDescIndex:0,
-                creator:"Grandmaster Blacksmith",
-                imgIndex:0,
-                maxPerkSlots:2,
-            });
+            let itemData = this.createItemData(0, Object.clone(this.meta));
+            itemUtils.addItemToInventory( itemData );
             userData.hasFirstPickaxe = true;
         }
     }
 
-    // TODO change tag if an item with the same name is given to a player
     migrateItem( itemData, newName ){
-        let newAccessor = newName.toLowerCase().split(" ").join(" ");
-        itemData.name = newName;
+        let newAccessor = newName.toLowerCase().split(" ").join("_");
+        itemData.name = newName.split("_").join(" ");
         itemData.meta.accessor = newAccessor;
         itemData.meta.name = newName;
     }
@@ -120,19 +129,26 @@ class ItemPickaxe extends Item{
         // Create shifty pickaxe item if it didn't already exist
         this.ensureUserHasDefaultPickaxe( lToken.userData );
 
-        // Unequip the pickaxe, save it's exp
-        let oldItemData = lToken.userData.items[ lToken.userData.pickaxe_accessor ];
-        oldItemData.meta.exp = lToken.userData.pickaxe_exp;
-        oldItemData.amount++;
+        let unequippedPickItemData = lToken.userData.items[ lToken.userData.pickaxe_accessor ];
+        Object.ensure( itemData.meta, Object.clone( this.meta ) );
+
+        // Unequip the pickaxe, save its data
+        Object.keys(lToken.userData).filter(x=>x.indexOf('pickaxe')==0).map((x)=>{
+            let n = x.split("_")[1];
+            unequippedPickItemData.meta[n] = lToken.userData[x];
+        })
+        unequippedPickItemData.amount++;
+        unequippedPickItemData.equipped = false;
 
         // Equip the new pickaxe
         Object.keys( itemData.meta ).map( ( key )=>{
-            lToken.userData[`pickaxe_${key}`] = itemData.meta[key];
             console.log(key);
+            lToken.userData[`pickaxe_${key}`] = itemData.meta[key];
         });
         itemData.amount--;
+        itemData.equipped = true;
 
-        lToken.send(`You've swapped your ${ ufmt.itemName(oldItemData.name, 0, "***") } for your ${ ufmt.itemName(itemData.name, 0, "***") }`)
+        lToken.send(`You've swapped your ${ ufmt.itemName(unequippedPickItemData.name, 0, "***") } for your ${ ufmt.itemName(itemData.name, 0, "***") }`)
     }
 
 	desc( lToken, itemData ){

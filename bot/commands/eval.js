@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-var Command = require("../class/command");
+const Command = require("../class/command");
 const env = require("../env");
 const loader = require("../loader");
 const views = loader( "./bot/views/ev", "./views/ev" );

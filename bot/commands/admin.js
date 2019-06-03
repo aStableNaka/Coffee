@@ -1,11 +1,11 @@
-var Command = require("../class/command");
+const Command = require("../class/command");
 const env = require("../env");
 const itemUtils = require("../utils/item.js");
 const ufmt = require("../utils/formatting.js");
 const loader = require("../loader");
 const utils = loader( "./bot/utils", "./utils" ); // Effectively reloads utils
 const fs = require('fs');
-const adjectives = fs.readFileSync( "./bot/data/english-adjectives.txt" ).toString().split("\n");
+//const adjectives = fs.readFileSync( "./bot/data/english-adjectives.txt" ).toString().split("\n");
 const globalStates = require("../utils/globalstates");
 
 class CommandAdmin extends Command{
@@ -59,9 +59,9 @@ class CommandAdmin extends Command{
 		lToken.client.fetchUser( userID ).then( ()=>{
 			lToken.database.get( userID, (ud)=>{
 				ud.blacklisted = true;
-				ud.bpbal = 0;
-				ud.bpps = 0;
-				ud.bpitems = [];
+				ud.bpbal = "0";
+				ud.bpps = "0";
+				ud.bpitems = {};
 				ud.blReason = reason;
 				ud.blEvidenceURL = url;
 				lToken.send( `${ userID }, ${ud.name}, blacklisted.` );

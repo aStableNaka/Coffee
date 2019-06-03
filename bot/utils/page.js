@@ -5,7 +5,7 @@ function createPageManager( lToken, msg, pageOperators, lifetime=120000 ){
             let operator = pageOperators.pop();
             lToken.addReactionHook( msg, operator.emojiName, ()=>{
                 operator.callback();
-                msg.delete();
+                msg.delete().catch((e)=>{console.log(`[DiscordMessage] [DeleteError] [page@8] ${e}`);});
             }, lifetime );
             msg.react( operator.emojiName ).then( doTheThing );
         }

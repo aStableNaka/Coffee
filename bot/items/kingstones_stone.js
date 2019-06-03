@@ -13,7 +13,7 @@ class ItemKingstonsStone extends Item{
 
 		this.consumable = true;
 		this.value = 1;
-		this.rank = 3;
+		this.rank = 5;
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
@@ -24,7 +24,7 @@ class ItemKingstonsStone extends Item{
         this.effect = `Using this will add ${ this.increaseValue } LvLs to your active pickaxe`;
     }
     
-    formatName( itemData ){
+    	formatName( itemData ){
 		return "Kingstone's Stone";
 	}
 

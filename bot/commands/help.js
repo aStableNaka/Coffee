@@ -1,4 +1,4 @@
-var Command = require("../class/command");
+const Command = require("../class/command");
 const env = require("../env");
 const OLDMESSAGE = "**~bp** <buy | shop>\n**~shop** <page>\n**~mine**\n**~buy** <itemCode> <amount | max>";
 const loader = require("../loader");
