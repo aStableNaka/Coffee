@@ -21,7 +21,7 @@ class ItemCoffee extends Item{
 		this.isDroppedByLootbox = true;
 	}
 
-	// Virural function
+	
 	use( lToken, itemData ){
 		lToken.userData.lastmine = 0; // Percent
 		lToken.send(Item.fmtUseMsg( this.useDialogue,[ufmt.denote('Effect', this.effect)]));

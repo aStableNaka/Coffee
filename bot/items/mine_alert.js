@@ -20,7 +20,7 @@ class ItemMineAlert extends Item{
 		this.effect_off = "You will no longer recieve a ping when you're ready to mine.";
 	}
 
-	// Virural function
+	
 	use( lToken, itemData ){
 		lToken.userData.tools.mine_alert = !lToken.userData.tools.mine_alert;
 		lToken.send(`*You press the big red button on the [ **Mine Alert** ] machine.*\n*\*Boop!\**\nEffect: ${lToken.userData.tools.mine_alert ? this.effect_on : this.effect_off}`);

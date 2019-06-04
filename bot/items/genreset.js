@@ -28,7 +28,7 @@ class ItemGenReset extends Item{
             return {amount:amount, meta:meta, name:name}
       }
 
-	// Virural function
+	
 	use( lToken, itemData ){
 		
 	}

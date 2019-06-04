@@ -22,7 +22,7 @@ class ItemBacon extends Item{
 		this.isDroppedByLootbox = true;
 	}
 
-	// Virural function
+	
 	use( lToken, itemData ){
 		lToken.userData.mineboost = this.boost; // Percent
 		lToken.userData.mineboostcharge = this.charge;

@@ -292,7 +292,7 @@ class ItemLootbox extends Item{
 
 
 
-	// Virural function
+	
 	use( lToken, itemData ){
 		// Test
 		if(this[`meta_${itemData.meta}`]){

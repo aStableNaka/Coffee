@@ -32,11 +32,12 @@ class CommandBotinfo extends Command{
 		['src', '', 'Get the link to view my source code!'],
 		['support', '', 'Get the link to join the support server if you have further questions!'],
 		['contributors', '', 'People who\'ve worked on this bot!'],
-		['changelogs', '', 'View updates and changes']
+		['changelogs', '', 'View updates and changes'],
+		['patreon', '', '[Click here to become a Patron!](https://www.patreon.com/coffeedev)']
 	];}
 	get helpGroup(){ return "Bot-Info"; }
 	get helpName(){ return "Botinfo"; }
-	get helpPage(){ return null; }
+	get helpPage(){ return 2; }
 	modifyArgs( args ){ return args; }
 	async execute( lToken ){
 		if(lToken.args[0]=='status'){

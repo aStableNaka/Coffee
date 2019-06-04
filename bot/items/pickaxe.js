@@ -94,7 +94,7 @@ class ItemPickaxe extends Item{
     }
 
     getUniqueRank( itemData ){
-		return Math.max( this.getMaxPerkSlots( itemData ) * 2, Item.ranks.length ) ;
+		return Math.max( this.getMaxPerkSlots( itemData ) * 2, Item.ranks.length-1 ) ;
 	}
 
     addPerk( itemData, perkName ){
@@ -107,11 +107,16 @@ class ItemPickaxe extends Item{
     ensureUserHasDefaultPickaxe( userData ){
         if(!userData.hasFirstPickaxe && userData.pickaxe_accessor=="shifty_pickaxe"){
             let itemData = this.createItemData(0, Object.clone(this.meta));
-            itemUtils.addItemToInventory( itemData );
+            itemUtils.addItemToInventory( userData, itemData );
             userData.hasFirstPickaxe = true;
         }
     }
 
+    /**
+     * Migrate item override
+     * @param {*} itemData 
+     * @param {*} newName 
+     */
     migrateItem( itemData, newName ){
         let newAccessor = newName.toLowerCase().split(" ").join("_");
         itemData.name = newName.split("_").join(" ");
@@ -124,7 +129,7 @@ class ItemPickaxe extends Item{
         return userData.items[userData.pickaxe_accessor];
     }
 
-	// Virural function
+	
 	use( lToken, itemData ){
         // Create shifty pickaxe item if it didn't already exist
         this.ensureUserHasDefaultPickaxe( lToken.userData );
@@ -151,6 +156,11 @@ class ItemPickaxe extends Item{
         lToken.send(`You've swapped your ${ ufmt.itemName(unequippedPickItemData.name, 0, "***") } for your ${ ufmt.itemName(itemData.name, 0, "***") }`)
     }
 
+    /**
+     * 
+     * @param {*} lToken 
+     * @param {*} itemData 
+     */
 	desc( lToken, itemData ){
         if(!itemData){
 

@@ -88,7 +88,7 @@ function lTokenize(msg) {
 	}
 	if (mimics[tokens[0]]) {
 		tokens = [...mimics[tokens[0]].cmd.split(' '), ...tokens.slice(1)].filter((x) => {
-			return x != '';
+			return x!='' && !!x;
 		});
 	}
 

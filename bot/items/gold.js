@@ -4,7 +4,7 @@ const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 var bpUtils = require("../utils/bp");
 
-class ItemCraftingMaterials extends Item{
+class ItemGold extends Item{
 	constructor(){
 		super();
 		this.name = "Gold"; // Required
@@ -24,7 +24,7 @@ class ItemCraftingMaterials extends Item{
 		this.increaseValue = 8;
 	}
 
-	// Virural function
+	
 	use( lToken, itemData ){
 		let amount = lToken.mArgs.amount || 1;
 		let bal = bpUtils.getCurrentBPBal( lToken );
@@ -44,4 +44,4 @@ class ItemCraftingMaterials extends Item{
 	}
 }
 
-module.exports = new ItemCraftingMaterials();
+module.exports = new ItemGold();

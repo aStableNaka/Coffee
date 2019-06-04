@@ -61,7 +61,7 @@ function itemMetaIsEmpty( meta ){
  * @param {String} itemName 
  */
 function addItemToInventory( userData, itemData, amount, itemName = null, trial=0 ){
-	if(typeof(amount)=='undefined'){amount=itemData.amount||1}
+	if(typeof(amount)=='undefined'){amount=itemData.amount}
 	let itemKey = getItemLookupKey(itemData, itemName, trial );  // Special inventory itemKey or default
 	let itemObject = getItemObject(itemData);
 	let existingItemData = userData.items[ itemKey ];
@@ -138,11 +138,12 @@ module.exports.transferItemToInventory = transferItemToInventory;
  * @param {UserData} userData 
  * @param {String} itemKey 
  */
-function userHasItem( userData, itemKey ){
+function userHasItem( userData, itemKey, amount = 1 ){
 	let itemData = userData.items[itemKey];
-	return itemData ? itemData.amount > 0 : false;
+	return itemData ? itemData.amount >= amount : false;
 }
 module.exports.userHasItem = userHasItem;
+
 
 function perkTreasureHelper( userData ){
 	let itemData = itemUtils.items.lootbox.createItemData(1, "box_box");
@@ -346,7 +347,7 @@ const pickPerks = {
 			let boost = outcome.divide(100).multiply( coefficient*level );
 			bp.addBP( lToken, boost );
 			return ufmt.perkMessage( 'Perk', 'Starved', 
-				`Your sated belly has increased profits by ${coefficient}%\n+ ${ufmt.bp(boost)}`
+				`Your sated belly has increased profits by ${coefficient*level}%\n+ ${ufmt.bp(boost)}`
 			);
 		}
 	},

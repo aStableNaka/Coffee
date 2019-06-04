@@ -24,7 +24,7 @@ class ItemOrbOfAlmanac extends Item{
 		//this.increaseValue = 8;
 	}
 
-	// Virural function
+	
 	use( lToken, itemData ){
 		let amount = lToken.mArgs.amount || 1;
 		let outcome = new BigInt( bpUtils.getCurrentBPBal( lToken ) ).divide( 100 ).multiply(this.increaseValue*(amount));

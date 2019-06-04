@@ -17,7 +17,7 @@ class ItemCraftingMaterials extends Item{
 		this.isDroppedByLootbox = true;
 	}
 
-	// Virural function
+	
 	use( lToken, itemData ){}
 
 	desc( lToken, itemData ){

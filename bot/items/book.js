@@ -22,7 +22,7 @@ class ItemBook extends Item{
 		this.isDroppedByLootbox = false;
 	}
 
-	// Virural function
+	
 	use( lToken, itemData ){
 		lToken.userData.mineboost = this.boost; // Percent
 		lToken.userData.mineboostcharge = this.charge;

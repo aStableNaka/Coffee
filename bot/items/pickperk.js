@@ -30,7 +30,7 @@ class ItemPickPerk extends Item{
         return { accessor:this.accessor, amount: amount, name:name, meta:meta || this.meta }
     }
 
-	// Virural function
+	
 	use( lToken, itemData ){
 		if(itemData.meta){
 			itemUtils.items.pickaxe.ensureUserHasDefaultPickaxe( lToken.userData );
@@ -71,14 +71,16 @@ class ItemPickPerk extends Item{
 				ufmt.denote('Perk Effect', perk.desc),
                 ufmt.denote('\nType', ufmt.block('Pickaxe Enchantment')),
 				ufmt.denote('Usage', this.effect),
-				ufmt.denote('Warning', 'Perks will only be applied if your pickaxe has an available perk slot.')
+				ufmt.denote('Warning', 'Perks will only be applied if your pickaxe has an available perk slot.'),
+				ufmt.denote('Warning', 'Once applied, perks cannot be removed.')
             ]);
         }else{
             return ufmt.itemDesc([
                 "*Makes your pickaxe better!*",
                 ufmt.denote('Type', ufmt.block('Pickaxe Enchantment')),
 				ufmt.denote('Usage', this.effect),
-				ufmt.denote('Warning', 'Perks will only be applied if your pickaxe has an available perk slot.')
+				ufmt.denote('Warning', 'Perks will only be applied if your pickaxe has an available perk slot.'),
+				ufmt.denote('Warning', 'Once applied, perks cannot be removed.')
             ]);
         }
 	}

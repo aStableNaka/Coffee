@@ -38,7 +38,6 @@ class CommandBlobPoints extends Command {
 
 	get helpExamples() {
 		return [
-			["bp", "< shop | buy | leaderboards >", locale.bp.help.summary.base],
 			["bal", "", locale.bp.help.summary.bal],
 			["shop", "< page >", locale.bp.help.summary.shop],
 			["buy", "<generator code> <amount | 'max'>", locale.bp.help.summary.buy],
@@ -46,8 +45,8 @@ class CommandBlobPoints extends Command {
 			["leaderboards", "< page >", locale.bp.help.summary.leaderboards ]
 		];
 	}
-	get helpName() { return "BP"; }
-	get helpGroup() { return "BP"; }
+	get helpName() { return "Blob-Points"; }
+	get helpGroup() { return "BlobPoints"; }
 
 	modifyArgs(args, lToken) {
 		if (this.modifiers.includes(args[0])) {
@@ -353,7 +352,7 @@ class CommandBlobPoints extends Command {
 		}else if (type=="gens"){
 			this.execGens( lToken );
 		}
-		console.log(lToken.mArgs);
+		//console.log(lToken.mArgs);
 		lToken.shared.modules.db.updateLeaderboards( lToken.userData );
 	}
 }

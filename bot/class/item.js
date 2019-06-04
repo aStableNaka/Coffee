@@ -126,7 +126,6 @@ Drop		Rank	Label
 		return content;
 	}
 
-	// Virural functions
 	use( lToken, itemData ){}
 	desc( lToken, itemData ){ return "Item description based on itemData"; }
 }

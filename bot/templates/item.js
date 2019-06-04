@@ -15,7 +15,7 @@ class ItemTemplate extends Item{
 		this.icon = "https://i.imgur.com/u3RS3gh.png";
 	}
 
-	// Virural function
+	
 	use( lToken, itemData ){
 
 	}

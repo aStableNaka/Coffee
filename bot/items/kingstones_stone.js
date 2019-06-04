@@ -28,7 +28,7 @@ class ItemKingstonsStone extends Item{
 		return "Kingstone's Stone";
 	}
 
-	// Virural function
+	
 	use( lToken, itemData ){
 		let amount = lToken.mArgs.amount || 1;
         let increase = 16*amount*this.increaseValue;

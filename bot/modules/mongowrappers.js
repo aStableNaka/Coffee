@@ -56,7 +56,7 @@ async function openCollection( collectionName='users', callback=()=>{} ){
 			if (err) {
 				DBLog("[DEBUG]" + err)
 			}
-			connection.db.collection("users", function (err, collection) {
+			connection.db.collection(collectionName, function (err, collection) {
 				if (err) {
 					DBLog(`[ERROR] ${err}`);
 					reject(err);
@@ -73,7 +73,7 @@ async function openCollection( collectionName='users', callback=()=>{} ){
  * Modified by Naka
  */
 async function getProfile(query, callback, collectionName = 'users') {
-	DBLog("[Mango] Get profile", query);
+	DBLog("[Mango] query", query);
 	return new Promise(( resolve, reject )=>{
 		openCollection( collectionName, (collection, connection)=>{
 			collection.find(query).toArray(function (err, data) {
@@ -181,6 +181,7 @@ async function removeProfile(query, collectionName = 'users') {
 	});
 }
 module.exports.getProfile = getProfile;
+module.exports.query = getProfile;
 module.exports.insert = insert;
 module.exports.updateProfile = updateProfile;
 module.exports.removeProfile = removeProfile;
