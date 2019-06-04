@@ -255,7 +255,7 @@
             "alias": "JACK",
             "baseCost": 1331000000827634112300000 ,
             "baseIncome": 6e+19,
-            "baseGrowth":1.12,
+            "baseGrowth":1.07,
             "available":true
         },
 		{
@@ -282,7 +282,7 @@
             "alias": "SKYP",
             "baseCost": 2538294330464173257874720017 ,
             "baseIncome": 16219499417728843239008,
-            "baseGrowth":1.15,
+            "baseGrowth":1.07,
             "available":true
         },
 		{
@@ -318,7 +318,7 @@
             "alias": "BRUS",
             "baseCost": 15763748882039428340029227184931 ,
             "baseIncome": 134327312041823291467100001,
-            "baseGrowth":1.24,
+            "baseGrowth":1.07,
             "available":true
         },
 		{
@@ -336,7 +336,7 @@
             "alias": "GOAT",
             "baseCost": "215061706407524932482953593276015" ,
             "baseIncome": "11554687599835073887955707542",
-            "baseGrowth":1.28,
+            "baseGrowth":1.07,
             "available":true
         },
 		{
@@ -354,7 +354,7 @@
             "alias": "RMSG",
             "baseCost": "19612485119584165126130724896270585" ,
             "baseIncome": "1524446834101898252235869432704",
-            "baseGrowth":1.32,
+            "baseGrowth":1.07,
             "available":true
         },
 		{
@@ -363,7 +363,7 @@
             "alias": "PLUT",
             "baseCost": "145684601339121787985651459825741687" ,
             "baseIncome": "12206491294407526049363587195705",
-            "baseGrowth":1.34,
+            "baseGrowth":1.07,
             "available":true
         },
 		{
@@ -372,7 +372,7 @@
             "alias": "ARRW",
             "baseCost": "1917621816947956503322890664906152738" ,
             "baseIncome": "172891944188829751938317282051587",
-            "baseGrowth":1.36,
+            "baseGrowth":1.07,
             "available":true
 		},
 		{
@@ -381,7 +381,7 @@
             "alias": "MARS",
             "baseCost": "18182682946339895927290578982660499365" ,
             "baseIncome": "1367553589986601741258929537364678",
-            "baseGrowth":1.38,
+            "baseGrowth":1.07,
             "available":true
         },
 		{
@@ -390,7 +390,7 @@
             "alias": "VIPA",
             "baseCost": "100697387120761759486777601657838428431" ,
             "baseIncome": "16185884065694592248261037431657092",
-            "baseGrowth":1.4,
+            "baseGrowth":1.07,
             "available":true
         },
 		{
@@ -399,7 +399,7 @@
             "alias": "SSDO",
             "baseCost": "1464719394424933548271868949270863522025" ,
             "baseIncome": "169366220266741984775107115629358726",
-            "baseGrowth":1.45,
+            "baseGrowth":1.07,
             "available":true
         },
 		{
@@ -408,7 +408,7 @@
             "alias": "SOML",
             "baseCost": "11704655751185556952249429185263525936002" ,
             "baseIncome": "1055884057785865022349534943895254782",
-            "baseGrowth":1.5,
+            "baseGrowth":1.07,
             "available":true
         },
 		{
@@ -417,7 +417,47 @@
             "alias": "ACAT",
             "baseCost": "182205062196945630615042143909730345419465" ,
             "baseIncome": "15621088210944213853097932468657941880",
-            "baseGrowth":1.42,
+            "baseGrowth":1.07,
+            "available":true
+	  }
+	  ,
+		{
+            "name":"Yosemite Ultra Volcano",
+            "desc": "A ticking timebomb",
+            "alias": "YOUV",
+            "baseCost": "2.342e+44" ,
+            "baseIncome": "1.1736e+40",
+            "baseGrowth":1.07,
+            "available":true
+	  }
+	  ,
+		{
+            "name":"Catamari Ball of Death",
+            "desc": "Rolls over the competition",
+            "alias": "ACAT",
+            "baseCost": "2.232e+46" ,
+            "baseIncome": "1.1736e+42",
+            "baseGrowth":1.07,
+            "available":true
+	  }
+	  ,
+		{
+            "name":"Jupiter-Sized Nut",
+            "desc": "The largest nut in the universe!",
+            "alias": "JNUT",
+            "baseCost": "1.845e+48" ,
+            "baseIncome": "1.1755e+44",
+            "baseGrowth":1.07,
+            "available":true
+	  }
+	  ,
+		{
+            "name":"Lost in Translation",
+            "desc": "redacted",
+            "alias": "LOST",
+            "baseCost": "1.942e+50" ,
+            "baseIncome": "1.2736e+46",
+            "baseGrowth":1.07,
             "available":true
         }
 	]

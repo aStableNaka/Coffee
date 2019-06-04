@@ -20,7 +20,8 @@ class CommandBotinfo extends Command{
 		{name:"support", cmd:"botinfo support"},
 		{name:"changelogs", cmd:"botinfo changelogs"},
 		{name:"changelog", cmd:"botinfo changelogs"},
-		{name:"contributors", cmd:"botinfo contributors"}
+		{name:"contributors", cmd:"botinfo contributors"},
+		{name:"patreon", cmd:"botinfo patreon"}
 	];}
 	get help(){ return {
 		name:"Bot Info",
@@ -51,7 +52,10 @@ class CommandBotinfo extends Command{
 		else if(lToken.args[0]=='support'){
 			lToken.author.send( `Here's the link to my support server! ${serverURL}` );
 			lToken.send("I've sent you an invite to my support server. Check your DMs.");
-		}else if(lToken.args[0]=='changelogs'){
+		}else if(lToken.args[0]=='patreon'){
+			lToken.send('[Click here to become a Patron!](https://www.patreon.com/coffeedev)');
+		}
+		else if(lToken.args[0]=='changelogs'){
 			lToken.send( views.changelogs( locale.changelogs ) );
 		}else{
 			lToken.send( views.info( lToken ) );

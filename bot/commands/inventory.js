@@ -68,7 +68,7 @@ class CommandInventory extends Command{
 		}else{
 			
 			// Used to look up other people's invs
-			mArgs.userQuery = lToken.words.join(" ");
+			mArgs.userQuery = args.join(" ");
 			mArgs.page = Math.max(0, lToken.numbers[0]-1||0);
 		}
 		return mArgs;
@@ -198,7 +198,7 @@ class CommandInventory extends Command{
 		let option = lToken.mArgs.option;
 		if(!option){
 			if( lToken.args[0] ){
-				let userQuery = lToken.words.join(" ");
+				let userQuery = lToken.mArgs.userQuery;
 				let searchStatus = lToken.queryUser( userQuery, ( snowflake )=>{
 					lToken.database.get( snowflake, ( userData )=>{
 						

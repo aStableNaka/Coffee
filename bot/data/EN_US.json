@@ -74,6 +74,9 @@
 
     "changelogs":[
         [
+            "0.1.15",
+            "- Reduced [ Treasure Hunter ] perk's lootbox drop from 4 -> 3",
+            "+ Added 4 new ~shop generators",
             "0.1.13",
             "+ Added [ ***Kingstone's Stone*** ] item",
             "- Fixed an issue with the [ **Hungry** ] and [ **Starved** ] perks",

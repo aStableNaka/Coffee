@@ -2,32 +2,76 @@ const ufmt = require("../../utils/formatting.js");
 const pN = ufmt.numPretty;
 const fBP = ufmt.formatBP;
 const fBPs = ufmt.formatBPs;
-let { calcCost, calcMax } = require("../../utils/bp");
+const { calcCost, calcMax } = require("../../utils/bp");
 const bp = require("../../utils/bp");
-
-var shop = require("../../data/shop.json");
+const  shop = require("../../data/shop.json");
 delete require.cache[ require.resolve("../../data/shop.json") ];
+
+const illionThreshold = 38; 
 let u = ''; //(cost<=bal) ? '' : "~~";
+
+/**
+ * Formatting with no colors, ideal for 
+ * mobile users
+ * @param {*} entries 
+ * @param {*} userData 
+ */
 function fmtDefault( entries, userData ){
 	
 	let field = [];
 	entries.map( ( {item, userItemAmount, cost, max} )=>{
+		// Converting full number into illions
+		let production = bp.calcGenProduction_x1( userData, item.alias );
+		let figuresCost = cost.toString().length;
+		let figuresProduction = production.toString().length;
+
+		let costFormat = fBP( cost, '' )
+		let productionFormat = fBPs( production, '' );
+
+		if(figuresCost>=illionThreshold){
+			costFormat = ufmt.bpi( cost, '' );
+		}
+		if(figuresProduction>=illionThreshold-1){
+			productionFormat = ufmt.bpsi( cost, '' );
+		}
+
+
 		field.push({
-			name: `[ **${item.alias}** ] "${item.name}"${u}\n${fBP( cost, '`' )}\n +${ fBPs( item.baseIncome, '`' ) }`,
+			name: `[ **${item.alias}** ] "${item.name}"${u}\n${costFormat}\n +${ productionFormat }`,
 			value: `${pN( userItemAmount )} owned, ${ pN( max ) } available`,
 		})
 	} )
 	return field;
 }
 
+/**
+ * Formatting with colors, ideal
+ * for desktop users.
+ * @param {*} entries 
+ * @param {*} userData 
+ */
 function fmtColorful( entries, userData ){
 	let field = {name:"Shop",value:"```md\n"};
 	entries.map( ( {item, userItemAmount, cost, max} )=>{
-		//console.log( item, userItemAmount, cost, max);
+		// Converting full number into illions
+		let production = bp.calcGenProduction_x1( userData, item.alias );
+		let figuresCost = cost.toString().length;
+		let figuresProduction = production.toString().length;
+
+		let costFormat = fBP( cost, '' )
+		let productionFormat = fBPs( production, '' );
+
+		if(figuresCost>=illionThreshold){
+			costFormat = ufmt.bpi( cost, '' );
+		}
+		if(figuresProduction>=illionThreshold-1){
+			productionFormat = ufmt.bpsi( cost, '' );
+		}
+
 		let fmt = [
 			`\n[ ${item.alias} ][ "${item.name}" ] <Lvl. ${bp.getGenLevel_UD( userData, item.alias )}>`,
-			`<${fBP( cost, '' )}>`,
-			`< + ${fBPs( bp.calcGenProduction_x1( userData, item.alias ), '' )} >`,
+			`<${costFormat}>`,
+			`< + ${productionFormat} >`,
 			`> "${item.desc}"`,
 			`< ${pN( userItemAmount )} > owned, <${pN( max )}> available\n`
 		]
