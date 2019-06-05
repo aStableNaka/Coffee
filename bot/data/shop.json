@@ -434,7 +434,7 @@
 		{
             "name":"Catamari Ball of Death",
             "desc": "Rolls over the competition",
-            "alias": "ACAT",
+            "alias": "CATI",
             "baseCost": "2.232e+46" ,
             "baseIncome": "1.1736e+42",
             "baseGrowth":1.07,
