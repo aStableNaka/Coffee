@@ -17,7 +17,7 @@ module.exports = function( lToken, timeSinceLastMine ){
 	}
 
 	if(itemUtils.userHasItem(lToken.userData, "coffee")){
-		embed.embed.description+="\n*You have coffee in your inventory. Use it to skip this cooldown.*";
+		embed.embed.description+="\n*You have coffee in your inventory. You can use it to skip this cooldown.*";
 	}
 
 	if( new BigInt( lToken.userData.bpbal ).lt( 100000 ) ){

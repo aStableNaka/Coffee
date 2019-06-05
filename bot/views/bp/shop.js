@@ -32,7 +32,7 @@ function fmtDefault( entries, userData ){
 			costFormat = ufmt.bpi( cost, '' );
 		}
 		if(figuresProduction>=illionThreshold-1){
-			productionFormat = ufmt.bpsi( cost, '' );
+			productionFormat = ufmt.bpsi( production, '' );
 		}
 
 
@@ -65,7 +65,7 @@ function fmtColorful( entries, userData ){
 			costFormat = ufmt.bpi( cost, '' );
 		}
 		if(figuresProduction>=illionThreshold-1){
-			productionFormat = ufmt.bpsi( cost, '' );
+			productionFormat = ufmt.bpsi( production, '' );
 		}
 
 		let fmt = [

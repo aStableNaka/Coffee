@@ -99,7 +99,7 @@ class CommandMine extends Command{
 							lastMsg = newMsg;
 							setTimeout( ()=>{
 								resend();
-							}, 10000);
+							}, Math.min(30,30-(timeSinceLastMine/1000/60))*1000);
 						}).catch((e)=>{
 							throw e;
 						});
