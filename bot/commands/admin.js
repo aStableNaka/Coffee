@@ -21,7 +21,8 @@ class CommandAdmin extends Command{
 		{ name: "savedb", cmd: "admin savedb" },
 		{ name: "additem", cmd: "admin additem"},
 		{ name: "im_hungry", cmd: "admin additm lootbox lunchbox 100"},
-		{ name: "monitor", cmd:"admin monitor" }
+		{ name: "monitor", cmd:"admin monitor" },
+		{ name: "restart", cmd:"admin restart" }
 	];}
 	
 	modifyArgs( args, lToken ){
@@ -179,6 +180,9 @@ class CommandAdmin extends Command{
 		}
 		if(o=='global_unlock'){
 			lToken.globalStates.unlockBot();
+		}
+		if(o=='restart'){
+			lToken.database.cleanup();
 		}
 	}
 }

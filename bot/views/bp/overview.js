@@ -33,11 +33,11 @@ module.exports = function( lToken, bal, income, count = 0, maxCount = 0 ){
 	embed.embed.fields = [
 		{
 			"name": "Income", 
-			"value": `${fmtBPs(income)}`
+			"value": `${fmtBPs(income, "***", true)}`
 		},
 		{
 			"name":"Balance",
-			"value":`${fmtBP(bal)}`
+			"value":`${fmtBP(bal, "***", true)}`
 		}
 	];
 

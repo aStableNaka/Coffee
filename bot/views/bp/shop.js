@@ -28,14 +28,6 @@ function fmtDefault( entries, userData ){
 		let costFormat = fBP( cost, '' )
 		let productionFormat = fBPs( production, '' );
 
-		if(figuresCost>=illionThreshold){
-			costFormat = ufmt.bpi( cost, '' );
-		}
-		if(figuresProduction>=illionThreshold-1){
-			productionFormat = ufmt.bpsi( production, '' );
-		}
-
-
 		field.push({
 			name: `[ **${item.alias}** ] "${item.name}"${u}\n${costFormat}\n +${ productionFormat }`,
 			value: `${pN( userItemAmount )} owned, ${ pN( max ) } available`,
@@ -60,13 +52,6 @@ function fmtColorful( entries, userData ){
 
 		let costFormat = fBP( cost, '' )
 		let productionFormat = fBPs( production, '' );
-
-		if(figuresCost>=illionThreshold){
-			costFormat = ufmt.bpi( cost, '' );
-		}
-		if(figuresProduction>=illionThreshold-1){
-			productionFormat = ufmt.bpsi( production, '' );
-		}
 
 		let fmt = [
 			`\n[ ${item.alias} ][ "${item.name}" ] <Lvl. ${bp.getGenLevel_UD( userData, item.alias )}>`,

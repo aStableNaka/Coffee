@@ -63,12 +63,22 @@ function formatCountable( name, amount, styleString='' ){
 	return `"${name}" x${amount}`;
 }
 
-function formatBP( amount, styleString='***' ){
+const illionThreshold = 36;
+
+function formatBP( amount, styleString='***', forceFull=false ){
+	// if the amount exceeds a constant length
+	if(amount.toString().length>=illionThreshold&&!forceFull){
+		return formatBPi( amount, styleString );
+	}
 	let ssEnd = styleString.split('').reverse().join('');
 	return `${surround( numPretty(amount), styleString)} BP`;
 }
 
-function formatBPs( amount, styleString='***' ){
+function formatBPs( amount, styleString='***', forceFull=false ){
+	// if the amount exceeds a constant length
+	if(amount.toString().length>=illionThreshold&&!forceFull){
+		return formatBPsi( amount, styleString );
+	}
 	let ssEnd = styleString.split('').reverse().join('');
 	return `${surround(numPretty(amount), styleString)} BP/s`;
 }
