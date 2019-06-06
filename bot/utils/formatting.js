@@ -212,6 +212,14 @@ function marquee( text, t, length=60 ){
 	return `\`[${formatted.slice(0,length)}]\``;
 }
 
+/**
+ * Formats a time difference
+ * hours, minutes
+ * TODO fix this is broke pepega
+ * @param {*} currentDiff 
+ * @param {*} goalDiff 
+ * @param {*} styleString 
+ */
 function timeLeft( currentDiff, goalDiff, styleString = "***" ){
 	let ssEnd = styleString.split('').reverse().join('');
 	let time = Math.floor( (goalDiff - currentDiff)/1000 );
@@ -219,7 +227,7 @@ function timeLeft( currentDiff, goalDiff, styleString = "***" ){
 	// Determine the unit
 	let unit = "seconds";
 	let fmtTime = time;
-	if( fmtTime > 1000 ){ // if the time is more than 1000 seconds
+	if( fmtTime > 60 ){ // if the time is more than 60 seconds
 		fmtTime = Math.floor( fmtTime / 60 );
 		unit = "minutes";
 	}
@@ -309,7 +317,11 @@ function inventory( inventoryObject, entriesPerPage=20, page=0 ){
 		return itemRankA - itemRankB;
 	}).slice(page*entriesPerPage, page*entriesPerPage+entriesPerPage);
 	if(listOfTruths.length==0){ return null; }
-	let itemNamePaddingLength = listOfTruths.map(x=>x.length).reduce( (acc, val)=>{ return Math.max(acc, val); } )+2;
+	let itemNamePaddingLength = listOfTruths.map((accessor)=>{
+		let itemData = inventoryObject[accessor];
+		let itemObject = itemUtils.getItemObject( itemData );
+		return itemObject.formatName( itemData ).length;
+	}).reduce( (acc, val)=>{ return Math.max(acc, val); } )+2;
 	let itemAmountPaddingLength = listOfTruths.map((itemAccessor)=>{
 		let itemData = inventoryObject[itemAccessor];
 		return String( itemData.amount ).length;
@@ -332,6 +344,10 @@ function perkMessage( perkType, perkName, desc ){
 		name:`${ufmt.block( perkType )} ${perkName}`,
 		value:desc
 	};
+}
+
+String.prototype.multiply = function( times ){
+	return new Array( times ).fill( this ).join('');
 }
 
 module.exports.perkMessage = perkMessage;

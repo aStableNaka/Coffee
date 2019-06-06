@@ -5,6 +5,20 @@ const locale = require("../data/EN_US");
 const itemUtils = require("../utils/item.js");
 let ezhash = require("../modules/ezhash");
 
+
+const tierAdjectives = [
+    ['weak', 'shifty', 'terrible', 'dull', 'bland', 'rusty', 'tarnished'],
+    ['iron', 'copper', 'metal', 'polished', 'fine', 'strapped'],
+    ['great', 'epic', 'awesome', 'youthful', 'glazed'],
+    ['ravenging', 'recursive', 'godly', 'flowing', 'holy', 'radiant']
+];
+const tierNouns = [
+    ['pickaxe'],
+    ['pickaxe', 'shovel', 'hand drill'],
+    ['pickaxe', 'power drill', 'shovel'],
+    ['pickaxe', 'power drill', 'shovel', 'laser drill', 'hole maker']
+]
+
 /**
  * Clones objects with recursive capabilities
  * @param {Object} object
@@ -63,7 +77,8 @@ class ItemPickaxe extends Item{
             multiplier: 0,
             creator:"Grandmaster Blacksmith",
             imgIndex:0,
-            maxPerkSlots:2
+            maxPerkSlots:2,
+            tier:0
         };
 
 		this.icon = "https://i.imgur.com/miBhBjt.png";
@@ -72,20 +87,50 @@ class ItemPickaxe extends Item{
     }
 
     formatName( itemData ){
-        return itemData.name;
+        let name = itemData.name;
+        if(itemData.name.indexOf('pick')==-1){
+            name+=" ( pick )";
+        }
+        return name;
     }
 
     cleanup( userData, itemData ){
         delete userData.items[itemData.meta.accessor];
 		return;
-	}
+    }
+    
+    generateMeta( tier=0 ){
+        let adjective = ufmt.pick( tierAdjectives[tier] || ['transcendent'], 1 )[0];
+        let noun = ufmt.pick( tierNouns[tier] || ['quantum tunneler'], 1 )[0];
+        let name = `${adjective}_${noun}`
+        return {
+            name: name,
+            accessor: name,
+            perks:[],
+            exp: 0,
+            time: 5,
+            multiplier: 0,
+            creator:"Grandmaster Blacksmith",
+            imgIndex:0,
+            maxPerkSlots:(tier+1)*2,
+            tier:tier
+        };
+    }
+
+    getTier( itemData ){
+        return itemData.meta.tier||0;
+    }
+
+    getMultiplier( itemData ){
+        return 25**this.getTier(itemData);
+    }
 
     computeMetaHash( itemData ){
 		return ezhash( `${this.name}_${this.computeMetaString( itemData.meta )}` )
 	}
 
-    createItemData(amount, meta, name){
-        meta = meta || Object.clone( this.meta );
+    createItemData(amount, meta, name, tier=0){
+        meta = meta || this.generateMeta( tier );
         return { accessor:this.accessor, amount: amount, name: meta.name || name || this.accessor, meta:meta } 
     }
     
@@ -94,7 +139,7 @@ class ItemPickaxe extends Item{
     }
 
     getUniqueRank( itemData ){
-		return Math.max( this.getMaxPerkSlots( itemData ) * 2, Item.ranks.length-1 ) ;
+		return Math.min( this.getTier( itemData ) * 2, Item.ranks.length-1 ) ;
 	}
 
     addPerk( itemData, perkName ){
@@ -162,14 +207,7 @@ class ItemPickaxe extends Item{
      */
 	desc( lToken, itemData ){
         if(!itemData){
-
-            return [
-                `- **Pickaxe** items can be equipped with the ~use command`,
-                `- **Each** pickaxe has it's own unique experience level and perk which stay with the pickaxe. You can switch between different pickaxes at any time!`,
-                `- **Only** a single pickaxe can be used at any given time.`,
-                `||- **Pickaxes** can be disenchanted for their perks, which lets you apply that perk onto a different pickaxe!|| [WIP]`,
-                `- **Already** have a pickaxe? use \`~iteminfo pickname\` for more detailed information on it!`
-            ].join("\n")
+            itemData = this.getActivePickaxeItemData( lToken.userData );
         }
         let pickaxeDescription = locale.pickaxe.descriptions[itemData.meta.lDescIndex] || `Not much is known about this mysterious pickaxe...`;
         // if the pickaxe is currenrly equipped.

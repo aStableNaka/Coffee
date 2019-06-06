@@ -1,6 +1,7 @@
 const dataShop = require("../data/shop.json");
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
+const itemUtils = require('./item.js');
 const dataShopCatalogue = {};
 Object.values( dataShop.catalogue ).map( (c, i)=>{ dataShopCatalogue[ c.alias ] = i; } );
 
@@ -182,6 +183,14 @@ function calcPrestigeBoxReward( userData ){
 	return Math.floor((calcBal_UD( userData ).toString().length ));
 }
 
+function calcPickaxeIncome( userData ){
+	let pickaxe = itemUtils.items.pickaxe;
+	let itemData = pickaxe.getActivePickaxeItemData( userData );
+	let tierModifier = pickaxe.getMultiplier(itemData);
+	return BigInt.max( 1, calcIncome_UD(userData) ).multiply(60).multiply( 20 + 10 * pickaxeLevelUD( userData )).multiply(tierModifier);
+}
+
+module.exports.calcPickaxeIncome = calcPickaxeIncome;
 module.exports.calcPrestigeBoxReward = calcPrestigeBoxReward;
 module.exports.calcPrestigeBonusReward = calcPrestigeBonusReward;
 module.exports.calcPrestigeGoldReward = calcPrestigeGoldReward;

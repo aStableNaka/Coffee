@@ -5,18 +5,20 @@ let bp = require("../../utils/bp");
 let itemUtils = require("../../utils/item");
 const BigInt = require("big-integer");
 const locale = require("../../data/EN_US.json");
-
+const pickaxe = itemUtils.items.pickaxe;
 module.exports = function( lToken, user, userData ){
 	if(!userData){ userData = lToken.userData; }
 
 	let firstUseDay = Math.floor((new Date().getTime() - userData.firstuse)/1000/60/60/24);
 	let badges = ([userData.tester?'Beta Tester':'', ...userData.tags]).map((tag)=>{ return ufmt.badge( tag ); }).join(" ");
 
-	let pickaxeIncome = ufmt.bp(BigInt.max( 1, calcIncome_UD(userData) ).multiply(60).multiply( 20 + 10 * pickaxeLevelUD( userData )) );
+	let pickaxeIncome = ufmt.bp( bp.calcPickaxeIncome( userData ) );
 	let perkDescriptions = userData.pickaxe_perks.map((x)=>{
 		let perk = itemUtils.pickPerks[ x ];
 		return `\n- ${ufmt.block(perk.name, "***")}: *${perk.desc || "No description"}*`;
 	}).join('');
+
+	let activePickaxeItemData = pickaxe.getActivePickaxeItemData( userData );
 
 	return {
 		"embed": {
@@ -51,7 +53,8 @@ module.exports = function( lToken, user, userData ){
 				{
 					"name":ufmt.block( `Pickaxe` ),
 					"value":[
-						ufmt.denote('Name', ufmt.block(userData.pickaxe_name)),
+						ufmt.denote('Name', `${ufmt.block(userData.pickaxe_name)} tier ${ufmt.block( pickaxe.getTier( activePickaxeItemData ))}`),
+						ufmt.denote('Multiplier', `x${pickaxe.getMultiplier(activePickaxeItemData)}` ),
 						ufmt.denote('Exp', ufmt.progressBar( userData.pickaxe_exp%16, 16, `LvL ${pickaxeLevelUD( userData )}`, 16 ) ),
 						ufmt.denote('Cooldown', ufmt.block(userData.pickaxe_time*60) ),
 						ufmt.denote('Income', `+${pickaxeIncome} / mine`),

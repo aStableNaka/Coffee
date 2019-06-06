@@ -40,7 +40,7 @@ class CommandMine extends Command{
 			// Mine success
 			var bal = getCurrentBPBal( lToken );
 			let income = calcIncome( lToken );
-			var outcome = BigInt.max( 1, income ).multiply(60).multiply( 20 + 10 * pickaxeLevelUD( lToken.userData ));  // BINTCONV
+			let outcome = bp.calcPickaxeIncome( lToken.userData );
 			let blessing;
 			let boost = false;
 			let perkMessages = [];

@@ -148,7 +148,7 @@ class CommandInventory extends Command{
 	execOverview( lToken, userData ){
 		if(!userData){userData = lToken.userData}
 		let numberOfItems = Object.values( userData.items ).filter( ( itemData )=>{ return itemData.amount > 0 } ).length;
-		let itemsPerPage = 20;
+		let itemsPerPage = 15;
 		let numberOfPages = Math.ceil( numberOfItems/itemsPerPage );
 
 		function send(){
@@ -161,7 +161,6 @@ class CommandInventory extends Command{
 			let pageOperators = [];
 
 			numberOfItems = Object.values( userData.items ).filter( ( itemData )=>{ return itemData.amount > 0 } ).length;
-			itemsPerPage = 20;
 			numberOfPages = Math.ceil( numberOfItems/itemsPerPage );
 
 			lToken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, lToken.mArgs.page||lToken.numbers[0]-1||0) );
@@ -197,7 +196,7 @@ class CommandInventory extends Command{
 	async execute( lToken ){ 
 		let option = lToken.mArgs.option;
 		if(!option){
-			if( lToken.args[0] ){
+			if( lToken.args.length != lToken.numbers.length ){
 				let userQuery = lToken.mArgs.userQuery;
 				let searchStatus = lToken.queryUser( userQuery, ( snowflake )=>{
 					lToken.database.get( snowflake, ( userData )=>{

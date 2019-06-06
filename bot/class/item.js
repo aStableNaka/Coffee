@@ -5,7 +5,7 @@ class Item{
 	constructor( createInstance ){
 		this.name = "Item"; // Required
 		this.accessor = "item"; // Virtural
-
+		this.restrictedAccessor = this.accessor;
 		this.consumable = false;
 		this.value = 0;
 		this.rank = 0;
@@ -42,7 +42,7 @@ class Item{
 
 	// Item name modifier
 	formatName( itemData ){
-		return null;
+		return itemData.name;
 	}
 
 	/**

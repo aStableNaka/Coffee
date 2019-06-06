@@ -31,7 +31,7 @@ module.exports = function( lToken ){
 				{
 					"name":"Database",
 					"value":([
-						`Active Documents: [ ***${ Object.keys( lToken.database.database ).length }*** ]`,
+						`Active Documents: [ ***${ Object.keys( lToken.database.cache ).length }*** ]`,
 						`User Count: [ ***${ Object.keys( lToken.database.global.leaderboards ).length }*** ]`,
 						`Inactive Count: [ ***${ lToken.database.temp.inactive }*** ]`,
 						`Gross Activity: [ ***0*** ]`
@@ -69,7 +69,7 @@ module.exports = function( lToken ){
 				},
 				{
 					"name":"Active users",
-					"value":`> ${(Object.values(lToken.database.database).map((ud)=>{
+					"value":`> ${(Object.values(lToken.database.cache).map((ud)=>{
 						return ufmt.name(ud);
 					})).join(", ")}`,
 					"inline":true

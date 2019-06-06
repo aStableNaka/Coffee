@@ -20,13 +20,21 @@ function fmtLootboxOutcome( outcomes, mobile ){
 }
 
 const enabledLootboxes = ['lootbox', 'lunchbox', 'goldbox'];
-const allLootboxes = ['lootbox', 'lunchbox', 'daily_box', 'box_box', 'pickbox', 'goldbox', 'testbox'];
+const allLootboxes = [
+	'lootbox', 'lunchbox', 'daily_box', 
+	'box_box', 'pickbox', 'goldbox', 
+	'testbox', 'good_pickbox', 'greater_pickbox',
+	'legendary_pickbox'
+];
 const uniqueRankings = {
 	'goldbox':2,
 	'box_box':3,
 	'pickbox':4,
 	'adminbox1000':11,
 	'testbox':11,
+	'good_pickbox':5,
+	'greater_pickbox':6,
+	'legendary_pickbox':7
 }
 
 /**
@@ -192,11 +200,23 @@ class ItemLootbox extends Item{
 	 * @param {*} lToken 
 	 * @param {*} itemData 
 	 */
-	meta_pickbox( lToken, itemData ){
-		let dropItemData = itemUtils.items.pickaxe.createItemData( 1 );
+	meta_pickbox( lToken, itemData, tier=0 ){
+		let dropItemData = itemUtils.items.pickaxe.createItemData( 1, null, null, tier );
 		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
 		lToken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
 		itemUtils.addItemToInventory( lToken.userData, dropItemData );
+	}
+
+	meta_good_pickbox(lToken, itemData ){
+		this.meta_pickbox( lToken, itemData, 1 );
+	}
+
+	meta_greater_pickbox(lToken, itemData ){
+		this.meta_pickbox( lToken, itemData, 2 );
+	}
+
+	meta_legendary_pickbox(lToken, itemData ){
+		this.meta_pickbox( lToken, itemData, 3 );
 	}
 
 	/**
