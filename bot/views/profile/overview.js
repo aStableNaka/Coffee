@@ -56,7 +56,7 @@ module.exports = function( lToken, user, userData ){
 						ufmt.denote('Cooldown', ufmt.block(userData.pickaxe_time*60) ),
 						ufmt.denote('Income', `+${pickaxeIncome} / mine`),
 						ufmt.denote('Perk Slots', `${userData.pickaxe_perks.length}/${itemUtils.items.pickaxe.getMaxPerkSlots( itemUtils.items.pickaxe.getActivePickaxeItemData( userData ) )}`),
-						ufmt.denote('Perks', `${perkDescriptions.length > 0 ? `${perkDescriptions}` : "Your pickaxe has no perks."}`)
+						ufmt.denote('Perks', `${perkDescriptions.length > 0 ? `${perkDescriptions}` : "This pickaxe has no perks."}`)
 					].join("\n")
 				}
 			]

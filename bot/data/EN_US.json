@@ -74,6 +74,11 @@
 
     "changelogs":[
         [
+            "0.1.17",
+            "+ Added 4 new ~shop generators",
+            "0.1.16",
+            "- Numbers now switch to -illion format when they are very large",
+            "+ Added 6 new ~shop generators",
             "0.1.15",
             "- Reduced [ Treasure Hunter ] perk's lootbox drop from 4 -> 3",
             "+ Added 4 new ~shop generators",

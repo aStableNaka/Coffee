@@ -31,6 +31,11 @@ function getItemObjectByAccessor( itemAccessor ){
 
 const trialDiscriminator = "_no.";
 
+// Inventories are just object dictionaries
+function createInventory(){
+	return {};
+}
+
 // Determines the itemKey, userData.items[itemKey]
 function getItemLookupKey( itemData, itemName, trial ){
 	let firstSection = (itemName || itemData.name || itemData.accessor || "unnamed item").split(trialDiscriminator)[0]; // removes trial marker
@@ -61,6 +66,7 @@ function itemMetaIsEmpty( meta ){
  * @param {String} itemName 
  */
 function addItemToInventory( userData, itemData, amount, itemName = null, trial=0 ){
+	clearEmptyUniques(userData.items);
 	if(typeof(amount)=='undefined'){amount=itemData.amount}
 	let itemKey = getItemLookupKey(itemData, itemName, trial );  // Special inventory itemKey or default
 	let itemObject = getItemObject(itemData);
@@ -76,7 +82,8 @@ function addItemToInventory( userData, itemData, amount, itemName = null, trial=
 		}
 		existingItemData.amount+=amount;
 	}else{
-		itemData.name = itemKey.split("_").join(' ');
+		// Todo format itemname as itemKey
+		itemData.name = itemKey;
 		userData.items[ itemKey ] = itemData;
 	}
 	if(!itemName){ itemName = itemData.name; } // Undefined or whatever
@@ -85,7 +92,25 @@ function addItemToInventory( userData, itemData, amount, itemName = null, trial=
 	}
 	return itemData;
 }
-module.exports.addItemToInventory = addItemToInventory;
+
+/**
+ * Deletes unique items that are not equipped and also empty
+ * @param {*} inventory 
+ */
+function clearEmptyUniques( inventory ){
+	Object.keys(inventory).map( ( key )=>{
+		let itemData = inventory[key];
+		let itemObject = getItemObject( itemData );
+
+		// Ensures item-name consistency
+		itemData.name = key;
+
+		if(itemObject.isUnique && itemData.amount==0 && !itemData.equipped){
+			console.log(`[Itemutils] deleting empty unique item ${JSON.stringify(itemData)}`);
+			delete inventory[ key ];
+		}
+	});
+}
 
 /**
  * Creates new itemData from passed itemObject which
@@ -102,7 +127,6 @@ function addItemObjectToInventory( userData, itemObject, amount, itemName = null
 	let itemData = itemObject.createItemData( amount, itemMeta );
 	return addItemToInventory( userData, itemData, amount, itemName );
 }
-module.exports.addItemObjectToInventory = addItemObjectToInventory;
 
 /**
  * Transfers an existing item (thats already in an inventory)
@@ -131,7 +155,15 @@ function transferItemToInventory( userData, toUserData, itemData, amount = 1 ){
 		if(itemData.amount==0){}
 	}	
 }
-module.exports.transferItemToInventory = transferItemToInventory;
+
+/**
+ * Merges two inventories,
+ * takes from the source and transfers to the destination
+ * @returns destinationInventory
+ */
+function mergeInventory( sourceInventory, destinationInventory ){
+
+}
 
 /**
  * Check to see if a user owns an item
@@ -142,7 +174,7 @@ function userHasItem( userData, itemKey, amount = 1 ){
 	let itemData = userData.items[itemKey];
 	return itemData ? itemData.amount >= amount : false;
 }
-module.exports.userHasItem = userHasItem;
+
 
 
 function perkTreasureHelper( userData ){
@@ -403,8 +435,6 @@ let dropProbabilities = [
 ]
 
 let dropDistribution = dropProbabilities.map(x=>x*1000000);
-module.exports.dropDistribution = dropDistribution;
-module.exports.lootboxDistribution = dropDistribution;
 
 // Fills an array with item ranks
 // The item rank will determine the subset of items that will be dropped
@@ -480,6 +510,12 @@ function addActivePickaxePerk( userData, perkName ){
 	userData.pickaxe_perks.push(perkName);
 }
 
+module.exports.userHasItem = userHasItem;
+module.exports.addItemToInventory = addItemToInventory;
+module.exports.addItemObjectToInventory = addItemObjectToInventory;
+module.exports.transferItemToInventory = transferItemToInventory;
+module.exports.dropDistribution = dropDistribution;
+module.exports.lootboxDistribution = dropDistribution;
 module.exports.availablePerks = availablePerks;
 module.exports.addActivePickaxePerk = addActivePickaxePerk;
 module.exports.migrateItem = migrateItem;

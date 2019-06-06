@@ -184,6 +184,9 @@ class CommandAdmin extends Command{
 		if(o=='restart'){
 			lToken.database.cleanup();
 		}
+		if(o=='restart-nosave'){
+			require("process").exit();
+		}
 	}
 }
 

@@ -147,7 +147,7 @@ class ItemPickaxe extends Item{
 
         // Equip the new pickaxe
         Object.keys( itemData.meta ).map( ( key )=>{
-            console.log(key);
+            //console.log(key);
             lToken.userData[`pickaxe_${key}`] = itemData.meta[key];
         });
         itemData.amount--;
