@@ -117,11 +117,10 @@ class ItemPickaxe extends Item{
      * @param {*} itemData 
      * @param {*} newName 
      */
-    migrateItem( itemData, newName ){
-        let newAccessor = newName.toLowerCase().split(" ").join("_");
-        itemData.name = newName.split("_").join(" ");
-        itemData.meta.accessor = newAccessor;
-        itemData.meta.name = newName;
+    migrateItem( itemData, itemKey ){
+        itemData.name = itemKey;
+        itemData.meta.accessor = itemKey;
+        itemData.meta.name = itemKey;
     }
 
     getActivePickaxeItemData( userData ){

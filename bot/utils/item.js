@@ -71,6 +71,9 @@ function addItemToInventory( userData, itemData, amount, itemName = null, trial=
 	let itemKey = getItemLookupKey(itemData, itemName, trial );  // Special inventory itemKey or default
 	let itemObject = getItemObject(itemData);
 	let existingItemData = userData.items[ itemKey ];
+	if(trial){
+		itemObject.migrateItem( itemData, itemKey );
+	}
 	if( existingItemData ){
 
 		// If item meta doesn't match, and the meta is not empty (metas are either strings or objects)
@@ -80,6 +83,9 @@ function addItemToInventory( userData, itemData, amount, itemName = null, trial=
 			console.warn(`itemname collision ${itemData.name} ${existingItemData.name}`)
 			return;
 		}
+
+		
+
 		existingItemData.amount+=amount;
 	}else{
 		// Todo format itemname as itemKey

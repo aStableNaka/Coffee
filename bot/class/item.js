@@ -36,8 +36,8 @@ class Item{
 		return itemData.rank || this.rank;
 	}
 
-	migrateItem( itemData, newName ){
-		itemData.name=newName;
+	migrateItem( itemData, itemKey ){
+		itemData.name=itemKey;
 	}
 
 	// Item name modifier

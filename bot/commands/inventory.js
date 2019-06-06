@@ -54,7 +54,7 @@ class CommandInventory extends Command{
 		if((['use', 'info', 'give', 'daily', 'trade'].includes(option))){
 			mArgs.option = option;
 			if(args[1]){
-				var itemAccessor = args.slice(1).join(' ').match(/([^@\d\s])[\d?\w?\.?]+/gi).join("_").toLowerCase();
+				var itemAccessor = args.slice(1).join(' ').match(/([^!@\d\s])[\d?\w?\.?]+/gi).join("_").toLowerCase();
 			}
 			
 			if(option=='give'||option=='trade'){
