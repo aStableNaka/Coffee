@@ -568,8 +568,8 @@ function executelToken(lToken) {
 				return;
 			}
 			lToken.cmd.execute(lToken).then(() => {}).catch((e) => {
-				let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,500) }\`\`\` `;
-				lToken.send(`<@133169572923703296>\n\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,500) }\`\`\` `);
+				let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `;
+				lToken.send(`<@133169572923703296>\n\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `);
 				lToken.messageAdmin(
 					ufmt.join([
 						ufmt.denote( 'Type', 'Command Execution Error' ),

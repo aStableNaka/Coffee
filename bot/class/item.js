@@ -10,7 +10,7 @@ class Item{
 		this.value = 0;
 		this.rank = 0;
 		this.meta = {};
-
+		this.isItemObject = true;
 		this.icon = "https://i.imgur.com/Sw5XtmO.png";
 
 		if(!createInstance){ return; }

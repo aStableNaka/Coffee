@@ -141,7 +141,10 @@ function nameMention( user, options = {styleString:"`"} ){
 }
 
 // Surround text inside a block
-function block( text, styleString="***" ){
+function block( text, styleString="***", autoFormat=true ){
+	if(autoFormat && typeof(text)=='string'){
+		text = text.split("_").map(capitalize).join(' ');
+	}
 	return `[ ${surround(text, styleString)} ]`;
 }
 

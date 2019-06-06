@@ -78,7 +78,8 @@ class ItemPickaxe extends Item{
             creator:"Grandmaster Blacksmith",
             imgIndex:0,
             maxPerkSlots:2,
-            tier:0
+            tier:0,
+            created: new Date().getTime().toString()
         };
 
 		this.icon = "https://i.imgur.com/miBhBjt.png";
@@ -113,7 +114,8 @@ class ItemPickaxe extends Item{
             creator:"Grandmaster Blacksmith",
             imgIndex:0,
             maxPerkSlots:(tier+1)*2,
-            tier:tier
+            tier:tier,
+            created: new Date().getTime().toString()
         };
     }
 
@@ -139,6 +141,7 @@ class ItemPickaxe extends Item{
     }
 
     getUniqueRank( itemData ){
+        if(!itemData){return 12;}
 		return Math.min( this.getTier( itemData ) * 2, Item.ranks.length-1 ) ;
 	}
 
