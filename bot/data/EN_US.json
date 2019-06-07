@@ -78,6 +78,9 @@
 
     "changelogs":[
         [
+            "0.1.19",
+            "+ 3 new perks released",
+            "+ Increased [ ***PP Soft Handle*** ]'s bonus from 20% to 50%",
             "0.1.18",
             "+ `~ii pickaxe` will show the stats of your current pickaxe",
             "+ `~ii gold` will now show how much all the gold you own is worth",

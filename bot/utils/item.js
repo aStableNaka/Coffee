@@ -241,7 +241,7 @@ const pickPerks = {
 	},
 	"determined_endurance":{
 		name:"Determined Endurance",
-		desc:"Your recovery time between mines reduces as your pickaxe gains experience. [ **-3.5 sec/lvl** ] with a hard cap of 120 seconds.",
+		desc:"Your mining cooldown reduces as your pickaxe gains experience. [ **-3.5 sec/lvl** ] with a hard cap of 120 seconds.",
 		onMine:( lToken, outcome )=>{
 			let lvl = bp.pickaxeLevelExp(lToken.userData.pickaxe_exp);
 			let reduction = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 3.5 * lvl * 1000 ));
@@ -314,9 +314,9 @@ const pickPerks = {
 
 	"soft_handle":{
 		name:"Soft Handle",
-		desc:`Your pickaxe's handle is softer, allowing you to mine more, increasing overall profits by ${20}%!`,
+		desc:`Your pickaxe's handle is softer, allowing you to mine more, increasing overall profits by ${50}%!`,
 		onMine:(lToken, outcome)=>{
-			let coefficient = 20;
+			let coefficient = 50;
 			let boost = outcome.divide(100).multiply( coefficient );
 			bp.addBP( lToken, boost );
 			return ufmt.perkMessage( 'Perk', 'Soft Handle', 
@@ -351,7 +351,7 @@ const pickPerks = {
 		name:"Scrapper",
 		desc:`You have a chance to find [ **Crafting Materials** ] x1 whenever you mine!`,
 		onMine:( lToken )=>{
-			if( (Math.random()<1/7) ){
+			if( (Math.random()>1/7) ){
 				let itemData = itemUtils.items.crafting_materials.createItemData(1);
 				addItemToInventory( lToken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Scrapper',
@@ -399,6 +399,50 @@ const pickPerks = {
 	"veteran":{
 		name:"Veteran",
 		desc:"Mining profits"
+	},
+
+	"chrimson_king":{
+		// is that a jojo refrence
+		name:"Chrimson King",
+		desc:"Your a portion of your mining cooldown gets deleted based on your pickaxe level. [ **-5 sec/lvl** ] with a hard cap of 120 seconds.",
+		onMine:( lToken, outcome )=>{
+			let lvl = bp.pickaxeLevelExp(lToken.userData.pickaxe_exp);
+			let reduction = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
+			lToken.userData.lastmine-=reduction;
+			//lToken.send(lvl);
+			return {
+				"name":`${ufmt.block( 'Perk' )} Chrimson King`,
+				"value":`Your ${ufmt.block("Chrimson King")} has deleted [ ***${reduction/1000}*** ] seconds from your cooldown!`
+			}
+		}
+	},
+
+	"sculptor":{
+		name:"Sculptor",
+		desc:`Your pickaxe is is fine-tuned for sculpting. You are likeley to accidentally make some ${ufmt.block("Kingstone's Stones")} on your mining adventures.`,
+		onMine:(lToken)=>{
+			if(Math.random()<1/10){ return; }
+			let itemData = itemUtils.items.kingstones_stone.createItemData(1);
+			addItemToInventory( lToken.userData, itemData );
+			return ufmt.perkMessage('Perk', 'Sculptor',
+				`While mining, you \**accidentally*\* carve out some emblems into a rock and it turned into a ${ufmt.item(itemData)}!`
+			);
+		}
+	},
+
+	"regurgitation":{
+		name:"regurgitation",
+		desc:"Your pickaxe has a chance of increasing the charge of your last-used mine boost by +1 ( even if the last mine boost is all used up ) but the mine boost becomes half as effective if the charge was already at 0.",
+		onMine:(lToken)=>{
+			if(Math.random()>1/8){ return; }
+			if(!lToken.userData.mineboostcharge){
+				lToken.userData.mineboost = Math.floor(lToken.userData.mineboost/2);
+			}
+			lToken.userData.mineboostcharge++;
+			return ufmt.perkMessage('Perk', 'regurgitation',
+				`You burp but some extra stuff came up... *Gross*...\nOn the bright side, your mine boost has recieved an extra charge!`
+			);
+		}
 	}
 };
 
@@ -411,7 +455,10 @@ const availablePerks = [
 	'adaptable',
 	'scrapper',
 	'hungry',
-	'starved'
+	'starved',
+	'chrimson_king',
+	'sculptor',
+	'regurgitation'
 ]
 
 /**
