@@ -109,7 +109,7 @@ class ItemPickaxe extends Item{
             accessor: name,
             perks:[],
             exp: 0,
-            time: 5,
+            time: 5+tier*2,
             multiplier: 0,
             creator:"Grandmaster Blacksmith",
             imgIndex:0,
