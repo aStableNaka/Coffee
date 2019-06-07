@@ -76,7 +76,7 @@ function addItemToInventory( userData, itemData, amount, itemName = null, trial=
 	}
 	if( existingItemData ){
 
-		// If item meta doesn't match, and the meta is not empty (metas are either strings or objects)
+		// If item meta doesn't match, and the mea is not empty (metas are either strings or objects)
 		// rename the item recursively
 		if(((existingItemData.meta!=itemData.meta || itemObject.isUnique) && !itemMetaIsEmpty(itemData.meta))){
 			addItemToInventory( userData, itemData, amount, itemName, trial+1 );
@@ -351,7 +351,7 @@ const pickPerks = {
 		name:"Scrapper",
 		desc:`You have a chance to find [ **Crafting Materials** ] x1 whenever you mine!`,
 		onMine:( lToken )=>{
-			if( (Math.random()<1/5) ){
+			if( (Math.random()<1/7) ){
 				let itemData = itemUtils.items.crafting_materials.createItemData(1);
 				addItemToInventory( lToken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Scrapper',
@@ -485,6 +485,7 @@ function pickFromDistribution( distribution, amount){
 			i++;
 			n -= distribution[i];
 		}
+		if(i<0){return 0;}
 		return i;
 	};
 	return new Array(amount).fill(0).map( doPick );

@@ -15,7 +15,7 @@ module.exports = function( lToken, outcome, perkMessages, boost ){
 			},
 			"fields": [],
 			"footer":{
-				"text":`[ ${lToken.userData.pickaxe_name} ] LvL ${ bp.pickaxeLevelExp( lToken.userData.pickaxe_exp ) }`
+				"text":`${ufmt.block(lToken.userData.pickaxe_name, '')} LvL ${ bp.pickaxeLevelExp( lToken.userData.pickaxe_exp ) }`
 			}
 		}
 	}

@@ -7,17 +7,17 @@ let ezhash = require("../modules/ezhash");
 
 
 const tierAdjectives = [
-    ['weak', 'shifty', 'terrible', 'dull', 'bland', 'rusty', 'tarnished'],
-    ['iron', 'copper', 'metal', 'polished', 'fine', 'strapped'],
-    ['great', 'epic', 'awesome', 'youthful', 'glazed'],
-    ['ravenging', 'recursive', 'godly', 'flowing', 'holy', 'radiant']
+    ['weak', 'shifty', 'terrible', 'dull', 'bland', 'rusty', 'tarnished', 'awful'],
+    ['iron', 'copper', 'metal', 'polished', 'fine', 'strapped', 'grey', 'red', 'blue', 'cyan', 'orange', 'yellow', 'purple', 'green', 'strong', 'sturdy', 'pleasnt'],
+    ['great', 'epic', 'awesome', 'youthful', 'glazed', 'electrified', 'glistening', 'poppin', 'firey', 'flamboyant', 'cheesy', 'dorky', 'nerdy', 'hunky_dory', 'elastic', 'genuine', 'tragic', 'killer', 'gassy', 'open', 'lost', 'ancient', 'jealous', 'zealous', 'tasty', 'tasteful', 'living', 'greatful', 'rainbow', 'cat', 'monkey', 'titanium', 'adamantium' ],
+    ['ravenging', 'recursive', 'godly', 'flowing', 'holy', 'radiant', 'resonant', 'molecular', 'nano_tech', 'ethereal', 'ephemeral']
 ];
 const tierNouns = [
     ['pickaxe'],
-    ['pickaxe', 'shovel', 'hand drill'],
-    ['pickaxe', 'power drill', 'shovel'],
-    ['pickaxe', 'power drill', 'shovel', 'laser drill', 'hole maker']
-]
+    ['pickaxe', 'shovel', 'hand_drill'],
+    ['pickaxe', 'power_drill', 'shovel'],
+    ['pickaxe', 'power_drill', 'shovel', 'laser_drill', 'hole_maker']
+];
 
 /**
  * Clones objects with recursive capabilities
@@ -103,7 +103,7 @@ class ItemPickaxe extends Item{
     generateMeta( tier=0 ){
         let adjective = ufmt.pick( tierAdjectives[tier] || ['transcendent'], 1 )[0];
         let noun = ufmt.pick( tierNouns[tier] || ['quantum tunneler'], 1 )[0];
-        let name = `${adjective}_${noun}`
+        let name = `${adjective}_${noun}`;
         return {
             name: name,
             accessor: name,
@@ -113,9 +113,12 @@ class ItemPickaxe extends Item{
             multiplier: 0,
             creator:"Grandmaster Blacksmith",
             imgIndex:0,
-            maxPerkSlots:(tier+1)*2,
+            maxPerkSlots:(tier+2),
             tier:tier,
-            created: new Date().getTime().toString()
+            created: new Date().getTime().toString(),
+            lDescIndex:tier+8,
+            adjective: adjective,
+            noun: noun
         };
     }
 
@@ -218,17 +221,19 @@ class ItemPickaxe extends Item{
             itemData.meta.exp = lToken.userData.pickaxe_exp;
         }
         return ufmt.join([
-            pickaxeDescription,
-            `**Name**: ${ufmt.block(itemData.name)}`,
-            `**Creator**: ${ufmt.block( itemData.meta.creator )}`,
-            `**LvL**: ${ufmt.block(bp.pickaxeLevelExp(itemData.meta.exp))}`,
-            `**Exp**: ${ufmt.block(itemData.meta.exp || 1)} mines`,
-            `**Cooldown**: ${ufmt.block(itemData.meta.time*60 || 1)} seconds`,
-            `**Perks**:\n${ufmt.join(itemData.meta.perks.map((x)=>{
+            `${ufmt.block(itemData.name)} LvL ${ufmt.block(bp.pickaxeLevelExp(itemData.meta.exp))} tier ${ufmt.block(this.getTier(itemData))}`,
+            `${pickaxeDescription}`,
+            '\n',
+            ufmt.denote('Multiplier', `x${ufmt.block(this.getMultiplier( itemData ))}`),
+            ufmt.denote(`Exp`, ufmt.block(itemData.meta.exp || 1) ),
+            ufmt.denote('Cooldown', `${ufmt.block(itemData.meta.time*60 || 1)} seconds`),
+            ufmt.denote('Perk Slots', `${itemData.meta.perks.length}/${ this.getMaxPerkSlots( itemData ) }`),
+            ufmt.denote('Perks', `\n${ufmt.join(itemData.meta.perks.map((x)=>{
                 let perk = itemUtils.pickPerks[ x ];
                 return `- ${ufmt.block(perk.name)}: *${perk.desc || "No description"}*`;
-            }))}`,
-            '\n',ufmt.denote('Unique ID', '`#'+this.computeMetaHash(itemData)+'`')
+            }))}`),
+            '\n',
+            ufmt.denote('Unique ID', '`#'+this.computeMetaHash(itemData)+'`')
         ]);
 	}
 }

@@ -8,7 +8,11 @@
             "Only given to those who deserve it, this pickaxe is as much a trophy to it's wielder as it is their companion.",
             "An old book. Who knows what sorts of ancient secrets lie inside?",
             "A book. What knowledge or power could this book hold?",
-            "Legends speak of the unspeakable hidden inside this tome."
+            "Legends speak of the unspeakable hidden inside this tome.",
+            "A poorly maintained pickaxe with it's head barely held on to it's body by a few pieces of duct tape.",
+            "A pickaxe made for those who mean business! Artisan crafted with only the best materials.",
+            "Not much is known about this pickaxe, other than its great condition the fine craftsmanship that went into making it.",
+            "Not much is known about this exotic pickaxe..."
         ]
     },
     "notes":{
@@ -74,6 +78,10 @@
 
     "changelogs":[
         [
+            "0.1.18",
+            "+ `~ii pickaxe` will show the stats of your current pickaxe",
+            "+ `~ii gold` will now show how much all the gold you own is worth",
+            "- [ ***Goldboxes*** ] have reduced drop rates from box boxes",  
             "0.1.17",
             "+ Added 4 new ~shop generators",
             "0.1.16",
@@ -95,8 +103,11 @@
             "- Fixed bug where using multiple gold did not compound, `~use gold n` works the same as spamming `~use gold`",
             "0.1.10",
             "- Gold return value increased from 7% to 8%",
-            "- Bacon charge increased from 2 to 4",
-            "0.1.9",
+            "- Bacon charge increased from 2 to 4"
+        ]
+    ],
+    "secret_changelogs":[
+        "0.1.9",
             "+ Lootboxes now drop 3 items instead of 2",
             "+ Limited time event: May 25-28 Chances of finding Box Boxes when mining are increased!",
             "+ New PickPerk item (PP)",
@@ -104,22 +115,20 @@
             "Each pickaxe now has a number of upgrade slots (2 by default)",
             "Perks are dropped through lootboxes and can be used to upgrade",
             "your active pickaxe.",
-            "0.1.7",
-            "Changes",
-            "+ New lootboxes",
-            "   + `[ Daily box ]`",
-            "   + `[ Lootbox ]` (Different from lunchboxes)",
-            "   + `[ Goldbox ]` - Drops Gold",
-            "   + `[ Box Box ]` - Drops boxes",
-            "+ Each box drops its own type of items.",
-            "+ Buffed gold - Now gives 8% instead of 7%",
-            "+ `~daily` now gives `[ Daily Boxes ] x2` instead of `[ Lunch Boxes ] x2`",
-            "+ Fixed `~contributors` issue",
-            "~ Inventory view is now sorted by item rank",
-            "- `[ Lunchboxes ]` no longer drop: Foxtail amulets"
-        ]
-    ],
-    "secret_changelogs":[
+            
+        "0.1.7",
+        "Changes",
+        "+ New lootboxes",
+        "   + `[ Daily box ]`",
+        "   + `[ Lootbox ]` (Different from lunchboxes)",
+        "   + `[ Goldbox ]` - Drops Gold",
+        "   + `[ Box Box ]` - Drops boxes",
+        "+ Each box drops its own type of items.",
+        "+ Buffed gold - Now gives 8% instead of 7%",
+        "+ `~daily` now gives `[ Daily Boxes ] x2` instead of `[ Lunch Boxes ] x2`",
+        "+ Fixed `~contributors` issue",
+        "~ Inventory view is now sorted by item rank",
+        "- `[ Lunchboxes ]` no longer drop: Foxtail amulets",
         "0.1.5",
         "Fixed bug where foxtail amulet gave only 1 lunchbox instead of the amount it should have gave",
         "Nerfed Foxtail amulet's lootbox drop amount from 5-10 to 2-5",

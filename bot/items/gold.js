@@ -30,7 +30,7 @@ class ItemGold extends Item{
 		let bal = bpUtils.getCurrentBPBal( lToken );
 		let outcome = new BigInt( new BigNum( bal.toString() ).times(new BigNum(1+this.increaseValue*0.01).pow( amount )).integerValue().toString() ).subtract(bal);
 		bpUtils.addBP( lToken, outcome );
-		lToken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gold", amount)} for BP!`,[`+ ${ ufmt.numPretty( outcome ) } BP \n( + ${ufmt.numPretty( Math.round( (Math.pow(1+0.01*this.increaseValue, amount)-1)*100) )}% )`]) );
+		lToken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gold", amount)} for BP!`,[`+ ${ ufmt.bp( outcome ) } BP \n( + ${ufmt.numPretty( Math.round( (Math.pow(1+0.01*this.increaseValue, amount)-1)*100) )}% )`]) );
 		
 		/*
 		let outcome = new BigInt( bpUtils.getCurrentBPBal( lToken ) ).divide( 100 ).multiply(this.increaseValue*(amount));
@@ -40,7 +40,16 @@ class ItemGold extends Item{
 	}
 
 	desc( lToken, itemData ){
-		return `A shiny metal coin worth ${this.increaseValue}% of your current BP bal.`;
+		let desc = `A shiny metal coin worth ${this.increaseValue}% of your current BP bal.`;
+		if(!itemData){ return desc; }
+		let amount = itemData.amount || 0;
+		let bal = bpUtils.getCurrentBPBal( lToken );
+		let outcome = new BigInt( new BigNum( bal.toString() ).times(new BigNum(1+this.increaseValue*0.01).pow( itemData.amount )).integerValue().toString() ).subtract(bal);
+		return ufmt.itemDesc([
+			desc,
+			ufmt.denote('Currently owned', amount ),
+			ufmt.denote('Worth', ufmt.bp(outcome))
+		]);
 	}
 }
 

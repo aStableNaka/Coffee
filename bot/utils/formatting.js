@@ -17,6 +17,11 @@ const illionaireLabels = [
 	'Quindecillionaire', 'Sexdecillionaire', 'Septendecillionaire', 'Octodecillionaire',
 	'Novemdecillionaire', 'Vigintillionaire'
 ];
+
+let illionPrefixes = [
+	'un', 'duo'
+]
+
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 const itemUtils = require("./item.js");
@@ -53,7 +58,7 @@ function numPrettyIllion(n, t = 20){
 			let p = String( n ).split('.').join('').slice(0,rollOver);
 			return `${ p } ${ illionLabels[ Math.floor( zed/3 )-1 ] }`;
 		}
-		return String( n );
+		return numPretty( n );
 	}
 	
 	return numPretty( n );

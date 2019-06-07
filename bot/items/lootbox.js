@@ -20,6 +20,7 @@ function fmtLootboxOutcome( outcomes, mobile ){
 }
 
 const enabledLootboxes = ['lootbox', 'lunchbox', 'goldbox'];
+const boxboxDropDistribution = [90, 100, 15];
 const allLootboxes = [
 	'lootbox', 'lunchbox', 'daily_box', 
 	'box_box', 'pickbox', 'goldbox', 
@@ -82,7 +83,11 @@ class ItemLootbox extends Item{
 	createItemData( amount=1, meta, name, adminRigs ){
 		let drops = adminRigs || enabledLootboxes;
 		if(!meta){
-			meta = ufmt.pick(drops, 1)[0];
+			if(adminRigs){
+				meta = ufmt.pick( drops, 1 )[0];
+			}else{
+				meta = drops[itemUtils.pickFromDistribution( boxboxDropDistribution, 1 )[0]];
+			}
 		}
 		return { accessor:'lootbox', amount: amount, name:meta, meta:meta }
 	}
