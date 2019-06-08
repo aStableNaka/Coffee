@@ -184,6 +184,7 @@ function userHasItem( userData, itemKey, amount = 1 ){
 
 
 function perkTreasureHelper( userData ){
+	
 	let itemData = itemUtils.items.lootbox.createItemData(1, "box_box");
 	itemUtils.addItemToInventory( userData, itemData );
 	return itemData;
@@ -565,6 +566,25 @@ function addActivePickaxePerk( userData, perkName ){
 	userData.pickaxe_perks.push(perkName);
 }
 
+const craftingRecipies = {
+	"good_pickbox": {
+		ingredients: [{
+			key: 'box_box',
+			amount: 4
+		}, {
+			key: 'crafting_materials',
+			amount: 20
+		}],
+		onCraft: (lToken, amount) => { // returns itemData
+			return itemUtils.items.lootbox.createItemData(1, 'good_pickbox');
+		}
+	},
+	"golden_apple":{
+		ingredients:[{key:'apple',amount:4},{key:'gold',amount:2}]
+	}
+}
+
+module.exports.craftingRecipies = craftingRecipies;
 module.exports.userHasItem = userHasItem;
 module.exports.addItemToInventory = addItemToInventory;
 module.exports.addItemObjectToInventory = addItemObjectToInventory;

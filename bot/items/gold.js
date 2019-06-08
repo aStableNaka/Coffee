@@ -15,7 +15,7 @@ class ItemGold extends Item{
 		this.rank = 3;
 		this.meta = {};
 
-		this.icon = "https://i.imgur.com/fT8lZ9R.png";
+		this.icon = "https://i.imgur.com/506QOWO.png";
 		this.isSaleRestricted = true;
         this.isDroppedByLootbox = true;
 		this.isDroppedByLunchbox = true;

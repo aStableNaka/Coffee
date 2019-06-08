@@ -16,7 +16,7 @@ class ItemKingstonsStone extends Item{
 		this.rank = 5;
 		this.meta = {};
 
-		this.icon = "https://i.imgur.com/fT8lZ9R.png";
+		this.icon = "https://i.imgur.com/690A2to.png";
         this.isDroppedByLootbox = true;
         this.canUseMulti = true;
 
@@ -34,7 +34,12 @@ class ItemKingstonsStone extends Item{
         let increase = 16*amount*this.increaseValue;
         let oldLevel = bp.pickaxeLevelUD( lToken.userData );
         lToken.userData.pickaxe_exp+=increase;
-        lToken.send( `Your ${ufmt.block( lToken.userData.pickaxe_name )} has LvL'd up!\n${ufmt.block( oldLevel )} -> ${ufmt.block( oldLevel+this.increaseValue*amount )}` );
+        lToken.send( ufmt.join(
+		[
+			`You hit yourself on the head with ${ufmt.block("Kingstone's Stone")} x${amount} and`,
+			`your ${ufmt.block( lToken.userData.pickaxe_name )} magically levels up!\n${ufmt.block( oldLevel )} -> ${ufmt.block( oldLevel+this.increaseValue*amount )}`
+		]
+	  ) );
 	}
 
 	desc( lToken, itemData ){

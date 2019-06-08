@@ -78,7 +78,7 @@ class CommandAdmin extends Command{
 			lToken.database.get( userID, (ud)=>{
 				let start = Math.max(0, ud.monitor.length-20)
 				let d = ud.monitor.slice(start, start+20).map( ( log )=>{
-					return `\`-${Math.floor( log.dt/1000)}s, ${log.t}, ${log.m}, ${log.c}\``;
+					return `\`-${log.dt/1000}s, ${log.t}, ${log.m}, ${log.c}\``;
 				}).join("\n");
 				lToken.send( `${ userID } ${ud.name}\n${d}` );
 			});

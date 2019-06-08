@@ -15,7 +15,7 @@ class ItemPickPerk extends Item{
 		this.meta = "badperk";
 		this.effect = "Apply this perk to your active pickaxe.";
 
-        this.icon = "https://i.imgur.com/fT8lZ9R.png";
+        this.icon = "https://i.imgur.com/5jC8IIi.png";
         
 		this.isDroppedByLunchbox = false;
 		this.isDroppedByLootbox = true;

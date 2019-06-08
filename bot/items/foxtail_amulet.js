@@ -14,7 +14,7 @@ class ItemFoxtailAmulet extends Item{
 		this.rank = 5;
 		this.meta = {};
 
-		this.icon = "https://i.imgur.com/fT8lZ9R.png";
+		this.icon = "https://i.imgur.com/RxQ29C6.png";
 		this.charge = 1;
 		this.boost = 18500;
 		this.effect = `Your next mine will produce ${ ufmt.block(this.boost) }%. Also, you will attract nearby lunchboxes.`;
