@@ -57,7 +57,9 @@ class CommandCraft extends Command {
 			});
 			return availableOptions;
 		}
-		lToken.send( searchForAvailableCraftingOptions( lToken.userData ) );
+
+		let availableCraftingOptions = searchForAvailableCraftingOptions( lToken.userData );
+		lToken.send( availableCraftingOptions.map(x=>ufmt.itemName(x, 1)).join("\n") );
 	}
 }
 
