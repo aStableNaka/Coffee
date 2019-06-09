@@ -1,12 +1,12 @@
 const Command = require("../class/command");
 const env = require("../env");
 const loader = require("../loader");
-const views = loader("./bot/views/botinfo", "./views/botinfo");
-//const localeReload = loader("./bot/data", "./data");
+const views = loader("./bot/views/crafting", "./views/crafting");
 const locale = require("../data/EN_US");
 const itemUtils = require("../utils/item.js");
 const ufmt = require("../utils/formatting.js");
 const recipies = itemUtils.craftingRecipies;
+
 class CommandCraft extends Command {
 	constructor() {
 		super();
@@ -59,7 +59,14 @@ class CommandCraft extends Command {
 		}
 
 		let availableCraftingOptions = searchForAvailableCraftingOptions( lToken.userData );
-		lToken.send( availableCraftingOptions.map(x=>ufmt.itemName(x, 1)).join("\n") );
+		let itemAccessor = lToken.words.join('_');
+		let amount = lToken.numbers[0];
+
+		if(itemAccessor){
+
+		}else{
+			lToken.send( views.overview(lToken, availableCraftingOptions ) );
+		}
 	}
 }
 
