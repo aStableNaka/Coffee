@@ -78,6 +78,8 @@
 
     "changelogs":[
         [
+            "0.1.21",
+            "+ Fixed [***Scrapper***] Perk, used to give CM every mine",
             "0.1.20",
             "+ Crafting is released! You can try it out with the `~craft` command.",
             "+ added [***Golden Apple***], craftable",

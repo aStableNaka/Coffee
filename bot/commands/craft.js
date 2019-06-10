@@ -58,7 +58,7 @@ class CommandCraft extends Command {
 		}
 
 		let availableCraftingOptions = searchForAvailableCraftingOptions( lToken.userData );
-		let itemAccessor = lToken.words.slice(1).join('_');
+		let itemAccessor = lToken.words.slice(1).join('_').toLowerCase();
 		let amount = Math.abs( lToken.numbers[0]||1 );
 		let userData = lToken.userData;
 		if(itemAccessor){

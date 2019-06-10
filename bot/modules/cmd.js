@@ -81,6 +81,12 @@ function tokenize(msg) {
 function lTokenize(msg) {
 	let preferences = modules.db.getGuildPreferences(msg.guild);
 	let tokens = tokenize(msg);
+	/*
+	if(msg.match(/\smax\s/gi).length>0){
+		var max = true;
+		msg = msg.replace(/\smax\s/gi, ' ');
+	}
+	*/
 	let mobile = false;
 	if (tokens[0][0] == preferences.prefix) {
 		mobile = true;
@@ -99,6 +105,7 @@ function lTokenize(msg) {
 		args: tokens.slice(1),
 		msg: msg,
 		mobile: mobile,
+		//max:max,
 		isLToken: true
 	};
 }

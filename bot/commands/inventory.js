@@ -24,6 +24,9 @@ class CommandInventory extends Command{
 		{name:"info",cmd:"inv info"},
 		{name:"ii",cmd:"inv info"},
 		{name:"use", cmd:"inv use"},
+		{name:"open", cmd:"inv use"},
+		{name:"equip", cmd:"inv use"},
+		{name:"eat", cmd:"inv use"},
 		{name:"give", cmd:"inv give"},
 		{name:"daily", cmd:"inv daily"}
 	]; }

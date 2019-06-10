@@ -152,7 +152,7 @@ function addItemObjectToUserData( userData, itemObject, amount, itemName = null,
  * @param {Number} amount 
  */
 function transferItemToUserData( userData, toUserData, itemData, amount = 1 ){
-	return transferItemToInventory( userData.items, toUserData.inventory, itemData, amount );
+	return transferItemToInventory( userData.items, toUserData.items, itemData, amount );
 }
 
 function transferItemToInventory( fromInventory, toInventory, itemData, amount = 1 ){
@@ -368,7 +368,7 @@ const pickPerks = {
 		name:"Scrapper",
 		desc:`You have a chance to find [ **Crafting Materials** ] x1 whenever you mine!`,
 		onMine:( lToken )=>{
-			if( (Math.random()>1/7) ){
+			if( (Math.random()<1/4) ){
 				let itemData = itemUtils.items.crafting_materials.createItemData(1);
 				addItemToUserData( lToken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Scrapper',

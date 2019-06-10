@@ -46,7 +46,7 @@ class Item{
 
 	// Item name modifier
 	formatName( itemData ){
-		return itemData.name;
+		return itemData.name || this.name;
 	}
 
 	/**
