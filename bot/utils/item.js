@@ -368,7 +368,7 @@ const pickPerks = {
 		name:"Scrapper",
 		desc:`You have a chance to find [ **Crafting Materials** ] x1 whenever you mine!`,
 		onMine:( lToken )=>{
-			if( (Math.random()<1/4) ){
+			if( (Math.random()<1/2.5) ){
 				let itemData = itemUtils.items.crafting_materials.createItemData(1);
 				addItemToUserData( lToken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Scrapper',
@@ -448,7 +448,7 @@ const pickPerks = {
 	},
 
 	"regurgitation":{
-		name:"regurgitation",
+		name:"Regurgitation",
 		desc:"Your pickaxe has a chance of increasing the charge of your last-used mine boost by +1 ( even if the last mine boost is all used up ) but the mine boost becomes half as effective if the charge was already at 0.",
 		onMine:(lToken)=>{
 			if(Math.random()>1/8){ return; }
@@ -459,6 +459,20 @@ const pickPerks = {
 			return ufmt.perkMessage('Perk', 'regurgitation',
 				`You burp but some extra stuff came up... *Gross*...\nOn the bright side, your mine boost has recieved an extra charge!`
 			);
+		}
+	},
+
+	"carb_scrapper":{
+		name:"Carb Scrapper",
+		desc:`If you have an active ${ufmt.block('Bread')} mine boost, you are guaranteed to find ${ufmt.block('Crafting Materials')} when mining!`,
+		onMine:(lToken)=>{
+			if(lToken.userData.mineboost.toLowerCase()=='bread' && lToken.userData.mineboostcharge>0){
+				let itemData = itemUtils.items.crafting_materials.createItemData(1);
+				addItemToUserData( lToken.userData, itemData );
+				return ufmt.perkMessage('Perk', 'Carb Scrapper',
+					`Your carbs gave you an edge... You found ${ufmt.item(itemData)} while mining!`
+				);
+			}
 		}
 	}
 };
@@ -475,7 +489,8 @@ const availablePerks = [
 	'starved',
 	'chrimson_king',
 	'sculptor',
-	'regurgitation'
+	'regurgitation',
+	'carb_scrapper'
 ]
 
 /**

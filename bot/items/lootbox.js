@@ -25,7 +25,7 @@ const allLootboxes = [
 	'lootbox', 'lunchbox', 'daily_box', 
 	'box_box', 'pickbox', 'goldbox', 
 	'testbox', 'good_pickbox', 'greater_pickbox',
-	'legendary_pickbox'
+	'legendary_pickbox', 'pickperk_box'
 ];
 const uniqueRankings = {
 	'goldbox':2,
@@ -117,6 +117,22 @@ class ItemLootbox extends Item{
 				}],
 				onCraft: (lToken, amount=1) => { // returns itemData
 					return itemUtils.items.lootbox.createItemData(amount, 'legendary_pickbox');
+				}
+			}
+			,
+			"pickperk_box": {
+				ingredients: [{
+					key: 'box_box',
+					amount: 2
+				}, {
+					key: 'crafting_materials',
+					amount: 10
+				}, {
+					key:'gold',
+					amount:5
+				}],
+				onCraft: (lToken, amount=1) => { // returns itemData
+					return itemUtils.items.lootbox.createItemData(amount, 'pickperk_box');
 				}
 			}
 		};
@@ -299,7 +315,7 @@ class ItemLootbox extends Item{
 			outcome += Math.ceil( Math.random()*1 );
 		})
 		let dropItemData = itemUtils.items.gold.createItemData( outcome );
-		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
 		lToken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
 		itemUtils.addItemToUserData( lToken.userData, dropItemData );
 	}
@@ -319,7 +335,7 @@ class ItemLootbox extends Item{
 			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
 		});
 
-		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
 		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
 	}
 
@@ -334,6 +350,25 @@ class ItemLootbox extends Item{
 		let newLootboxData = itemUtils.items.lootbox.createItemData(lToken.mArgs.amount, 'lootbox');
 		lToken.send(`Whoa... You're not supposed to have this item!!. Here, have a ${ufmt.item(newLootboxData)} instead.`);
 		itemUtils.addItemToUserData( lToken.userData, newLootboxData );
+	}
+
+	/**
+	 * Drops Pick Perk
+	 * @param {*} lToken 
+	 * @param {*} itemData 
+	 */
+	meta_pickperk_box( lToken, itemData ){
+		let amount = lToken.mArgs.amount;
+		let itemDatas = new Array(amount).fill(0).map( ()=>{
+			return itemUtils.items.pickperk.createItemData( 1 );
+		})
+		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
+		itemDatas.map( ( outcomeItemData )=>{
+			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
+		});
+
+		let useDialogue = `You open up ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
+		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
 	}
 
 	/**
@@ -439,6 +474,11 @@ class ItemLootbox extends Item{
 				return ufmt.join([
 					`*A box that drops a legendary pickaxe*`,
 					ufmt.denote("Usage",`Drops a tier ${ufmt.block('3')} pickaxe.` )
+				])
+			case 'pickperk_box':
+				return ufmt.join([
+					`*A box that drops a pick perk*`,
+					ufmt.denote("Usage",`Drops a random pickperk (PP).` )
 				])
 			default:
 				return ufmt.join([
