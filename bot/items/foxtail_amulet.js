@@ -27,7 +27,7 @@ class ItemFoxtailAmulet extends Item{
 		lToken.userData.mineboostcharge = this.charge;
         lToken.userData.mineboostsource = this.name;
         let amount = Math.floor(Math.random()*3+2)
-        itemUtils.addItemObjectToInventory( lToken.userData, itemUtils.getItemObjectByAccessor("lootbox"), amount, "lunchbox", "lunchbox" );
+        itemUtils.addItemObjectToUserData( lToken.userData, itemUtils.getItemObjectByAccessor("lootbox"), amount, "lunchbox", "lunchbox" );
 		lToken.send(Item.fmtUseMsg( this.useDialogue,[
             "It breaks in the progress, but *you suddenly feel smarter*...",
             "Your increased intelligence has lead you to discover *better* methods of mining!",

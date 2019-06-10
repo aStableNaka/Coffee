@@ -10,7 +10,6 @@ const recipies = itemUtils.craftingRecipies;
 class CommandCraft extends Command {
 	constructor() {
 		super();
-		this.wip = true;
 	}
 	get botAdminOnly() {
 		return false;
@@ -25,12 +24,12 @@ class CommandCraft extends Command {
 		return [];
 	}
 	get help() {
-		return null;
+		return 1;
 	}
 	get helpExamples() {
 		return [
 			['craft', '', 'View a list of available crafting options!'],
-			['craft', '< item name >', 'craft an item!']
+			['craft', '< item name > < amount >', 'craft an item!']
 		];
 	}
 	get helpGroup() {
@@ -59,11 +58,43 @@ class CommandCraft extends Command {
 		}
 
 		let availableCraftingOptions = searchForAvailableCraftingOptions( lToken.userData );
-		let itemAccessor = lToken.words.join('_');
-		let amount = lToken.numbers[0];
-
+		let itemAccessor = lToken.words.slice(1).join('_');
+		let amount = Math.abs( lToken.numbers[0]||1 );
+		let userData = lToken.userData;
 		if(itemAccessor){
+			if(recipies[itemAccessor]){
+				let recipie = recipies[itemAccessor];
+				// something here to check if the requested amount is available for crafting
+				let hasEnoughIngredients = recipie.ingredients.filter( (ingredient)=>{
+					return itemUtils.userHasItem( userData, ingredient.key, ingredient.amount*amount );
+				}).length == recipie.ingredients.length;
+				if( hasEnoughIngredients ){
+					// use said something if it's positive
+					// turn ingredient data into ineventory for easier formatting later
+					let ingredientsUsedInventory = {};
+					
+					// Transfers ingredients to throwaway inventory
+					recipie.ingredients.map( (ingredient)=>{
+						itemUtils.transferItemToInventory( userData.items, ingredientsUsedInventory, lToken.userData.items[ingredient.key], ingredient.amount*amount );
+						return {key:ingredient, amount:ingredient.amount*amount}
+					});
 
+					//add new item(s) to inventory
+					let itemData = recipie.onCraft( amount );
+					itemUtils.addItemToUserData( userData, itemData );
+					lToken.send( views.success( lToken, itemData, ingredientsUsedInventory ) );
+				}else{
+					// do something else if it's negative
+					let ingredientsNeeded = recipie.ingredients.filter( (ingredient)=>{
+						return !itemUtils.userHasItem( userData, recipie.key, recipie.amount*amount );
+					}).map( (ingredient)=>{
+						return {key:ingredient.key, amount:ingredient.amount*amount-(userData.items[ingredient.key]||{amount:0}).amount}
+					});
+					lToken.send( views.insufficient( lToken, amount, itemAccessor, ingredientsNeeded ) );
+				}
+			}else{
+				lToken.send( views.notfound( lToken, itemAccessor ) );
+			}
 		}else{
 			lToken.send( views.overview(lToken, availableCraftingOptions ) );
 		}

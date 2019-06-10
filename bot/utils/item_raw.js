@@ -17,7 +17,7 @@ module.exports.getItemObjectByAccessor = getItemObjectByAccessor;
  * @param {Number} amount 
  * @param {String} itemName 
  */
-function addItemToInventory( userData, itemData, amount = 1, itemName = null ){
+function addItemToUserData( userData, itemData, amount = 1, itemName = null ){
 	let accessor = itemName || itemData.accessor; // Special inventory accessor or default
 	if( userData.items[ accessor ] ){
 		userData.items[ accessor ].amount+=amount;
@@ -26,7 +26,7 @@ function addItemToInventory( userData, itemData, amount = 1, itemName = null ){
 	}
 	return itemData;
 }
-module.exports.addItemToInventory = addItemToInventory;
+module.exports.addItemToUserData = addItemToUserData;
 
 /**
  * Creates new itemData from passed itemObject which
@@ -37,8 +37,8 @@ module.exports.addItemToInventory = addItemToInventory;
  * @param {String} itemName 
  * @param {Any} itemMeta 
  */
-function addItemObjectToInventory( userData, itemObject, amount = 1, itemName = null, itemMeta = null ){
+function addItemObjectToUserData( userData, itemObject, amount = 1, itemName = null, itemMeta = null ){
 	let itemData = itemObject.createItemData( amount, itemMeta );
-	return addItemToInventory( userData, itemData, amount, itemName );
+	return addItemToUserData( userData, itemData, amount, itemName );
 }
-module.exports.addItemObjectToInventory = addItemObjectToInventory;
+module.exports.addItemObjectToUserData = addItemObjectToUserData;

@@ -17,6 +17,10 @@ class Item{
 		this.instance = this.createItemData();
 	}
 
+	get recipies(){
+		return {};
+	}
+
 	computeMetaString( meta=null ){
 		if(!meta){
 			meta = this.meta;

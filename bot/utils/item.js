@@ -9,6 +9,11 @@ const locale = require("../data/EN_US");
 const items = loader( "./bot/items", "./items" );
 const Item = require("../class/item.js");
 const itemUtils = module.exports;
+const craftingRecipies = {}
+
+Object.values(items).map( ( itemObject )=>{
+	Object.assign( craftingRecipies, itemObject.recipies );
+} )
 
 function lunchboxDropFilter(itemObject){
 	return itemObject.isDroppedByLunchbox;
@@ -65,12 +70,16 @@ function itemMetaIsEmpty( meta ){
  * @param {Number} amount 
  * @param {String} itemName 
  */
-function addItemToInventory( userData, itemData, amount, itemName = null, trial=0 ){
-	clearEmptyUniques(userData.items);
+function addItemToUserData( userData, itemData, amount, itemName = null, trial=0 ){
+	return addItemToInventory( userData.items, itemData, amount, itemName = null, trial=0 );
+}
+
+function addItemToInventory( inventory, itemData, amount, itemName = null, trial=0 ){
+	clearEmptyUniques(inventory);
 	if(typeof(amount)=='undefined'){amount=itemData.amount}
 	let itemKey = getItemLookupKey(itemData, itemName, trial );  // Special inventory itemKey or default
 	let itemObject = getItemObject(itemData);
-	let existingItemData = userData.items[ itemKey ];
+	let existingItemData = inventory[ itemKey ];
 	if(trial){
 		itemObject.migrateItem( itemData, itemKey );
 	}
@@ -79,7 +88,7 @@ function addItemToInventory( userData, itemData, amount, itemName = null, trial=
 		// If item meta doesn't match, and the mea is not empty (metas are either strings or objects)
 		// rename the item recursively
 		if(((existingItemData.meta!=itemData.meta || itemObject.isUnique) && !itemMetaIsEmpty(itemData.meta))){
-			addItemToInventory( userData, itemData, amount, itemName, trial+1 );
+			addItemToInventory( inventory, itemData, amount, itemName, trial+1 );
 			console.warn(`itemname collision ${itemData.name} ${existingItemData.name}`)
 			return;
 		}
@@ -90,11 +99,11 @@ function addItemToInventory( userData, itemData, amount, itemName = null, trial=
 	}else{
 		// Todo format itemname as itemKey
 		itemData.name = itemKey;
-		userData.items[ itemKey ] = itemData;
+		inventory[ itemKey ] = itemData;
 	}
 	if(!itemName){ itemName = itemData.name; } // Undefined or whatever
 	if(itemName){
-		userData.items[ itemKey ].name = itemName;
+		inventory[ itemKey ].name = itemName;
 	}
 	return itemData;
 }
@@ -128,10 +137,10 @@ function clearEmptyUniques( inventory ){
  * @param {String} itemName 
  * @param {Any} itemMeta 
  */
-function addItemObjectToInventory( userData, itemObject, amount, itemName = null, itemMeta = null ){
+function addItemObjectToUserData( userData, itemObject, amount, itemName = null, itemMeta = null ){
 	if(typeof(amount)=='undefined'){amount=1;} // Unless stated, amount defaults to 1
 	let itemData = itemObject.createItemData( amount, itemMeta );
-	return addItemToInventory( userData, itemData, amount, itemName );
+	return addItemToUserData( userData, itemData, amount, itemName );
 }
 
 /**
@@ -142,7 +151,11 @@ function addItemObjectToInventory( userData, itemObject, amount, itemName = null
  * @param {ItemData} itemData 
  * @param {Number} amount 
  */
-function transferItemToInventory( userData, toUserData, itemData, amount = 1 ){
+function transferItemToUserData( userData, toUserData, itemData, amount = 1 ){
+	return transferItemToInventory( userData.items, toUserData.inventory, itemData, amount );
+}
+
+function transferItemToInventory( fromInventory, toInventory, itemData, amount = 1 ){
 	let itemKey = (itemData.name || itemData.accessor).toLowerCase().split(" ").join("_");
 	amount = Math.min( Math.max(0, amount), itemData.amount );
 	let meta = itemData.meta;
@@ -156,10 +169,10 @@ function transferItemToInventory( userData, toUserData, itemData, amount = 1 ){
 	// Just for safe measure, we'll do a check here to make sure the user has enough to give.
 	if(amount && itemData.amount >= amount){
 		itemDataClone.amount=amount;
-		addItemToInventory( toUserData, itemDataClone, amount, itemKey );
+		addItemToInventory( toInventory, itemDataClone, amount, itemKey );
 		itemData.amount-=amount;
 		if(itemData.amount==0){}
-	}	
+	}
 }
 
 /**
@@ -168,7 +181,10 @@ function transferItemToInventory( userData, toUserData, itemData, amount = 1 ){
  * @returns destinationInventory
  */
 function mergeInventory( sourceInventory, destinationInventory ){
-
+	Object.values(sourceInventory).map( ( itemData )=>{
+		addItemToInventory( destinationInventory, itemData );
+		itemData.amount = 0;
+	});
 }
 
 /**
@@ -186,7 +202,7 @@ function userHasItem( userData, itemKey, amount = 1 ){
 function perkTreasureHelper( userData ){
 	
 	let itemData = itemUtils.items.lootbox.createItemData(1, "box_box");
-	itemUtils.addItemToInventory( userData, itemData );
+	itemUtils.addItemToUserData( userData, itemData );
 	return itemData;
 }
 
@@ -280,7 +296,7 @@ const pickPerks = {
 			// If the progress is at 0
 			if(!expProgress){
 				let itemData = itemUtils.items.lootbox.createItemData(3, 'box_box');
-				itemUtils.addItemToInventory( lToken.userData, itemData );
+				itemUtils.addItemToUserData( lToken.userData, itemData );
 				return {
 					"name":`${ufmt.block( 'Perk' )} Treasure Hunter`,
 					"value":`Your ${ufmt.block("Treasure Hunter")} perk has given you ${ufmt.item(itemData)}!`
@@ -332,7 +348,7 @@ const pickPerks = {
 		onMine:( lToken )=>{
 			if( !(lToken.userData.pickaxe_exp%4) ){
 				let itemData = items.gold.createItemData(1);
-				addItemToInventory( lToken.userData, itemData );
+				addItemToUserData( lToken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Gold Digger',
 					`You found ${ufmt.item(itemData)} while mining!`
 				);
@@ -354,7 +370,7 @@ const pickPerks = {
 		onMine:( lToken )=>{
 			if( (Math.random()>1/7) ){
 				let itemData = itemUtils.items.crafting_materials.createItemData(1);
-				addItemToInventory( lToken.userData, itemData );
+				addItemToUserData( lToken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Scrapper',
 					`You found ${ufmt.item(itemData)} while mining!`
 				);
@@ -424,7 +440,7 @@ const pickPerks = {
 		onMine:(lToken)=>{
 			if(Math.random()<1/10){ return; }
 			let itemData = itemUtils.items.kingstones_stone.createItemData(1);
-			addItemToInventory( lToken.userData, itemData );
+			addItemToUserData( lToken.userData, itemData );
 			return ufmt.perkMessage('Perk', 'Sculptor',
 				`While mining, you \**accidentally*\* carve out some emblems into a rock and it turned into a ${ufmt.item(itemData)}!`
 			);
@@ -553,7 +569,7 @@ function migrateItem( userData, itemName, newItemName ){
 
 	itemData.name = newItemName;
 	delete userData.items[itemName];
-	addItemToInventory( userData, itemData );
+	addItemToUserData( userData, itemData );
 	return itemData;
 }
 
@@ -566,28 +582,31 @@ function addActivePickaxePerk( userData, perkName ){
 	userData.pickaxe_perks.push(perkName);
 }
 
-const craftingRecipies = {
-	"good_pickbox": {
-		ingredients: [{
-			key: 'box_box',
-			amount: 4
-		}, {
-			key: 'crafting_materials',
-			amount: 20
-		}],
-		onCraft: (lToken, amount) => { // returns itemData
-			return itemUtils.items.lootbox.createItemData(1, 'good_pickbox');
+function inventoryFromArrayOfItemDatas( itemDatas ){
+	let accessors = itemDatas.map( (itemObject)=>{return itemObject.name||itemObject.accessor} );
+	// This is a tally snippet
+	let tallyObject = {}
+	accessors.map((accessor)=>{
+		if(!tallyObject[accessor]){tallyObject[accessor]=1;}
+		else{
+			tallyObject[accessor]++;
 		}
-	},
-	"golden_apple":{
-		ingredients:[{key:'apple',amount:4},{key:'gold',amount:2}]
-	}
+	})
+	return tallyObject;
+}
+
+function formatTalliedOutcomes( tallyObject ){
+	return Object.keys(tallyObject).map( (accessor)=>{
+		return itemName(accessor, tallyObject[accessor], '', false);
+	} );
 }
 
 module.exports.craftingRecipies = craftingRecipies;
 module.exports.userHasItem = userHasItem;
+module.exports.addItemToUserData = addItemToUserData;
+module.exports.addItemObjectToUserData = addItemObjectToUserData;
+module.exports.transferItemToUserData = transferItemToUserData;
 module.exports.addItemToInventory = addItemToInventory;
-module.exports.addItemObjectToInventory = addItemObjectToInventory;
 module.exports.transferItemToInventory = transferItemToInventory;
 module.exports.dropDistribution = dropDistribution;
 module.exports.lootboxDistribution = dropDistribution;

@@ -156,9 +156,10 @@ class ItemPickaxe extends Item{
     }
 
     ensureUserHasDefaultPickaxe( userData ){
-        if(!userData.hasFirstPickaxe && userData.pickaxe_accessor=="shifty_pickaxe"){
+        if((!userData.hasFirstPickaxe && userData.pickaxe_accessor=="shifty_pickaxe") || (Object.values(userData.items).filter( (x)=>{return x.equipped;} ).length==0) ){
             let itemData = this.createItemData(0, Object.clone(this.meta));
-            itemUtils.addItemToInventory( userData, itemData );
+            itemData.equipped = true;
+            itemUtils.addItemToUserData( userData, itemData );
             userData.hasFirstPickaxe = true;
         }
     }

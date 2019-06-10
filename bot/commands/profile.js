@@ -12,8 +12,7 @@ class CommandTemplate extends Command{
 	get mimics(){ return [/*{name:"buy",cmd:"bp buy"}*/]; }
 	get help(){ return 1;/*["A simple command!"];*/ }
 	get helpExamples(){ return [
-		['profile', '< name search | @user | @discordID >', 'View your game profile!'],
-		['pickaxe', '< name search | @user | @discordID >', 'View your pickaxe stats!']
+		['profile', '< name search | @user | @discordID >', 'View your game profile!']
 	];/*[["command", "< parameters >", "desc"]];*/ }
 	get helpGroup(){ return "Profile"; }
 	get helpName(){ return "Profile"; }

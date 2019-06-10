@@ -78,6 +78,12 @@
 
     "changelogs":[
         [
+            "0.1.20",
+            "+ Crafting is released! You can try it out with the `~craft` command.",
+            "+ added [***Golden Apple***], craftable",
+            "+ added [***Good Pickbox***], craftable",
+            "+ added [***Greater Pickbox***], craftable",
+            "+ added [***Legendary Pickbox***], craftable",
             "0.1.19",
             "+ 3 new perks released",
             "+ Increased [ ***PP Soft Handle*** ]'s bonus from 20% to 50%",

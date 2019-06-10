@@ -66,6 +66,62 @@ class ItemLootbox extends Item{
 		}, this);
 	}
 
+	get recipies(){
+		return {
+			"good_pickbox": {
+				ingredients: [{
+					key: 'box_box',
+					amount: 4
+				},{
+					key:'gold',
+					amount:10
+				},{
+					key: 'crafting_materials',
+					amount: 20
+				}],
+				onCraft: (lToken, amount=1) => { // returns itemData
+					return itemUtils.items.lootbox.createItemData(amount, 'good_pickbox');
+				}
+			},
+			"greater_pickbox": {
+				ingredients: [{
+					key: 'box_box',
+					amount: 10
+				}, {
+					key: 'crafting_materials',
+					amount: 80
+				},{
+					key:'gold',
+					amount:20
+				},{
+					key:'foxtail_amulet',
+					amount:5
+				}],
+				onCraft: (lToken, amount=1) => { // returns itemData
+					return itemUtils.items.lootbox.createItemData(amount, 'greater_pickbox');
+				}
+			},
+			"legendary_pickbox": {
+				ingredients: [{
+					key: 'box_box',
+					amount: 50
+				}, {
+					key: 'crafting_materials',
+					amount: 360
+				}, {
+					key:'gold',
+					amount:50
+				}, {
+					key:'orb_of_almanac',
+					amount:1
+				}],
+				onCraft: (lToken, amount=1) => { // returns itemData
+					return itemUtils.items.lootbox.createItemData(amount, 'legendary_pickbox');
+				}
+			}
+		};
+	}
+
 	/**
 	 * Override
 	 */
@@ -145,7 +201,7 @@ class ItemLootbox extends Item{
 		let formattedTallies = this.formatTalliedOutcomes( tallyObject );
 
 		itemDatas.map( ( outcomeItemData )=>{
-			itemUtils.addItemToInventory( lToken.userData, outcomeItemData );
+			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
 		});
 
 		return formattedTallies;
@@ -197,7 +253,7 @@ class ItemLootbox extends Item{
 		let dropItemData = itemUtils.items.crafting_materials.createItemData( outcome );
 		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
 		lToken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
-		itemUtils.addItemToInventory( lToken.userData, dropItemData );
+		itemUtils.addItemToUserData( lToken.userData, dropItemData );
 	}
 
 	/**
@@ -206,10 +262,17 @@ class ItemLootbox extends Item{
 	 * @param {*} itemData 
 	 */
 	meta_pickbox( lToken, itemData, tier=0 ){
-		let dropItemData = itemUtils.items.pickaxe.createItemData( 1, null, null, tier );
+		let amount = lToken.mArgs.amount;
+		let itemDatas = new Array(amount).fill(0).map( ()=>{
+			return itemUtils.items.pickaxe.createItemData( 1, null, null, tier );
+		})
+		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
+		itemDatas.map( ( outcomeItemData )=>{
+			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
+		});
+
 		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
-		itemUtils.addItemToInventory( lToken.userData, dropItemData );
+		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
 	}
 
 	meta_good_pickbox(lToken, itemData ){
@@ -238,7 +301,7 @@ class ItemLootbox extends Item{
 		let dropItemData = itemUtils.items.gold.createItemData( outcome );
 		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
 		lToken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
-		itemUtils.addItemToInventory( lToken.userData, dropItemData );
+		itemUtils.addItemToUserData( lToken.userData, dropItemData );
 	}
 
 	/**
@@ -253,7 +316,7 @@ class ItemLootbox extends Item{
 		})
 		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
 		itemDatas.map( ( outcomeItemData )=>{
-			itemUtils.addItemToInventory( lToken.userData, outcomeItemData );
+			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
 		});
 
 		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
@@ -270,7 +333,7 @@ class ItemLootbox extends Item{
 		]));
 		let newLootboxData = itemUtils.items.lootbox.createItemData(lToken.mArgs.amount, 'lootbox');
 		lToken.send(`Whoa... You're not supposed to have this item!!. Here, have a ${ufmt.item(newLootboxData)} instead.`);
-		itemUtils.addItemToInventory( lToken.userData, newLootboxData );
+		itemUtils.addItemToUserData( lToken.userData, newLootboxData );
 	}
 
 	/**
@@ -285,7 +348,7 @@ class ItemLootbox extends Item{
 		})
 		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
 		itemDatas.map( ( outcomeItemData )=>{
-			itemUtils.addItemToInventory( lToken.userData, outcomeItemData );
+			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
 		});
 
 		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
@@ -306,7 +369,7 @@ class ItemLootbox extends Item{
 		})
 		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
 		itemDatas.map( ( outcomeItemData )=>{
-			itemUtils.addItemToInventory( lToken.userData, outcomeItemData );
+			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
 		});
 
 		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
@@ -352,7 +415,7 @@ class ItemLootbox extends Item{
 					ufmt.denote("Usage",`Drops ${ufmt.block('1')} gold.` ),
 					ufmt.denote("Possible Drops", `\n${ufmt.block( "gold" )}`)
 				]);
-			case 'daily box':
+			case 'daily_box':
 				return ufmt.join([
 					`*A special lootbox you can only obtain once a day*`,
 					ufmt.denote("Usage",`Drops ${ufmt.block('3')} random types of lootboxes.` ),
@@ -361,6 +424,21 @@ class ItemLootbox extends Item{
 					].map((itemObject)=>{
 						return ufmt.block( itemObject.name );
 					}),', ',4)}`)
+				])
+			case 'good_pickbox':
+				return ufmt.join([
+					`*A box that drops a good pickaxe*`,
+					ufmt.denote("Usage",`Drops a tier ${ufmt.block('1')} pickaxe.` )
+				])
+			case 'greater_pickbox':
+				return ufmt.join([
+					`*A box that drops a greater pickaxe*`,
+					ufmt.denote("Usage",`Drops a tier ${ufmt.block('2')} pickaxe.` )
+				])
+			case 'legendary_pickbox':
+				return ufmt.join([
+					`*A box that drops a legendary pickaxe*`,
+					ufmt.denote("Usage",`Drops a tier ${ufmt.block('3')} pickaxe.` )
 				])
 			default:
 				return ufmt.join([

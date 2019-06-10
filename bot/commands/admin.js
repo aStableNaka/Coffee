@@ -127,12 +127,12 @@ class CommandAdmin extends Command{
 			let userData = lToken.userData;
 			if( lToken.mentions[0] ){
 				lToken.database.get( String( lToken.mentions[0].id ), (userData)=>{
-					let itemData = itemUtils.addItemObjectToInventory( userData, itemObject, lToken.numbers[0] || 1 );
+					let itemData = itemUtils.addItemObjectToUserData( userData, itemObject, lToken.numbers[0] || 1 );
 					lToken.send( `\`\`\`json\n${ JSON.stringify( itemData ) }\`\`\`` );
 				});
 				return;
 			}
-			let itemData = itemUtils.addItemObjectToInventory( lToken.userData, itemObject, lToken.numbers[0] || 1, lToken.args[2] );
+			let itemData = itemUtils.addItemObjectToUserData( lToken.userData, itemObject, lToken.numbers[0] || 1, lToken.args[2] );
 			lToken.send( `\`\`\`json\n${ JSON.stringify( itemData ) }\`\`\`` );
 		}else{
 			lToken.send(`Could not find requested item [ ***${ lToken.args[2] }*** ]`);

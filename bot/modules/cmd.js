@@ -551,6 +551,7 @@ function createMonitorEvent(lToken) {
 }
 
 function executelToken(lToken) {
+	const ufmt = require("../utils/formatting");
 	if (lToken.usesDatabase) {
 		modules.db.get(lToken.author.id, (userData) => {
 			// Temporary
@@ -567,6 +568,7 @@ function executelToken(lToken) {
 				lToken.send(views.blacklist(lToken));
 				return;
 			}
+			
 			lToken.cmd.execute(lToken).then(() => {}).catch((e) => {
 				let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `;
 				lToken.send(`<@133169572923703296>\n\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `);

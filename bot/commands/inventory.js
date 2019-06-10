@@ -76,7 +76,7 @@ class CommandInventory extends Command{
 
 	execDaily(lToken){
 		if(new Date().getTime() - lToken.userData.daily >= 22*60*60*1000 ){
-			let itemData = itemUtils.addItemToInventory(lToken.userData,itemUtils.items.lootbox.createItemData(2, 'daily_box'));
+			let itemData = itemUtils.addItemToUserData(lToken.userData,itemUtils.items.lootbox.createItemData(2, 'daily_box'));
 			lToken.send( `${ufmt.name(lToken.userData)}, here's your daily reward: ${ ufmt.item(itemData) }` );
 			lToken.userData.daily = new Date().getTime();
 		}else{
@@ -88,8 +88,9 @@ class CommandInventory extends Command{
 		if( itemData && itemData.amount > 0){
 			if(lToken.mArgs.to){
 				lToken.database.get( lToken.mArgs.to.id.toString(), ( toUserData )=>{
-					itemUtils.transferItemToInventory( lToken.userData, toUserData, itemData, lToken.mArgs.amount );
-					lToken.send( `You've given ${ ufmt.nameMention( lToken.mArgs.to ) } ${ ufmt.item( itemData,lToken.mArgs.amount ) }` );
+					let amount = Math.min( itemData.amount, lToken.mArgs.amount);
+					itemUtils.transferItemToUserData( lToken.userData, toUserData, itemData, amount );
+					lToken.send( `You've given ${ ufmt.nameMention( lToken.mArgs.to ) } ${ ufmt.item( itemData,amount ) }` );
 					let itemObject = itemUtils.getItemObject( itemData );
 					if(itemObject.isUnique){
 						itemObject.cleanup( lToken.userData, itemData )
