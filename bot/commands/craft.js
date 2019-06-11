@@ -46,6 +46,7 @@ class CommandCraft extends Command {
 	}
 	async execute(lToken) {
 		function searchForAvailableCraftingOptions( userData ){
+			return Object.keys( recipies );
 			let availableOptions = Object.keys( recipies ).filter(( product )=>{
 				let ingredients = recipies[product].ingredients;
 				let available = ingredients.map( ( ingredientData )=>{
