@@ -80,7 +80,7 @@ class CommandCraft extends Command {
 					});
 
 					//add new item(s) to inventory
-					let itemData = recipie.onCraft( amount );
+					let itemData = recipie.onCraft( lToken, amount );
 					itemUtils.addItemToUserData( userData, itemData );
 					lToken.send( views.success( lToken, itemData, ingredientsUsedInventory ) );
 				}else{

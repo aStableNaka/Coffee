@@ -18,6 +18,8 @@ class ItemMineAlert extends Item{
 		this.effect = "This will alert you when you're ready to mine.";
 		this.effect_on = "You will receive a ping when you're ready to mine *if you try mining before your cooldown ends*.";
 		this.effect_off = "You will no longer recieve a ping when you're ready to mine.";
+
+		this.isDroppedByLootbox = true;
 	}
 
 	

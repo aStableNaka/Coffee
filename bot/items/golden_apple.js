@@ -14,9 +14,9 @@ class ItemGoldenApple extends Item{
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
-		this.charge = 1;
-		this.boost = 75*25;
-		this.effect = `Your next mine will produce ${ufmt.block(this.boost)} % more profit.`;
+		this.charge = 6;
+		this.boost = 75*30;
+		this.effect = `Your next ${ufmt.block(this.charge)} mines will produce ${ufmt.block(this.boost)} % more profit.`;
 		this.useDialogue = `You eat a Golen Apple!`;
 	}
 
