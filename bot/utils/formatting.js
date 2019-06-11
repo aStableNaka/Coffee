@@ -311,7 +311,7 @@ function joinGrid( arr, sep=',', cols ){
 	return out.join(sep+'\n');
 }
 
-function inventory( inventoryObject, entriesPerPage=20, page=0 ){
+function inventory( inventoryObject, entriesPerPage=20, page=0, filter=()=>{return true;} ){
 	let out = "";
 	let itemAccessors = Object.keys( inventoryObject );
 	// Only show items that aren't amount 0
@@ -323,6 +323,9 @@ function inventory( inventoryObject, entriesPerPage=20, page=0 ){
 		let itemRankA = itemUtils.getItemObject( itemDataA ).getUniqueRank( itemDataA );
 		let itemRankB = itemUtils.getItemObject( itemDataB ).getUniqueRank( itemDataB );
 		return itemRankA - itemRankB;
+	}).filter(( itemAccessor )=>{
+		let itemData = inventoryObject[itemAccessor];
+		return filter(itemData);
 	}).slice(page*entriesPerPage, page*entriesPerPage+entriesPerPage);
 	if(listOfTruths.length==0){ return null; }
 	let itemNamePaddingLength = listOfTruths.map((accessor)=>{

@@ -78,6 +78,8 @@
 
     "changelogs":[
         [
+            "0.1.24",
+            "+ Added inventory filtering, `~inv filter:\"box\" will give you your inventory with only boxes",
             "0.1.23",
             "Buffed [ ***Golden Apple*** ]",
             "0.1.22",

@@ -155,10 +155,21 @@ class CommandInventory extends Command{
 		let itemsPerPage = 15;
 		let numberOfPages = Math.ceil( numberOfItems/itemsPerPage );
 
+		// Name filter, uses lToken.keyPair filter:"query"
+		let filter = ( itemData )=>{
+			if(lToken.keyPairs.filter){
+				//console.log(lToken.keyPairs.filter, itemData.name, itemData.accessor, itemData.name.includes(lToken.keyPairs.filter) || itemData.accessor.includes(lToken.keyPairs.filter))
+				return itemData.name.includes(lToken.keyPairs.filter) || itemData.accessor.includes(lToken.keyPairs.filter);
+			}
+			return true;
+		};
+
 		function send(){
 			lToken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, lToken.mArgs.page||lToken.numbers[0]-1||0) );
-			lToken.send( views.overview(lToken, lToken.mArgs.page, userData, numberOfItems, itemsPerPage, numberOfPages) ).then( pageThing );
-		}
+			lToken.send( views.overview(lToken, lToken.mArgs.page, userData, numberOfItems, itemsPerPage, numberOfPages, filter) ).then( pageThing );
+		};
+
+		
 
 		function pageThing( hookMsg ){
 			// Starting conditions

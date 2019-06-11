@@ -148,6 +148,7 @@ function lTokenExpandOFlags(lToken){
  * - lToken.words (All words, excluding numericals and symbols)
  * - lToken.quotes (All quotated tokens)
  * - lToken.max (True if arguments includes phrase "max")
+ * - lToken.keyPairs, uses key:"value" syntax
  * @param {lToken} lToken 
  * @param {DiscordjsMessage} msg 
  */
@@ -175,12 +176,24 @@ async function lTokenGroupArguments(lToken, msg){ // jshint ignore:line
 	}).map((x) => {
 		return parseFloat(x.replace(/,/gi, ''));
 	});
-	lToken.words = msg.content.match(/([A-z])\w+/gi);
-	lToken.quotes = msg.content.match(/"[^"]*"/gi);
-	lToken.max = lToken.args.includes('max');
-	lToken.wordsPlus = msg.content.match(/(#?[A-z]?[0-9]?)\w+/gi);
+	
+	let text = msg.content;
+	let keyPairs = text.match(/\w+:".+"/gi) || [];
+	lToken.keyPairs = {};
+	keyPairs.map( (kp)=>{
+		text = text.replace(kp, '');
+		let m = kp.split(':');
+		lToken.keyPairs[m[0]] = m[1].split('"')[1];
+	});
+	text = text.split(' ').filter( (x)=>{return x!='';} ).join(' ');
+	
 
-	if(msg.content.indexOf("<@350823530377773057>") == 0){
+	lToken.words = text.match(/([A-z])\w+/gi);
+	lToken.quotes = text.match(/"[^"]*"/gi);
+	lToken.max = lToken.args.includes('max');
+	lToken.wordsPlus = text.match(/(#?[A-z]?[0-9]?)\w+/gi);
+
+	if(text.indexOf("<@350823530377773057>") == 0){
 		lToken.mentions = lToken.mentions.slice(1);
 	}
 }
