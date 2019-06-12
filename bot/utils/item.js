@@ -466,8 +466,7 @@ const pickPerks = {
 		name:"Carb Scrapper",
 		desc:`If you have an active ${ufmt.block('Bread')} mine boost, you are guaranteed to find ${ufmt.block('Crafting Materials')} when mining!`,
 		onMine:(lToken)=>{
-			if(!lToken.userData.mineboost){ return; }
-			if(lToken.userData.mineboost.toLowerCase()=='bread' && lToken.userData.mineboostcharge>0){
+			if(lToken.userData.mineboostsource.toLowerCase()=='bread' && lToken.userData.mineboostcharge>0){
 				let itemData = itemUtils.items.crafting_materials.createItemData(1);
 				addItemToUserData( lToken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Carb Scrapper',
