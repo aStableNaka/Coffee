@@ -78,6 +78,8 @@
 
     "changelogs":[
         [
+            "0.1.25",
+            "+ Less lag(?)",
             "0.1.24",
             "+ Added inventory filtering, `~inv filter:\"box\"` will give you your inventory, showing only the boxes",
             "0.1.23",
