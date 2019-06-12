@@ -8,7 +8,7 @@ var bpUtils = require("../utils/bp");
 class ItemKingstonsStone extends Item{
 	constructor(){
 		super();
-		this.name = "Kingston's Stone"; // Required
+		this.name = "Kingstone's Stone"; // Required
 		this.accessor = "kingstones_stone"; // Virtural
 
 		this.consumable = true;

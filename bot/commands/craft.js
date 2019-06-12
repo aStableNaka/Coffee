@@ -87,7 +87,7 @@ class CommandCraft extends Command {
 				}else{
 					// do something else if it's negative
 					let ingredientsNeeded = recipie.ingredients.filter( (ingredient)=>{
-						return !itemUtils.userHasItem( userData, recipie.key, recipie.amount*amount );
+						return !itemUtils.userHasItem( userData, ingredient.key, ingredient.amount*amount );
 					}).map( (ingredient)=>{
 						return {key:ingredient.key, amount:ingredient.amount*amount-(userData.items[ingredient.key]||{amount:0}).amount}
 					});

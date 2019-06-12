@@ -78,6 +78,10 @@
 
     "changelogs":[
         [
+            "0.1.26",
+            "- Fixed a few formatting issues",
+            "- Added `~eat`, `~equip` and `~open` ailiases for the `~use` command",
+            "- Fixed crafting 'not enough resources' formatting issue",
             "0.1.25",
             "+ Less lag(?)",
             "0.1.24",

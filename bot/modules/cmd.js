@@ -502,10 +502,16 @@ function containsPrefix(msg) {
 
 const layoutInvalidPerms = require("../views/invalid_perms");
 module.exports.handle = async function (msg, client) { // jshint ignore:line
+	// Test for beta access
+	if(env.beta){
+		if(env.whitelist.indexOf(msg.author.id.toString())==-1){
+			return;
+		}
+	}
 	if (msg.author.bot && !(env.bot.whitelist.includes(msg.author.id))) {
 		return;
 	}
-	if (msg.content == "<@350823530377773057>") {
+	if (msg.content == `<@${client.user.id.toString()}>`) {
 		msg.content = "~help";
 	}
 

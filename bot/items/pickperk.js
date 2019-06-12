@@ -49,7 +49,7 @@ class ItemPickPerk extends Item{
 				pickaxeItemData.meta.perks.push( itemData.meta );
 				lToken.userData.pickaxe_perks = pickaxeItemData.meta.perks;
 
-				lToken.send(`you've applied ${ufmt.item(itemData)} to your current pickaxe!`);
+				lToken.send(`You've applied ${ufmt.item(itemData, 1)} to your current pickaxe!`);
 				return;
 			}else{
 				lToken.send("Your pickaxe doesn't have enough perk slots!");

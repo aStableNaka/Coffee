@@ -148,7 +148,15 @@ class CommandInventory extends Command{
 	execInfo( lToken, itemObject, itemData ){
 		lToken.send(views.info( lToken, itemObject, itemData ));
 	}
+	
+	/*
+		Reported issue:
+		"~inv 3211263 automatically displays the second page of my inventory and doesn't let me change to earlier pages
+		suspicion for above: ~inv [page] is the problem since inv thinks I'm looking at page 3211263 and so pressing the left arrow doesn't help because it only decrements by one"
 
+		Dev Response:
+		"I can't seem to replicate the issue. But I'll leave this comment here in case it appears again"
+	*/
 	execOverview( lToken, userData ){
 		if(!userData){userData = lToken.userData}
 		let numberOfItems = Object.values( userData.items ).filter( ( itemData )=>{ return itemData.amount > 0 } ).length;
