@@ -3,9 +3,10 @@ const ufmt = require("../../utils/formatting.js");
 const pBar = ufmt.progressBar;
 const os = require("os");
 module.exports = function( lToken ){
+	const maxMemory = 0.5;
 	let memoryUsage = process.memoryUsage();
 	let totalMemoryUsed = parseInt((memoryUsage.rss + memoryUsage.heapTotal)/1024/1024);
-	let memProgressBar = pBar( totalMemoryUsed, 1024*4, `${ totalMemoryUsed } / ${1024*4} MB` );
+	let memProgressBar = pBar( totalMemoryUsed, 1024*maxMemory, `${ totalMemoryUsed } / ${1024*maxMemory} MB` );
 	let cpuUsage = process.cpuUsage();
 	let obj = {
 		"embed": {
