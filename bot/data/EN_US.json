@@ -80,7 +80,7 @@
         [
             "0.1.26",
             "~ Pickaxe changes",
-            "- Pickaxes level coefficient changed from 60*(1+10*lvl) to `15*(1+10*lvl*(tier+1))` per mine",
+            "- Pickaxes level coefficient changed from `60*(1+10*lvl)` to `15*(1+10*lvl*(tier+1))` per mine",
             "- Pickaxe multiplier stat now factors in levels",
             "- Fixed potential exploit with det/king perks",
             "- Fixed carb scrapper perk",
