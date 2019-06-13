@@ -576,6 +576,22 @@ function createMonitorEvent(lToken) {
 	return data;
 }
 
+function notifyError( lToken, e ){
+	let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `;
+	lToken.send("Oh no... Something went wrong! I'll notify the bot admin.");
+	lToken.messageAdmin(
+		ufmt.join([
+			ufmt.denote( 'Type', 'Command Execution Error' ),
+			ufmt.denote( 'User', ufmt.name(lToken.userData) ),
+			ufmt.denote( 'ID', lToken.msg.author.id),
+			ufmt.denote('Guild', lToken.msg.guild.id),
+			ufmt.denote('Channel', lToken.msg.channel.id),
+			ufmt.denote( 'Command', `\`${lToken.msg.content}\``),
+			errorMessage
+		])
+	)
+}
+
 function executelToken(lToken) {
 	const ufmt = require("../utils/formatting");
 	if (lToken.usesDatabase) {
@@ -595,18 +611,7 @@ function executelToken(lToken) {
 				return;
 			}
 			
-			lToken.cmd.execute(lToken).then(() => {}).catch((e) => {
-				let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `;
-				lToken.send(`<@133169572923703296>\n\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `);
-				lToken.messageAdmin(
-					ufmt.join([
-						ufmt.denote( 'Type', 'Command Execution Error' ),
-						ufmt.denote( 'User', ufmt.name(lToken.userData) ),
-						ufmt.denote( 'Command', `\`${lToken.message}\``),
-						errorMessage
-					])
-				)
-			});
+			lToken.cmd.execute(lToken).then(() => {}).catch( (e)=>{ return notifyError(lToken, e); } );
 			lToken.userData.cmdcount++;
 			lToken.userData.lastuse = new Date().getTime();
 			if (userData.monitored) {
@@ -621,18 +626,7 @@ function executelToken(lToken) {
 			}
 		});
 	} else {
-		lToken.cmd.execute(lToken).then(() => {}).catch((e) => {
-			let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,500) }\`\`\` `;
-			lToken.send(errorMessage);
-			lToken.messageAdmin(
-				ufmt.join([
-					ufmt.denote( 'Type', 'Command Execution Error' ),
-					ufmt.denote( 'User', ufmt.name(lToken.userData) ),
-					ufmt.denote( 'Command', `\`${lToken.message}\``),
-					errorMessage
-				])
-			)
-		});
+		lToken.cmd.execute(lToken).then(() => {}).catch((e)=>{ return notifyError(lToken, e);});
 	}
 }
 
