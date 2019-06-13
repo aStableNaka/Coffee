@@ -196,6 +196,11 @@ class ItemPickaxe extends Item{
         unequippedPickItemData.amount++;
         unequippedPickItemData.equipped = false;
 
+        unequippedPickItemData.meta.perks.map( (perkName)=>{
+            let unequip = itemUtils.pickPerks[perkName].onUnequip || (()=>{});
+            unequip( lToken, unequippedPickItemData );
+        });
+
         // Equip the new pickaxe
         Object.keys( itemData.meta ).map( ( key )=>{
             //console.log(key);

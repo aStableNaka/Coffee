@@ -79,6 +79,8 @@
     "changelogs":[
         [
             "0.1.26",
+            "- Fixed potential exploit with det/king perks",
+            "- Fixed carb scrapper perk",
             "- Fixed a few formatting issues",
             "- Added `~eat`, `~equip` and `~open` ailiases for the `~use` command",
             "- Fixed crafting 'not enough resources' formatting issue",

@@ -268,6 +268,33 @@ const pickPerks = {
 				"name":`${ufmt.block( 'Perk' )} Determined Endurance`,
 				"value":`Your ${ufmt.block("Determined Endurance")} has reduced your mining cooldown by [ ***${reduction/1000}*** ] seconds!`
 			}
+		},
+		onUnequip:(lToken, itemData)=>{
+			// Undo the decrease
+			let lvl = bp.pickaxeLevelExp(itemData.meta.exp);
+			let increase = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
+			lToken.userData.lastmine+=increase;
+		}
+	},
+	"chrimson_king":{
+		// is that a jojo refrence
+		name:"Chrimson King",
+		desc:"Your a portion of your mining cooldown gets deleted based on your pickaxe level. [ **-5 sec/lvl** ] with a hard cap of 120 seconds.",
+		onMine:( lToken, outcome )=>{
+			let lvl = bp.pickaxeLevelExp(lToken.userData.pickaxe_exp);
+			let reduction = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
+			lToken.userData.lastmine-=reduction;
+			//lToken.send(lvl);
+			return {
+				"name":`${ufmt.block( 'Perk' )} Chrimson King`,
+				"value":`Your ${ufmt.block("Chrimson King")} has deleted [ ***${reduction/1000}*** ] seconds from your cooldown!`
+			}
+		},
+		onUnequip:(lToken, itemData)=>{
+			// Undo the decrease
+			let lvl = bp.pickaxeLevelExp(itemData.meta.exp);
+			let increase = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
+			lToken.userData.lastmine+=increase;
 		}
 	},
 	"level_up":{
@@ -416,22 +443,6 @@ const pickPerks = {
 	"veteran":{
 		name:"Veteran",
 		desc:"Mining profits"
-	},
-
-	"chrimson_king":{
-		// is that a jojo refrence
-		name:"Chrimson King",
-		desc:"Your a portion of your mining cooldown gets deleted based on your pickaxe level. [ **-5 sec/lvl** ] with a hard cap of 120 seconds.",
-		onMine:( lToken, outcome )=>{
-			let lvl = bp.pickaxeLevelExp(lToken.userData.pickaxe_exp);
-			let reduction = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
-			lToken.userData.lastmine-=reduction;
-			//lToken.send(lvl);
-			return {
-				"name":`${ufmt.block( 'Perk' )} Chrimson King`,
-				"value":`Your ${ufmt.block("Chrimson King")} has deleted [ ***${reduction/1000}*** ] seconds from your cooldown!`
-			}
-		}
 	},
 
 	"sculptor":{
