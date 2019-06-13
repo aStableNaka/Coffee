@@ -187,7 +187,7 @@ function calcPickaxeIncome( userData ){
 	let pickaxe = itemUtils.items.pickaxe;
 	let itemData = pickaxe.getActivePickaxeItemData( userData );
 	let tierModifier = pickaxe.getMultiplier(itemData);
-	return BigInt.max( 1, calcIncome_UD(userData) ).multiply(60).multiply( 20 + 10 * pickaxeLevelUD( userData )).multiply(tierModifier);
+	return BigInt.max( 1, calcIncome_UD(userData) ).multiply(15).multiply(tierModifier);
 }
 
 module.exports.calcPickaxeIncome = calcPickaxeIncome;

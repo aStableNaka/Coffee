@@ -2,7 +2,7 @@
 	"catalogue": [{
 			"name": "MySpace Stocks",
 			"desc": "It won't make you rich, but it's a start.",
-			"baseCost": 800,
+			"baseCost": 100,
 			"baseCostv2": 900,
 			"baseIncome": 2,
 			"baseGrowth": 1.0143,
@@ -14,7 +14,7 @@
 		{
 			"name": "Cat Videos",
 			"desc": "Rack in that youtube ad-revenue.",
-			"baseCost": 4500,
+			"baseCost": 500,
 			"baseCostv2": 6700,
 			"baseIncome": 7,
 			"baseGrowth": 1.03,
@@ -26,7 +26,7 @@
 		{
 			"name": "Trained Monkies",
 			"desc": "These primates are primed BP hunters.",
-			"baseCost": 7000,
+			"baseCost": 1200,
 			"baseIncome": 20,
 			"baseGrowth": 1.04,
 			"id": "BP_Item_trainedMonkies",
@@ -37,7 +37,7 @@
 		{
 			"name": "Chinese T-Shirt Company",
 			"desc": "Cheap labor, not so cheap returns!",
-			"baseCost": 11020,
+			"baseCost": 7000,
 			"baseIncome": 34,
 			"baseGrowth": 1.1,
 			"id": "BP_Item_chineeseTshirtCompany",
@@ -48,7 +48,7 @@
 		{
 			"name": "Horse that poops weapons",
 			"desc": "From a land far far away.",
-			"baseCost": 86400,
+			"baseCost": 36400,
 			"baseIncome": 98,
 			"baseGrowth": 1.11,
 			"id": "BP_Item_weaponHorse",
@@ -60,7 +60,7 @@
 			"name": "Hydrogen Blockchain Supercapacitor",
 			"desc": "Useless, but shareholders love the idea!",
 			"alias": "HBSC",
-			"baseCost": 126700,
+			"baseCost": 106700,
 			"baseIncome": 128,
 			"baseGrowth": 1.115,
 			"id": "BP_Item_weaponHorse",

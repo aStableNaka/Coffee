@@ -79,6 +79,9 @@
     "changelogs":[
         [
             "0.1.26",
+            "~ Pickaxe changes",
+            "- Pickaxes nerfed, level coefficient changed from 60*(1+10*lvl) to `15*(1+10*lvl*tier)` per mine",
+            "- Pickaxe multiplier stat now factors in levels",
             "- Fixed potential exploit with det/king perks",
             "- Fixed carb scrapper perk",
             "- Fixed a few formatting issues",

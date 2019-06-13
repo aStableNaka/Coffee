@@ -127,7 +127,8 @@ class ItemPickaxe extends Item{
     }
 
     getMultiplier( itemData ){
-        return 25**this.getTier(itemData);
+        let tier = this.getTier(itemData)
+        return 25**tier*(1+bp.pickaxeLevelExp( itemData.meta.exp )*10*tier);
     }
 
     computeMetaHash( itemData ){
