@@ -1,14 +1,9 @@
 const Command = require("../class/command");
-const env = require("../env");
 const loader = require("../loader");
-const views = loader("./bot/views/botinfo", "./views/botinfo");
-//const localeReload = loader("./bot/data", "./data");
-const url = "https://repl.it/@DrankArizonaIce/coffee";
-const serverURL = "https://discord.gg/5caakFA";
 const locale = require("../data/EN_US");
 
 const hexCache = {};
-
+// todo add pages
 class CommandServer extends Command{
 	constructor(){
 		super();
@@ -20,8 +15,8 @@ class CommandServer extends Command{
 		{name:"hex",cmd:"server hex"},
 	];}
 	get help(){ return {
-		name:"Bot Info",
-		value:"View my info!"
+		name:"Server",
+		value:"Server commands"
 	};}
 	get helpExamples(){ return [
             ['hex', '', 'Chose a random color role!'],
@@ -67,14 +62,14 @@ class CommandServer extends Command{
                   existingRole.setColor( validColorInteger ).then( ()=>{
                         confirmation();
                         lToken.guild.members.find( x=>x.id==lToken.userData.id ).addRole( existingRole, 'Coffee hex' );
-                  } ).catch((e)=>{ console.log(e);this.handleHexInvalidPerms(lToken); });
+                  } ).catch((e)=>{ this.handleHexInvalidPerms(lToken); });
             }else{
                   // create a new role
                   lToken.guild.createRole({name:rolename,color:hexString}).then( (role)=>{
                         lToken.userData.hexRoleIDS[lToken.guild.id] = role.id;
                         confirmation( true );
                         lToken.guild.members.find(x=>x.id==lToken.userData.id).addRole( role, 'Coffee hex' );
-                  }).catch(()=>{ console.log(e); this.handleHexInvalidPerms(lToken); });
+                  }).catch(()=>{ this.handleHexInvalidPerms(lToken); });
             }
       }
 
