@@ -211,6 +211,7 @@ async function lTokenGroupArguments(lToken, msg){ // jshint ignore:line
 function lTokenFlattenMsgData(lToken, msg){
 	lToken.channel = msg.channel;
 	lToken.author = msg.author;
+	lToken.guild = msg.guild;
 }
 
 /**
@@ -577,6 +578,7 @@ function createMonitorEvent(lToken) {
 }
 
 function notifyError( lToken, e ){
+	const ufmt = require("../utils/formatting");
 	let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `;
 	lToken.send("Oh no... Something went wrong! I'll notify the bot admin.");
 	lToken.messageAdmin(
@@ -593,7 +595,7 @@ function notifyError( lToken, e ){
 }
 
 function executelToken(lToken) {
-	const ufmt = require("../utils/formatting");
+	
 	if (lToken.usesDatabase) {
 		modules.db.get(lToken.author.id, (userData) => {
 			// Temporary
