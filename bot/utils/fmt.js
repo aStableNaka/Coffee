@@ -362,6 +362,24 @@ String.prototype.multiply = function( times ){
 	return new Array( times ).fill( this ).join('');
 }
 
+function positiveOrZero(x){
+	return x>=0?x:0;
+}
+
+function elapsedTime( timestamp, styleString='***' ){
+	timestamp=Math.floor(timestamp/1000);
+	let seconds = timestamp %60;
+	timestamp=Math.floor(timestamp-seconds)/60;
+	let minutes = timestamp%60;
+	timestamp=Math.floor(timestamp-minutes)/60;
+	let hours = timestamp%24;
+	timestamp=Math.floor(timestamp-minutes)/24;
+	let days = timestamp;
+	let format = [hours,minutes,seconds];
+	return ufmt.block(format.map(x=>`${surround(Math.floor(x).toString().padStart(2,'0'),styleString)}`).join(' : '), '');
+}
+
+module.exports.elapsedTime = elapsedTime;
 module.exports.perkMessage = perkMessage;
 module.exports.joinGrid = joinGrid;
 module.exports.itemNameNoBlock = itemNameNoBlock;

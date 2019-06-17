@@ -83,7 +83,7 @@ class CommandInventory extends Command{
 			lToken.send( `${ufmt.name(lToken.userData)}, here's your daily reward: ${ ufmt.item(itemData) }` );
 			lToken.userData.daily = new Date().getTime();
 		}else{
-			lToken.send( `${ufmt.name(lToken.userData)}, you've already claimed your daily reward! You can claim one again in ${ufmt.timeLeft( new Date().getTime() - lToken.userData.daily, 22*60*60*1000 )}.` )
+			lToken.send( `${ufmt.name(lToken.userData)}, you've already claimed your daily reward! You can claim one again in ${ufmt.elapsedTime( lToken.userData.daily+22*60*60*1000 - (new Date().getTime()) )}.` )
 		}
 	}
 
