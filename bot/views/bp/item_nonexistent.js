@@ -1,4 +1,4 @@
-const ufmt = require("../../utils/formatting.js");
+const ufmt = require("../../utils/fmt.js");
 module.exports = function( lToken ){
 	return {
 		"embed": {

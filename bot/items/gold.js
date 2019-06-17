@@ -1,5 +1,5 @@
 let Item = require("../class/item");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 var bpUtils = require("../utils/bp");
@@ -17,7 +17,7 @@ class ItemGold extends Item{
 
 		this.icon = "https://i.imgur.com/506QOWO.png";
 		this.isSaleRestricted = true;
-        this.isDroppedByLootbox = true;
+		this.isDroppedByLootbox = true;
 		this.isDroppedByLunchbox = true;
 		this.canUseMulti = true;
 
@@ -35,7 +35,7 @@ class ItemGold extends Item{
 		/*
 		let outcome = new BigInt( bpUtils.getCurrentBPBal( lToken ) ).divide( 100 ).multiply(this.increaseValue*(amount));
 		bpUtils.addBP( lToken, outcome );
-        lToken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gold", amount)} for BP!`,[`+ ${ ufmt.numPretty( outcome ) } BP \n( + ${ufmt.numPretty( this.increaseValue*(amount) )}% )`]) );
+		lToken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gold", amount)} for BP!`,[`+ ${ ufmt.numPretty( outcome ) } BP \n( + ${ufmt.numPretty( this.increaseValue*(amount) )}% )`]) );
 		*/
 	}
 

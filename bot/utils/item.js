@@ -1,7 +1,7 @@
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 const bp = require("./bp.js");
-const ufmt = require("./formatting.js");
+const ufmt = require("./fmt.js");
 const loader = require("../loader");
 
 const locale = require("../data/EN_US");

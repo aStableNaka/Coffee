@@ -1,5 +1,5 @@
 let process = require("process");
-const ufmt = require("../../utils/formatting.js");
+const ufmt = require("../../utils/fmt.js");
 const pBar = ufmt.progressBar;
 const dateCreated = 1546300800000;
 let msToDay = 1000*60*60*24;

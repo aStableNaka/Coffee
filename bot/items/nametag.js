@@ -1,5 +1,5 @@
 let Item = require("../class/item");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 
 
 /**
@@ -29,9 +29,9 @@ class ItemNametag extends Item{
 
 	desc( lToken, itemData ){
 		return ufmt.itemDesc([
-                  `Use this to rename your currently equipped pickaxe!`,
-                  ufmt.denote('Usage', 'You will be prompted to pick a new name for your current pickaxe.')
-            ]);
+				  `Use this to rename your currently equipped pickaxe!`,
+				  ufmt.denote('Usage', 'You will be prompted to pick a new name for your current pickaxe.')
+			]);
 	}
 }
 

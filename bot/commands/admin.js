@@ -1,7 +1,7 @@
 const Command = require("../class/command");
 const env = require("../env");
 const itemUtils = require("../utils/item.js");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 const loader = require("../loader");
 const utils = loader( "./bot/utils", "./utils" ); // Effectively reloads utils
 const fs = require('fs');

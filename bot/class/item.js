@@ -1,5 +1,5 @@
 let ezhash = require("../modules/ezhash");
-let ufmt = require("../utils/formatting");
+let ufmt = require("../utils/fmt");
 
 class Item{
 	constructor( createInstance ){

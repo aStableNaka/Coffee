@@ -3,18 +3,21 @@
   "version": "0.0.1",
   "description": "A charming little idle game bot",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+	"test": "jest"
+  },
   "author": "Daniel Tran",
   "license": "MIT",
   "dependencies": {
-    "express": "latest",
-    "body-parser": "latest",
-    "sqlite3": "latest",
-    "discord.js": "11.4.2",
-    "mongoose": "5.4.3",
-    "mongodb": "3.1.10",
-    "big-integer": "1.6.40",
-    "bignumber.js": "8.0.2",
-    "string-similarity": "latest"
+	"express": "latest",
+	"body-parser": "latest",
+	"sqlite3": "latest",
+	"discord.js": "11.4.2",
+	"mongoose": "5.4.3",
+	"mongodb": "3.1.10",
+	"big-integer": "1.6.40",
+	"bignumber.js": "8.0.2",
+	"string-similarity": "latest",
+	"jest": "latest"
   }
 }

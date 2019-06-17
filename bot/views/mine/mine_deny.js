@@ -1,4 +1,4 @@
-const ufmt = require("../../utils/formatting.js");
+const ufmt = require("../../utils/fmt.js");
 const itemUtils = require("../../utils/item.js");
 const pN = ufmt.numPretty;
 const BigInt = require("big-integer");

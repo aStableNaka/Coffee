@@ -1,5 +1,5 @@
 let Item = require("../class/item");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 
 class ItemTemplate extends Item{
 	constructor(){

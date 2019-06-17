@@ -27,7 +27,7 @@ let rawHooks = {
 // Store commands by aliashash
 function loadCommands() {
 	sources = loader("./bot/commands", "./commands");
-	console.log(sources);
+	//console.log(sources);
 	Object.values(sources).map((cmd) => {
 		cmd.accessors.map((alias) => {
 			commands[modules.ezhash(alias)] = cmd;
@@ -578,7 +578,7 @@ function createMonitorEvent(lToken) {
 }
 
 function notifyError( lToken, e ){
-	const ufmt = require("../utils/formatting");
+	const ufmt = require("../utils/fmt");
 	let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `;
 	lToken.send("Oh no... Something went wrong! I'll notify the bot admin.");
 	lToken.messageAdmin(

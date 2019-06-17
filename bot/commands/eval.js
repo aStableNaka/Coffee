@@ -5,7 +5,7 @@ const env = require("../env");
 const loader = require("../loader");
 const views = loader( "./bot/views/ev", "./views/ev" );
 
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 const bpUtils = require("../utils/bp");
 const globalStates = require("../utils/globalstates");
 const pN = ufmt.numPretty;

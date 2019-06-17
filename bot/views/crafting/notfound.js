@@ -3,9 +3,9 @@
  */
 
 const itemUtils = require("../../utils/item.js");
-const ufmt = require("../../utils/formatting.js");
+const ufmt = require("../../utils/fmt.js");
 const recipies = itemUtils.craftingRecipies;
 
 module.exports = function( lToken, itemAccessor ){
-      return `"${itemAccessor}" can't be crafted! Use \`~craft\` to view all crafting options!`;
+	  return `"${itemAccessor}" can't be crafted! Use \`~craft\` to view all crafting options!`;
 }

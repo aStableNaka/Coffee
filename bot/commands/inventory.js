@@ -4,7 +4,7 @@ const loader = require("../loader");
 const views = loader( "./bot/views/inventory", "./views/inventory" );
 const data = loader( "./bot/data", "./data" );
 const itemUtils = require("../utils/item.js");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 var emojis = require("../utils/emojis");
 var pages = require("../utils/page");
 class CommandInventory extends Command{

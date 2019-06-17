@@ -24,7 +24,6 @@ let illionPrefixes = [
 
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
-const itemUtils = require("./item.js");
 const ufmt = module.exports;
 // Adds commas to numbers
 
@@ -171,6 +170,7 @@ function capitalize( text ){
  * @param {*} brackets true
  */
 function item( itemData, amount, styleString='***', brackets=true, namePadding=0, amountPadding=0 ){
+	let itemUtils = require("./item.js");
 	if(!amount){amount=itemData.amount;}
 	let itemObject = itemUtils.getItemObject( itemData );
 	var name;
@@ -312,6 +312,7 @@ function joinGrid( arr, sep=',', cols ){
 }
 
 function inventory( inventoryObject, entriesPerPage=20, page=0, filter=()=>{return true;} ){
+	let itemUtils = require("./item.js");
 	let out = "";
 	let itemAccessors = Object.keys( inventoryObject );
 	// Only show items that aren't amount 0
@@ -362,7 +363,6 @@ String.prototype.multiply = function( times ){
 }
 
 module.exports.perkMessage = perkMessage;
-module.exports.inventory = inventory;
 module.exports.joinGrid = joinGrid;
 module.exports.itemNameNoBlock = itemNameNoBlock;
 module.exports.code = code;
@@ -380,10 +380,8 @@ module.exports.denote = denote;
 module.exports.timeLeft = timeLeft;
 module.exports.marquee = marquee;
 module.exports.badge = badge;
-module.exports.itemName = itemName;
 module.exports.pick = pick;
 module.exports.nameMention = nameMention;
-module.exports.item = item;
 module.exports.bp = formatBP;
 module.exports.bps = formatBPs;
 module.exports.bpi = formatBPi;
@@ -399,3 +397,7 @@ module.exports.formatBPsi = formatBPsi;
 module.exports.figures = figures;
 module.exports.illionaire = illionaire;
 module.exports.numPrettyIllion = numPrettyIllion;
+
+module.exports.inventory = inventory;
+module.exports.item = item;
+module.exports.itemName = itemName;

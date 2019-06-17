@@ -17,8 +17,8 @@ function DBLog(...args) {
 }
 
 module.exports = {
-    log: log,
-    loglen: loglen,
-    maxLogLength: maxLogLength,
-    DBLog: DBLog
+	log: log,
+	loglen: loglen,
+	maxLogLength: maxLogLength,
+	DBLog: DBLog
 };

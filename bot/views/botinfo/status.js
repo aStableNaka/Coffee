@@ -1,5 +1,5 @@
 let process = require("process");
-const ufmt = require("../../utils/formatting.js");
+const ufmt = require("../../utils/fmt.js");
 const pBar = ufmt.progressBar;
 const os = require("os");
 module.exports = function( lToken ){

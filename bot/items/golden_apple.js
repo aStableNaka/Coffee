@@ -1,5 +1,5 @@
 let Item = require("../class/item");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 const locale = require("../data/EN_US");
 const itemUtils = require("../utils/item.js");
 class ItemGoldenApple extends Item{
@@ -20,17 +20,17 @@ class ItemGoldenApple extends Item{
 		this.useDialogue = `You eat a Golen Apple!`;
 	}
 
-      get recipies(){
-            return {
-                  "golden_apple":{
-                        ingredients:[{key:'apple',amount:15},{key:'gold',amount:3}],
-                        onCraft:(lToken, amount=1)=>{
-                              return itemUtils.items.golden_apple.createItemData( amount );
-                        }
-                  }
-            };
-      }
-      
+	  get recipies(){
+			return {
+				  "golden_apple":{
+						ingredients:[{key:'apple',amount:15},{key:'gold',amount:3}],
+						onCraft:(lToken, amount=1)=>{
+							  return itemUtils.items.golden_apple.createItemData( amount );
+						}
+				  }
+			};
+	  }
+	  
 	use( lToken, itemData ){
 		lToken.userData.mineboost = this.boost; // Percent
 		lToken.userData.mineboostcharge = this.charge;

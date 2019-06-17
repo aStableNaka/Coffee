@@ -1,5 +1,5 @@
 const itemUtils = require("../../utils/item.js");
-const ufmt = require("../../utils/formatting.js");
+const ufmt = require("../../utils/fmt.js");
 module.exports = function( lToken, amount = 1 ){
 	let embed = {
 		"embed": {

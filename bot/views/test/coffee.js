@@ -1,7 +1,7 @@
 module.exports = function( lToken ){
-    return {
-        embed:{
-            
-        }
-    }
+	return {
+		embed:{
+			
+		}
+	}
 }

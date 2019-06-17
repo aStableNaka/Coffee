@@ -1,4 +1,4 @@
-const ufmt = require("../../utils/formatting.js");
+const ufmt = require("../../utils/fmt.js");
 const bp = require("../../utils/bp.js");
 const pN = ufmt.numPretty;
 const fBP = ufmt.formatBP;

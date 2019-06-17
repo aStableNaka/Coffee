@@ -1,5 +1,5 @@
 let Item = require("../class/item");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 const itemUtils = require("../utils/item.js");
 const locale = require("../data/EN_US");
 
@@ -25,23 +25,23 @@ class ItemFoxtailAmulet extends Item{
 	use( lToken, itemData ){
 		lToken.userData.mineboost = this.boost; // Percent
 		lToken.userData.mineboostcharge = this.charge;
-        lToken.userData.mineboostsource = this.name;
-        let amount = Math.floor(Math.random()*3+2)
-        itemUtils.addItemObjectToUserData( lToken.userData, itemUtils.getItemObjectByAccessor("lootbox"), amount, "lunchbox", "lunchbox" );
+		lToken.userData.mineboostsource = this.name;
+		let amount = Math.floor(Math.random()*3+2)
+		itemUtils.addItemObjectToUserData( lToken.userData, itemUtils.getItemObjectByAccessor("lootbox"), amount, "lunchbox", "lunchbox" );
 		lToken.send(Item.fmtUseMsg( this.useDialogue,[
-            "It breaks in the progress, but *you suddenly feel smarter*...",
-            "Your increased intelligence has lead you to discover *better* methods of mining!",
-            "Out of nowhere: *a couple stray lunchboxes fall right into your hands!*",
-            `+ ${ufmt.itemName('Lunchbox', amount, '**')}`,
-            ufmt.denote('Effect', this.effect)
-        ]));
+			"It breaks in the progress, but *you suddenly feel smarter*...",
+			"Your increased intelligence has lead you to discover *better* methods of mining!",
+			"Out of nowhere: *a couple stray lunchboxes fall right into your hands!*",
+			`+ ${ufmt.itemName('Lunchbox', amount, '**')}`,
+			ufmt.denote('Effect', this.effect)
+		]));
 	}
 
 	desc( lToken, itemData ){
 		return ufmt.itemDesc([
-            "An amulet made from a **real fox's tail**!",
-            "- ( *We won't discuss the ethics behind cutting off foxes' tails to make amulets* )",
-            "- *It's said that activating this will boost your Intelligence enough for you to finally understand Rick and Morty.*",
+			"An amulet made from a **real fox's tail**!",
+			"- ( *We won't discuss the ethics behind cutting off foxes' tails to make amulets* )",
+			"- *It's said that activating this will boost your Intelligence enough for you to finally understand Rick and Morty.*",
 			ufmt.denote('Type', [ufmt.block('Mining Boost'), ufmt.block('Lootbox')].join(' ')),
 			ufmt.denote('Usage', this.effect),
 			ufmt.denote('Warning', "Mining Boosts do NOT stack")

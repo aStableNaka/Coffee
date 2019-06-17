@@ -1,5 +1,5 @@
 let Item = require("../class/item");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 var bpUtils = require("../utils/bp");
@@ -21,12 +21,12 @@ class ItemGenReset extends Item{
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
 
 		this.increaseValue = 8;
-      }
-      
-      createItemData( amount, meta ){
-            let name = `gr_${meta}`;
-            return {amount:amount, meta:meta, name:name}
-      }
+	  }
+	  
+	  createItemData( amount, meta ){
+			let name = `gr_${meta}`;
+			return {amount:amount, meta:meta, name:name}
+	  }
 
 	
 	use( lToken, itemData ){

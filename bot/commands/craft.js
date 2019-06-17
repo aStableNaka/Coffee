@@ -4,7 +4,7 @@ const loader = require("../loader");
 const views = loader("./bot/views/crafting", "./views/crafting");
 const locale = require("../data/EN_US");
 const itemUtils = require("../utils/item.js");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 const recipies = itemUtils.craftingRecipies;
 
 class CommandCraft extends Command {

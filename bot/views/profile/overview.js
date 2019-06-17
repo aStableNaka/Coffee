@@ -1,6 +1,6 @@
 
 let {getCurrentBPBal, addBP, calcIncome, pickaxeLevelUD, calcIncome_UD} = require("../../utils/bp");
-let ufmt = require("../../utils/formatting");
+let ufmt = require("../../utils/fmt");
 let bp = require("../../utils/bp");
 let itemUtils = require("../../utils/item");
 const BigInt = require("big-integer");

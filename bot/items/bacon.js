@@ -1,5 +1,5 @@
 let Item = require("../class/item");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 const locale = require("../data/EN_US");
 
 class ItemBacon extends Item{
@@ -17,8 +17,8 @@ class ItemBacon extends Item{
 		this.charge = 4;
 		this.boost = 20;
 		this.effect = `Your next ${ufmt.block(this.charge)} mines will produce ${ufmt.block(this.boost)} % more profit.`;
-        this.useDialogue = `You eat a slice of bacon!`
-        this.isDroppedByLunchbox = true;
+		this.useDialogue = `You eat a slice of bacon!`
+		this.isDroppedByLunchbox = true;
 		this.isDroppedByLootbox = true;
 	}
 

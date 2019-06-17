@@ -6,8 +6,8 @@ const locale = require("../data/EN_US");
 
 class CommandPreference extends Command{
 	constructor(){
-        super();
-        this.wip = true;
+		super();
+		this.wip = true;
 	}
 	get botAdminOnly(){ return false; }
 	get usesDatabase(){ return false; }
@@ -15,15 +15,15 @@ class CommandPreference extends Command{
 	get mimics(){ return [];}
 	get help(){ return null;}
 	get helpExamples(){ return [
-        ['pref', '', 'View a list of available crafting options!'],
-        ['craft', '< item name >', 'craft an item!']
+		['pref', '', 'View a list of available crafting options!'],
+		['craft', '< item name >', 'craft an item!']
 	];}
 	get helpGroup(){ return "Crafting"; }
 	get helpName(){ return "Crafting"; }
 	get helpPage(){ return 2; }
 	modifyArgs( args ){ return args; }
 	async execute( lToken ){
-        
+		
 	}
 }
 

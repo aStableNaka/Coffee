@@ -1,4 +1,4 @@
-const ufmt = require("../../utils/formatting.js");
+const ufmt = require("../../utils/fmt.js");
 const pN = ufmt.numPretty;
 
 module.exports = function( lToken ){

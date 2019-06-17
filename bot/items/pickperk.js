@@ -1,5 +1,5 @@
 let Item = require("../class/item");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 const itemUtils = require("../utils/item.js");
 const locale = require("../data/EN_US");
 
@@ -15,20 +15,20 @@ class ItemPickPerk extends Item{
 		this.meta = "badperk";
 		this.effect = "Apply this perk to your active pickaxe.";
 
-        this.icon = "https://i.imgur.com/5jC8IIi.png";
-        
+		this.icon = "https://i.imgur.com/5jC8IIi.png";
+		
 		this.isDroppedByLunchbox = false;
 		this.isDroppedByLootbox = true;
-    }
-    
-    createItemData( amount=1, meta ){
+	}
+	
+	createItemData( amount=1, meta ){
 		if(!meta){
 			// Pick a perk to award
 			meta = ufmt.pick( itemUtils.availablePerks, 1 )[0];
 		}
-        let name = this.name+"_"+(meta||this.meta);
-        return { accessor:this.accessor, amount: amount, name:name, meta:meta || this.meta }
-    }
+		let name = this.name+"_"+(meta||this.meta);
+		return { accessor:this.accessor, amount: amount, name:name, meta:meta || this.meta }
+	}
 
 	
 	use( lToken, itemData ){
@@ -63,26 +63,26 @@ class ItemPickPerk extends Item{
 	}
 
 	desc( lToken, itemData ){
-        if(itemData.meta){
+		if(itemData.meta){
 			let perk = itemUtils.pickPerks[itemData.meta];
 			return ufmt.itemDesc([
 				ufmt.block("PickPerk"),
 				ufmt.denote('Perk Name', ufmt.block( perk.name )),
 				ufmt.denote('Perk Effect', perk.desc),
-                ufmt.denote('\nType', ufmt.block('Pickaxe Enchantment')),
+				ufmt.denote('\nType', ufmt.block('Pickaxe Enchantment')),
 				ufmt.denote('Usage', this.effect),
 				ufmt.denote('Warning', 'Perks will only be applied if your pickaxe has an available perk slot.'),
 				ufmt.denote('Warning', 'Once applied, perks cannot be removed.')
-            ]);
-        }else{
-            return ufmt.itemDesc([
-                "*Makes your pickaxe better!*",
-                ufmt.denote('Type', ufmt.block('Pickaxe Enchantment')),
+			]);
+		}else{
+			return ufmt.itemDesc([
+				"*Makes your pickaxe better!*",
+				ufmt.denote('Type', ufmt.block('Pickaxe Enchantment')),
 				ufmt.denote('Usage', this.effect),
 				ufmt.denote('Warning', 'Perks will only be applied if your pickaxe has an available perk slot.'),
 				ufmt.denote('Warning', 'Once applied, perks cannot be removed.')
-            ]);
-        }
+			]);
+		}
 	}
 }
 

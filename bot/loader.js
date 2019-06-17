@@ -13,7 +13,7 @@ function loadDirectory( dir, root, recursive ){
 		if(stat.isFile() && filename.includes(".js")){
 			// Derefrerence the module so we don't run into any cache issues
 			delete require.cache[ require.resolve(`${root}/${ filename }`) ];
-			console.log(`[Loader] Loading ${root}/${ filename }...`);
+			//console.log(`[Loader] Loading ${root}/${ filename }...`);
 			// Load it
 			var m = require( `${root}/${ filename }`);
 			modules[ filename.split(".")[0] ] = m;

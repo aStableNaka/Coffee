@@ -7,7 +7,7 @@ const BigNum = require('bignumber.js');
 
 let {getCurrentBPBal, addBP, calcIncome, pickaxeLevelUD} = require("../utils/bp");
 let bp =require("../utils/bp");
-let ufmt = require("../utils/formatting");
+let ufmt = require("../utils/fmt");
 let itemUtils = require("../utils/item");
 
 function createOutcome( amount=new BigInt(0), desc="" ){

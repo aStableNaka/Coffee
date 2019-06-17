@@ -1,5 +1,5 @@
 let Item = require("../class/item");
-const ufmt = require("../utils/formatting.js");
+const ufmt = require("../utils/fmt.js");
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 var bpUtils = require("../utils/bp");
@@ -32,9 +32,9 @@ class ItemGem extends Item{
 
 	desc( lToken, itemData ){
 		return ufmt.itemDesc([
-                  `A shiny gem worth ${this.increaseValue}% of your current BP bal.`,
-                  `Only one lucky individual can find a ${ufmt.block('Gem')} *per day*. This applies globally.`
-            ]);
+				  `A shiny gem worth ${this.increaseValue}% of your current BP bal.`,
+				  `Only one lucky individual can find a ${ufmt.block('Gem')} *per day*. This applies globally.`
+			]);
 	}
 }
 

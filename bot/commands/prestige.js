@@ -19,17 +19,17 @@ class CommandPrestige extends Command{
 	get helpGroup(){ return null; }
 	get helpName(){ return null; }
 	modifyArgs( args, lToken ){
-        let mArgs = {};
-        let validOptions = ['confirm'];
-        if(args[0]=='confirm'){
-            mArgs.confirm = true;
-        }
-        return mArgs;
-    }
+		let mArgs = {};
+		let validOptions = ['confirm'];
+		if(args[0]=='confirm'){
+			mArgs.confirm = true;
+		}
+		return mArgs;
+	}
 	async execute( lToken ){ 
-        if(lToken.mArgs.confirm){
+		if(lToken.mArgs.confirm){
 			
-        }else{
+		}else{
 			lToken.queryUser( lToken.args.join(" "), ( snowflake )=>{
 				lToken.database.get( snowflake, ( userData )=>{
 					lToken.send( views.overview( lToken, userData ) );
@@ -39,9 +39,9 @@ class CommandPrestige extends Command{
 			}, ( )=>{
 				lToken.send( views.overview( lToken ) );
 			} );
-            
-        }
-    }
+			
+		}
+	}
 }
 
 module.exports = new CommandPrestige();

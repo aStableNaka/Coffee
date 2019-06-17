@@ -1,5 +1,5 @@
 const itemUtils = require("../../utils/item.js");
-const ufmt = require("../../utils/formatting.js");
+const ufmt = require("../../utils/fmt.js");
 const Item = require("../../class/item.js");
 module.exports = function( lToken, itemObject='', itemData='' ){
 	let itemRank = itemObject.getUniqueRank( itemData );
