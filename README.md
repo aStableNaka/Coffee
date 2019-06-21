@@ -1,5 +1,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/d1eeb09874edfefefcee/maintainability)](https://codeclimate.com/github/aStableNaka/Coffee/maintainability)
-Join our Discord support server to try the bot live!
+
+####Join our Discord support server to try the bot live!
 [![Discord Chat](https://img.shields.io/discord/530098686558994443.svg)](https://discord.gg/)  
 
 # Coffee
