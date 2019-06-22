@@ -13,7 +13,7 @@ class ItemCola extends Item{
 		this.rank = 3;
 		this.meta = {};
 
-		this.icon = "https://i.imgur.com/fT8lZ9R.png";
+		this.icon = "https://piskel-imgstore-b.appspot.com/img/76af36e1-94fc-11e9-bf7d-9722320997e8.gif";
 		this.charge = 1;
 		this.boost = 1600;
 		this.effect = `Drinking this will immediately reset your mining cooldown. Also, your next mine will produce ${ufmt.block(this.boost)} % more profit.`;
