@@ -7,6 +7,7 @@ const utils = loader( "./bot/utils", "./utils" ); // Effectively reloads utils
 const fs = require('fs');
 //const adjectives = fs.readFileSync( "./bot/data/english-adjectives.txt" ).toString().split("\n");
 const globalStates = require("../utils/globalstates");
+const classes = loader("./bot/class", './class');
 
 class CommandAdmin extends Command{
 	constructor(){
@@ -182,7 +183,7 @@ class CommandAdmin extends Command{
 			lToken.globalStates.unlockBot();
 		}
 		if(o=='restart'){
-			lToken.database.cleanup();
+			lToken.shared.modules.db.cleanup();
 		}
 		if(o=='restart-nosave'){
 			require("process").exit();

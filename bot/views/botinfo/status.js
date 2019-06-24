@@ -33,8 +33,8 @@ module.exports = function( lToken ){
 					"name":"Database",
 					"value":([
 						`Active Documents: [ ***${ Object.keys( lToken.database.cache ).length }*** ]`,
-						`User Count: [ ***${ Object.keys( lToken.database.global.leaderboards ).length }*** ]`,
-						`Inactive Count: [ ***${ lToken.database.temp.inactive }*** ]`,
+						`User Count: [ ***${ Object.keys( lToken.shared.modules.db.global.leaderboards ).length }*** ]`,
+						`Inactive Count: [ ***${ lToken.shared.modules.db.temp.inactive }*** ]`,
 						`Gross Activity: [ ***0*** ]`
 					]).join("\n"),
 					"inline":true
@@ -51,10 +51,10 @@ module.exports = function( lToken ){
 				{
 					"name":"Bot Statistics",
 					"value":([
-						`# of CMDs Used Total: [ ***${ lToken.database.temp.commandsTotal }*** ]`,
-						`# of CMDs Used This Session: [ ***${ lToken.database.temp.commandsUsed }*** ]`,
-						`# of Times Rate Limited: [ ***${ lToken.database.temp.rateLimits }*** ]`,
-						`# of Miner's Blessings: [ ***${lToken.database.temp.blessings}*** ]`
+						`# of CMDs Used Total: [ ***${ lToken.shared.modules.db.temp.commandsTotal }*** ]`,
+						`# of CMDs Used This Session: [ ***${ lToken.shared.modules.db.temp.commandsUsed }*** ]`,
+						`# of Times Rate Limited: [ ***${ lToken.shared.modules.db.temp.rateLimits }*** ]`,
+						`# of Miner's Blessings: [ ***${lToken.shared.modules.db.temp.blessings}*** ]`
 					]).join("\n"),
 					"inline":true
 				},

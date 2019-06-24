@@ -18,6 +18,7 @@ var shared = {};
 var prompts = {};
 
 const views = loader("./bot/views/admin", "./views/admin");
+const classes = loader("./bot/class", './class');
 
 // Message IDs will be used as identifiers
 let rawHooks = {
@@ -304,7 +305,9 @@ function lTokenProvideResponseHelpers(lToken){
 		msgSendPromise.catch((e) => {
 
 		});
-		msgSendPromise.then(() => {});
+		msgSendPromise.then(() => {
+			lToken.channel.stopTyping();
+		});
 		/*if(lToken.oFlags.stacktrace){
 			var stack = new Error("Labunga").stack;
 			lToken.send("```javascript\n"+stack+"```");
@@ -351,7 +354,7 @@ function lTokenQueryUser(
 ){
 
 	// Search for userQuery matches in the leaderboards user cache
-	let results = Object.values( lToken.database.global.leaderboards ).filter((ldata)=>{
+	let results = Object.values( lToken.shared.modules.db.global.leaderboards ).filter((ldata)=>{
 		return ldata.name.toLowerCase().includes( userQuery.toLowerCase() ) || ldata.id == userQuery.replace('@','');
 	});
 	
@@ -554,6 +557,7 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 			}
 
 			// Differenciate between commands that use the database and those that don't
+			msg.channel.startTyping();
 			executelToken(lToken);
 		}
 	}
@@ -608,6 +612,7 @@ function executelToken(lToken) {
 			// TODO guildData
 			lToken.guildData = {};
 			lToken.userData = userData;
+			Object.setPrototypeOf(lToken.userData, classes.userdata.prototype);
 			if (userData.blacklisted) {
 				lToken.send(views.blacklist(lToken));
 				return;

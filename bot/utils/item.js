@@ -235,7 +235,7 @@ const pickPerks = {
 		desc:"",
 		onMine:(lToken, outcome)=>{
 			let blessing = BigInt.randBetween(1, 10);
-			lToken.database.temp.blessings++;
+			lToken.shared.modules.db.temp.blessings++;
 			bp.addBP( lToken, outcome.multiply(blessing || 1) );
 			return {
 				"name":`${ufmt.block("Perk")} Miner's Blessing`,
@@ -248,7 +248,7 @@ const pickPerks = {
 		desc:"",
 		onMine:(lToken, outcome)=>{
 			let blessing = BigInt.randBetween(2, 20);
-			lToken.database.temp.blessings++;
+			lToken.shared.modules.db.temp.blessings++;
 			bp.addBP( lToken, outcome.multiply(blessing || 1) );
 			return {
 				"name":`${ufmt.block( 'Luck' )} Miner's Blessing`,
@@ -300,10 +300,10 @@ const pickPerks = {
 	"level_up":{
 		name:"Level Up",
 		desc:"Triggered when a pickaxe levels up.",
-		onMine:( lToken )=>{
+		onLevelUp:(lToken)=>{
 			return {
 				"name":`${ufmt.block( 'Pickaxe' )} Level Up!`,
-				"value":`Your pickaxe is now level ${ufmt.block(bp.pickaxeLevelExp(lToken.userData.pickaxe_exp)+1)}.`
+				"value":`Your pickaxe is now level ${ufmt.block(bp.pickaxeLevelExp(lToken.userData.pickaxe_exp))}.`
 			};
 		}
 	},
@@ -317,18 +317,14 @@ const pickPerks = {
 	"treasure_hunter":{
 		name:"Treasure Hunter",
 		desc:`You gain [ **Box Box** ] x3 every time your pickaxe levels up!`,
-		onMine:( lToken )=>{
-			let expProgress = bp.pickaxeExpProgress(lToken.userData.pickaxe_exp);
-
-			// If the progress is at 0
-			if(!expProgress){
-				let itemData = itemUtils.items.lootbox.createItemData(3, 'box_box');
-				itemUtils.addItemToUserData( lToken.userData, itemData );
-				return {
-					"name":`${ufmt.block( 'Perk' )} Treasure Hunter`,
-					"value":`Your ${ufmt.block("Treasure Hunter")} perk has given you ${ufmt.item(itemData)}!`
-				}
-			}
+		onMine:( lToken )=>{},
+		onLevelUp:(lToken)=>{
+			let itemData = itemUtils.items.lootbox.createItemData(3, 'box_box');
+			itemUtils.addItemToUserData( lToken.userData, itemData );
+			return {
+				"name":`${ufmt.block( 'Perk' )} Treasure Hunter`,
+				"value":`Your ${ufmt.block("Treasure Hunter")} perk has given you ${ufmt.item(itemData)}!`
+			};
 		}
 	},
 	"treasure_luck":{

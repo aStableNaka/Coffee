@@ -41,7 +41,7 @@ module.exports = function( lToken, bal, income, count = 0, maxCount = 0 ){
 		}
 	];
 
-	let ldb = lToken.database.getLeaderboardsData( lToken.userData );
+	let ldb = lToken.shared.modules.db.getLeaderboardsData( lToken.userData );
 	if(ldb){
 		descContent+=(`, Rank [ ***${ ldb.rank == 15 ? "00f" : ldb.rank }*** ]`);
 	}
