@@ -1,4 +1,4 @@
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	return {
 		"embed": {
 			"title": "\"Ah ah ah! What's the magic word?\"",

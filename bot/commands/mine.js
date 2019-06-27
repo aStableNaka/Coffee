@@ -51,44 +51,44 @@ class CommandMine extends Command {
 	get helpGroup() {
 		return "BP";
 	}
-	async execute(lToken) {
-		let timeSinceLastMine = new Date().getTime() - lToken.userData.lastmine;
-		if (timeSinceLastMine / 1000 / 60 >= lToken.userData.pickaxe_time) {
-			lToken.userData.lastmine = new Date().getTime();
+	async execute(Chicken) {
+		let timeSinceLastMine = new Date().getTime() - Chicken.userData.lastmine;
+		if (timeSinceLastMine / 1000 / 60 >= Chicken.userData.pickaxe_time) {
+			Chicken.userData.lastmine = new Date().getTime();
 			// Mine success
-			var bal = getCurrentBPBal(lToken);
-			let income = calcIncome(lToken);
-			let outcome = bp.calcPickaxeIncome(lToken.userData);
+			var bal = getCurrentBPBal(Chicken);
+			let income = calcIncome(Chicken);
+			let outcome = bp.calcPickaxeIncome(Chicken.userData);
 			let blessing;
 			let boost = false;
 			let perkMessages = [];
 			let bonusPerks = [];
-			let pickaxeLevel = bp.pickaxeLevelUD(lToken.userData);
+			let pickaxeLevel = bp.pickaxeLevelUD(Chicken.userData);
 			let z = false;
 
 			// Miner's blessing
 			if (Math.random() < 1 / 20) {
 				bonusPerks.push("miners_blessing_luck");
-				lToken.shared.modules.db.temp.blessings++;
+				Chicken.shared.modules.db.temp.blessings++;
 			}
 
 			// TODO may 29 change this back to 1/10
 			// Found treasure
 			if (Math.random() < 1 / 10) {
 				bonusPerks.push("treasure_luck");
-				//lToken.shared.modules.db.temp.blessings++;
+				//Chicken.shared.modules.db.temp.blessings++;
 			}
 			
-			lToken.userData.pickaxe_exp++;
+			Chicken.userData.pickaxe_exp++;
 			// Apply pickaxe perk effects and add message fields
 			// welcome to javascript
 			function perkEventDecorator( eventName, perkAccessor ){
 				return (perks[perkAccessor][eventName]||(()=>{}));
 			}
-			[...bonusPerks, ...lToken.userData.pickaxe_perks].map((perkAccessor) => {
-				let mineField = perkEventDecorator('onMine', perkAccessor)(lToken, outcome);
+			[...bonusPerks, ...Chicken.userData.pickaxe_perks].map((perkAccessor) => {
+				let mineField = perkEventDecorator('onMine', perkAccessor)(Chicken, outcome);
 				
-				if((pickaxeLevel!=bp.pickaxeLevelUD(lToken.userData)&&!z)){
+				if((pickaxeLevel!=bp.pickaxeLevelUD(Chicken.userData)&&!z)){
 					bonusPerks.push('level_up');
 					z = true;
 				}
@@ -97,8 +97,8 @@ class CommandMine extends Command {
 				}
 			});
 			if(z){
-				[...bonusPerks, ...lToken.userData.pickaxe_perks].map((perkAccessor) => {
-					let levelUpField = perkEventDecorator('onLevelUp', perkAccessor)(lToken, outcome);
+				[...bonusPerks, ...Chicken.userData.pickaxe_perks].map((perkAccessor) => {
+					let levelUpField = perkEventDecorator('onLevelUp', perkAccessor)(Chicken, outcome);
 					if(levelUpField){
 						perkMessages.push( levelUpField );
 					}
@@ -106,33 +106,33 @@ class CommandMine extends Command {
 			}
 
 			// Food boosts
-			if (lToken.userData.mineboostcharge > 0) {
-				boost = outcome.divide(100).multiply(lToken.userData.mineboost);
-				lToken.userData.mineboostcharge--;
+			if (Chicken.userData.mineboostcharge > 0) {
+				boost = outcome.divide(100).multiply(Chicken.userData.mineboost);
+				Chicken.userData.mineboostcharge--;
 			}
 
-			addBP(lToken, outcome.add(boost ? boost : 0));
+			addBP(Chicken, outcome.add(boost ? boost : 0));
 			
 
-			lToken.send(views.mine(lToken, outcome, perkMessages, boost));
+			Chicken.send(views.mine(Chicken, outcome, perkMessages, boost));
 		} else {
 			// Mine deny
-			lToken.send(views.mine_deny(lToken, timeSinceLastMine)).then((msg) => {
+			Chicken.send(views.mine_deny(Chicken, timeSinceLastMine)).then((msg) => {
 				let id = msg.id;
-				lToken.userData.msg_m = id;
+				Chicken.userData.msg_m = id;
 				let lastMsg = msg;
-				let initialCmdcount = lToken.userData.cmdcount;
+				let initialCmdcount = Chicken.userData.cmdcount;
 
 				function resend(first) {
-					if (!first && lastMsg.id != lToken.userData.msg_m) {
+					if (!first && lastMsg.id != Chicken.userData.msg_m) {
 						msg.delete().catch((e) => {
 							console.log(`[DiscordMessage] [DeleteError] [mine@93] ${e}`);
 						});
 						return;
 					}
-					if (timeSinceLastMine / 1000 / 60 < lToken.userData.pickaxe_time) {
-						timeSinceLastMine = new Date().getTime() - lToken.userData.lastmine;
-						msg.edit(views.mine_deny(lToken, timeSinceLastMine)).then((newMsg) => {
+					if (timeSinceLastMine / 1000 / 60 < Chicken.userData.pickaxe_time) {
+						timeSinceLastMine = new Date().getTime() - Chicken.userData.lastmine;
+						msg.edit(views.mine_deny(Chicken, timeSinceLastMine)).then((newMsg) => {
 							lastMsg = newMsg;
 							setTimeout(() => {
 								resend();
@@ -141,9 +141,9 @@ class CommandMine extends Command {
 							throw e;
 						});
 					} else {
-						msg.edit(views.mine_available(lToken, timeSinceLastMine));
-						if (lToken.userData.tools.mine_alert) {
-							lToken.send(`[ ***Mine Alert*** ]: <@${lToken.author.id}>, You're ready to mine!`);
+						msg.edit(views.mine_available(Chicken, timeSinceLastMine));
+						if (Chicken.userData.tools.mine_alert) {
+							Chicken.send(`[ ***Mine Alert*** ]: <@${Chicken.author.id}>, You're ready to mine!`);
 						}
 					}
 				}

@@ -18,11 +18,11 @@ class ItemCraftingMaterials extends Item{
 	}
 
 	
-	use( lToken, itemData ){
-		lToken.send('Crafting is not available yet!');
+	use( Chicken, itemData ){
+		Chicken.send('Crafting is not available yet!');
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return `This is used as an ingredient for crafting!`;
 	}
 }

@@ -31,14 +31,14 @@ class ItemPickPerk extends Item{
 	}
 
 	
-	use( lToken, itemData ){
+	use( Chicken, itemData ){
 		if(itemData.meta){
-			itemUtils.items.pickaxe.ensureUserHasDefaultPickaxe( lToken.userData );
+			itemUtils.items.pickaxe.ensureUserHasDefaultPickaxe( Chicken.userData );
 
-			let pickaxeItemData = lToken.userData.items[lToken.userData.pickaxe_accessor];
+			let pickaxeItemData = Chicken.userData.items[Chicken.userData.pickaxe_accessor];
 			let slots = itemUtils.items.pickaxe.getMaxPerkSlots( pickaxeItemData );
-			if(lToken.userData.pickaxe_perks.indexOf(itemData.meta)>-1){
-				lToken.send( "Your pickaxe already has this perk!" );
+			if(Chicken.userData.pickaxe_perks.indexOf(itemData.meta)>-1){
+				Chicken.send( "Your pickaxe already has this perk!" );
 				return Item.useStatus.NO_CONSUME;
 			}
 
@@ -47,22 +47,22 @@ class ItemPickPerk extends Item{
 
 				// This process will ensure perks are always synced
 				pickaxeItemData.meta.perks.push( itemData.meta );
-				lToken.userData.pickaxe_perks = pickaxeItemData.meta.perks;
+				Chicken.userData.pickaxe_perks = pickaxeItemData.meta.perks;
 
-				lToken.send(`You've applied ${ufmt.item(itemData, 1)} to your current pickaxe!`);
+				Chicken.send(`You've applied ${ufmt.item(itemData, 1)} to your current pickaxe!`);
 				return;
 			}else{
-				lToken.send("Your pickaxe doesn't have enough perk slots!");
+				Chicken.send("Your pickaxe doesn't have enough perk slots!");
 				return Item.useStatus.NO_CONSUME;
 			}
 		}else{
-			lToken.send( "How did you get this? :)");
+			Chicken.send( "How did you get this? :)");
 		}
 		return Item.useStatus.NO_CONSUME;
 		
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		if(itemData.meta){
 			let perk = itemUtils.pickPerks[itemData.meta];
 			return ufmt.itemDesc([

@@ -18,51 +18,51 @@ class CommandTemplate extends Command{
 	get helpName(){ return "Profile"; }
 	get helpPage(){ return 2; }
 	modifyArgs( args ){ return args; }
-	async execute( lToken ){
-		if(lToken.mentions[0]){
-			lToken.database.get( String( lToken.mentions[0].id ), ( userData )=>{
-				lToken.shared.modules.db.updateLeaderboards( userData );
-				lToken.send( views.overview(lToken, lToken.mentions[0], userData) );
+	async execute( Chicken ){
+		if(Chicken.mentions[0]){
+			Chicken.database.get( String( Chicken.mentions[0].id ), ( userData )=>{
+				Chicken.shared.modules.db.updateLeaderboards( userData );
+				Chicken.send( views.overview(Chicken, Chicken.mentions[0], userData) );
 			});
 		}else{
-			if( lToken.args[0] ){
+			if( Chicken.args[0] ){
 				// Query users
-				let userQuery = lToken.args.join(" ");
-				let searchStatus = lToken.queryUser( userQuery, ( snowflake )=>{
-					lToken.database.get( snowflake, ( userData )=>{
-						lToken.shared.modules.db.updateLeaderboards( userData );
-						lToken.send( views.overview(lToken, lToken.mentions[0], userData) );
+				let userQuery = Chicken.args.join(" ");
+				let searchStatus = Chicken.queryUser( userQuery, ( snowflake )=>{
+					Chicken.database.get( snowflake, ( userData )=>{
+						Chicken.shared.modules.db.updateLeaderboards( userData );
+						Chicken.send( views.overview(Chicken, Chicken.mentions[0], userData) );
 					});
 				}, ( results )=>{
-					lToken.send( views.found(lToken, results) );
+					Chicken.send( views.found(Chicken, results) );
 				}, ()=>{} );
 
 				// If the search succeeds, theres no need to continue
 				if( searchStatus ){ return; }
 
 				/*
-				let results = Object.values( lToken.database.global.leaderboards ).filter((ldata)=>{
+				let results = Object.values( Chicken.database.global.leaderboards ).filter((ldata)=>{
 					return ldata.name.toLowerCase().includes( .toLowerCase() );
 				});
 				
 				// If there is only one query result...
 				if(results.length==1){
 					let snowflake = results[0].id;
-					lToken.database.get( snowflake, ( userData )=>{
-						lToken.send( views.overview(lToken, lToken.mentions[0], userData) );
-						lToken.shared.modules.db.updateLeaderboards( userData );
+					Chicken.database.get( snowflake, ( userData )=>{
+						Chicken.send( views.overview(Chicken, Chicken.mentions[0], userData) );
+						Chicken.shared.modules.db.updateLeaderboards( userData );
 					});
 					return;
 				}else if(results.length){
 					// If there are multiple query results
-					lToken.send( views.found(lToken, results) );
+					Chicken.send( views.found(Chicken, results) );
 					return;
 				}
 				*/
 			}
-			lToken.shared.modules.db.updateLeaderboards( lToken.userData );
+			Chicken.shared.modules.db.updateLeaderboards( Chicken.userData );
 			// By default, send the user's own profile
-			lToken.send( views.overview(lToken, lToken.author) );
+			Chicken.send( views.overview(Chicken, Chicken.author) );
 		}
 		
 	}

@@ -10,11 +10,11 @@ const { openCollection, mongoose } = require("./mongowrappers");
 
 /**
  * Creates a market entry in the database, returns the market code.
- * @param {lToken} lToken 
+ * @param {Chicken} Chicken 
  * @param {itemData} itemData 
  * @param {Function} callback 
  * @returns marketCode:String
  */
-function createMarketEntry( lToken, itemData, value, callback ){
+function createMarketEntry( Chicken, itemData, value, callback ){
 	
 }

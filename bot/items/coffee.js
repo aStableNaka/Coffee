@@ -22,12 +22,12 @@ class ItemCoffee extends Item{
 	}
 
 	
-	use( lToken, itemData ){
-		lToken.userData.lastmine = 0; // Percent
-		lToken.send(Item.fmtUseMsg( this.useDialogue,[ufmt.denote('Effect', this.effect)]));
+	use( Chicken, itemData ){
+		Chicken.userData.lastmine = 0; // Percent
+		Chicken.send(Item.fmtUseMsg( this.useDialogue,[ufmt.denote('Effect', this.effect)]));
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return `*"A good source of energy!"*\nType: ${ufmt.block('Cooldown Reduction')}\nUsage: ${this.effect}`;
 	}
 }

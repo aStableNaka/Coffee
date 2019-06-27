@@ -23,14 +23,14 @@ class ItemCookie extends Item{
 	}
 
 	
-	use( lToken, itemData ){
-		lToken.userData.mineboost = this.boost; // Percent
-		lToken.userData.mineboostcharge = this.charge;
-		lToken.userData.mineboostsource = this.name;
-		lToken.send(Item.fmtUseMsg( this.useDialogue,[ufmt.denote('Effect', this.effect)]));
+	use( Chicken, itemData ){
+		Chicken.userData.mineboost = this.boost; // Percent
+		Chicken.userData.mineboostcharge = this.charge;
+		Chicken.userData.mineboostsource = this.name;
+		Chicken.send(Item.fmtUseMsg( this.useDialogue,[ufmt.denote('Effect', this.effect)]));
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return ufmt.itemDesc([
 			"*A homemade cookie. It's still warm!*",
 			ufmt.denote('Type', ufmt.block('Mining Boost')),

@@ -15,8 +15,8 @@ class CommandSrc extends Command{
 	get helpGroup(){ return "Src"; }
 	get helpName(){ return "Src"; }
 	modifyArgs( args ){ return args; }
-	async execute( lToken ){ 
-		lToken.send( `<${url}>` );
+	async execute( Chicken ){ 
+		Chicken.send( `<${url}>` );
 	}
 }
 module.exports = new CommandSrc();

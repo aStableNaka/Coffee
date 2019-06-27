@@ -71,15 +71,15 @@ function tokenize(msg) {
  * Splits a message into "Tokens"
  * 
  * Provided fields
- * - lToken.accessor ( command accessor )
- * - lToken.flags ( see @lTokenExpandOFlags )
- * - lToken.args
- * - lToken.msg ( [ DiscordjsMessage object ] )
- * - lToken.mobile ( True if user requests mobile views )
- * - lToken.isLToken ( A not-so-unique identifier for lTokens )
+ * - Chicken.accessor ( command accessor )
+ * - Chicken.flags ( see @ChickenExpandOFlags )
+ * - Chicken.args
+ * - Chicken.msg ( [ DiscordjsMessage object ] )
+ * - Chicken.mobile ( True if user requests mobile views )
+ * - Chicken.isChicken ( A not-so-unique identifier for Chickens )
  * @param {DiscordjsMessage} msg 
  */
-function lTokenize(msg) {
+function Chickenize(msg) {
 	let preferences = modules.db.getGuildPreferences(msg.guild);
 	let tokens = tokenize(msg);
 	/*
@@ -107,22 +107,22 @@ function lTokenize(msg) {
 		msg: msg,
 		mobile: mobile,
 		//max:max,
-		isLToken: true
+		isChicken: true
 	};
 }
 
 /**
  * 
  * Provided fields
- * - lToken.cmd
- * - lToken.eArgsLen
- * @param {lToken} lToken 
+ * - Chicken.cmd
+ * - Chicken.eArgsLen
+ * @param {Chicken} Chicken 
  */
-function lTokenExpandPlaceholders(lToken){
-	let cmd = commands[lToken.accessor];
-	lToken.cmd = cmd;
-	lToken.eArgsLen = 0;
-	lToken.oFlags = {};
+function ChickenExpandPlaceholders(Chicken){
+	let cmd = commands[Chicken.accessor];
+	Chicken.cmd = cmd;
+	Chicken.eArgsLen = 0;
+	Chicken.oFlags = {};
 }
 
 /**
@@ -131,12 +131,12 @@ function lTokenExpandPlaceholders(lToken){
  * 
  * Provided fields
 
- * @param {lToken} lToken
+ * @param {Chicken} Chicken
  */
-function lTokenExpandOFlags(lToken){
-	lToken.flags.map((flag) => {
+function ChickenExpandOFlags(Chicken){
+	Chicken.flags.map((flag) => {
 		var [key, value] = [...flag.split("="), true]
-		lToken.oFlags[key] = value;
+		Chicken.oFlags[key] = value;
 	});
 }
 
@@ -144,22 +144,22 @@ function lTokenExpandOFlags(lToken){
  * Places message tokens into groups
  * 
  * Provided fields
- * - lToken.mentions (All mentions + @[id] mentions)
+ * - Chicken.mentions (All mentions + @[id] mentions)
  * - loken.numbers (All numbers, excluding words)
- * - lToken.words (All words, excluding numericals and symbols)
- * - lToken.quotes (All quotated tokens)
- * - lToken.max (True if arguments includes phrase "max")
- * - lToken.keyPairs, uses key:"value" syntax
- * @param {lToken} lToken 
+ * - Chicken.words (All words, excluding numericals and symbols)
+ * - Chicken.quotes (All quotated tokens)
+ * - Chicken.max (True if arguments includes phrase "max")
+ * - Chicken.keyPairs, uses key:"value" syntax
+ * @param {Chicken} Chicken 
  * @param {DiscordjsMessage} msg 
  */
-async function lTokenGroupArguments(lToken, msg){ // jshint ignore:line
-	lToken.mentions = [...msg.mentions.users.values()];
+async function ChickenGroupArguments(Chicken, msg){ // jshint ignore:line
+	Chicken.mentions = [...msg.mentions.users.values()];
 
 	// Searches for pattern: @[id], @1234592819341
 	(msg.content.match(/@\d{0,}/gi) || []).slice(0,4).map(async (idMention)=>{
 		let snowflake = idMention.replace("@",'');
-		let user = await lToken.client.fetchUser( snowflake ); // jshint ignore:line
+		let user = await Chicken.client.fetchUser( snowflake ); // jshint ignore:line
 
 		// If snowflake search fails (which it will because nodejs is suck ass at realizing fetchUser is an async function)
 		if(!user){
@@ -170,9 +170,9 @@ async function lTokenGroupArguments(lToken, msg){ // jshint ignore:line
 			return;
 		}
 
-		lToken.mentions.push( user );
+		Chicken.mentions.push( user );
 	});
-	lToken.numbers = lToken.args.filter((x) => {
+	Chicken.numbers = Chicken.args.filter((x) => {
 		return !Number.isNaN(parseFloat(x.replace(/,/gi, '')))
 	}).map((x) => {
 		return parseFloat(x.replace(/,/gi, ''));
@@ -180,22 +180,22 @@ async function lTokenGroupArguments(lToken, msg){ // jshint ignore:line
 	
 	let text = msg.content;
 	let keyPairs = text.match(/\w+:".+"/gi) || [];
-	lToken.keyPairs = {};
+	Chicken.keyPairs = {};
 	keyPairs.map( (kp)=>{
 		text = text.replace(kp, '');
 		let m = kp.split(':');
-		lToken.keyPairs[m[0]] = m[1].split('"')[1];
+		Chicken.keyPairs[m[0]] = m[1].split('"')[1];
 	});
 	text = text.split(' ').filter( (x)=>{return x!='';} ).join(' ');
 	
 
-	lToken.words = text.match(/([A-z])\w+/gi);
-	lToken.quotes = text.match(/"[^"]*"/gi);
-	lToken.max = lToken.args.includes('max');
-	lToken.wordsPlus = text.match(/(#?[A-z]?[0-9]?)\w+/gi);
+	Chicken.words = text.match(/([A-z])\w+/gi);
+	Chicken.quotes = text.match(/"[^"]*"/gi);
+	Chicken.max = Chicken.args.includes('max');
+	Chicken.wordsPlus = text.match(/(#?[A-z]?[0-9]?)\w+/gi);
 
 	if(text.indexOf("<@350823530377773057>") == 0){
-		lToken.mentions = lToken.mentions.slice(1);
+		Chicken.mentions = Chicken.mentions.slice(1);
 	}
 }
 
@@ -204,54 +204,54 @@ async function lTokenGroupArguments(lToken, msg){ // jshint ignore:line
  * ease of access
  * 
  * Provided fields
- * - lToken.channel ( DiscordjsChannel )
- * - lToken.author ( DiscordjsUser )
- * @param {lToken} lToken 
+ * - Chicken.channel ( DiscordjsChannel )
+ * - Chicken.author ( DiscordjsUser )
+ * @param {Chicken} Chicken 
  * @param {DiscordjsMessage} msg 
  */
-function lTokenFlattenMsgData(lToken, msg){
-	lToken.channel = msg.channel;
-	lToken.author = msg.author;
-	lToken.guild = msg.guild;
+function ChickenFlattenMsgData(Chicken, msg){
+	Chicken.channel = msg.channel;
+	Chicken.author = msg.author;
+	Chicken.guild = msg.guild;
 }
 
 /**
  * Handles emulation, if emulation is used
  * 
  * Provided fields
- * - lToken.originalAuthor ( Original author of the message )
- * - lToken.emulated ( True if the command uses emulation )
- * @param {lToken} lToken 
+ * - Chicken.originalAuthor ( Original author of the message )
+ * - Chicken.emulated ( True if the command uses emulation )
+ * @param {Chicken} Chicken 
  */
-function lTokenHandleEmulation(lToken){
-	if (lToken.oFlags['emulate']) {
-		lToken.originalAuthor = lToken.author;
-		lToken.emulated = true;
-		lToken.author = lToken.mentions[0];
+function ChickenHandleEmulation(Chicken){
+	if (Chicken.oFlags['emulate']) {
+		Chicken.originalAuthor = Chicken.author;
+		Chicken.emulated = true;
+		Chicken.author = Chicken.mentions[0];
 	}
 }
 
 /**
- * Pass globals into the lToken to be used as needed
+ * Pass globals into the Chicken to be used as needed
  * 
  * Provided fields
- * - lToken.bot
- * - lToken.shared
- * - lToken.cAccessors
- * - lToken.database
- * - lToken.commands
- * - lToken.globalStates
- * - lToken.rawHooks
- * @param {lToken} lToken 
+ * - Chicken.bot
+ * - Chicken.shared
+ * - Chicken.cAccessors
+ * - Chicken.database
+ * - Chicken.commands
+ * - Chicken.globalStates
+ * - Chicken.rawHooks
+ * @param {Chicken} Chicken 
  */
-function lTokenIncludeGloals(lToken){
-	lToken.bot = shared;
-	lToken.shared = shared;
-	lToken.cAccessors = commands;
-	lToken.database = modules.db;
-	lToken.commands = sources;
-	lToken.globalStates = globalStates;
-	lToken.rawHooks = rawHooks;
+function ChickenIncludeGloals(Chicken){
+	Chicken.bot = shared;
+	Chicken.shared = shared;
+	Chicken.cAccessors = commands;
+	Chicken.database = modules.db;
+	Chicken.commands = sources;
+	Chicken.globalStates = globalStates;
+	Chicken.rawHooks = rawHooks;
 }
 
 /**
@@ -259,12 +259,12 @@ function lTokenIncludeGloals(lToken){
  * ( i.e. formatting )
  * 
  * Provided fields
- * - lToken.userData
- * @param {lToken} lToken 
+ * - Chicken.userData
+ * @param {Chicken} Chicken 
  * @param {DiscordjsMessage} msg 
  */
-function lTokenIncludeUserData(lToken, msg){
-	lToken.userData = {
+function ChickenIncludeUserData(Chicken, msg){
+	Chicken.userData = {
 		name: msg.author.username,
 		discriminator: msg.author.discriminator,
 		id: String(msg.author.id)
@@ -276,15 +276,15 @@ function lTokenIncludeUserData(lToken, msg){
  * parser
  * 
  * Provided fields
- * - lToken.mArgs
- * - lToken.usesDatabase ( true if a command needs to access database )
- * @param {lToken} lToken 
+ * - Chicken.mArgs
+ * - Chicken.usesDatabase ( true if a command needs to access database )
+ * @param {Chicken} Chicken 
  */
-function lTokenParseArguments(lToken){
-	let cmd = commands[lToken.accessor];
-	if (lToken.cmd) {
-		lToken.mArgs = cmd.modifyArgs(lToken.args, lToken);
-		lToken.usesDatabase = cmd.usesDatabase;
+function ChickenParseArguments(Chicken){
+	let cmd = commands[Chicken.accessor];
+	if (Chicken.cmd) {
+		Chicken.mArgs = cmd.modifyArgs(Chicken.args, Chicken);
+		Chicken.usesDatabase = cmd.usesDatabase;
 	}
 }
 
@@ -293,68 +293,68 @@ function lTokenParseArguments(lToken){
  * Provide wrappers for different response options
  * 
  * Provided fields
- * - lToken.send()
- * - lToken.prompt()
- * - lToken.messageAdmin();
- * @param {*} lToken 
+ * - Chicken.send()
+ * - Chicken.prompt()
+ * - Chicken.messageAdmin();
+ * @param {*} Chicken 
  */
-function lTokenProvideResponseHelpers(lToken){
+function ChickenProvideResponseHelpers(Chicken){
 	// Sending a message
-	lToken.send = (data, callback) => {
-		let msgSendPromise = lToken.channel.send(data);
+	Chicken.send = (data, callback) => {
+		let msgSendPromise = Chicken.channel.send(data);
 		msgSendPromise.catch((e) => {
 
 		});
 		msgSendPromise.then(() => {
-			lToken.channel.stopTyping();
+			Chicken.channel.stopTyping();
 		});
-		/*if(lToken.oFlags.stacktrace){
+		/*if(Chicken.oFlags.stacktrace){
 			var stack = new Error("Labunga").stack;
-			lToken.send("```javascript\n"+stack+"```");
+			Chicken.send("```javascript\n"+stack+"```");
 		}*/
 		return msgSendPromise;
 	}
 
 	// Prompting the user
 	// For asking questions and having the user respond.
-	lToken.prompt = (data, onNextMessage) => {
-		prompts[lToken.author.id] = onNextMessage;
-		return lToken.channel.send(data);
+	Chicken.prompt = (data, onNextMessage) => {
+		prompts[Chicken.author.id] = onNextMessage;
+		return Chicken.channel.send(data);
 	}
 
-	lToken.messageAdmin = ( data )=>{
+	Chicken.messageAdmin = ( data )=>{
 		modules.client.users.find("id", "133169572923703296").send(data);
 	}
 }
 
-function lTokenProvideAdminHelpers(lToken){
+function ChickenProvideAdminHelpers(Chicken){
 	// If not bot admin, do not go past this point
-	if (!env.bot.admins[lToken.author.id]) {
+	if (!env.bot.admins[Chicken.author.id]) {
 		return;
 	}
-	if (lToken.oFlags['nodb']) {
-		lToken.usesDatabase = false;
+	if (Chicken.oFlags['nodb']) {
+		Chicken.usesDatabase = false;
 	}
 }
 
 /**
  * Search for a user, given a term:userQuery
  * 
- * @param {lToken} lToken 
+ * @param {Chicken} Chicken 
  * @param {String} userQuery 
  * @param {Lambda} onFoundOne (snowflake)=>{}
  * @param {Lambda} onFoundMany (lData[])=>{}
  * @param {Lambda} onFoundNone ()=>{}
  */
-function lTokenQueryUser(
-	lToken, userQuery,
+function ChickenQueryUser(
+	Chicken, userQuery,
 	onFoundOne=console.log,
 	onFoundMany=console.log,
 	onFoundNone=console.log
 ){
 
 	// Search for userQuery matches in the leaderboards user cache
-	let results = Object.values( lToken.shared.modules.db.global.leaderboards ).filter((ldata)=>{
+	let results = Object.values( Chicken.shared.modules.db.global.leaderboards ).filter((ldata)=>{
 		return ldata.name.toLowerCase().includes( userQuery.toLowerCase() ) || ldata.id == userQuery.replace('@','');
 	});
 	
@@ -367,8 +367,8 @@ function lTokenQueryUser(
 		// If there are multiple query results
 		onFoundMany( results );
 		return true;
-	}else if(lToken.mentions[0]){
-		onFoundOne( lToken.mentions[0].id );
+	}else if(Chicken.mentions[0]){
+		onFoundOne( Chicken.mentions[0].id );
 		return true;
 	}else{
 		// No results found
@@ -381,22 +381,22 @@ function lTokenQueryUser(
  * Provide helper functions that perform search operations
  * 
  * Provided fields
- * - lToken.queryUser()
- * @param {lToken} lToken 
+ * - Chicken.queryUser()
+ * @param {Chicken} Chicken 
  */
-function lTokenProvideQueryingHelpers(lToken){
-	lToken.queryUser = (userQuery, onFoundOne, onFoundMany, onFoundNone)=>{
-		return lTokenQueryUser( lToken, userQuery, onFoundOne, onFoundMany, onFoundNone );
+function ChickenProvideQueryingHelpers(Chicken){
+	Chicken.queryUser = (userQuery, onFoundOne, onFoundMany, onFoundNone)=>{
+		return ChickenQueryUser( Chicken, userQuery, onFoundOne, onFoundMany, onFoundNone );
 	}
 }
 
 
-function createHookData_MESSAGE_REACTION_ADD( lToken, msg, emojiName, callback, lifetime ){
+function createHookData_MESSAGE_REACTION_ADD( Chicken, msg, emojiName, callback, lifetime ){
 	//console.log(msg);
 	return {
 		msgID: msg.id.toString(),
-		userID: lToken.author.id.toString(),
-		lToken: lToken,
+		userID: Chicken.author.id.toString(),
+		Chicken: Chicken,
 		emojiName: emojiName,
 		callback: callback,
 		lifetime: lifetime
@@ -424,14 +424,14 @@ module.exports.handleRaw = async function( data ){
 				return;
 			}
 			
-			hook.callback( hook.lToken );
+			hook.callback( hook.Chicken );
 		}
 	}
 }
 
-function createMsgReactionHook( lToken, msg, emojiName, callback, lifetime=120000 ){
-	let hookData = createHookData_MESSAGE_REACTION_ADD( lToken, msg, emojiName, callback, new Date().getTime() + lifetime );
-	let hookIdentifier = createHookIdentifier_MESSAGE_REACTION_ADD( msg.id.toString(), lToken.author.id.toString(), emojiName );
+function createMsgReactionHook( Chicken, msg, emojiName, callback, lifetime=120000 ){
+	let hookData = createHookData_MESSAGE_REACTION_ADD( Chicken, msg, emojiName, callback, new Date().getTime() + lifetime );
+	let hookIdentifier = createHookIdentifier_MESSAGE_REACTION_ADD( msg.id.toString(), Chicken.author.id.toString(), emojiName );
 	rawHooks.MESSAGE_REACTION_ADD[ hookIdentifier ] = hookData;
 	//console.log(`[Hook Create] ${hookIdentifier}`);
 	setTimeout( ()=>{
@@ -444,12 +444,12 @@ function createMsgReactionHook( lToken, msg, emojiName, callback, lifetime=12000
  * Provide helper functions for message hooks
  * 
  * Provided fields
- * - lToken.addReactionHook
- * @param {lToken} lToken 
+ * - Chicken.addReactionHook
+ * @param {Chicken} Chicken 
  */
-function lTokenProvideMessageReactionHooks( lToken ){
-	lToken.addReactionHook = ( msg, emojiName, callback, lifetime=120000 )=>{
-		return createMsgReactionHook( lToken, msg, emojiName, callback, lifetime );
+function ChickenProvideMessageReactionHooks( Chicken ){
+	Chicken.addReactionHook = ( msg, emojiName, callback, lifetime=120000 )=>{
+		return createMsgReactionHook( Chicken, msg, emojiName, callback, lifetime );
 	}
 }
 
@@ -457,42 +457,42 @@ function lTokenProvideMessageReactionHooks( lToken ){
  * Provide additional permissions information
  * 
  * Provided fields
- * - lToken.userIsBotAdmin
- * @param {*} lToken 
+ * - Chicken.userIsBotAdmin
+ * @param {*} Chicken 
  */
-function lTokenVerifyUserPermissions( lToken ){
-	lToken.userIsBotAdmin = !!env.bot.admins[lToken.author.id];
+function ChickenVerifyUserPermissions( Chicken ){
+	Chicken.userIsBotAdmin = !!env.bot.admins[Chicken.author.id];
 }
 
-// Expand the lToken only if it's a valid command
-async function lTokenExpand(lToken) {
-	let msg = lToken.msg;
-	lTokenExpandPlaceholders(lToken);
-	lTokenExpandOFlags(lToken);
-	await lTokenGroupArguments(lToken, msg);
-	lTokenFlattenMsgData(lToken, msg);
-	lTokenHandleEmulation(lToken);
-	lTokenIncludeGloals(lToken);
-	lTokenIncludeUserData(lToken, msg);
-	lTokenParseArguments(lToken);
-	lTokenProvideResponseHelpers(lToken);
-	lTokenProvideAdminHelpers(lToken);
-	lTokenProvideQueryingHelpers(lToken);
-	lTokenVerifyUserPermissions(lToken);
-	lTokenProvideMessageReactionHooks( lToken );
+// Expand the Chicken only if it's a valid command
+async function ChickenExpand(Chicken) {
+	let msg = Chicken.msg;
+	ChickenExpandPlaceholders(Chicken);
+	ChickenExpandOFlags(Chicken);
+	await ChickenGroupArguments(Chicken, msg);
+	ChickenFlattenMsgData(Chicken, msg);
+	ChickenHandleEmulation(Chicken);
+	ChickenIncludeGloals(Chicken);
+	ChickenIncludeUserData(Chicken, msg);
+	ChickenParseArguments(Chicken);
+	ChickenProvideResponseHelpers(Chicken);
+	ChickenProvideAdminHelpers(Chicken);
+	ChickenProvideQueryingHelpers(Chicken);
+	ChickenVerifyUserPermissions(Chicken);
+	ChickenProvideMessageReactionHooks( Chicken );
 }
 
 /*
-	lToken Interface
+	Chicken Interface
 	
 */
 
-function cmdExists(lToken) {
-	return commands[lToken.accessor];
+function cmdExists(Chicken) {
+	return commands[Chicken.accessor];
 }
 
-function isMimic(lToken) {
-	return !!mimics[lToken.accessor];
+function isMimic(Chicken) {
+	return !!mimics[Chicken.accessor];
 }
 
 function containsPrefix(msg) {
@@ -519,12 +519,12 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 		msg.content = "~help";
 	}
 
-	var lToken;
+	var Chicken;
 	// Handle prompts
 	if (prompts[msg.author.id]) {
-		lToken = lTokenize(msg);
-		await lTokenExpand(lToken);
-		prompts[msg.author.id](lToken);
+		Chicken = Chickenize(msg);
+		await ChickenExpand(Chicken);
+		prompts[msg.author.id](Chicken);
 		delete prompts[msg.author.id];
 		return;
 	}
@@ -534,19 +534,19 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 		//console.log("[ready]", msg);
 		modules.db.temp.commandsUsed++;
 		modules.db.temp.commandsTotal++;
-		lToken = lTokenize(msg);
-		lToken.client = client;
-		if (cmdExists(lToken)) {
-			await lTokenExpand(lToken);
+		Chicken = Chickenize(msg);
+		Chicken.client = client;
+		if (cmdExists(Chicken)) {
+			await ChickenExpand(Chicken);
 			//console.log(globalStates.isBotLocked());
 			// Global lock implemtation
-			if( globalStates.isBotLocked() && !lToken.userIsBotAdmin ){
-				lToken.send("The bot is currently under lockdown. Please come back later!");
+			if( globalStates.isBotLocked() && !Chicken.userIsBotAdmin ){
+				Chicken.send("The bot is currently under lockdown. Please come back later!");
 				return;
 			}
 
 			// Check for appropriate permissions
-			if (lToken.cmd.botAdminOnly && !env.bot.admins[lToken.author.id]) {
+			if (Chicken.cmd.botAdminOnly && !env.bot.admins[Chicken.author.id]) {
 				return; // Im sick of people doing stuff
 			}
 
@@ -558,21 +558,21 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 
 			// Differenciate between commands that use the database and those that don't
 			msg.channel.startTyping();
-			executelToken(lToken);
+			executeChicken(Chicken);
 		}
 	}
 }
 
-module.exports.handleMulti = async function (lToken, content, client) { // jshint ignore:line
+module.exports.handleMulti = async function (Chicken, content, client) { // jshint ignore:line
 
 }
 
-function createMonitorEvent(lToken) {
-	let lastMonitor = lToken.userData.monitor[lToken.userData.monitor.length - 1];
+function createMonitorEvent(Chicken) {
+	let lastMonitor = Chicken.userData.monitor[Chicken.userData.monitor.length - 1];
 	let data = {
 		t: new Date().getTime(),
-		m: lToken.msg.content,
-		c: lToken.channel.id
+		m: Chicken.msg.content,
+		c: Chicken.channel.id
 	};
 	// Delta time
 	if (lastMonitor) {
@@ -581,59 +581,59 @@ function createMonitorEvent(lToken) {
 	return data;
 }
 
-function notifyError( lToken, e ){
+function notifyError( Chicken, e ){
 	const ufmt = require("../utils/fmt");
 	let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `;
-	lToken.send("Oh no... Something went wrong! I'll notify the bot admin.");
-	lToken.messageAdmin(
+	Chicken.send("Oh no... Something went wrong! I'll notify the bot admin.");
+	Chicken.messageAdmin(
 		ufmt.join([
 			ufmt.denote( 'Type', 'Command Execution Error' ),
-			ufmt.denote( 'User', ufmt.name(lToken.userData) ),
-			ufmt.denote( 'ID', lToken.msg.author.id),
-			ufmt.denote('Guild', lToken.msg.guild.id),
-			ufmt.denote('Channel', lToken.msg.channel.id),
-			ufmt.denote( 'Command', `\`${lToken.msg.content}\``),
+			ufmt.denote( 'User', ufmt.name(Chicken.userData) ),
+			ufmt.denote( 'ID', Chicken.msg.author.id),
+			ufmt.denote('Guild', Chicken.msg.guild.id),
+			ufmt.denote('Channel', Chicken.msg.channel.id),
+			ufmt.denote( 'Command', `\`${Chicken.msg.content}\``),
 			errorMessage
 		])
 	)
 }
 
-function executelToken(lToken) {
+function executeChicken(Chicken) {
 	
-	if (lToken.usesDatabase) {
-		modules.db.get(lToken.author.id, (userData) => {
+	if (Chicken.usesDatabase) {
+		modules.db.get(Chicken.author.id, (userData) => {
 			// Temporary
-			/*if(!env.bot.admins[ lToken.author.id ]){
-				lToken.send( "This is currently disabled :)\nThank you for your patience." );
+			/*if(!env.bot.admins[ Chicken.author.id ]){
+				Chicken.send( "This is currently disabled :)\nThank you for your patience." );
 				return;
 			}*/
 			// Temporary
 
 			// TODO guildData
-			lToken.guildData = {};
-			lToken.userData = userData;
-			Object.setPrototypeOf(lToken.userData, classes.userdata.prototype);
+			Chicken.guildData = {};
+			Chicken.userData = userData;
+			Object.setPrototypeOf(Chicken.userData, classes.userdata.prototype);
 			if (userData.blacklisted) {
-				lToken.send(views.blacklist(lToken));
+				Chicken.send(views.blacklist(Chicken));
 				return;
 			}
 			
-			lToken.cmd.execute(lToken).then(() => {}).catch( (e)=>{ return notifyError(lToken, e); } );
-			lToken.userData.cmdcount++;
-			lToken.userData.lastuse = new Date().getTime();
+			Chicken.cmd.execute(Chicken).then(() => {}).catch( (e)=>{ return notifyError(Chicken, e); } );
+			Chicken.userData.cmdcount++;
+			Chicken.userData.lastuse = new Date().getTime();
 			if (userData.monitored) {
-				userData.monitor.push(createMonitorEvent(lToken));
+				userData.monitor.push(createMonitorEvent(Chicken));
 			}
-			if (!lToken.msg.guild) {
+			if (!Chicken.msg.guild) {
 				return;
 			}
-			let guildID = String(lToken.msg.guild.id);
+			let guildID = String(Chicken.msg.guild.id);
 			if (!userData.guilds.includes(guildID)) {
 				userData.guilds.push(guildID);
 			}
 		});
 	} else {
-		lToken.cmd.execute(lToken).then(() => {}).catch((e)=>{ return notifyError(lToken, e);});
+		Chicken.cmd.execute(Chicken).then(() => {}).catch((e)=>{ return notifyError(Chicken, e);});
 	}
 }
 
@@ -645,38 +645,38 @@ module.exports.loadCommands = loadCommands;
 ///////////////
 
 /*
- * lToken Interface (v1.1.2)
+ * Chicken Interface (v1.1.2)
  * 
- * - lToken.cmd
- * - lToken.eArgsLen
- * - lToken.accessor ( command accessor )
- * - lToken.flags ( see @lTokenExpandOFlags )
- * - lToken.args
- * - lToken.msg ( [ DiscordjsMessage object ] )
- * - lToken.mobile ( True if user requests mobile views )
- * - lToken.isLToken ( A not-so-unique identifier for lTokens )
- * - lToken.oFlags ( An object that uses flag-names as identifiers )
- * - lToken.mentions (All mentions + @[id] mentions)
+ * - Chicken.cmd
+ * - Chicken.eArgsLen
+ * - Chicken.accessor ( command accessor )
+ * - Chicken.flags ( see @ChickenExpandOFlags )
+ * - Chicken.args
+ * - Chicken.msg ( [ DiscordjsMessage object ] )
+ * - Chicken.mobile ( True if user requests mobile views )
+ * - Chicken.isChicken ( A not-so-unique identifier for Chickens )
+ * - Chicken.oFlags ( An object that uses flag-names as identifiers )
+ * - Chicken.mentions (All mentions + @[id] mentions)
  * - loken.numbers (All numbers, excluding words)
- * - lToken.words (All words, excluding numericals and symbols)
- * - lToken.quotes (All quotated tokens)
- * - lToken.max (True if arguments includes phrase "max")
- * - lToken.channel ( DiscordjsChannel )
- * - lToken.author ( DiscordjsUser )
- * - lToken.bot
- * - lToken.shared
- * - lToken.cAccessors
- * - lToken.database
- * - lToken.commands
- * - lToken.globalStates
- * - lToken.mArgs
- * - lToken.usesDatabase ( true if a command needs to access database )
- * - lToken.send()
- * - lToken.prompt()
- * - lToken.queryUser()
- * - lToken.addReactionHook
- * - lToken.userIsBotAdmin
- * - lToken.rawHooks
- * - lToken.messageAdmin()
- * - lToken.guildData
+ * - Chicken.words (All words, excluding numericals and symbols)
+ * - Chicken.quotes (All quotated tokens)
+ * - Chicken.max (True if arguments includes phrase "max")
+ * - Chicken.channel ( DiscordjsChannel )
+ * - Chicken.author ( DiscordjsUser )
+ * - Chicken.bot
+ * - Chicken.shared
+ * - Chicken.cAccessors
+ * - Chicken.database
+ * - Chicken.commands
+ * - Chicken.globalStates
+ * - Chicken.mArgs
+ * - Chicken.usesDatabase ( true if a command needs to access database )
+ * - Chicken.send()
+ * - Chicken.prompt()
+ * - Chicken.queryUser()
+ * - Chicken.addReactionHook
+ * - Chicken.userIsBotAdmin
+ * - Chicken.rawHooks
+ * - Chicken.messageAdmin()
+ * - Chicken.guildData
 */

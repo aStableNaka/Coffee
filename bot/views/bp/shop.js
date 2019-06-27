@@ -69,20 +69,20 @@ function fmtColorful( entries, userData ){
 let fmts = [ fmtColorful, fmtDefault, fmtColorful, null ];
 
 const ENTRIES_PER_PAGE = 4;
-module.exports = function( lToken, bal, page = 0 ){
+module.exports = function( Chicken, bal, page = 0 ){
 	var fields = [];
 	let extra = 1;
-	let fieldFmter = fmts[ lToken.userData.fmt_pref ] || fmts[ 0 ];
+	let fieldFmter = fmts[ Chicken.userData.fmt_pref ] || fmts[ 0 ];
 
 	// Mobile
-	if( lToken.mobile ){
+	if( Chicken.mobile ){
 		fieldFmter = fmtDefault;
 	}
 
 	var embed = {
 		"embed": {
-			"title": `"${ufmt.name( lToken )}, Here's what I have to offer."`,
-			"description": `${ufmt.name(lToken)}, You have ${fBP(bal)}!`,
+			"title": `"${ufmt.name( Chicken )}, Here's what I have to offer."`,
+			"description": `${ufmt.name(Chicken)}, You have ${fBP(bal)}!`,
 			"color": 0xfec31b,
 			"author":{
 				"name":"Mr. B.P. Banker",
@@ -101,7 +101,7 @@ module.exports = function( lToken, bal, page = 0 ){
 
 	if(page){
 		page = Math.min( Math.max(1, page), Math.ceil(shop.catalogue.length/ENTRIES_PER_PAGE) );
-		lToken.mArgs.page = page;
+		Chicken.mArgs.page = page;
 		// Regular view
 		fields.push({
 			"name":"\u200B",
@@ -109,12 +109,12 @@ module.exports = function( lToken, bal, page = 0 ){
 		});
 
 		let entries = shop.catalogue.slice( (page-1) * ENTRIES_PER_PAGE, (page-1) * ENTRIES_PER_PAGE + ENTRIES_PER_PAGE ).map( (item, i )=>{
-			let userItemAmount = lToken.userData.bpitems[item.alias] || 0;
+			let userItemAmount = Chicken.userData.bpitems[item.alias] || 0;
 			let cost = calcCost( item.alias, 1, userItemAmount );
 			let max = calcMax( item.alias, bal, userItemAmount );
 			return { item:item, userItemAmount:userItemAmount, cost:cost, max:max };	
 		});
-		fieldFmter( entries, lToken.userData ).map( (x)=>{
+		fieldFmter( entries, Chicken.userData ).map( (x)=>{
 			fields.push(x);
 		});
 	}else{
@@ -133,25 +133,25 @@ module.exports = function( lToken, bal, page = 0 ){
 
 		let entries = [...shop.catalogue].sort( (a,b)=>{
 			// Sort from highest cost to lowest cost
-			let userItemAmountA = lToken.userData.bpitems[a.alias] || 0;
-			let userItemAmountB = lToken.userData.bpitems[b.alias] || 0;
+			let userItemAmountA = Chicken.userData.bpitems[a.alias] || 0;
+			let userItemAmountB = Chicken.userData.bpitems[b.alias] || 0;
 			// Changed to sort by income basec on level
-			let costA = bp.calcGenProduction_x1( lToken.userData, a.alias );
-			let costB = bp.calcGenProduction_x1( lToken.userData, b.alias );
+			let costA = bp.calcGenProduction_x1( Chicken.userData, a.alias );
+			let costB = bp.calcGenProduction_x1( Chicken.userData, b.alias );
 			return costB - costA;  // BINTCONV
 		}).filter( ( item )=>{
 			// Filter out the ones that can't be bought
-			let userItemAmount = lToken.userData.bpitems[item.alias] || 0;
+			let userItemAmount = Chicken.userData.bpitems[item.alias] || 0;
 			let max = calcMax( item.alias, bal, userItemAmount );
 			return max > 0;
 		}).slice(0, 4).map( (item, i )=>{
 			// Append the 4 best choices
-			let userItemAmount = lToken.userData.bpitems[item.alias] || 0;
+			let userItemAmount = Chicken.userData.bpitems[item.alias] || 0;
 			let cost = calcCost( item.alias, 1, userItemAmount );
 			let max = calcMax( item.alias, bal, userItemAmount );
 			return { item:item, userItemAmount:userItemAmount, cost:cost, max:max }
 		});
-		fieldFmter( entries, lToken.userData ).map( (x)=>{
+		fieldFmter( entries, Chicken.userData ).map( (x)=>{
 			fields.push(x);
 		});
 

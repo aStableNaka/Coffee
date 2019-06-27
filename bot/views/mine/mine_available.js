@@ -1,7 +1,7 @@
 const ufmt = require("../../utils/fmt.js");
 const pN = ufmt.numPretty;
 
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	return {
 		"embed": {
 			"title": "\"Looks like you've gotten enough rest.\"",

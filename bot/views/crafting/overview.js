@@ -8,7 +8,7 @@ const itemUtils = require("../../utils/item.js");
 const ufmt = require("../../utils/fmt.js");
 const recipies = itemUtils.craftingRecipies;
 
-module.exports = function( lToken, availbleCraftingOptions ){
+module.exports = function( Chicken, availbleCraftingOptions ){
 	  const ingSep = `\n${ufmt.embedWS.multiply(6)}`;
 	  let desc = ufmt.join([
 			'\n',
@@ -21,7 +21,7 @@ module.exports = function( lToken, availbleCraftingOptions ){
 	  
 	  const payload = {
 		"embed": {
-			"title": `Here's a list of your crafting options, ${ ufmt.name( lToken.userData )}`,
+			"title": `Here's a list of your crafting options, ${ ufmt.name( Chicken.userData )}`,
 			"description": desc,
 				  "color": 0x66ff66
 		}

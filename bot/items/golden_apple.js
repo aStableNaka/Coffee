@@ -24,21 +24,21 @@ class ItemGoldenApple extends Item{
 			return {
 				  "golden_apple":{
 						ingredients:[{key:'apple',amount:15},{key:'gold',amount:3}],
-						onCraft:(lToken, amount=1)=>{
+						onCraft:(Chicken, amount=1)=>{
 							  return itemUtils.items.golden_apple.createItemData( amount );
 						}
 				  }
 			};
 	  }
 	  
-	use( lToken, itemData ){
-		lToken.userData.mineboost = this.boost; // Percent
-		lToken.userData.mineboostcharge = this.charge;
-		lToken.userData.mineboostsource = this.name;
-		lToken.send(Item.fmtUseMsg( this.useDialogue,[ufmt.denote('Effect', this.effect)]));
+	use( Chicken, itemData ){
+		Chicken.userData.mineboost = this.boost; // Percent
+		Chicken.userData.mineboostcharge = this.charge;
+		Chicken.userData.mineboostsource = this.name;
+		Chicken.send(Item.fmtUseMsg( this.useDialogue,[ufmt.denote('Effect', this.effect)]));
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return ufmt.itemDesc([
 			"*Be aware of gold poisoning!*",
 			ufmt.denote('Type', ufmt.block('Mining Boost')),

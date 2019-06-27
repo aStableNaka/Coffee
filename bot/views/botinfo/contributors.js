@@ -1,6 +1,6 @@
 const ufmt = require("../../utils/fmt.js");
 
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	return {
 		embed:{
 			title:"Credits/Contributors",

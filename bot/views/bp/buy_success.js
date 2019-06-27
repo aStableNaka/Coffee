@@ -3,10 +3,10 @@ const pN = ufmt.numPretty;
 const fmtBP = ufmt.formatBP;
 const fmtBPi = ufmt.formatBPIllion;
 
-module.exports = function( lToken, bal, nextCost, lastIncome, currentIncome, item, owned ){
+module.exports = function( Chicken, bal, nextCost, lastIncome, currentIncome, item, owned ){
 	let embed = {
 		"embed": {
-			"title": `${ ufmt.name( lToken ) }, you've purchased ${ ufmt.block( item.name ) } x${ lToken.mArgs.amount }!`,
+			"title": `${ ufmt.name( Chicken ) }, you've purchased ${ ufmt.block( item.name ) } x${ Chicken.mArgs.amount }!`,
 			"description": ufmt.join([
 				ufmt.denote('Cost', `\n-${pN( nextCost )} BP`),
 				ufmt.denote('Bal',`\n${ pN( bal ) } BP`),

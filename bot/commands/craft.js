@@ -44,7 +44,7 @@ class CommandCraft extends Command {
 	modifyArgs(args) {
 		return args;
 	}
-	async execute(lToken) {
+	async execute(Chicken) {
 		function searchForAvailableCraftingOptions( userData ){
 			return Object.keys( recipies );
 			let availableOptions = Object.keys( recipies ).filter(( product )=>{
@@ -58,10 +58,10 @@ class CommandCraft extends Command {
 			return availableOptions;
 		}
 
-		let availableCraftingOptions = searchForAvailableCraftingOptions( lToken.userData );
-		let itemAccessor = lToken.words.slice(1).join('_').toLowerCase();
-		let amount = Math.abs( lToken.numbers[0]||1 );
-		let userData = lToken.userData;
+		let availableCraftingOptions = searchForAvailableCraftingOptions( Chicken.userData );
+		let itemAccessor = Chicken.words.slice(1).join('_').toLowerCase();
+		let amount = Math.abs( Chicken.numbers[0]||1 );
+		let userData = Chicken.userData;
 		if(itemAccessor){
 			if(recipies[itemAccessor]){
 				let recipie = recipies[itemAccessor];
@@ -76,14 +76,14 @@ class CommandCraft extends Command {
 					
 					// Transfers ingredients to throwaway inventory
 					recipie.ingredients.map( (ingredient)=>{
-						itemUtils.transferItemToInventory( userData.items, ingredientsUsedInventory, lToken.userData.items[ingredient.key], ingredient.amount*amount );
+						itemUtils.transferItemToInventory( userData.items, ingredientsUsedInventory, Chicken.userData.items[ingredient.key], ingredient.amount*amount );
 						return {key:ingredient, amount:ingredient.amount*amount}
 					});
 
 					//add new item(s) to inventory
-					let itemData = recipie.onCraft( lToken, amount );
+					let itemData = recipie.onCraft( Chicken, amount );
 					itemUtils.addItemToUserData( userData, itemData );
-					lToken.send( views.success( lToken, itemData, ingredientsUsedInventory ) );
+					Chicken.send( views.success( Chicken, itemData, ingredientsUsedInventory ) );
 				}else{
 					// do something else if it's negative
 					let ingredientsNeeded = recipie.ingredients.filter( (ingredient)=>{
@@ -91,13 +91,13 @@ class CommandCraft extends Command {
 					}).map( (ingredient)=>{
 						return {key:ingredient.key, amount:ingredient.amount*amount-(userData.items[ingredient.key]||{amount:0}).amount}
 					});
-					lToken.send( views.insufficient( lToken, amount, itemAccessor, ingredientsNeeded ) );
+					Chicken.send( views.insufficient( Chicken, amount, itemAccessor, ingredientsNeeded ) );
 				}
 			}else{
-				lToken.send( views.notfound( lToken, itemAccessor ) );
+				Chicken.send( views.notfound( Chicken, itemAccessor ) );
 			}
 		}else{
-			lToken.send( views.overview(lToken, availableCraftingOptions ) );
+			Chicken.send( views.overview(Chicken, availableCraftingOptions ) );
 		}
 	}
 }

@@ -130,7 +130,7 @@ function progressBar( n, max, label, len = 10, options = {label:1, styleString:'
 }
 
 function name( userData, options = {styleString:"**", length:100} ){
-	if(userData.isLToken){ userData = userData.userData }
+	if(userData.isChicken){ userData = userData.userData }
 	let name = (userData.nickname?userData.nickname:userData.name || "New User");
 	if( name.slice(0,options.length).length != name.length ){
 		name = name.slice(0,options.length-3) + "...";

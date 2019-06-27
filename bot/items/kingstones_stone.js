@@ -29,20 +29,20 @@ class ItemKingstonsStone extends Item{
 	}
 
 	
-	use( lToken, itemData ){
-		let amount = lToken.mArgs.amount || 1;
+	use( Chicken, itemData ){
+		let amount = Chicken.mArgs.amount || 1;
 		let increase = 16*amount*this.increaseValue;
-		let oldLevel = bp.pickaxeLevelUD( lToken.userData );
-		lToken.userData.pickaxe_exp+=increase;
-		lToken.send( ufmt.join(
+		let oldLevel = bp.pickaxeLevelUD( Chicken.userData );
+		Chicken.userData.pickaxe_exp+=increase;
+		Chicken.send( ufmt.join(
 		[
 			`You hit yourself on the head with ${ufmt.block("Kingstone's Stone")} x${amount} and`,
-			`your ${ufmt.block( lToken.userData.pickaxe_name )} magically levels up!\n${ufmt.block( oldLevel )} -> ${ufmt.block( oldLevel+this.increaseValue*amount )}`
+			`your ${ufmt.block( Chicken.userData.pickaxe_name )} magically levels up!\n${ufmt.block( oldLevel )} -> ${ufmt.block( oldLevel+this.increaseValue*amount )}`
 		]
 	  ) );
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return ufmt.itemDesc([
 			"*A rock with embedded knowledge*",
 			ufmt.denote('Type', ufmt.block('Level Modifier')),

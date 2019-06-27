@@ -1,9 +1,9 @@
-function createPageManager( lToken, msg, pageOperators, lifetime=120000 ){
+function createPageManager( Chicken, msg, pageOperators, lifetime=120000 ){
 	pageOperators.reverse();
 	function doTheThing(){
 		if(pageOperators[0]){
 			let operator = pageOperators.pop();
-			lToken.addReactionHook( msg, operator.emojiName, ()=>{
+			Chicken.addReactionHook( msg, operator.emojiName, ()=>{
 				operator.callback();
 				msg.delete().catch((e)=>{console.log(`[DiscordMessage] [DeleteError] [page@8] ${e}`);});
 			}, lifetime );

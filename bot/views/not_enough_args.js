@@ -1,8 +1,8 @@
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	return {
 		"embed": {
 			"title": "\"Whoops! You didn't add enough args!\"",
-			"description": `This command expected ***${lToken.eArgsLen}*** but you only gave me ${lToken.args.length}`,
+			"description": `This command expected ***${Chicken.eArgsLen}*** but you only gave me ${Chicken.args.length}`,
 			"color": 0xff0000,
 			"author":{
 				"name":"Coffee",

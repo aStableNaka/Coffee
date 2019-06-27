@@ -1,11 +1,11 @@
 const ufmt = require("../../utils/fmt.js");
 const pN = ufmt.numPretty;
 
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	return {
 		"embed": {
 			"title": `"Huh? :D ?"`,
-			"description": `${ufmt.name(lToken)}, are you trying to give away bp?`,
+			"description": `${ufmt.name(Chicken)}, are you trying to give away bp?`,
 			"color": 0xff6666,
 			"author":{
 				"name":"Mr. B.P. Banker",

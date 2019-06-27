@@ -23,11 +23,11 @@ class ItemNametag extends Item{
 	}
 
 	
-	use( lToken, itemData ){
-		lToken.send('Crafting is not available yet!');
+	use( Chicken, itemData ){
+		Chicken.send('Crafting is not available yet!');
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return ufmt.itemDesc([
 				  `Use this to rename your currently equipped pickaxe!`,
 				  ufmt.denote('Usage', 'You will be prompted to pick a new name for your current pickaxe.')

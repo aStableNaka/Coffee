@@ -23,12 +23,12 @@ class ItemMineAlert extends Item{
 	}
 
 	
-	use( lToken, itemData ){
-		lToken.userData.tools.mine_alert = !lToken.userData.tools.mine_alert;
-		lToken.send(`*You press the big red button on the [ **Mine Alert** ] machine.*\n*\*Boop!\**\nEffect: ${lToken.userData.tools.mine_alert ? this.effect_on : this.effect_off}`);
+	use( Chicken, itemData ){
+		Chicken.userData.tools.mine_alert = !Chicken.userData.tools.mine_alert;
+		Chicken.send(`*You press the big red button on the [ **Mine Alert** ] machine.*\n*\*Boop!\**\nEffect: ${Chicken.userData.tools.mine_alert ? this.effect_on : this.effect_off}`);
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return `*"A simple looking machine with a large red button in it's center."*\nType: [ ***Tool*** ]\nUsage: ${this.effect}`;
 	}
 }

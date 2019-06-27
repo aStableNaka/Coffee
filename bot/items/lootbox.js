@@ -79,7 +79,7 @@ class ItemLootbox extends Item{
 					key: 'crafting_materials',
 					amount: 20
 				}],
-				onCraft: (lToken, amount=1) => { // returns itemData
+				onCraft: (Chicken, amount=1) => { // returns itemData
 					return itemUtils.items.lootbox.createItemData(amount, 'good_pickbox');
 				}
 			},
@@ -97,7 +97,7 @@ class ItemLootbox extends Item{
 					key:'foxtail_amulet',
 					amount:5
 				}],
-				onCraft: (lToken, amount=1) => { // returns itemData
+				onCraft: (Chicken, amount=1) => { // returns itemData
 					return itemUtils.items.lootbox.createItemData(amount, 'greater_pickbox');
 				}
 			},
@@ -115,7 +115,7 @@ class ItemLootbox extends Item{
 					key:'orb_of_almanac',
 					amount:1
 				}],
-				onCraft: (lToken, amount=1) => { // returns itemData
+				onCraft: (Chicken, amount=1) => { // returns itemData
 					return itemUtils.items.lootbox.createItemData(amount, 'legendary_pickbox');
 				}
 			}
@@ -131,7 +131,7 @@ class ItemLootbox extends Item{
 					key:'gold',
 					amount:5
 				}],
-				onCraft: (lToken, amount=1) => { // returns itemData
+				onCraft: (Chicken, amount=1) => { // returns itemData
 					return itemUtils.items.lootbox.createItemData(amount, 'pickperk_box');
 				}
 			}
@@ -207,7 +207,7 @@ class ItemLootbox extends Item{
 		} );
 	}
 
-	processLootboxOutcomes( lToken, distribution, amount, dropFilter ){
+	processLootboxOutcomes( Chicken, distribution, amount, dropFilter ){
 		let outcomes = this.pickItemsFromDistribution( distribution, amount, dropFilter );
 		let itemDatas = outcomes.map( ( itemObject )=>{
 			// Since it's generated, we let the item decide how its going to generate its itemdata
@@ -217,7 +217,7 @@ class ItemLootbox extends Item{
 		let formattedTallies = this.formatTalliedOutcomes( tallyObject );
 
 		itemDatas.map( ( outcomeItemData )=>{
-			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
+			itemUtils.addItemToUserData( Chicken.userData, outcomeItemData );
 		});
 
 		return formattedTallies;
@@ -229,186 +229,186 @@ class ItemLootbox extends Item{
 
 	/**
 	 * A lootbox that drops food items
-	 * @param {*} lToken 
+	 * @param {*} Chicken 
 	 * @param {*} itemData 
 	 */
-	meta_lunchbox( lToken, itemData ){
-		let formattedTallies = this.processLootboxOutcomes( lToken, itemUtils.dropDistribution, 2*lToken.mArgs.amount, itemUtils.lunchboxDropFilter );
-		let useDialogue = `You open up your home-made ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
+	meta_lunchbox( Chicken, itemData ){
+		let formattedTallies = this.processLootboxOutcomes( Chicken, itemUtils.dropDistribution, 2*Chicken.mArgs.amount, itemUtils.lunchboxDropFilter );
+		let useDialogue = `You open up your home-made ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, Chicken.mobile )]) );
 	}
 
 	/**
 	 * A lootbox that drops any sort of items
-	 * @param {*} lToken 
+	 * @param {*} Chicken 
 	 * @param {*} itemData 
 	 */
-	meta_lootbox( lToken, itemData ){
-		let formattedTallies = this.processLootboxOutcomes( lToken, itemUtils.dropDistribution, 3*lToken.mArgs.amount, itemUtils.lootboxDropFilter );
-		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
+	meta_lootbox( Chicken, itemData ){
+		let formattedTallies = this.processLootboxOutcomes( Chicken, itemUtils.dropDistribution, 3*Chicken.mArgs.amount, itemUtils.lootboxDropFilter );
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, Chicken.mobile )]) );
 	}
 
-	meta_testbox( lToken, itemData ){
-		let formattedTallies = this.processLootboxOutcomes( lToken, itemUtils.dropDistribution, 10*lToken.mArgs.amount, itemUtils.testboxDropFilter );
-		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
+	meta_testbox( Chicken, itemData ){
+		let formattedTallies = this.processLootboxOutcomes( Chicken, itemUtils.dropDistribution, 10*Chicken.mArgs.amount, itemUtils.testboxDropFilter );
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, Chicken.mobile )]) );
 	}
 
 	/**
 	 * Drops crafting materials
-	 * @param {*} lToken 
+	 * @param {*} Chicken 
 	 * @param {*} itemData 
 	 */
-	meta_materialsbox( lToken, itemData ){
-		let amount = lToken.mArgs.amount;
+	meta_materialsbox( Chicken, itemData ){
+		let amount = Chicken.mArgs.amount;
 		let outcome = 0;
 		new Array(amount).fill(0).map( ()=>{
 			outcome += Math.ceil( Math.random()*2 );
 		})
 		let dropItemData = itemUtils.items.crafting_materials.createItemData( outcome );
-		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
-		itemUtils.addItemToUserData( lToken.userData, dropItemData );
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
+		itemUtils.addItemToUserData( Chicken.userData, dropItemData );
 	}
 
 	/**
 	 * A lootbox that drops a pickaxe
-	 * @param {*} lToken 
+	 * @param {*} Chicken 
 	 * @param {*} itemData 
 	 */
-	meta_pickbox( lToken, itemData, tier=0 ){
-		let amount = lToken.mArgs.amount;
+	meta_pickbox( Chicken, itemData, tier=0 ){
+		let amount = Chicken.mArgs.amount;
 		let itemDatas = new Array(amount).fill(0).map( ()=>{
 			return itemUtils.items.pickaxe.createItemData( 1, null, null, tier );
 		})
 		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
 		itemDatas.map( ( outcomeItemData )=>{
-			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
+			itemUtils.addItemToUserData( Chicken.userData, outcomeItemData );
 		});
 
-		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, Chicken.mobile )]) );
 	}
 
-	meta_good_pickbox(lToken, itemData ){
-		this.meta_pickbox( lToken, itemData, 1 );
+	meta_good_pickbox(Chicken, itemData ){
+		this.meta_pickbox( Chicken, itemData, 1 );
 	}
 
-	meta_greater_pickbox(lToken, itemData ){
-		this.meta_pickbox( lToken, itemData, 2 );
+	meta_greater_pickbox(Chicken, itemData ){
+		this.meta_pickbox( Chicken, itemData, 2 );
 	}
 
-	meta_legendary_pickbox(lToken, itemData ){
-		this.meta_pickbox( lToken, itemData, 3 );
+	meta_legendary_pickbox(Chicken, itemData ){
+		this.meta_pickbox( Chicken, itemData, 3 );
 	}
 
 	/**
 	 * A lootbox that drops gold
-	 * @param {*} lToken 
+	 * @param {*} Chicken 
 	 * @param {*} itemData 
 	 */
-	meta_goldbox( lToken, itemData ){
-		let amount = lToken.mArgs.amount;
+	meta_goldbox( Chicken, itemData ){
+		let amount = Chicken.mArgs.amount;
 		let outcome = 0;
 		new Array(amount).fill(0).map( ()=>{
 			outcome += Math.ceil( Math.random()*1 );
 		})
 		let dropItemData = itemUtils.items.gold.createItemData( outcome );
-		let useDialogue = `You open up ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
-		itemUtils.addItemToUserData( lToken.userData, dropItemData );
+		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]) );
+		itemUtils.addItemToUserData( Chicken.userData, dropItemData );
 	}
 
 	/**
 	 * A lootbox that drops other lootboxes!
-	 * @param {*} lToken 
+	 * @param {*} Chicken 
 	 * @param {*} itemData 
 	 */
-	meta_box_box( lToken, itemData ){
-		let amount = 2*lToken.mArgs.amount;
+	meta_box_box( Chicken, itemData ){
+		let amount = 2*Chicken.mArgs.amount;
 		let itemDatas = new Array(amount).fill(0).map( ()=>{
 			return this.createItemData();
 		})
 		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
 		itemDatas.map( ( outcomeItemData )=>{
-			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
+			itemUtils.addItemToUserData( Chicken.userData, outcomeItemData );
 		});
 
-		let useDialogue = `You open up ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
+		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, Chicken.mobile )]) );
 	}
 
-	meta_badbox( lToken, itemData ){
-		//lToken.send(":D how did you find me?");
-		lToken.messageAdmin( ufmt.join([
+	meta_badbox( Chicken, itemData ){
+		//Chicken.send(":D how did you find me?");
+		Chicken.messageAdmin( ufmt.join([
 			ufmt.denote('Type','Invalid Lootbox used'),
-			ufmt.denote('User',ufmt.name(lToken.userData)),
-			ufmt.denote('Command', ufmt.code(lToken.msg)),
+			ufmt.denote('User',ufmt.name(Chicken.userData)),
+			ufmt.denote('Command', ufmt.code(Chicken.msg)),
 			ufmt.denote('ItemData', ufmt.code(JSON.stringify(itemData, null, "\t"),"json"))
 		]));
-		let newLootboxData = itemUtils.items.lootbox.createItemData(lToken.mArgs.amount, 'lootbox');
-		lToken.send(`Whoa... You're not supposed to have this item!!. Here, have a ${ufmt.item(newLootboxData)} instead.`);
-		itemUtils.addItemToUserData( lToken.userData, newLootboxData );
+		let newLootboxData = itemUtils.items.lootbox.createItemData(Chicken.mArgs.amount, 'lootbox');
+		Chicken.send(`Whoa... You're not supposed to have this item!!. Here, have a ${ufmt.item(newLootboxData)} instead.`);
+		itemUtils.addItemToUserData( Chicken.userData, newLootboxData );
 	}
 
 	/**
 	 * Drops Pick Perk
-	 * @param {*} lToken 
+	 * @param {*} Chicken 
 	 * @param {*} itemData 
 	 */
-	meta_pickperk_box( lToken, itemData ){
-		let amount = lToken.mArgs.amount;
+	meta_pickperk_box( Chicken, itemData ){
+		let amount = Chicken.mArgs.amount;
 		let itemDatas = new Array(amount).fill(0).map( ()=>{
 			return itemUtils.items.pickperk.createItemData( 1 );
 		})
 		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
 		itemDatas.map( ( outcomeItemData )=>{
-			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
+			itemUtils.addItemToUserData( Chicken.userData, outcomeItemData );
 		});
 
-		let useDialogue = `You open up ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
+		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, Chicken.mobile )]) );
 	}
 
 	/**
 	 * A special lootbox you can only obtain once a day!
-	 * @param {*} lToken 
+	 * @param {*} Chicken 
 	 * @param {*} itemData 
 	 */
-	meta_daily_box(lToken, itemData){
-		let amount = 2*lToken.mArgs.amount;
+	meta_daily_box(Chicken, itemData){
+		let amount = 2*Chicken.mArgs.amount;
 		let itemDatas = new Array(amount).fill(0).map( ()=>{
 			return this.createItemData();
 		})
 		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
 		itemDatas.map( ( outcomeItemData )=>{
-			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
+			itemUtils.addItemToUserData( Chicken.userData, outcomeItemData );
 		});
 
-		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, Chicken.mobile )]) );
 	}
 
 	/**
 	 * For debugging purposes
 	 * gives the user 1000 random lootboxes
 	 * uses enabledLootboxes
-	 * @param {*} lToken 
+	 * @param {*} Chicken 
 	 * @param {*} itemData 
 	 */
-	meta_adminbox1000( lToken, itemData ){
-		let amount = 1000*lToken.mArgs.amount;
+	meta_adminbox1000( Chicken, itemData ){
+		let amount = 1000*Chicken.mArgs.amount;
 		let itemDatas = new Array(amount).fill(0).map( ()=>{
 			return this.createItemData(1, null, null, allLootboxes);
 		})
 		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
 		itemDatas.map( ( outcomeItemData )=>{
-			itemUtils.addItemToUserData( lToken.userData, outcomeItemData );
+			itemUtils.addItemToUserData( Chicken.userData, outcomeItemData );
 		});
 
-		let useDialogue = `You open up a ${ ufmt.item( itemData, lToken.mArgs.amount ) }\nand inside it, you find...`;
-		lToken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, lToken.mobile )]) );
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, Chicken.mobile )]) );
 	}
 
 
@@ -416,17 +416,17 @@ class ItemLootbox extends Item{
 
 
 	
-	use( lToken, itemData ){
+	use( Chicken, itemData ){
 		// Test
 		if(this[`meta_${itemData.meta}`]){
-			this[`meta_${itemData.meta}`](lToken, itemData);
+			this[`meta_${itemData.meta}`](Chicken, itemData);
 		} else {
-			this.meta_badbox(lToken, itemData);
+			this.meta_badbox(Chicken, itemData);
 		}
 		
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		switch(itemData.meta){
 			case 'lunchbox':
 				return ufmt.join([

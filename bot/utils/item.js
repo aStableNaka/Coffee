@@ -210,11 +210,11 @@ const pickPerks = {
 	"matts_charity":{
 		name:locale.perks.matts_charity.name,
 		desc:locale.perks.matts_charity.desc,
-		onMine:(lToken, outcome)=>{
-			let income = bp.calcIncome( lToken );
+		onMine:(Chicken, outcome)=>{
+			let income = bp.calcIncome( Chicken );
 			let blessing;
 			if(income.eq(0)){
-				let lvl = bp.pickaxeLevelExp(lToken.userData.pickaxe_exp);
+				let lvl = bp.pickaxeLevelExp(Chicken.userData.pickaxe_exp);
 				blessing = BigInt.randBetween(2, new BigInt(250).add(new BigInt(5).pow(lvl)));
 				return {
 					"name":`${ufmt.block("Perk")} Matt's Charity`,
@@ -226,17 +226,17 @@ const pickPerks = {
 	"food_boost":{
 		name:"Full Belly",
 		desc:"Your sated stomach increases your mining profits.",
-		onMine:(lToken, outcome)=>{
+		onMine:(Chicken, outcome)=>{
 			
 		}
 	},
 	"miners_blessing":{
 		name:"Miner's Blessing",
 		desc:"",
-		onMine:(lToken, outcome)=>{
+		onMine:(Chicken, outcome)=>{
 			let blessing = BigInt.randBetween(1, 10);
-			lToken.shared.modules.db.temp.blessings++;
-			bp.addBP( lToken, outcome.multiply(blessing || 1) );
+			Chicken.shared.modules.db.temp.blessings++;
+			bp.addBP( Chicken, outcome.multiply(blessing || 1) );
 			return {
 				"name":`${ufmt.block("Perk")} Miner's Blessing`,
 				"value":`You've been granted ${ufmt.block("Miner's Blessing")}\n\`\`\`fix\n+ ${ ufmt.bp(outcome.multiply(blessing), "") } ( + ${ blessing.toString() }00% )\`\`\` `
@@ -246,10 +246,10 @@ const pickPerks = {
 	"miners_blessing_luck":{
 		name:"Miner's Blessing",
 		desc:"",
-		onMine:(lToken, outcome)=>{
+		onMine:(Chicken, outcome)=>{
 			let blessing = BigInt.randBetween(2, 20);
-			lToken.shared.modules.db.temp.blessings++;
-			bp.addBP( lToken, outcome.multiply(blessing || 1) );
+			Chicken.shared.modules.db.temp.blessings++;
+			bp.addBP( Chicken, outcome.multiply(blessing || 1) );
 			return {
 				"name":`${ufmt.block( 'Luck' )} Miner's Blessing`,
 				"value":`While digging, you stumble upon an ancient relic which grants you the [ ***Miner's Blessing*** ].\n\`\`\`fix\n+ ${ ufmt.bp(outcome.multiply(blessing), "") } ( + ${ blessing.toString() }00% )\`\`\` `
@@ -259,68 +259,68 @@ const pickPerks = {
 	"determined_endurance":{
 		name:"Determined Endurance",
 		desc:"Your mining cooldown reduces as your pickaxe gains experience. [ **-3.5 sec/lvl** ] with a hard cap of 120 seconds.",
-		onMine:( lToken, outcome )=>{
-			let lvl = bp.pickaxeLevelExp(lToken.userData.pickaxe_exp);
-			let reduction = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 3.5 * lvl * 1000 ));
-			lToken.userData.lastmine-=reduction;
-			//lToken.send(lvl);
+		onMine:( Chicken, outcome )=>{
+			let lvl = bp.pickaxeLevelExp(Chicken.userData.pickaxe_exp);
+			let reduction = Math.floor(Math.min( (Chicken.userData.pickaxe_time-2) * 60 * 1000, 3.5 * lvl * 1000 ));
+			Chicken.userData.lastmine-=reduction;
+			//Chicken.send(lvl);
 			return {
 				"name":`${ufmt.block( 'Perk' )} Determined Endurance`,
 				"value":`Your ${ufmt.block("Determined Endurance")} has reduced your mining cooldown by [ ***${reduction/1000}*** ] seconds!`
 			}
 		},
-		onUnequip:(lToken, itemData)=>{
+		onUnequip:(Chicken, itemData)=>{
 			// Undo the decrease
 			let lvl = bp.pickaxeLevelExp(itemData.meta.exp);
-			let increase = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
-			lToken.userData.lastmine+=increase;
+			let increase = Math.floor(Math.min( (Chicken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
+			Chicken.userData.lastmine+=increase;
 		}
 	},
 	"chrimson_king":{
 		// is that a jojo refrence
 		name:"Chrimson King",
 		desc:"Your a portion of your mining cooldown gets deleted based on your pickaxe level. [ **-5 sec/lvl** ] with a hard cap of 120 seconds.",
-		onMine:( lToken, outcome )=>{
-			let lvl = bp.pickaxeLevelExp(lToken.userData.pickaxe_exp);
-			let reduction = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
-			lToken.userData.lastmine-=reduction;
-			//lToken.send(lvl);
+		onMine:( Chicken, outcome )=>{
+			let lvl = bp.pickaxeLevelExp(Chicken.userData.pickaxe_exp);
+			let reduction = Math.floor(Math.min( (Chicken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
+			Chicken.userData.lastmine-=reduction;
+			//Chicken.send(lvl);
 			return {
 				"name":`${ufmt.block( 'Perk' )} Chrimson King`,
 				"value":`Your ${ufmt.block("Chrimson King")} has deleted [ ***${reduction/1000}*** ] seconds from your cooldown!`
 			}
 		},
-		onUnequip:(lToken, itemData)=>{
+		onUnequip:(Chicken, itemData)=>{
 			// Undo the decrease
 			let lvl = bp.pickaxeLevelExp(itemData.meta.exp);
-			let increase = Math.floor(Math.min( (lToken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
-			lToken.userData.lastmine+=increase;
+			let increase = Math.floor(Math.min( (Chicken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
+			Chicken.userData.lastmine+=increase;
 		}
 	},
 	"level_up":{
 		name:"Level Up",
 		desc:"Triggered when a pickaxe levels up.",
-		onLevelUp:(lToken)=>{
+		onLevelUp:(Chicken)=>{
 			return {
 				"name":`${ufmt.block( 'Pickaxe' )} Level Up!`,
-				"value":`Your pickaxe is now level ${ufmt.block(bp.pickaxeLevelExp(lToken.userData.pickaxe_exp))}.`
+				"value":`Your pickaxe is now level ${ufmt.block(bp.pickaxeLevelExp(Chicken.userData.pickaxe_exp))}.`
 			};
 		}
 	},
 	"no_cooldown":{
 		name:"No Cooldown",
 		desc:"Your pickaxe has no mining cooldown.",
-		onMine:( lToken )=>{
-			lToken.userData.lastmine = 0;
+		onMine:( Chicken )=>{
+			Chicken.userData.lastmine = 0;
 		}
 	},
 	"treasure_hunter":{
 		name:"Treasure Hunter",
 		desc:`You gain [ **Box Box** ] x3 every time your pickaxe levels up!`,
-		onMine:( lToken )=>{},
-		onLevelUp:(lToken)=>{
+		onMine:( Chicken )=>{},
+		onLevelUp:(Chicken)=>{
 			let itemData = itemUtils.items.lootbox.createItemData(3, 'box_box');
-			itemUtils.addItemToUserData( lToken.userData, itemData );
+			itemUtils.addItemToUserData( Chicken.userData, itemData );
 			return {
 				"name":`${ufmt.block( 'Perk' )} Treasure Hunter`,
 				"value":`Your ${ufmt.block("Treasure Hunter")} perk has given you ${ufmt.item(itemData)}!`
@@ -330,9 +330,9 @@ const pickPerks = {
 	"treasure_luck":{
 		name:"Treasure",
 		desc:"Good fortune comes to those who persist",
-		onMine:(lToken)=>{
-			let itemData = perkTreasureHelper( lToken.userData );
-			//lToken.send( `` );
+		onMine:(Chicken)=>{
+			let itemData = perkTreasureHelper( Chicken.userData );
+			//Chicken.send( `` );
 			return {
 				"name":`${ufmt.block( 'Luck' )} Treasure`,
 				"value":`You stumble upon a treasure while mining!\nYou found ${ ufmt.item(itemData) }!`
@@ -343,9 +343,9 @@ const pickPerks = {
 	"dumb_luck":{
 		name:"Dumb Luck",
 		desc:"Your pickaxe is more likely to find treasure.",
-		onMine:( lToken )=>{
+		onMine:( Chicken )=>{
 			if( Math.random() > 1/8 ){ return; }
-			let itemData = perkTreasureHelper( lToken.userData );
+			let itemData = perkTreasureHelper( Chicken.userData );
 			return ufmt.perkMessage('Perk', 'Dumb Luck',
 				`You randomly trip on something... It's a ${ ufmt.item(itemData) }!`
 			);
@@ -355,10 +355,10 @@ const pickPerks = {
 	"soft_handle":{
 		name:"Soft Handle",
 		desc:`Your pickaxe's handle is softer, allowing you to mine more, increasing overall profits by ${50}%!`,
-		onMine:(lToken, outcome)=>{
+		onMine:(Chicken, outcome)=>{
 			let coefficient = 50;
 			let boost = outcome.divide(100).multiply( coefficient );
-			bp.addBP( lToken, boost );
+			bp.addBP( Chicken, boost );
 			return ufmt.perkMessage( 'Perk', 'Soft Handle', 
 				`Your Pickaxe's ${ufmt.block('Soft Handle')} has increased profits by ${coefficient}%\n+ ${ufmt.bp(boost)}`
 			);
@@ -368,10 +368,10 @@ const pickPerks = {
 	"gold_digger":{
 		name:"Gold Digger",
 		desc:"Every 4 mines, you get a [ **Gold** ] x1",
-		onMine:( lToken )=>{
-			if( !(lToken.userData.pickaxe_exp%4) ){
+		onMine:( Chicken )=>{
+			if( !(Chicken.userData.pickaxe_exp%4) ){
 				let itemData = items.gold.createItemData(1);
-				addItemToUserData( lToken.userData, itemData );
+				addItemToUserData( Chicken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Gold Digger',
 					`You found ${ufmt.item(itemData)} while mining!`
 				);
@@ -382,18 +382,18 @@ const pickPerks = {
 	"adaptable":{
 		name:"Adaptable",
 		desc:"Your pickaxe levels up 2x faster!",
-		onMine:( lToken )=>{
-			lToken.userData.pickaxe_exp++;
+		onMine:( Chicken )=>{
+			Chicken.userData.pickaxe_exp++;
 		}
 	},
 
 	"scrapper":{
 		name:"Scrapper",
 		desc:`You have a chance to find [ **Crafting Materials** ] x1 whenever you mine!`,
-		onMine:( lToken )=>{
+		onMine:( Chicken )=>{
 			if( (Math.random()<1/2.5) ){
 				let itemData = itemUtils.items.crafting_materials.createItemData(1);
-				addItemToUserData( lToken.userData, itemData );
+				addItemToUserData( Chicken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Scrapper',
 					`You found ${ufmt.item(itemData)} while mining!`
 				);
@@ -404,11 +404,11 @@ const pickPerks = {
 	"hungry":{
 		name:"Hungry",
 		desc:`Your pickaxe will produce 35% more profit if you have an active mine boost.`,
-		onMine:( lToken, outcome )=>{
-			if(lToken.userData.mineboostcharge==0){return;}
+		onMine:( Chicken, outcome )=>{
+			if(Chicken.userData.mineboostcharge==0){return;}
 			let coefficient = 35;
 			let boost = outcome.divide(100).multiply( coefficient );
-			bp.addBP( lToken, boost );
+			bp.addBP( Chicken, boost );
 			return ufmt.perkMessage( 'Perk', 'Hungry', 
 				`Your sated belly has increased profits by ${coefficient}%\n+ ${ufmt.bp(boost)}`
 			);
@@ -418,12 +418,12 @@ const pickPerks = {
 	"starved":{
 		name:"Starved",
 		desc:`Your pickaxe will produce 3% More profit per LvL. if you have an active mine boost`,
-		onMine:( lToken, outcome )=>{
-			if(lToken.userData.mineboostcharge==0){return;}
-			let level = bp.pickaxeLevelUD( lToken.userData );
+		onMine:( Chicken, outcome )=>{
+			if(Chicken.userData.mineboostcharge==0){return;}
+			let level = bp.pickaxeLevelUD( Chicken.userData );
 			let coefficient = 3;
 			let boost = outcome.divide(100).multiply( coefficient*level );
-			bp.addBP( lToken, boost );
+			bp.addBP( Chicken, boost );
 			return ufmt.perkMessage( 'Perk', 'Starved', 
 				`Your sated belly has increased profits by ${coefficient*level}%\n+ ${ufmt.bp(boost)}`
 			);
@@ -444,10 +444,10 @@ const pickPerks = {
 	"sculptor":{
 		name:"Sculptor",
 		desc:`Your pickaxe is is fine-tuned for sculpting. You are likeley to accidentally make some ${ufmt.block("Kingstone's Stones")} on your mining adventures.`,
-		onMine:(lToken)=>{
+		onMine:(Chicken)=>{
 			if(Math.random()<1/10){ return; }
 			let itemData = itemUtils.items.kingstones_stone.createItemData(1);
-			addItemToUserData( lToken.userData, itemData );
+			addItemToUserData( Chicken.userData, itemData );
 			return ufmt.perkMessage('Perk', 'Sculptor',
 				`While mining, you \**accidentally*\* carve out some emblems into a rock and it turned into a ${ufmt.item(itemData)}!`
 			);
@@ -457,12 +457,12 @@ const pickPerks = {
 	"regurgitation":{
 		name:"Regurgitation",
 		desc:"Your pickaxe has a chance of increasing the charge of your last-used mine boost by +1 ( even if the last mine boost is all used up ) but the mine boost becomes half as effective if the charge was already at 0.",
-		onMine:(lToken)=>{
+		onMine:(Chicken)=>{
 			if(Math.random()>1/8){ return; }
-			if(!lToken.userData.mineboostcharge){
-				lToken.userData.mineboost = Math.floor(lToken.userData.mineboost/2);
+			if(!Chicken.userData.mineboostcharge){
+				Chicken.userData.mineboost = Math.floor(Chicken.userData.mineboost/2);
 			}
-			lToken.userData.mineboostcharge++;
+			Chicken.userData.mineboostcharge++;
 			return ufmt.perkMessage('Perk', 'regurgitation',
 				`You burp but some extra stuff came up... *Gross*...\nOn the bright side, your mine boost has recieved an extra charge!`
 			);
@@ -472,10 +472,10 @@ const pickPerks = {
 	"carb_scrapper":{
 		name:"Carb Scrapper",
 		desc:`If you have an active ${ufmt.block('Bread')} mine boost, you are guaranteed to find ${ufmt.block('Crafting Materials')} when mining!`,
-		onMine:(lToken)=>{
-			if(lToken.userData.mineboostsource.toLowerCase()=='bread' && lToken.userData.mineboostcharge>0){
+		onMine:(Chicken)=>{
+			if(Chicken.userData.mineboostsource.toLowerCase()=='bread' && Chicken.userData.mineboostcharge>0){
 				let itemData = itemUtils.items.crafting_materials.createItemData(1);
-				addItemToUserData( lToken.userData, itemData );
+				addItemToUserData( Chicken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Carb Scrapper',
 					`Your carbs gave you an edge... You found ${ufmt.item(itemData)} while mining!`
 				);

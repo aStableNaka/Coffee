@@ -10,18 +10,18 @@ const trades = {};
 
 /**
  * States: offer, recieve
- * @param {*} lToken 
+ * @param {*} Chicken 
  * @param {*} state 
  */
-function promptTrade( lToken ){
+function promptTrade( Chicken ){
 	
 	
-	lToken.prompt("What is your offer?", ( lToken )=>{
-		console.log(lToken);
+	Chicken.prompt("What is your offer?", ( Chicken )=>{
+		console.log(Chicken);
 	});
 	
 	function doOffer(){
-		lToken.prompt
+		Chicken.prompt
 	}
 }
 
@@ -53,7 +53,7 @@ class CommandPrestige extends Command {
 	get helpName() {
 		return null;
 	}
-	modifyArgs(args, lToken) {
+	modifyArgs(args, Chicken) {
 		let mArgs = { 
 			valid: false,
 			offer:[],
@@ -62,7 +62,7 @@ class CommandPrestige extends Command {
 		};
 		let tradeString = args.split(' ').slice(1).join(' ').join(" ").toLowerCase();
 		let sections = tradeString.split(" for ");
-		let reciever = lToken.mentions[0];
+		let reciever = Chicken.mentions[0];
 
 		// if the tradestring is invalid or the reciever isn't specified
 		if(sections.length!=2 || !reciever){return mArgs;}
@@ -74,16 +74,16 @@ class CommandPrestige extends Command {
 
 		return mArgs;
 	}
-	async execute(lToken) {
-		if(lToken.mentions[0]){
+	async execute(Chicken) {
+		if(Chicken.mentions[0]){
 			let tradeDetails = {
-				from: lToken.userData.id,
-				to: lToken.mentions[0],
+				from: Chicken.userData.id,
+				to: Chicken.mentions[0],
 				offer: {},  // Inventory
 				want: {} // Inventory
 			};
-			console.log(lToken.mArgs);
-			trades[lToken.userData.id] = tradeDetails;
+			console.log(Chicken.mArgs);
+			trades[Chicken.userData.id] = tradeDetails;
 
 			
 		}

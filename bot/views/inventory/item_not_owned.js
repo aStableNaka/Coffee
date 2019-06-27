@@ -1,10 +1,10 @@
 const itemUtils = require("../../utils/item.js");
 const ufmt = require("../../utils/fmt.js");
-module.exports = function( lToken, amount = 1 ){
+module.exports = function( Chicken, amount = 1 ){
 	let embed = {
 		"embed": {
 			"title": "You don't own this item!",
-			"description": `You don't own ${ufmt.block( lToken.mArgs.itemAccessor )} x${amount}!`,
+			"description": `You don't own ${ufmt.block( Chicken.mArgs.itemAccessor )} x${amount}!`,
 			"color": 0xff6666,
 			"author":{
 				"name":"Inventory",

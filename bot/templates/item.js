@@ -16,11 +16,11 @@ class ItemTemplate extends Item{
 	}
 
 	
-	use( lToken, itemData ){
+	use( Chicken, itemData ){
 
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return `Item`;
 	}
 }

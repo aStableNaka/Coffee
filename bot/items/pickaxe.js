@@ -182,50 +182,50 @@ class ItemPickaxe extends Item{
 	}
 
 	
-	use( lToken, itemData ){
+	use( Chicken, itemData ){
 		// Create shifty pickaxe item if it didn't already exist
-		this.ensureUserHasDefaultPickaxe( lToken.userData );
+		this.ensureUserHasDefaultPickaxe( Chicken.userData );
 
-		let unequippedPickItemData = lToken.userData.items[ lToken.userData.pickaxe_accessor ];
+		let unequippedPickItemData = Chicken.userData.items[ Chicken.userData.pickaxe_accessor ];
 		Object.ensure( itemData.meta, Object.clone( this.meta ) );
 
 		// Unequip the pickaxe, save its data
-		Object.keys(lToken.userData).filter(x=>x.indexOf('pickaxe')==0).map((x)=>{
+		Object.keys(Chicken.userData).filter(x=>x.indexOf('pickaxe')==0).map((x)=>{
 			let n = x.split("_")[1];
-			unequippedPickItemData.meta[n] = lToken.userData[x];
+			unequippedPickItemData.meta[n] = Chicken.userData[x];
 		})
 		unequippedPickItemData.amount++;
 		unequippedPickItemData.equipped = false;
 
 		unequippedPickItemData.meta.perks.map( (perkName)=>{
 			let unequip = itemUtils.pickPerks[perkName].onUnequip || (()=>{});
-			unequip( lToken, unequippedPickItemData );
+			unequip( Chicken, unequippedPickItemData );
 		});
 
 		// Equip the new pickaxe
 		Object.keys( itemData.meta ).map( ( key )=>{
 			//console.log(key);
-			lToken.userData[`pickaxe_${key}`] = itemData.meta[key];
+			Chicken.userData[`pickaxe_${key}`] = itemData.meta[key];
 		});
 		itemData.amount--;
 		itemData.equipped = true;
 
-		lToken.send(`You've swapped your ${ ufmt.itemName(unequippedPickItemData.name, 0, "***") } for your ${ ufmt.itemName(itemData.name, 0, "***") }`)
+		Chicken.send(`You've swapped your ${ ufmt.itemName(unequippedPickItemData.name, 0, "***") } for your ${ ufmt.itemName(itemData.name, 0, "***") }`)
 	}
 
 	/**
 	 * 
-	 * @param {*} lToken 
+	 * @param {*} Chicken 
 	 * @param {*} itemData 
 	 */
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		if(!itemData){
-			itemData = this.getActivePickaxeItemData( lToken.userData );
+			itemData = this.getActivePickaxeItemData( Chicken.userData );
 		}
 		let pickaxeDescription = locale.pickaxe.descriptions[itemData.meta.lDescIndex] || `Not much is known about this mysterious pickaxe...`;
 		// if the pickaxe is currenrly equipped.
-		if(itemData.meta.accessor == lToken.userData.pickaxe_accessor){
-			itemData.meta.exp = lToken.userData.pickaxe_exp;
+		if(itemData.meta.accessor == Chicken.userData.pickaxe_accessor){
+			itemData.meta.exp = Chicken.userData.pickaxe_exp;
 		}
 		return ufmt.join([
 			`${ufmt.block(itemData.name)} LvL ${ufmt.block(bp.pickaxeLevelExp(itemData.meta.exp))} tier ${ufmt.block(this.getTier(itemData))}`,

@@ -17,44 +17,44 @@ class CommandHelp extends Command{
 	modifyArgs( args ){
 		return { cmd: args[0], group: args[1]=='group'};
 	}
-	async execute( lToken ){
-		if(!lToken.mArgs.group){
+	async execute( Chicken ){
+		if(!Chicken.mArgs.group){
 
 			// Dynamic view
 			let view = views.help;
 			function pageThing( hookMsg ){
 				// Starting conditions
-				lToken.numbers[0] = Math.min(2, Math.max(0, lToken.numbers[0] || 1));
+				Chicken.numbers[0] = Math.min(2, Math.max(0, Chicken.numbers[0] || 1));
 
 				let pageOperators = [];
-					if(lToken.numbers[0] > 1){
+					if(Chicken.numbers[0] > 1){
 						pageOperators.push(
 							page.createPageOperator( emojis.arrow_left, ()=>{
 
 								// Backwards operation
-								lToken.numbers[0]--;
+								Chicken.numbers[0]--;
 
-								lToken.send( view( lToken ) ).then(pageThing);	
+								Chicken.send( view( Chicken ) ).then(pageThing);	
 							} )
 						)
 					}
-					if(lToken.numbers[0]<2){
+					if(Chicken.numbers[0]<2){
 						pageOperators.push(
 							page.createPageOperator( emojis.arrow_right,
 							()=>{
 
 								// Forewards operation
-								lToken.numbers[0]++;
+								Chicken.numbers[0]++;
 
-								lToken.send( view( lToken ) ).then(pageThing);
+								Chicken.send( view( Chicken ) ).then(pageThing);
 							} )
 						)
 					}
 					
-				page.createPageManager( lToken, hookMsg, pageOperators );
+				page.createPageManager( Chicken, hookMsg, pageOperators );
 			}
 
-			lToken.send( view( lToken ) ).then( pageThing );
+			Chicken.send( view( Chicken ) ).then( pageThing );
 		}
 	}
 }

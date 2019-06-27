@@ -9,16 +9,16 @@ class CommandReload extends Command{
 	get botAdminOnly(){ return true; }
 	get accessors(){ return ['reload']; }
 
-	async execute( lToken ){
-		lToken.send("Reloading commands!");
-		if(lToken.flags.includes("savedb")){
-			lToken.send("Saving Database!");
-			lToken.bot.modules.db.saveDatabase();
+	async execute( Chicken ){
+		Chicken.send("Reloading commands!");
+		if(Chicken.flags.includes("savedb")){
+			Chicken.send("Saving Database!");
+			Chicken.bot.modules.db.saveDatabase();
 		}
-		if(lToken.flags.includes("all")){
-			lToken.client.reloadModules();
+		if(Chicken.flags.includes("all")){
+			Chicken.client.reloadModules();
 		}else{
-			lToken.bot.modules.cmd.loadCommands();
+			Chicken.bot.modules.cmd.loadCommands();
 		}
 	}
 }

@@ -6,12 +6,12 @@ const fBPs = ufmt.formatBPsi;
 const illionaire = ufmt.illionaire;
 const fmtName = ufmt.name;
 
-function fmtDefault( embed, sorted, globals, position, amount, lToken ){
+function fmtDefault( embed, sorted, globals, position, amount, Chicken ){
 	sorted.filter((x)=>{
-		if(lToken.mArgs.local && lToken.msg.guild){
+		if(Chicken.mArgs.local && Chicken.msg.guild){
 			
 			if(!x.guilds){return false;}
-			return x.guilds.indexOf( lToken.msg.guild.id ) > -1;
+			return x.guilds.indexOf( Chicken.msg.guild.id ) > -1;
 		}
 		return x;
 	}).slice( 0, amount ).map( ( lbData, i )=>{
@@ -24,10 +24,10 @@ function fmtDefault( embed, sorted, globals, position, amount, lToken ){
 
 var fmtter = fmtDefault;
 
-module.exports = function( lToken, globals, amount = 5 ){
+module.exports = function( Chicken, globals, amount = 5 ){
 	let embed = {
 		"embed": {
-			"title": (lToken.mArgs.local?lToken.msg.guild+'\'s Local':'Global')+" Leaderboards",
+			"title": (Chicken.mArgs.local?Chicken.msg.guild+'\'s Local':'Global')+" Leaderboards",
 			"description": `Here are the top ${ amount } players.\nGlobal Pot: ${ fBPi( globals.pot ) }\n`,
 			"color": 0xfec31b,
 			"author":{
@@ -40,10 +40,10 @@ module.exports = function( lToken, globals, amount = 5 ){
 
 	let sorted = globals.leaderboardsSorted;
 	let position = -1;
-	sorted.map( (x, i)=>{ if(x.id == lToken.author.id ){ position = i; } } )
+	sorted.map( (x, i)=>{ if(x.id == Chicken.author.id ){ position = i; } } )
 	if(position!=-1){
-		embed.embed.footer = {"icon_url": "https://i.imgur.com/G1k7gZM.png",text:`${ufmt.name( lToken, {styleString:''} )}, you are rank ${position+1} of ${sorted.length}`};
+		embed.embed.footer = {"icon_url": "https://i.imgur.com/G1k7gZM.png",text:`${ufmt.name( Chicken, {styleString:''} )}, you are rank ${position+1} of ${sorted.length}`};
 	}
-	fmtter( embed, sorted, globals, position, amount, lToken );
+	fmtter( embed, sorted, globals, position, amount, Chicken );
 	return embed; 
 }

@@ -1,5 +1,5 @@
 const ufmt = require("../../utils/fmt.js");
-module.exports = function( lToken, userData ){
+module.exports = function( Chicken, userData ){
 	let embed = {
 		embed:{
 			description:""

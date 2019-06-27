@@ -1,11 +1,11 @@
 const ufmt = require("../../utils/fmt.js");
 const pN = ufmt.numPretty;
 
-module.exports = function( lToken, bal, cost, item ){
+module.exports = function( Chicken, bal, cost, item ){
 	return {
 		"embed": {
-			"title": `"You don't have enough BP to buy '${ item.name }' ***x${ lToken.mArgs.amount }***!"`,
-			"description": `${ufmt.name(lToken)}`,
+			"title": `"You don't have enough BP to buy '${ item.name }' ***x${ Chicken.mArgs.amount }***!"`,
+			"description": `${ufmt.name(Chicken)}`,
 			"color": 0xff6666,
 			"author":{
 				"name":"Mr. B.P. Banker",

@@ -1,4 +1,4 @@
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	return {
 		embed:{
 			

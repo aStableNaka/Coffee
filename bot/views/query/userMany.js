@@ -1,3 +1,3 @@
-module.exports = function(lToken, nameQuery){
+module.exports = function(Chicken, nameQuery){
 	
 }

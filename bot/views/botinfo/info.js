@@ -3,7 +3,7 @@ const ufmt = require("../../utils/fmt.js");
 const pBar = ufmt.progressBar;
 const dateCreated = 1546300800000;
 let msToDay = 1000*60*60*24;
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	let obj = {
 		"embed": {
 			"title": "A simple and fun idle game bot.\n[ This bot is still in early beta. ]",

@@ -1,9 +1,9 @@
 const ufmt = require("../../utils/fmt.js");
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	return {
 		"embed": {
-			"title": `\"Hmm... I can't seem to find what you're looking for, ${ufmt.name(lToken)}!\"`,
-			"description":`You asked for [ ***${ lToken.mArgs.itemAlias }*** ]`,
+			"title": `\"Hmm... I can't seem to find what you're looking for, ${ufmt.name(Chicken)}!\"`,
+			"description":`You asked for [ ***${ Chicken.mArgs.itemAlias }*** ]`,
 			"color": 0xff6666,
 			"author":{
 				"name":"Mr. B.P. Banker",

@@ -22,7 +22,7 @@ class CommandPreference extends Command{
 	get helpName(){ return "Crafting"; }
 	get helpPage(){ return 2; }
 	modifyArgs( args ){ return args; }
-	async execute( lToken ){
+	async execute( Chicken ){
 		
 	}
 }

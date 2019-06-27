@@ -22,15 +22,15 @@ class ItemGem extends Item{
 		this.increaseValue = 334;
 	}
 
-	use( lToken, itemData ){
-		let amount = lToken.mArgs.amount || 1;
-		let bal = bpUtils.getCurrentBPBal( lToken );
+	use( Chicken, itemData ){
+		let amount = Chicken.mArgs.amount || 1;
+		let bal = bpUtils.getCurrentBPBal( Chicken );
 		let outcome = new BigInt( new BigNum( bal.toString() ).times(new BigNum(1+this.increaseValue*0.01).pow( amount )).integerValue().toString() ).subtract(bal);
-		bpUtils.addBP( lToken, outcome );
-		lToken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gem", amount)} for BP!`,[`+ ${ ufmt.numPretty( outcome ) } BP \n( + ${ufmt.numPretty( Math.round( (Math.pow(1+0.01*this.increaseValue, amount)-1)*100) )}% )`]) );
+		bpUtils.addBP( Chicken, outcome );
+		Chicken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gem", amount)} for BP!`,[`+ ${ ufmt.numPretty( outcome ) } BP \n( + ${ufmt.numPretty( Math.round( (Math.pow(1+0.01*this.increaseValue, amount)-1)*100) )}% )`]) );
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return ufmt.itemDesc([
 				  `A shiny gem worth ${this.increaseValue}% of your current BP bal.`,
 				  `Only one lucky individual can find a ${ufmt.block('Gem')} *per day*. This applies globally.`

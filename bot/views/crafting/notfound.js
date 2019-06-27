@@ -6,6 +6,6 @@ const itemUtils = require("../../utils/item.js");
 const ufmt = require("../../utils/fmt.js");
 const recipies = itemUtils.craftingRecipies;
 
-module.exports = function( lToken, itemAccessor ){
+module.exports = function( Chicken, itemAccessor ){
 	  return `"${itemAccessor}" can't be crafted! Use \`~craft\` to view all crafting options!`;
 }

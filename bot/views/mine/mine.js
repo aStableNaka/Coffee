@@ -3,7 +3,7 @@ const bp = require("../../utils/bp.js");
 const pN = ufmt.numPretty;
 const fBP = ufmt.formatBP;
 var bpUtils = require("../../utils/bp");
-module.exports = function( lToken, outcome, perkMessages, boost ){
+module.exports = function( Chicken, outcome, perkMessages, boost ){
 	let embed = {
 		"embed": {
 			"title": "\"Dig! Dig! Dig!\"",
@@ -15,15 +15,15 @@ module.exports = function( lToken, outcome, perkMessages, boost ){
 			},
 			"fields": [],
 			"footer":{
-				"text":`${ufmt.block(lToken.userData.pickaxe_name, '')} LvL ${ bp.pickaxeLevelUD( lToken.userData ) }`
+				"text":`${ufmt.block(Chicken.userData.pickaxe_name, '')} LvL ${ bp.pickaxeLevelUD( Chicken.userData ) }`
 			}
 		}
 	}
 
 	if(boost){
-		embed.embed.description+=`\n*Your [ **${ lToken.userData.mineboostsource }** ] has increased base profits by [ **${ lToken.userData.mineboost }%** ]*\n+ ${ fBP(boost) }`,
+		embed.embed.description+=`\n*Your [ **${ Chicken.userData.mineboostsource }** ] has increased base profits by [ **${ Chicken.userData.mineboost }%** ]*\n+ ${ fBP(boost) }`,
 		embed.embed.footer = {
-			text: `Your [ ${ lToken.userData.mineboostsource } ] has [ ${ lToken.userData.mineboostcharge } ] ${ufmt.plural( lToken.userData.mineboostcharge, 'charge', 'charges' )} left!`
+			text: `Your [ ${ Chicken.userData.mineboostsource } ] has [ ${ Chicken.userData.mineboostcharge } ] ${ufmt.plural( Chicken.userData.mineboostcharge, 'charge', 'charges' )} left!`
 		};
 	}
 
@@ -35,17 +35,17 @@ module.exports = function( lToken, outcome, perkMessages, boost ){
 	 * 117182716780216325 alex
 	 */
 	/*
-	if(lToken.author.id == "327513269541535744" && !lToken.userData.mattbomb){
-		if(bpUtils.calcBal_UD( lToken.userData ).gt( "300000000" )){
-			lToken.database.get("117182716780216325", ( alexUserData )=>{
+	if(Chicken.author.id == "327513269541535744" && !Chicken.userData.mattbomb){
+		if(bpUtils.calcBal_UD( Chicken.userData ).gt( "300000000" )){
+			Chicken.database.get("117182716780216325", ( alexUserData )=>{
 				let bal = alexUserData.bpbal;
 				embed.embed.fields.push({
 					"name":"Well it ain't 1 Billion...",
 					"value":"Congrats Mattyboi, alex has blessed you with his wealth.\n```fix\n+ "+ fBP( bal, '' ) +"```"
 				});
 				alexUserData.bpbal = "0";
-				bpUtils.addBP( lToken, bal );
-				lToken.userData.mattbomb = true;
+				bpUtils.addBP( Chicken, bal );
+				Chicken.userData.mattbomb = true;
 			});
 		}
 	}

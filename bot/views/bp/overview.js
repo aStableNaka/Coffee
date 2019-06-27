@@ -9,8 +9,8 @@ const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 const bp = require("../../utils/bp.js");
 const locale = require("../../data/EN_US.json");
-module.exports = function( lToken, bal, income, count = 0, maxCount = 0 ){
-	let descContent = `**${ufmt.name(lToken, {styleString:''})}**, ${ illionaire(bal) }`;
+module.exports = function( Chicken, bal, income, count = 0, maxCount = 0 ){
+	let descContent = `**${ufmt.name(Chicken, {styleString:''})}**, ${ illionaire(bal) }`;
 	let embed = {
 		"embed": {
 			"title": ``,
@@ -22,7 +22,7 @@ module.exports = function( lToken, bal, income, count = 0, maxCount = 0 ){
 			},
 			"footer": {
 				"icon_url": "https://i.imgur.com/yMVIb0V.png",
-				"text": `${ pNi( Math.floor( lToken.userData.bptotal ) )} BP life-time earnings.`
+				"text": `${ pNi( Math.floor( Chicken.userData.bptotal ) )} BP life-time earnings.`
 			}
 		}
 	}
@@ -41,7 +41,7 @@ module.exports = function( lToken, bal, income, count = 0, maxCount = 0 ){
 		}
 	];
 
-	let ldb = lToken.shared.modules.db.getLeaderboardsData( lToken.userData );
+	let ldb = Chicken.shared.modules.db.getLeaderboardsData( Chicken.userData );
 	if(ldb){
 		descContent+=(`, Rank [ ***${ ldb.rank == 15 ? "00f" : ldb.rank }*** ]`);
 	}
@@ -49,10 +49,10 @@ module.exports = function( lToken, bal, income, count = 0, maxCount = 0 ){
 	if(count!=0){
 		//embed.embed.footer.text+=` ${ufmt.progressBar( count, maxCount, 'Refreshes', 10, {label:false, percent:false, styleString:' '} )}`;
 	}
-	let wabajack = lToken.userData.pickaxe_exp%locale.messages.length;
+	let wabajack = Chicken.userData.pickaxe_exp%locale.messages.length;
 	let marquee = ufmt.marquee( ` - - ${[locale.messages.slice( wabajack ), ...locale.messages.slice( 0, wabajack )].join(" - - ")}`, count, 60 );
 	marquee = '';
-	embed.embed.title+=`${!lToken.mobile?marquee:''}\n***Overview***`;
+	embed.embed.title+=`${!Chicken.mobile?marquee:''}\n***Overview***`;
 	embed.embed.description += `${descContent}`;
 
 	 // BINTCONV

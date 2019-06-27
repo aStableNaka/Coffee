@@ -9,7 +9,7 @@ class Command{
 	get helpGroup(){ return null; }
 	get helpName(){ return null; }
 	modifyArgs( args ){ return args; }
-	async execute( lToken ){ return null; }
+	async execute( Chicken ){ return null; }
 }
 
 module.exports = Command;

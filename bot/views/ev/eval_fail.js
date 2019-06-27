@@ -1,8 +1,8 @@
-module.exports = function( lToken, error ){
+module.exports = function( Chicken, error ){
 	return {
 		"embed": {
 			"title": "\"Beep Boop! Eval Fail!\"",
-			"description": "```" + lToken.mArgs + "```",
+			"description": "```" + Chicken.mArgs + "```",
 			"color": 0xff6666,
 			"author":{
 				"name":"Coffee Eval",

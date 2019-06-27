@@ -1,12 +1,12 @@
 const itemUtils = require("../../utils/item.js");
 const ufmt = require("../../utils/fmt.js");
-module.exports = function( lToken, page, userData, numberOfItems, itemsPerPage, numberOfPages, filter ){
-	userData = userData || lToken.userData;
+module.exports = function( Chicken, page, userData, numberOfItems, itemsPerPage, numberOfPages, filter ){
+	userData = userData || Chicken.userData;
 	let embed = {
 		"embed":{
 			"title":`${ufmt.name( userData )}'s inventory`,
 			"description":"",
-			"footer":{text:`Page ${(page+1)}/${numberOfPages} - Showing ${itemsPerPage} items.${lToken.keyPairs.filter?` Filtering for "${lToken.keyPairs.filter}"`:''}`}
+			"footer":{text:`Page ${(page+1)}/${numberOfPages} - Showing ${itemsPerPage} items.${Chicken.keyPairs.filter?` Filtering for "${Chicken.keyPairs.filter}"`:''}`}
 		}
 	};
 	//console.log(page);

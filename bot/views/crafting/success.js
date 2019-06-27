@@ -6,7 +6,7 @@ const itemUtils = require("../../utils/item.js");
 const ufmt = require("../../utils/fmt.js");
 const recipies = itemUtils.craftingRecipies;
 
-module.exports = function( lToken, itemData, ingredientsUsedInventory ){
+module.exports = function( Chicken, itemData, ingredientsUsedInventory ){
 	  let desc = ufmt.join([
 			`You successfully craft ${ufmt.item(itemData)}!\n`,
 			`Ingredients used:`,

@@ -40,25 +40,25 @@ class CommandBotinfo extends Command{
 	get helpName(){ return "Botinfo"; }
 	get helpPage(){ return 2; }
 	modifyArgs( args ){ return args; }
-	async execute( lToken ){
-		if(lToken.args[0]=='status'){
-			lToken.send( views.status( lToken ) );
-		}else if(lToken.args[0]=='src'){
-			lToken.send( `<${url}>\nhttps://github.com/aStableNaka/Coffee` );
+	async execute( Chicken ){
+		if(Chicken.args[0]=='status'){
+			Chicken.send( views.status( Chicken ) );
+		}else if(Chicken.args[0]=='src'){
+			Chicken.send( `<${url}>\nhttps://github.com/aStableNaka/Coffee` );
 		}
-		else if(lToken.args[0]=='contributors'){
-			lToken.send( views.contributors( lToken ) );
+		else if(Chicken.args[0]=='contributors'){
+			Chicken.send( views.contributors( Chicken ) );
 		}
-		else if(lToken.args[0]=='support'){
-			lToken.author.send( `Here's the link to my support server! ${serverURL}` );
-			lToken.send("I've sent you an invite to my support server. Check your DMs.");
-		}else if(lToken.args[0]=='patreon'){
-			lToken.send('[Click here to become a Patron!](https://www.patreon.com/coffeedev)');
+		else if(Chicken.args[0]=='support'){
+			Chicken.author.send( `Here's the link to my support server! ${serverURL}` );
+			Chicken.send("I've sent you an invite to my support server. Check your DMs.");
+		}else if(Chicken.args[0]=='patreon'){
+			Chicken.send('[Click here to become a Patron!](https://www.patreon.com/coffeedev)');
 		}
-		else if(lToken.args[0]=='changelogs'){
-			lToken.send( views.changelogs( locale.changelogs ) );
+		else if(Chicken.args[0]=='changelogs'){
+			Chicken.send( views.changelogs( locale.changelogs ) );
 		}else{
-			lToken.send( views.info( lToken ) );
+			Chicken.send( views.info( Chicken ) );
 		}
 		
 	}

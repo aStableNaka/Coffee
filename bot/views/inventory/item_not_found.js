@@ -1,9 +1,9 @@
 const itemUtils = require("../../utils/item.js");
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	let embed = {
 		"embed": {
 			"title": "Item not found",
-			"description": `The item "${lToken.mArgs.itemAccessor}" doesn't exist!`,
+			"description": `The item "${Chicken.mArgs.itemAccessor}" doesn't exist!`,
 			"color": 0xff6666,
 			"author":{
 				"name":"Inventory",

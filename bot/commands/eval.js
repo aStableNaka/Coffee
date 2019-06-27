@@ -30,39 +30,39 @@ class CommandEval extends Command{
 		return args.join(" ");
 	}
 	get usesDatabase() { return true; }
-	async execute( lToken ){
+	async execute( Chicken ){
 		try{
-			let modules = lToken.bot.modules;
+			let modules = Chicken.bot.modules;
 			let db = modules.db;
-			let commands = lToken.bot.commands;
-			let author = lToken.author;
-			let userData = lToken.userData;
-			let send = (...args)=>{ lToken.send(...args)};
+			let commands = Chicken.bot.commands;
+			let author = Chicken.author;
+			let userData = Chicken.userData;
+			let send = (...args)=>{ Chicken.send(...args)};
 
-			lToken.mArgs = lToken.mArgs.replace("```javascript\n",'\n').replace('```','');
+			Chicken.mArgs = Chicken.mArgs.replace("```javascript\n",'\n').replace('```','');
 			// Env protection
-			lToken.mArgs = lToken.mArgs.replace(/env/gi, '({})');
-			console.log(lToken.mArgs);
-			let ev = eval(lToken.mArgs);
+			Chicken.mArgs = Chicken.mArgs.replace(/env/gi, '({})');
+			console.log(Chicken.mArgs);
+			let ev = eval(Chicken.mArgs);
 
 			let jRes = function( msg ){
-				views.eval_success( lToken, ufmt.code( JSON.stringify(msg, null, "\t") ) );
+				views.eval_success( Chicken, ufmt.code( JSON.stringify(msg, null, "\t") ) );
 			}
 
-			if(lToken.oFlags["noresponse"]){return;}
-			if(lToken.flags.includes('json')){ ev = JSON.stringify(ev, null, "\t"); }
-			if(lToken.flags.includes('simple')){
-				lToken.send( ev );
+			if(Chicken.oFlags["noresponse"]){return;}
+			if(Chicken.flags.includes('json')){ ev = JSON.stringify(ev, null, "\t"); }
+			if(Chicken.flags.includes('simple')){
+				Chicken.send( ev );
 			}else{
-				lToken.send( views.eval_success( lToken, ufmt.code(ev) ) );
+				Chicken.send( views.eval_success( Chicken, ufmt.code(ev) ) );
 			}
-			if(lToken.oFlags["save"]){
+			if(Chicken.oFlags["save"]){
 				let filename = `./debug/eval_${new Date().getTime()}.txt`;
 				fs.writeFileSync( filename, ev );
-				lToken.send(`[ Eval ] data written to ${filename}`);
+				Chicken.send(`[ Eval ] data written to ${filename}`);
 			}
 		}catch(error){
-			lToken.send( views.eval_fail( lToken, error ) );
+			Chicken.send( views.eval_fail( Chicken, error ) );
 		}
 	}
 }

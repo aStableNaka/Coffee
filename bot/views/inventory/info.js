@@ -1,12 +1,12 @@
 const itemUtils = require("../../utils/item.js");
 const ufmt = require("../../utils/fmt.js");
 const Item = require("../../class/item.js");
-module.exports = function( lToken, itemObject='', itemData='' ){
+module.exports = function( Chicken, itemObject='', itemData='' ){
 	let itemRank = itemObject.getUniqueRank( itemData );
 	let embed = {
 		"embed": {
 			"title": ufmt.block( Item.ranks[itemRank] ) +' '+ ufmt.itemNameNoBlock(itemData.name || itemObject.name),
-			"description": itemObject.desc( lToken, itemData ),
+			"description": itemObject.desc( Chicken, itemData ),
 			"color": Item.rankColors[itemRank],
 			"author":{
 				"name":"Item Info",

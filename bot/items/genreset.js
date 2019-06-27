@@ -29,11 +29,11 @@ class ItemGenReset extends Item{
 	  }
 
 	
-	use( lToken, itemData ){
+	use( Chicken, itemData ){
 		
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return `A shiny metal coin worth ${this.increaseValue}% of your current BP bal.`;
 	}
 }

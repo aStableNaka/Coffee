@@ -7,7 +7,7 @@
 const ufmt = require("../../utils/fmt.js");
 const recipies = itemUtils.craftingRecipies;
 
-module.exports = function( lToken, amount, itemAccessor, ingredientsNeeded ){
+module.exports = function( Chicken, amount, itemAccessor, ingredientsNeeded ){
 	  let desc = ufmt.join([
 			`You don't have enough ingredients to craft ${ufmt.block(itemAccessor)} x${amount}!\n`,
 			`You need:`,

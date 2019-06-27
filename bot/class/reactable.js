@@ -1,5 +1,5 @@
 class Reactable{
-	constructor( lToken, msg, reactions ){
+	constructor( Chicken, msg, reactions ){
 		this.promise = msg;
 	}
 }

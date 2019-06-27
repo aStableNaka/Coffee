@@ -18,7 +18,7 @@ class CommandPrestige extends Command{
 	get helpExamples(){ return null;/*[["command", "< parameters >", "desc"]];*/ }
 	get helpGroup(){ return null; }
 	get helpName(){ return null; }
-	modifyArgs( args, lToken ){
+	modifyArgs( args, Chicken ){
 		let mArgs = {};
 		let validOptions = ['confirm'];
 		if(args[0]=='confirm'){
@@ -26,18 +26,18 @@ class CommandPrestige extends Command{
 		}
 		return mArgs;
 	}
-	async execute( lToken ){ 
-		if(lToken.mArgs.confirm){
+	async execute( Chicken ){ 
+		if(Chicken.mArgs.confirm){
 			
 		}else{
-			lToken.queryUser( lToken.args.join(" "), ( snowflake )=>{
-				lToken.database.get( snowflake, ( userData )=>{
-					lToken.send( views.overview( lToken, userData ) );
+			Chicken.queryUser( Chicken.args.join(" "), ( snowflake )=>{
+				Chicken.database.get( snowflake, ( userData )=>{
+					Chicken.send( views.overview( Chicken, userData ) );
 				});
 			}, ( )=>{
-				lToken.send( views.overview( lToken ) );
+				Chicken.send( views.overview( Chicken ) );
 			}, ( )=>{
-				lToken.send( views.overview( lToken ) );
+				Chicken.send( views.overview( Chicken ) );
 			} );
 			
 		}

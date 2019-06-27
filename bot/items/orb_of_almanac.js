@@ -25,14 +25,14 @@ class ItemOrbOfAlmanac extends Item{
 	}
 
 	
-	use( lToken, itemData ){
-		let amount = lToken.mArgs.amount || 1;
-		let outcome = new BigInt( bpUtils.getCurrentBPBal( lToken ) ).divide( 100 ).multiply(this.increaseValue*(amount));
-		bpUtils.addBP( lToken, outcome );
-		lToken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gold", amount)} for BP!`,[`+ ${ ufmt.numPretty( outcome ) } BP \n( + ${ufmt.numPretty( this.increaseValue*(amount) )}% )`]) );
+	use( Chicken, itemData ){
+		let amount = Chicken.mArgs.amount || 1;
+		let outcome = new BigInt( bpUtils.getCurrentBPBal( Chicken ) ).divide( 100 ).multiply(this.increaseValue*(amount));
+		bpUtils.addBP( Chicken, outcome );
+		Chicken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gold", amount)} for BP!`,[`+ ${ ufmt.numPretty( outcome ) } BP \n( + ${ufmt.numPretty( this.increaseValue*(amount) )}% )`]) );
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return `A shiny metal coin worth ${this.increaseValue}% of your current BP bal.`;
 	}
 }

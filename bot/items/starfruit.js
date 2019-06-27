@@ -23,18 +23,18 @@ class ItemStarfruit extends Item{
 	}
 
 	
-	use( lToken, itemData ){
-		lToken.userData.mineboost = this.boost; // Percent
-		lToken.userData.mineboostcharge = this.charge;
-		lToken.userData.mineboostsource = this.name;
-		lToken.userData.lastmine -= 1000*this.cdrs;
-		lToken.send(Item.fmtUseMsg( this.useDialogue,[
+	use( Chicken, itemData ){
+		Chicken.userData.mineboost = this.boost; // Percent
+		Chicken.userData.mineboostcharge = this.charge;
+		Chicken.userData.mineboostsource = this.name;
+		Chicken.userData.lastmine -= 1000*this.cdrs;
+		Chicken.send(Item.fmtUseMsg( this.useDialogue,[
 			ufmt.denote('Cooldown Reduction', `Your current mining cooldown is reduced by ${ufmt.block(this.cdrs)} seconds.`),
 			ufmt.denote('Mining Boost', `Your next mine will produce ${ufmt.block(this.boost)} % more profit.`)
 		]));
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return ufmt.itemDesc([
 			"*A bizzare tropical delicacy!*",
 			ufmt.denote('Type', [ufmt.block('Mining Boost'),ufmt.block('Cooldown Reduction')].join(' ')),

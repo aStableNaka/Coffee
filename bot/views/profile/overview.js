@@ -6,8 +6,8 @@ let itemUtils = require("../../utils/item");
 const BigInt = require("big-integer");
 const locale = require("../../data/EN_US.json");
 const pickaxe = itemUtils.items.pickaxe;
-module.exports = function( lToken, user, userData ){
-	if(!userData){ userData = lToken.userData; }
+module.exports = function( Chicken, user, userData ){
+	if(!userData){ userData = Chicken.userData; }
 
 	let firstUseDay = Math.floor((new Date().getTime() - userData.firstuse)/1000/60/60/24);
 	let badges = ([userData.tester?'Beta Tester':'', ...userData.tags]).map((tag)=>{ return ufmt.badge( tag ); }).join(" ");
@@ -30,7 +30,7 @@ module.exports = function( lToken, user, userData ){
 				{
 					"name": ufmt.block( "General" ),
 					"value": [
-						ufmt.denote('Rank', ufmt.block(lToken.shared.modules.db.global.leaderboards[String(userData.id)].rank)),
+						ufmt.denote('Rank', ufmt.block(Chicken.shared.modules.db.global.leaderboards[String(userData.id)].rank)),
 						ufmt.denote('First Use', `${ ufmt.block(firstUseDay) } days ago`),
 						ufmt.denote('Badges', badges),
 						ufmt.denote('Commands Used', ufmt.block(userData.cmdcount)),

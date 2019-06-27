@@ -16,9 +16,9 @@ function getItemByAlias( itemAlias ){
 }
 
 // BigInt complete
-function addBP( lToken, amount ){
-	lToken.userData.bpbal = BigInt( lToken.userData.bpbal ).add( amount );
-	lToken.userData.bptotal = BigInt( lToken.userData.bptotal ).add( amount );
+function addBP( Chicken, amount ){
+	Chicken.userData.bpbal = BigInt( Chicken.userData.bpbal ).add( amount );
+	Chicken.userData.bptotal = BigInt( Chicken.userData.bptotal ).add( amount );
 }
 
 // BigIntcomplete
@@ -36,19 +36,19 @@ function addBP_UD( userData, amount ){
 }
 
 //BigIntc
-function confirmBuy( lToken, itemAlias, nextCost ){
-	if(typeof( lToken.userData.bpitems[itemAlias] ) == "undefined"){
-		lToken.userData.bpitems[itemAlias] = 0; // Will be a number, how many owned
+function confirmBuy( Chicken, itemAlias, nextCost ){
+	if(typeof( Chicken.userData.bpitems[itemAlias] ) == "undefined"){
+		Chicken.userData.bpitems[itemAlias] = 0; // Will be a number, how many owned
 	}
-	lToken.userData.bpitems[itemAlias] += lToken.mArgs.amount;
+	Chicken.userData.bpitems[itemAlias] += Chicken.mArgs.amount;
 	let item = getItemByAlias( itemAlias );
-	lToken.userData.bpbal = BigInt( lToken.userData.bpbal).subtract(nextCost);
-	return [item, lToken.userData.bpitems[itemAlias]];
+	Chicken.userData.bpbal = BigInt( Chicken.userData.bpbal).subtract(nextCost);
+	return [item, Chicken.userData.bpitems[itemAlias]];
 }
 
 //BigIntc
-function calcIncome( lToken ){
-	return calcIncome_UD(lToken.userData);
+function calcIncome( Chicken ){
+	return calcIncome_UD(Chicken.userData);
 }
 
 // Production per single generator, with included level factor
@@ -74,8 +74,8 @@ function calcIncome_UD( userData ){
 module.exports.calcIncome_UD = calcIncome_UD;
 
 //BigIntc
-function calcCurrentBal( lToken ){
-	return calcBal_UD( lToken.userData );
+function calcCurrentBal( Chicken ){
+	return calcBal_UD( Chicken.userData );
 }
 
 //BigIntc
@@ -87,11 +87,11 @@ function calcBal_UD( userData ){
 }
 module.exports.calcBal_UD = calcBal_UD;
 
-function getAmountOwned( lToken, itemAlias ){
-	if(typeof( lToken.userData.bpitems[itemAlias] ) == "undefined"){
-		lToken.userData.bpitems[itemAlias] = 0;
+function getAmountOwned( Chicken, itemAlias ){
+	if(typeof( Chicken.userData.bpitems[itemAlias] ) == "undefined"){
+		Chicken.userData.bpitems[itemAlias] = 0;
 	}
-	return lToken.userData.bpitems[itemAlias];
+	return Chicken.userData.bpitems[itemAlias];
 }
 
 function getAmountOwned_UD( userData, itemAlias ){
@@ -115,11 +115,11 @@ function calcGenMultiplier( level ){
 }
 module.exports.calcGenMultiplier = calcGenMultiplier;
 
-function getPersonalMultiplier( lToken, itemAlias ){
-	if(typeof( lToken.userData.bpitems[itemAlias] ) == "undefined"){
-		lToken.userData.bpmultipliers[itemAlias] = 1;
+function getPersonalMultiplier( Chicken, itemAlias ){
+	if(typeof( Chicken.userData.bpitems[itemAlias] ) == "undefined"){
+		Chicken.userData.bpmultipliers[itemAlias] = 1;
 	}
-	return lToken.userData.bpmultipliers[itemAlias];
+	return Chicken.userData.bpmultipliers[itemAlias];
 }
 
 function calcCost( itemAlias, amount, owned ){
@@ -159,16 +159,16 @@ function calcMax( itemAlias, c, owned ){
 }
 
 
-// Calculate the next cost of a lToken
-function calcNextCost( lToken ){
-	let { itemAlias, amount } = lToken.mArgs;
-	return calcCost( itemAlias, amount, getAmountOwned( lToken, itemAlias ) );
+// Calculate the next cost of a Chicken
+function calcNextCost( Chicken ){
+	let { itemAlias, amount } = Chicken.mArgs;
+	return calcCost( itemAlias, amount, getAmountOwned( Chicken, itemAlias ) );
 }
 
 
 // Temporary
-function getCurrentBPBal( lToken ){
-	return calcCurrentBal(lToken);
+function getCurrentBPBal( Chicken ){
+	return calcCurrentBal(Chicken);
 }
 
 function calcPrestigeGoldReward( userData ){

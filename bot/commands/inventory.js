@@ -47,11 +47,11 @@ class CommandInventory extends Command{
 	get helpName(){ return "Inventory/Items"; }
 	get helpGroup(){ return "Items"; }
 	get helpPage(){ return 1; /*Field for the help command*/ }
-	modifyArgs( args, lToken ){
+	modifyArgs( args, Chicken ){
 		let option = args[0];
 		let mArgs = {
 			option:null,
-			page: lToken.numbers[0] || 1,
+			page: Chicken.numbers[0] || 1,
 			userQuery: null
 		}
 		if((['use', 'info', 'give', 'daily', 'trade'].includes(option))){
@@ -62,78 +62,78 @@ class CommandInventory extends Command{
 			
 			if(option=='give'||option=='trade'){
 				mArgs.itemAccessor = itemAccessor;
-				mArgs.to = lToken.mentions[0] || null;
-				mArgs.amount = Math.abs( lToken.numbers[0] || 1);
+				mArgs.to = Chicken.mentions[0] || null;
+				mArgs.amount = Math.abs( Chicken.numbers[0] || 1);
 			}else{
 				mArgs.itemAccessor = itemAccessor;
-				mArgs.amount = Math.abs( lToken.numbers[0] || 1 );
+				mArgs.amount = Math.abs( Chicken.numbers[0] || 1 );
 			}
 		}else{
 			
 			// Used to look up other people's invs
 			mArgs.userQuery = args.join(" ");
-			mArgs.page = Math.max(0, lToken.numbers[0]-1||0);
+			mArgs.page = Math.max(0, Chicken.numbers[0]-1||0);
 		}
 		return mArgs;
 	}
 
-	execDaily(lToken){
-		if(new Date().getTime() - lToken.userData.daily >= 22*60*60*1000 ){
-			let itemData = itemUtils.addItemToUserData(lToken.userData,itemUtils.items.lootbox.createItemData(2, 'daily_box'));
-			lToken.send( `${ufmt.name(lToken.userData)}, here's your daily reward: ${ ufmt.item(itemData) }` );
-			lToken.userData.daily = new Date().getTime();
+	execDaily(Chicken){
+		if(new Date().getTime() - Chicken.userData.daily >= 22*60*60*1000 ){
+			let itemData = itemUtils.addItemToUserData(Chicken.userData,itemUtils.items.lootbox.createItemData(2, 'daily_box'));
+			Chicken.send( `${ufmt.name(Chicken.userData)}, here's your daily reward: ${ ufmt.item(itemData) }` );
+			Chicken.userData.daily = new Date().getTime();
 		}else{
-			lToken.send( `${ufmt.name(lToken.userData)}, you've already claimed your daily reward! You can claim one again in ${ufmt.elapsedTime( lToken.userData.daily+22*60*60*1000 - (new Date().getTime()) )}.` )
+			Chicken.send( `${ufmt.name(Chicken.userData)}, you've already claimed your daily reward! You can claim one again in ${ufmt.elapsedTime( Chicken.userData.daily+22*60*60*1000 - (new Date().getTime()) )}.` )
 		}
 	}
 
-	execGive( lToken, itemData ){
+	execGive( Chicken, itemData ){
 		if( itemData && itemData.amount > 0){
-			if(lToken.mArgs.to){
-				lToken.database.get( lToken.mArgs.to.id.toString(), ( toUserData )=>{
-					let amount = Math.min( itemData.amount, lToken.mArgs.amount);
-					itemUtils.transferItemToUserData( lToken.userData, toUserData, itemData, amount );
-					lToken.send( `You've given ${ ufmt.nameMention( lToken.mArgs.to ) } ${ ufmt.item( itemData,amount ) }` );
+			if(Chicken.mArgs.to){
+				Chicken.database.get( Chicken.mArgs.to.id.toString(), ( toUserData )=>{
+					let amount = Math.min( itemData.amount, Chicken.mArgs.amount);
+					itemUtils.transferItemToUserData( Chicken.userData, toUserData, itemData, amount );
+					Chicken.send( `You've given ${ ufmt.nameMention( Chicken.mArgs.to ) } ${ ufmt.item( itemData,amount ) }` );
 					let itemObject = itemUtils.getItemObject( itemData );
 					if(itemObject.isUnique){
-						itemObject.cleanup( lToken.userData, itemData )
+						itemObject.cleanup( Chicken.userData, itemData )
 					}
 					//console.log("SUPER WASABI")
 				});
 				//console.log("GUUAWUU")
 			}
 		}else{
-			lToken.send( views.item_not_owned( lToken, itemData ) );
+			Chicken.send( views.item_not_owned( Chicken, itemData ) );
 		}
 	}
 
-	execTrade( lToken, itemData ){
+	execTrade( Chicken, itemData ){
 
 	}
 
 	// Only executed if itemData exists
-	execUse( lToken, itemData ){
+	execUse( Chicken, itemData ){
 		
 		// For special items (ie. "MSPS Boost" which is a meta-form of "Item Boost")
 		// userData.items["msps_boost"] -> accessor=item_boost;
 		// TODO finish
 		if(!itemData){
-			lToken.send( views.item_not_owned( lToken, lToken.mArgs.amount ) );
+			Chicken.send( views.item_not_owned( Chicken, Chicken.mArgs.amount ) );
 			return;
 		}
 		let itemObject = itemUtils.getItemObject( itemData );
 
 		// If the item can't be stacked
 		if(!itemObject.canUseMulti){
-			lToken.mArgs.amount = 1;
+			Chicken.mArgs.amount = 1;
 		}
 
-		if(itemData.amount >= lToken.mArgs.amount && itemObject){
-			var useStatus = itemObject.use( lToken, itemData );
+		if(itemData.amount >= Chicken.mArgs.amount && itemObject){
+			var useStatus = itemObject.use( Chicken, itemData );
 
 			// If the item is consumable, non-persistent and doesn't pass the NO_CONSUME status when used
 			if( itemObject.consumable && !itemObject.persistent && useStatus != "NO_CONSUME" ){
-				itemData.amount-=lToken.mArgs.amount;
+				itemData.amount-=Chicken.mArgs.amount;
 				if(!itemData.used){
 					itemData.used=0;
 				}
@@ -141,12 +141,12 @@ class CommandInventory extends Command{
 			}
 
 		}else{
-			lToken.send( views.item_not_owned( lToken, lToken.mArgs.amount ) );
+			Chicken.send( views.item_not_owned( Chicken, Chicken.mArgs.amount ) );
 		}
 	}
 
-	execInfo( lToken, itemObject, itemData ){
-		lToken.send(views.info( lToken, itemObject, itemData ));
+	execInfo( Chicken, itemObject, itemData ){
+		Chicken.send(views.info( Chicken, itemObject, itemData ));
 	}
 	
 	/*
@@ -157,24 +157,24 @@ class CommandInventory extends Command{
 		Dev Response:
 		"I can't seem to replicate the issue. But I'll leave this comment here in case it appears again"
 	*/
-	execOverview( lToken, userData ){
-		if(!userData){userData = lToken.userData}
+	execOverview( Chicken, userData ){
+		if(!userData){userData = Chicken.userData}
 		let numberOfItems = Object.values( userData.items ).filter( ( itemData )=>{ return itemData.amount > 0 } ).length;
 		let itemsPerPage = 15;
 		let numberOfPages = Math.ceil( numberOfItems/itemsPerPage );
 
-		// Name filter, uses lToken.keyPair filter:"query"
+		// Name filter, uses Chicken.keyPair filter:"query"
 		let filter = ( itemData )=>{
-			if(lToken.keyPairs.filter){
-				//console.log(lToken.keyPairs.filter, itemData.name, itemData.accessor, itemData.name.includes(lToken.keyPairs.filter) || itemData.accessor.includes(lToken.keyPairs.filter))
-				return itemData.name.includes(lToken.keyPairs.filter) || itemData.accessor.includes(lToken.keyPairs.filter);
+			if(Chicken.keyPairs.filter){
+				//console.log(Chicken.keyPairs.filter, itemData.name, itemData.accessor, itemData.name.includes(Chicken.keyPairs.filter) || itemData.accessor.includes(Chicken.keyPairs.filter))
+				return itemData.name.includes(Chicken.keyPairs.filter) || itemData.accessor.includes(Chicken.keyPairs.filter);
 			}
 			return true;
 		};
 
 		function send(){
-			lToken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, lToken.mArgs.page||lToken.numbers[0]-1||0) );
-			lToken.send( views.overview(lToken, lToken.mArgs.page, userData, numberOfItems, itemsPerPage, numberOfPages, filter) ).then( pageThing );
+			Chicken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, Chicken.mArgs.page||Chicken.numbers[0]-1||0) );
+			Chicken.send( views.overview(Chicken, Chicken.mArgs.page, userData, numberOfItems, itemsPerPage, numberOfPages, filter) ).then( pageThing );
 		};
 
 		
@@ -186,87 +186,87 @@ class CommandInventory extends Command{
 			numberOfItems = Object.values( userData.items ).filter( ( itemData )=>{ return itemData.amount > 0 } ).length;
 			numberOfPages = Math.ceil( numberOfItems/itemsPerPage );
 
-			lToken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, lToken.mArgs.page||lToken.numbers[0]-1||0) );
+			Chicken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, Chicken.mArgs.page||Chicken.numbers[0]-1||0) );
 			
 			
-			if(lToken.mArgs.page > 0){
+			if(Chicken.mArgs.page > 0){
 				pageOperators.push(
 					pages.createPageOperator( emojis.arrow_left, ()=>{
 
 						// Backwards operation
-						lToken.mArgs.page--;
+						Chicken.mArgs.page--;
 						send();
 					} )
 				);
 			}
-			if( lToken.mArgs.page < numberOfPages-1 ){
+			if( Chicken.mArgs.page < numberOfPages-1 ){
 				pageOperators.push(
 					pages.createPageOperator( emojis.arrow_right,
 					()=>{
 	
 						// Forewards operation
-						lToken.mArgs.page++;
+						Chicken.mArgs.page++;
 						send();
 					} )
 				)
 			}
 			
-			pages.createPageManager( lToken, hookMsg, pageOperators );
+			pages.createPageManager( Chicken, hookMsg, pageOperators );
 		}
 		send();
 	}
 
-	async execute( lToken ){ 
-		let option = lToken.mArgs.option;
+	async execute( Chicken ){ 
+		let option = Chicken.mArgs.option;
 		if(!option){
-			if( lToken.args.length != lToken.numbers.length ){
-				let userQuery = lToken.mArgs.userQuery;
-				let searchStatus = lToken.queryUser( userQuery, ( snowflake )=>{
-					lToken.database.get( snowflake, ( userData )=>{
+			if( Chicken.args.length != Chicken.numbers.length ){
+				let userQuery = Chicken.mArgs.userQuery;
+				let searchStatus = Chicken.queryUser( userQuery, ( snowflake )=>{
+					Chicken.database.get( snowflake, ( userData )=>{
 						
-						this.execOverview( lToken, userData )
-						lToken.shared.modules.db.updateLeaderboards( userData );
+						this.execOverview( Chicken, userData )
+						Chicken.shared.modules.db.updateLeaderboards( userData );
 					});
 				}, ( results )=>{
-					lToken.send( views.found(lToken, results) );
+					Chicken.send( views.found(Chicken, results) );
 				}, ()=>{} );
 	
 				// If the search succeeds, theres no need to continue
 				if( searchStatus ){ return; }
 			}
-			this.execOverview( lToken )
+			this.execOverview( Chicken )
 			
 		}else{
 			if(option == 'daily'){
-				this.execDaily( lToken );
+				this.execDaily( Chicken );
 				return;
 			}
 
 			// Checkpoint 1, assume item is explicitly typed
-			let itemData = lToken.userData.items[ lToken.mArgs.itemAccessor ];
-			let itemObject = itemUtils.items[ lToken.mArgs.itemAccessor ];
+			let itemData = Chicken.userData.items[ Chicken.mArgs.itemAccessor ];
+			let itemObject = itemUtils.items[ Chicken.mArgs.itemAccessor ];
 			if(!itemData && !itemObject){
 
 				// Checkpoint 2, item isn't explicitly stated, find matches.
-				let itemsFound = Object.keys(lToken.userData.items).filter( ( itemName )=>{
-					return itemName.includes(lToken.mArgs.itemAccessor);
+				let itemsFound = Object.keys(Chicken.userData.items).filter( ( itemName )=>{
+					return itemName.includes(Chicken.mArgs.itemAccessor);
 				});
 				if( itemsFound[0] ){
 					if(itemsFound.length==1){
 						
 						// Single item found -> Assume user wants *that* item -> Continue on
 						let accessor = itemsFound[0];
-						itemData = lToken.userData.items[accessor];
+						itemData = Chicken.userData.items[accessor];
 						itemObject = itemUtils.items[ accessor ];
-						lToken.mArgs.itemAccessor = accessor;
+						Chicken.mArgs.itemAccessor = accessor;
 					}else{
 						
 						// Multiple items found -> Give the user a list of all items found
-						lToken.send( views.query(lToken, itemsFound) );
+						Chicken.send( views.query(Chicken, itemsFound) );
 						return;
 					}
 				}else{
-					lToken.send( views.item_not_found(lToken) );
+					Chicken.send( views.item_not_found(Chicken) );
 					return;
 				}
 			}
@@ -274,20 +274,20 @@ class CommandInventory extends Command{
 			// Checkpoint 3, continue on with the itemObject and itemData
 			switch( option ){
 				case 'use':
-					return this.execUse( lToken, itemData );
+					return this.execUse( Chicken, itemData );
 				case 'give':
-					return this.execGive( lToken, itemData );
+					return this.execGive( Chicken, itemData );
 				case 'trade':
-					return this.execTrade( lToken, itemData );
+					return this.execTrade( Chicken, itemData );
 				case 'info':
 					if(!itemObject){
 						itemObject = itemUtils.getItemObject( itemData );
 					}
 					if(!itemObject){
-						lToken.send( views.item_not_found(lToken) );
+						Chicken.send( views.item_not_found(Chicken) );
 						return;
 					}
-					this.execInfo(lToken, itemObject, itemData );
+					this.execInfo(Chicken, itemObject, itemData );
 			}
 		}
 	}

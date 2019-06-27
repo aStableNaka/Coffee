@@ -21,10 +21,10 @@ class CommandMarket extends Command{
 	get helpExamples(){ return null;/*[["command", "< parameters >", "desc"]];*/ }
 	get helpGroup(){ return null; }
 	get helpName(){ return null; }
-	modifyArgs( args, lToken ){
+	modifyArgs( args, Chicken ){
 		let validOptions = ['catalogue', 'sell', 'bid'];
 	}
-	async execute( lToken ){ return null; }
+	async execute( Chicken ){ return null; }
 }
 
 module.exports = new CommandMarket();

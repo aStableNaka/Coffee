@@ -22,13 +22,13 @@ class ItemFoxtailAmulet extends Item{
 		this.isDroppedByLootbox = true;
 	}
 
-	use( lToken, itemData ){
-		lToken.userData.mineboost = this.boost; // Percent
-		lToken.userData.mineboostcharge = this.charge;
-		lToken.userData.mineboostsource = this.name;
+	use( Chicken, itemData ){
+		Chicken.userData.mineboost = this.boost; // Percent
+		Chicken.userData.mineboostcharge = this.charge;
+		Chicken.userData.mineboostsource = this.name;
 		let amount = Math.floor(Math.random()*3+2)
-		itemUtils.addItemObjectToUserData( lToken.userData, itemUtils.getItemObjectByAccessor("lootbox"), amount, "lunchbox", "lunchbox" );
-		lToken.send(Item.fmtUseMsg( this.useDialogue,[
+		itemUtils.addItemObjectToUserData( Chicken.userData, itemUtils.getItemObjectByAccessor("lootbox"), amount, "lunchbox", "lunchbox" );
+		Chicken.send(Item.fmtUseMsg( this.useDialogue,[
 			"It breaks in the progress, but *you suddenly feel smarter*...",
 			"Your increased intelligence has lead you to discover *better* methods of mining!",
 			"Out of nowhere: *a couple stray lunchboxes fall right into your hands!*",
@@ -37,7 +37,7 @@ class ItemFoxtailAmulet extends Item{
 		]));
 	}
 
-	desc( lToken, itemData ){
+	desc( Chicken, itemData ){
 		return ufmt.itemDesc([
 			"An amulet made from a **real fox's tail**!",
 			"- ( *We won't discuss the ethics behind cutting off foxes' tails to make amulets* )",

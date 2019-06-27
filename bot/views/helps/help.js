@@ -1,6 +1,6 @@
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	let wip = [];
-	let page = Math.min(2, Math.max(0, lToken.numbers[0] || 1));
+	let page = Math.min(2, Math.max(0, Chicken.numbers[0] || 1));
 	let embed = {
 		"embed": {
 			"description":`[ ***Help page ${page}/2*** ]`,
@@ -12,7 +12,7 @@ module.exports = function( lToken ){
 			}
 		}
 	}
-	Object.values( lToken.shared.sources ).map( (cmd)=>{
+	Object.values( Chicken.shared.sources ).map( (cmd)=>{
 		let p = cmd.helpPage || 1;
 		if(p != page){ return; }
 		if(cmd.help){

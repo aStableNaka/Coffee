@@ -5,8 +5,8 @@ const BigInt = require("big-integer");
 const locale = require("../../data/EN_US.json");
 
 
-module.exports = function( lToken, userData ){
-	userData = userData || lToken.userData;
+module.exports = function( Chicken, userData ){
+	userData = userData || Chicken.userData;
 	let inventoryObject = {
 		'gold':itemUtils.items.gold.createItemData(bp.calcPrestigeGoldReward( userData )),
 		'box_box':itemUtils.items.lootbox.createItemData(bp.calcPrestigeBoxReward( userData ), 'box_box'),

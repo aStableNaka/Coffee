@@ -130,8 +130,8 @@ Drop		Rank	Label
 		return content;
 	}
 
-	use( lToken, itemData ){}
-	desc( lToken, itemData ){ return "Item description based on itemData"; }
+	use( Chicken, itemData ){}
+	desc( Chicken, itemData ){ return "Item description based on itemData"; }
 }
 
 module.exports = Item;

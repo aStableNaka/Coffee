@@ -1,8 +1,8 @@
-module.exports = function( lToken ){
+module.exports = function( Chicken ){
 	return {
 		"embed": {
 			"title": "\"Beep Boop! Eval Success!\"",
-			"description": "```" + lToken.mArgs + "```",
+			"description": "```" + Chicken.mArgs + "```",
 			"color": 0xfec31b,
 			"author":{
 				"name":"Coffee",
