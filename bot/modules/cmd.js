@@ -306,7 +306,7 @@ function ChickenProvideResponseHelpers(Chicken){
 
 		});
 		msgSendPromise.then(() => {
-			Chicken.channel.stopTyping();
+			Chicken.channel.stopTyping( true );
 		});
 		/*if(Chicken.oFlags.stacktrace){
 			var stack = new Error("Labunga").stack;
