@@ -99,6 +99,7 @@ function addItemToInventory( inventory, itemData, amount, itemName = null, trial
 	}else{
 		// Todo format itemname as itemKey
 		itemData.name = itemKey;
+		itemObject.migrateItem( itemData, itemKey ); // mitigate itemName-itemMeta.name conflicts
 		inventory[ itemKey ] = itemData;
 	}
 	if(!itemName){ itemName = itemData.name; } // Undefined or whatever
@@ -622,6 +623,12 @@ function formatTalliedOutcomes( tallyObject ){
 		return itemName(accessor, tallyObject[accessor], '', false);
 	} );
 }
+
+function resetInventory( inventory ){
+
+}
+
+module.exports.resetInventory = resetInventory;
 
 module.exports.craftingRecipies = craftingRecipies;
 module.exports.userHasItem = userHasItem;
