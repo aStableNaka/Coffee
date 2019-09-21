@@ -99,7 +99,7 @@ function addItemToInventory( inventory, itemData, amount, itemName = null, trial
 	}else{
 		// Todo format itemname as itemKey
 		itemData.name = itemKey;
-		itemObject.migrateItem( itemData, itemKey ); // mitigate itemName-itemMeta.name conflicts
+		//itemObject.migrateItem( itemData, itemKey ); // mitigate itemName-itemMeta.name conflicts
 		inventory[ itemKey ] = itemData;
 	}
 	if(!itemName){ itemName = itemData.name; } // Undefined or whatever
