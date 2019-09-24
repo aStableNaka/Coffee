@@ -30,7 +30,7 @@ class ItemGold extends Item{
 		let bal = bpUtils.getCurrentBPBal( Chicken );
 		let outcome = new BigInt( new BigNum( bal.toString() ).times(new BigNum(1+this.increaseValue*0.01).pow( amount )).integerValue().toString() ).subtract(bal);
 		bpUtils.addBP( Chicken, outcome );
-		Chicken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gold", amount)} for BP!`,[`+ ${ ufmt.bp( outcome ) } BP \n( + ${ufmt.numPretty( Math.round( (Math.pow(1+0.01*this.increaseValue, amount)-1)*100) )}% )`]) );
+		Chicken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gold", amount)} for BP!`,[`+ ${ ufmt.bp( outcome ) } \n( + ${ufmt.numPretty( Math.round( (Math.pow(1+0.01*this.increaseValue, amount)-1)*100) )}% )`]) );
 		
 		/*
 		let outcome = new BigInt( bpUtils.getCurrentBPBal( Chicken ) ).divide( 100 ).multiply(this.increaseValue*(amount));

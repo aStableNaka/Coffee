@@ -21,7 +21,8 @@ class CommandBotinfo extends Command{
 		{name:"changelogs", cmd:"botinfo changelogs"},
 		{name:"changelog", cmd:"botinfo changelogs"},
 		{name:"contributors", cmd:"botinfo contributors"},
-		{name:"patreon", cmd:"botinfo patreon"}
+		{name:"patreon", cmd:"botinfo patreon"},
+		{name:"wiki", cmd:"botinfo wiki"}
 	];}
 	get help(){ return {
 		name:"Bot Info",
@@ -34,7 +35,8 @@ class CommandBotinfo extends Command{
 		['support', '', 'Get the link to join the support server if you have further questions!'],
 		['contributors', '', 'People who\'ve worked on this bot!'],
 		['changelogs', '', 'View updates and changes'],
-		['patreon', '', '[Click here to become a Patron!](https://www.patreon.com/coffeedev)']
+		['patreon', '', '[Click here to become a Patron!](https://www.patreon.com/coffeedev)'],
+		['wiki', '', '[Click here to view the Wiki!](https://github.com/aStableNaka/Coffee/wiki/Quickstart)']
 	];}
 	get helpGroup(){ return "Bot-Info"; }
 	get helpName(){ return "Botinfo"; }
@@ -54,6 +56,9 @@ class CommandBotinfo extends Command{
 			Chicken.send("I've sent you an invite to my support server. Check your DMs.");
 		}else if(Chicken.args[0]=='patreon'){
 			Chicken.send('[Click here to become a Patron!](https://www.patreon.com/coffeedev)');
+		}
+		else if(Chicken.args[0]=='wiki'){
+			Chicken.send('[Click here to view the Wiki!](https://github.com/aStableNaka/Coffee/wiki/Quickstart)');
 		}
 		else if(Chicken.args[0]=='changelogs'){
 			Chicken.send( views.changelogs( locale.changelogs ) );
