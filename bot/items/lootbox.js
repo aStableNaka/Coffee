@@ -70,6 +70,36 @@ class ItemLootbox extends Item{
 
 	get recipies(){
 		return {
+			"lootbox":{
+				ingredients: [
+					{
+						key: 'crafting_materials',
+						amount: 1
+					},
+					{
+						key: 'silver',
+						amount: 1
+					}
+				],
+				onCraft: (Chicken, amount=1) => { // returns itemData
+					return itemUtils.items.lootbox.createItemData(amount, 'lootbox');
+				}
+			},
+			"box_box":{
+				ingredients: [
+					{
+						key: 'crafting_materials',
+						amount: 5
+					},
+					{
+						key: 'lootbox',
+						amount: 1
+					}
+				],
+				onCraft: (Chicken, amount=1) => { // returns itemData
+					return itemUtils.items.lootbox.createItemData(amount, 'box_box');
+				}
+			},
 			"good_pickbox": {
 				ingredients: [{
 					key: 'box_box',

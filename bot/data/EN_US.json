@@ -78,7 +78,11 @@
 
     "changelogs":[
         [   
-            "0.1.28",
+            "0.1.29",
+            "***NEW***",
+            "> + [ Lootbox ] can now be crafted",
+            "> + [ Box Box ] can now be crafted",
+            "\n0.1.28",
             "***NEW***",
             "> + [ Tinkers Gizmo ] item added",
             "***UPDATED***",
