@@ -32,6 +32,7 @@ const uniqueRankings = {
 	'box_box':3,
 	'pickbox':4,
 	'adminbox1000':11,
+	'itembox1000':11,
 	'testbox':11,
 	'good_pickbox':5,
 	'greater_pickbox':6,
@@ -54,6 +55,7 @@ class ItemLootbox extends Item{
 		this.value = 0;
 		this.rank = 1;
 		this.meta = {};
+		this.usesMeta = true;
 		this.icon = "https://i.imgur.com/u3RS3gh.png";
 		
 		// Can the item be used multiple times?
@@ -189,15 +191,15 @@ class ItemLootbox extends Item{
 	}
 
 	tallyItemOutcomes( outcomes ){
-		let accessors = outcomes.map( (itemObject)=>{return itemObject.name||itemObject.accessor} );
+		let accessors = outcomes.map( (itemData)=>{return itemData.name||itemData.accessor} );
 		// This is a tally snippet
 		let tallyObject = {}
-		accessors.map((accessor)=>{
+		accessors.map((accessor, i)=>{
 			if(!tallyObject[accessor]){tallyObject[accessor]=1;}
 			else{
-				tallyObject[accessor]++;
+				tallyObject[accessor]+=outcomes[i].amount||1;
 			}
-		})
+		});
 		return tallyObject;
 	}
 
@@ -412,7 +414,29 @@ class ItemLootbox extends Item{
 	}
 
 
+	/**
+	 * For debugging purposes
+	 * gives the user 1000 of each non-unique item
+	 * uses enabledLootboxes
+	 * @param {*} Chicken 
+	 * @param {*} itemData 
+	 */
+	meta_itembox1000( Chicken, itemData ){
+		let amount = 1000*Chicken.mArgs.amount;
+		let itemDatas = Object.values(itemUtils.items).map( (item)=>{
+			if(!item.isUnique&&!item.usesMeta){
+				return item.createItemData( 1000 );
+			}
+			return null;
+		}).filter((itemData)=>{ return !!itemData; });
+		let formattedTallies = this.formatTalliedOutcomes( this.tallyItemOutcomes( itemDatas ) );
+		itemDatas.map( ( outcomeItemData )=>{
+			itemUtils.addItemToUserData( Chicken.userData, outcomeItemData );
+		});
 
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		Chicken.send( Item.fmtUseMsg( useDialogue, [fmtLootboxOutcome( formattedTallies, Chicken.mobile )]) );
+	}
 
 
 	

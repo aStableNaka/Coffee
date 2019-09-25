@@ -17,19 +17,19 @@ class ItemGoldenApple extends Item{
 		this.charge = 6;
 		this.boost = 75*30;
 		this.effect = `Your next ${ufmt.block(this.charge)} mines will produce ${ufmt.block(this.boost)} % more profit.`;
-		this.useDialogue = `You eat a Golen Apple!`;
+		this.useDialogue = `You eat a Golden Apple!`;
 	}
 
-	  get recipies(){
-			return {
-				  "golden_apple":{
-						ingredients:[{key:'apple',amount:15},{key:'gold',amount:3}],
-						onCraft:(Chicken, amount=1)=>{
-							  return itemUtils.items.golden_apple.createItemData( amount );
-						}
-				  }
-			};
-	  }
+	get recipies(){
+		return {
+			"golden_apple":{
+				ingredients:[{key:'apple',amount:15},{key:'gold',amount:3}],
+				onCraft:(Chicken, amount=1)=>{
+						return itemUtils.items.golden_apple.createItemData( amount );
+				}
+			}
+		};
+	}
 	  
 	use( Chicken, itemData ){
 		Chicken.userData.mineboost = this.boost; // Percent

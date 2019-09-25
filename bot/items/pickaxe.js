@@ -81,6 +81,7 @@ class ItemPickaxe extends Item{
 			tier:0,
 			created: new Date().getTime().toString()
 		};
+		this.usesMeta=true;
 
 		this.icon = "https://i.imgur.com/miBhBjt.png";
 

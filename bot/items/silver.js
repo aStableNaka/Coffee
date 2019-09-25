@@ -12,7 +12,7 @@ class ItemSilver extends Item{
 
 		this.consumable = true;
 		this.value = 1;
-		this.rank = 2;
+		this.rank = 1;
 		this.meta = {};
 
 		//this.icon = "https://i.imgur.com/506QOWO.png";

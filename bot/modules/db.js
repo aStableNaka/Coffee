@@ -140,6 +140,8 @@ function ensure(userID, ud) {
 	delete ud.bibpbal;
 	delete ud.bibps;
 	delete ud.bibptotal
+
+	if(!ud.orbs){ud.orbs = 0;}
 	
 }
 
@@ -181,7 +183,7 @@ async function getAllUsers(callback = (udCollection) => {}) {
 			$eq: 0
 		}
 	};
-	getProfile(query).then(callback).catch(()=>{
+	getProfile(query).then(callback).catch((e)=>{
 			console.log(`[Leaders] Error fetching leaderboards ${e}`)
 		}
 	);
@@ -200,9 +202,9 @@ function loadLeaderboards( id=0 ) {
 			DBLog(`[Leaderboards] Loading took too long for routine #${id}`);
 		}
 		let ids = udCollection.map((userData) => {
-			updateLeaderboards(userData);
-
+			//console.log(userData);
 			ensure(userData.id, userData); // Temporary ensure
+			updateLeaderboards(userData);
 			temp.commandsTotal += userData.cmdcount;
 			return userData.id;
 		})

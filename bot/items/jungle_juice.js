@@ -13,7 +13,7 @@ class ItemJungleJuice extends Item{
 		this.rank = 3;
 		this.meta = {};
 
-		this.icon = "https://i.imgur.com/fT8lZ9R.png";
+		this.icon = "https://piskel-imgstore-b.appspot.com/img/a18045b0-df31-11e9-a6ac-81af7574a4ed.gif";
 		this.charge = 1;
 		this.boost = 2100;
 		this.effect = `Drinking this will reduce your current mining cooldown by 50% your pickaxe's base cooldown. Also, your next mine will produce ${ufmt.block(this.boost)} % more profit.`;

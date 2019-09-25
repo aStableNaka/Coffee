@@ -23,11 +23,9 @@ class CommandBlobPoints extends Command {
 		{ name: "shop", cmd: "bp shop" }, 
 		{ name: "buy", cmd: "bp buy" }, 
 		{ name: "store", cmd: "bp shop" }, 
-		{ name: "donate", cmd: "bp give" }, 
 		{ name: "leaderboards", cmd: "bp leaderboards" }, 
 		{ name: "leaders", cmd: "bp leaderboards" }, 
 		{ name: "leaderboard", cmd: "bp leaderboards" },
-		{ name: "donate", cmd: "bp give" },
 		{ name: "gens", cmd: "bp gens" }
 	];}
 	get modifiers() { return ['shop', 'leaderboards', 'buy', 'give', 'prestige', 'gens'] }

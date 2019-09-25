@@ -68,7 +68,8 @@ function calcIncome_UD( userData ){
 		let production_x1 = calcGenProduction_x1(userData, itemAlias);
 		income = income.add( production_x1.multiply( amountOwned ).multiply( userData.bpmultipliers[itemAlias] || 1 ) );
 	});
-	income = income.add( userData.bpps );
+	
+	income = income.add( userData.bpps ).multiply(Math.pow(2,(userData.orbs)));
 	return income;
 }
 module.exports.calcIncome_UD = calcIncome_UD;

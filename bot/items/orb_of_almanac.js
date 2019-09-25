@@ -7,7 +7,7 @@ var bpUtils = require("../utils/bp");
 class ItemOrbOfAlmanac extends Item{
 	constructor(){
 		super();
-		this.name = "Orb of Amlanac"; // Required
+		this.name = "Orb of Almanac"; // Required
 		this.accessor = "orb_of_almanac"; // Virtural
 
 		this.consumable = true;
@@ -17,23 +17,63 @@ class ItemOrbOfAlmanac extends Item{
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
 		this.isSaleRestricted = true;
-		//this.isDroppedByLootbox = true;
+		this.isDroppedByLootbox = true;
 		//this.isDroppedByLunchbox = true;
-		//this.canUseMulti = true;
+		this.canUseMulti = true;
 
 		//this.increaseValue = 8;
+	}
+
+	get recipies(){
+		return {
+			"orb_of_almanac":{
+				ingredients:[
+					{
+						key:"box_box",
+						amount:30
+					},
+					{
+						key:"crafting_materials",
+						amount:20
+					},
+					{
+						key:"kingstones_stone",
+						amount:50,
+					},
+					{
+						key:"gold",
+						amount:20
+					},
+					{
+						key:"gilded_slurry",
+						amount:5
+					},
+					{
+						key:"foxtail_amulet",
+						amount:2
+					}
+				],
+				onCraft: (Chicken, amount=1) => { // returns itemData
+					return itemUtils.items.orb_of_almanac.createItemData(amount);
+				}
+			}
+		}
 	}
 
 	
 	use( Chicken, itemData ){
 		let amount = Chicken.mArgs.amount || 1;
-		let outcome = new BigInt( bpUtils.getCurrentBPBal( Chicken ) ).divide( 100 ).multiply(this.increaseValue*(amount));
-		bpUtils.addBP( Chicken, outcome );
-		Chicken.send( Item.fmtUseMsg( `You exchange your ${ ufmt.itemName("Gold", amount)} for BP!`,[`+ ${ ufmt.numPretty( outcome ) } BP \n( + ${ufmt.numPretty( this.increaseValue*(amount) )}% )`]) );
+		Chicken.userData.orbs+=amount;
+		Chicken.send(Item.fmtUseMsg( `*You shatter the ${ufmt.plural(amount, 'Orb', 'Orbs')} of Almanac and a mysterious flash of light rushes into your pockets.*`, [
+			ufmt.denote('Effect', `All income is permanently increased by ${ufmt.block(Math.pow(2,amount))} x`)
+		]));
 	}
 
 	desc( Chicken, itemData ){
-		return `A shiny metal coin worth ${this.increaseValue}% of your current BP bal.`;
+		return ufmt.itemDesc([
+			`An enigma surrounded by an ominous glow...`,
+			ufmt.denote('Usage', 'Permanently increases all income by x2 per orb applied.' )
+		]);
 	}
 }
 

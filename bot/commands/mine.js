@@ -60,7 +60,7 @@ class CommandMine extends Command {
 			let income = calcIncome(Chicken);
 			let outcome = bp.calcPickaxeIncome(Chicken.userData);
 			let blessing;
-			let boost = false;
+			let boost = {isDefault:true};
 			let perkMessages = [];
 			let bonusPerks = [];
 			let pickaxeLevel = bp.pickaxeLevelUD(Chicken.userData);
@@ -105,13 +105,27 @@ class CommandMine extends Command {
 				});
 			}
 
+			/**
+			 * New Boost conventions 0.1.27
+			 * item.name = basic boost
+			 * item.accessor = special boost, item.onBoost(Chicken)->String required.
+			 */
 			// Food boosts
 			if (Chicken.userData.mineboostcharge > 0) {
-				boost = outcome.divide(100).multiply(Chicken.userData.mineboost);
+				// If the boost has some other desired effect
+				boost.active = true;
+				let item = itemUtils.items[Chicken.userData.mineboostsource] || {};
+				if( item.onBoost ){
+					boost.description = item.onBoost( Chicken );
+					boost.isDefault = false;
+				}else{
+					boost.amount = outcome.divide(100).multiply(Chicken.userData.mineboost);
+					addBP(Chicken, outcome.add(boost.amount));
+				}
 				Chicken.userData.mineboostcharge--;
 			}
 
-			addBP(Chicken, outcome.add(boost ? boost : 0));
+			
 			
 
 			Chicken.send(views.mine(Chicken, outcome, perkMessages, boost));

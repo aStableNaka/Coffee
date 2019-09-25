@@ -12,20 +12,21 @@ module.exports = function( Chicken, availbleCraftingOptions ){
 	  const ingSep = `\n${ufmt.embedWS.multiply(6)}`;
 	  let desc = ufmt.join([
 			'\n',
-			...availbleCraftingOptions.map( ( ingredientKey )=>{
-				  return `${ufmt.block(ingredientKey)} needs${ingSep}${ recipies[ingredientKey].ingredients.map(( ingredient )=>{
-						return `${ufmt.block(ingredient.key)} x${ingredient.amount}`;
-				  }).join(ingSep)}`;
-			})
-	  ], '\n\n');
+			...(Object.values(itemUtils.items).filter((itemObject)=>{return Object.keys(itemObject.recipies).length>0;}).map((x)=>{
+				return x.name || x.accessor;
+			}).map((name)=>{return ufmt.block(name)}))
+	  ], '\n');
 	  
-	  const payload = {
+	  const message = {
 		"embed": {
 			"title": `Here's a list of your crafting options, ${ ufmt.name( Chicken.userData )}`,
 			"description": desc,
-				  "color": 0x66ff66
+			"color": 0x66ff66,
+			"footer":{
+				"text":"Type '~ii <itemName>' to view available recipies associated with that item!"
+			}
 		}
 	  }
 	  
-	  return payload;
+	  return message;
 }

@@ -24,6 +24,16 @@ class ItemGold extends Item{
 		this.increaseValue = 8;
 	}
 
+	get recipies(){
+		return {
+			"gold":{
+				ingredients:[{key:'silver',amount:75}],
+				onCraft:(Chicken, amount=1)=>{
+					return itemUtils.items.gold.createItemData( amount );
+				}
+			}
+		};
+	}
 	
 	use( Chicken, itemData ){
 		let amount = Chicken.mArgs.amount || 1;

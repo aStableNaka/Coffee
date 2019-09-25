@@ -13,6 +13,7 @@ class ItemPickPerk extends Item{
 		this.value = 0;
 		this.rank = 4;
 		this.meta = "badperk";
+		this.usesMeta = true;
 		this.effect = "Apply this perk to your active pickaxe.";
 
 		this.icon = "https://i.imgur.com/5jC8IIi.png";

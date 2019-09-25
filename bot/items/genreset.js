@@ -17,7 +17,7 @@ class ItemGenReset extends Item{
 		this.value = 1;
 		this.rank = 3;
 		this.meta = {};
-
+		this.usesMeta=true;
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
 
 		this.increaseValue = 8;

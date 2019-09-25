@@ -46,7 +46,8 @@ module.exports = function( Chicken, user, userData ){
 						ufmt.denote('Gold', ufmt.block( userData.items.gold ? userData.items.gold.amount : 0 ) + ' Coins'),
 						ufmt.denote('Income', ufmt.block( ufmt.numPrettyIllion( bp.calcIncome_UD( userData) ) )+' BP/s'),
 						ufmt.denote('Balance', ufmt.block( ufmt.numPrettyIllion( userData.bpbal ) )+' BP'),
-						ufmt.denote('Life-Time Earnings', ufmt.block( ufmt.numPrettyIllion( userData.bptotal ) )+' BP')
+						ufmt.denote('Life-Time Earnings', ufmt.block( ufmt.numPrettyIllion( userData.bptotal ) )+' BP'),
+						ufmt.denote('Orbs', `${ufmt.block( userData.orbs )} ( + ${Math.pow(2,userData.orbs)}x income )`)
 					].join("\n"),
 					inline:true
 				},
