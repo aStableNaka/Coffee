@@ -72,7 +72,7 @@ class ItemGildedSlurry extends Item{
 	desc( Chicken, itemData ){
 		return ufmt.itemDesc([
 			"*A drink full of dangerious and highly toxic heavy metals!*",
-			ufmt.denote('Type', ufmt.block('Mining Boost')),
+			ufmt.denote('Type', ufmt.block('Special Mining Boost')),
 			ufmt.denote('Usage', this.effect),
 			ufmt.denote('Warning', "Mining Boosts do NOT stack")
 		]);

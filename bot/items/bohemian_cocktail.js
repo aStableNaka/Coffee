@@ -67,7 +67,7 @@ class ItemBohemianCocktail extends Item{
 	desc( Chicken, itemData ){
 		return ufmt.itemDesc([
 			"*Weird mix, but ok.*",
-			ufmt.denote('Type', ufmt.block('Mining Boost')),
+			ufmt.denote('Type', ufmt.block('Special Mining Boost')),
 			ufmt.denote('Usage', this.effect),
 			ufmt.denote('Warning', "Mining Boosts do NOT stack")
 		]);

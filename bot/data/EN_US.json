@@ -77,7 +77,23 @@
     },
 
     "changelogs":[
-        [
+        [   
+            "0.1.27",
+            "***NEW***",
+            "+ [ Orb of Almanac ] released",
+            "+ [ Gilded Slurry ] released",
+            "+ [ Bohemian Cocktail ] released",
+            "+ New 'Special Boosts' added",
+            "***UPDATED***",
+            "~ Gold now can be crafted",
+            "~ A few item icons have been updated",
+            "~ Silver is now a common item",
+            "~ We've recieved a new Wiki writer!",
+
+            "***FIXED***",
+            "~ Fixed formatting issues with a few perks",
+            "~ Fixed a few grammatical issues",
+
             "0.1.26",
             "~ Pickaxe changes",
             "- Pickaxes level coefficient changed from `60*(1+10*lvl)` to `15*(1+10*lvl*(tier+1))` per mine",
@@ -86,8 +102,11 @@
             "- Fixed carb scrapper perk",
             "- Fixed a few formatting issues",
             "- Added `~eat`, `~equip` and `~open` ailiases for the `~use` command",
-            "- Fixed crafting 'not enough resources' formatting issue",
-            "0.1.25",
+            "- Fixed crafting 'not enough resources' formatting issue"
+        ]
+    ],
+    "secret_changelogs":[
+        "0.1.25",
             "+ Less lag(?)",
             "0.1.24",
             "+ Added inventory filtering, `~inv filter:\"box\"` will give you your inventory, showing only the boxes",
@@ -118,10 +137,7 @@
             "+ Added 6 new ~shop generators",
             "0.1.15",
             "- Reduced [ Treasure Hunter ] perk's lootbox drop from 4 -> 3",
-            "+ Added 4 new ~shop generators"
-        ]
-    ],
-    "secret_changelogs":[
+            "+ Added 4 new ~shop generators",
         "0.1.13",
         "+ Added [ ***Kingstone's Stone*** ] item",
         "- Fixed an issue with the [ **Hungry** ] and [ **Starved** ] perks",
