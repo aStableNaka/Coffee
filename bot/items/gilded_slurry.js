@@ -35,7 +35,7 @@ class ItemGildedSlurry extends Item{
 
 		return ufmt.join([
 			'Your ', ufmt.block(this.name),
-			' has led you to find ', ufmt.itemName( item ),
+			' has led you to find ', ufmt.item( item ),
 			'!'
 		], '');
 	}
