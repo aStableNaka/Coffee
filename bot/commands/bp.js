@@ -58,7 +58,7 @@ class CommandBlobPoints extends Command {
 				}
 			} else if (args[0] == 'shop') {
 				return { type: 'shop', page: Chicken.numbers[0] || 0 }
-			} else if (args[0] == 'give' || args[0] == 'donate' ) {
+			} else if ((args[0] == 'give' || args[0] == 'donate')&&false ) {
 				return { type: 'give', amount: Chicken.numbers[0], to: Chicken.mentions[0] }
 			}else if( args[0] == 'gens' ){
 				return{

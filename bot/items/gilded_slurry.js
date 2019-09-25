@@ -45,7 +45,7 @@ class ItemGildedSlurry extends Item{
 			"gilded_slurry": {
 				ingredients: [{
 					key: 'silver',
-					amount: 3
+					amount: 7
 				},{
 					key:'apple',
 					amount:2

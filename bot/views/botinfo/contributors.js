@@ -17,7 +17,7 @@ module.exports = function( Chicken ){
 					"value":ufmt.join([
 						`${ufmt.block("Kpostal")} [ Database ]\n${ufmt.denote('Repl.it','<https://repl.it/@kpostal10>')}`,
 						`${ufmt.block("A5Rocks")} [ Lead Wiki Writer ]\n${ufmt.denote('Repl.it','<https://repl.it/@a5rocks>')}\n${ufmt.denote('Github','<https://github.com/A5rocks>')}`,
-						`${ufmt.block("[Insert Username Here]")} [ Wiki Writer ]\n${ufmt.denote('Github','<https://github.com/AmbiguousUsername>')}`,
+						`${ufmt.block("[Insert Username]")} [ Wiki Writer ]\n${ufmt.denote('Github','<https://github.com/AmbiguousUsername>')}`,
 						`${ufmt.block("HarditS")} [ Beta Tester ]\nIn memory of our first beta tester.`
 					],"\n\n")
 				},

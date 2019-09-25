@@ -118,16 +118,7 @@ Drop		Rank	Label
 	}
 
 	static fmtUseMsg( title, descArray, name ){
-		let content = {
-			embed:{
-				title:title,
-				description: descArray.join("\n")/*,
-				footer:{
-					text:`Tip: Use '~iteminfo ${name||this.accessor}' to see this item's information`
-				}*/
-			}
-		};
-		return content;
+		return ufmt.itemUsedResponse( title, descArray, name );
 	}
 
 	use( Chicken, itemData ){}

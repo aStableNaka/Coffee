@@ -306,7 +306,7 @@ function ChickenProvideResponseHelpers(Chicken){
 
 		});
 		msgSendPromise.then(() => {
-			Chicken.channel.stopTyping( true );
+			//Chicken.channel.stopTyping( true );
 		});
 		/*if(Chicken.oFlags.stacktrace){
 			var stack = new Error("Labunga").stack;
@@ -557,8 +557,9 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 			}
 
 			// Differenciate between commands that use the database and those that don't
-			msg.channel.startTyping();
+			//msg.channel.startTyping()
 			executeChicken(Chicken);
+			
 		}
 	}
 }

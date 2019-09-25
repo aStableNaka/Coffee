@@ -54,12 +54,12 @@ module.exports = function( Chicken, user, userData ){
 				{
 					"name":ufmt.block( `Pickaxe` ),
 					"value":[
-						ufmt.denote('Name', `${ufmt.block(userData.pickaxe_name)} tier ${ufmt.block( pickaxe.getTier( activePickaxeItemData ))}`),
+						ufmt.denote('Name', `${ufmt.block(activePickaxeItemData.name)} tier ${ufmt.block( pickaxe.getTier( activePickaxeItemData ))}`),
 						ufmt.denote('Multiplier', `x${pickaxe.getMultiplier(activePickaxeItemData)}` ),
 						ufmt.denote('Exp', ufmt.progressBar( userData.pickaxe_exp%16, 16, `LvL ${pickaxeLevelUD( userData )}`, 16 ) ),
 						ufmt.denote('Cooldown', ufmt.block(userData.pickaxe_time*60) ),
 						ufmt.denote('Income', `+${pickaxeIncome} / mine`),
-						ufmt.denote('Perk Slots', `${userData.pickaxe_perks.length}/${itemUtils.items.pickaxe.getMaxPerkSlots( itemUtils.items.pickaxe.getActivePickaxeItemData( userData ) )}`),
+						ufmt.denote('Perk Slots', `${userData.pickaxe_perks.length}/${itemUtils.items.pickaxe.getMaxPerkSlots( activePickaxeItemData )}`),
 						ufmt.denote('Perks', `${perkDescriptions.length > 0 ? `${perkDescriptions}` : "This pickaxe has no perks."}`)
 					].join("\n")
 				}

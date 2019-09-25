@@ -446,7 +446,7 @@ const pickPerks = {
 		name:"Sculptor",
 		desc:`Your pickaxe is is fine-tuned for sculpting. You are likely to accidentally make some ${ufmt.block("Kingstone's Stones", '**')} on your mining adventures.`,
 		onMine:(Chicken)=>{
-			if(Math.random()<1/10){ return; }
+			if(Math.random()<1/15){ return; }
 			let itemData = itemUtils.items.kingstones_stone.createItemData(1);
 			addItemToUserData( Chicken.userData, itemData );
 			return ufmt.perkMessage('Perk', 'Sculptor',
@@ -459,7 +459,7 @@ const pickPerks = {
 		name:"Regurgitation",
 		desc:"Your pickaxe has a chance of increasing the charge of your last-used mine boost by +1 ( even if the last mine boost is all used up ) but the mine boost becomes half as effective if the charge was already at 0. This will not work for special boosts.",
 		onMine:(Chicken)=>{
-			if(Math.random()>1/8){ return; }
+			if(Math.random()<1/8){ return; }
 			let specialBoost = itemUtils.items[Chicken.userData.mineboostsource] || {};
 			if(specialBoost.onBoost){return;}
 			if(!Chicken.userData.mineboostcharge){

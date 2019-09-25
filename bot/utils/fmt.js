@@ -382,6 +382,26 @@ function elapsedTime( timestamp, styleString='***' ){
 	return ufmt.block(format.map(x=>`${surround(Math.floor(x).toString().padStart(2,'0'),styleString)}`).join(' : '), '');
 }
 
+/**
+ * Format the message that appears when an item gets used
+ * @param {String} title 
+ * @param {String[]} descArray 
+ * @param {*} name 
+ */
+function itemUsedResponse(title, descArray, name){
+	let content = {
+		embed:{
+			title:title,
+			description: descArray.join("\n")/*,
+			footer:{
+				text:`Tip: Use '~iteminfo ${name||this.accessor}' to see this item's information`
+			}*/
+		}
+	};
+	return content;
+}
+
+module.exports.itemUsedResponse = itemUsedResponse;
 module.exports.elapsedTime = elapsedTime;
 module.exports.perkMessage = perkMessage;
 module.exports.joinGrid = joinGrid;
