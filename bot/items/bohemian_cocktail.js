@@ -20,15 +20,15 @@ class ItemBohemianCocktail extends Item{
 
 		this.icon = "https://piskel-imgstore-b.appspot.com/img/f52acb23-df31-11e9-826e-81af7574a4ed.gif";
 		this.charge = 2;
-		this.effect = `Your next ${ufmt.block(this.charge)} mines will grant you ${ufmt.block('5-15') } ${ufmt.block('Box Box')}.`;
+		this.effect = `Your next ${ufmt.block(this.charge)} mines will grant you ${ufmt.block('2-3') } ${ufmt.block('Foxtail Amulets')}.`;
 		this.useDialogue = `You down a Bohemian Cocktail!`;
 	}
 
 	// When a user mines and the boost is active
 	// Must return a boost description
 	onBoost( Chicken ){
-		let outcome = Math.ceil(Math.random()*10)+5;
-		let item = itemUtils.items.lootbox.createItemData(outcome, 'box_box');
+		let outcome = Math.round(Math.random()*1)+2;
+		let item = itemUtils.items.foxtail_amulet.createItemData(outcome);
 		itemUtils.addItemToUserData( Chicken.userData, item);
 
 		return ufmt.join([
