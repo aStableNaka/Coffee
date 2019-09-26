@@ -24,7 +24,7 @@ class ItemKingstonsStone extends Item{
 		this.effect = `Using this will add ${ this.increaseValue } LvLs to your active pickaxe`;
 	}
 	
-		formatName( itemData ){
+	formatName( itemData ){
 		return "Kingstone's Stone";
 	}
 

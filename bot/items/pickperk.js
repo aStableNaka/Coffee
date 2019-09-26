@@ -21,6 +21,10 @@ class ItemPickPerk extends Item{
 		this.isDroppedByLunchbox = false;
 		this.isDroppedByLootbox = true;
 	}
+
+	formatName( itemData ){
+		return itemData.name.replace("pp_", 'PP_');
+	}
 	
 	createItemData( amount=1, meta ){
 		if(!meta){
