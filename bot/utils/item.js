@@ -446,11 +446,11 @@ const pickPerks = {
 		name:"Sculptor",
 		desc:`Your pickaxe is is fine-tuned for sculpting. You are likely to accidentally make some ${ufmt.block("Kingstone's Stones", '**')} on your mining adventures.`,
 		onMine:(Chicken)=>{
-			if(Math.random()<1/15){ return; }
+			if(Math.random()>13/32){ return; }
 			let itemData = itemUtils.items.kingstones_stone.createItemData(1);
 			addItemToUserData( Chicken.userData, itemData );
 			return ufmt.perkMessage('Perk', 'Sculptor',
-				`While mining, you \**accidentally*\* carve out some emblems into a rock and it turned into a ${ufmt.item(itemData)}!`
+				`While mining, you \**accidentally*\* carve out some glyphs onto a rock and it turned into a ${ufmt.item(itemData)}!`
 			);
 		}
 	},
@@ -466,7 +466,7 @@ const pickPerks = {
 				Chicken.userData.mineboost = Math.floor(Chicken.userData.mineboost/2);
 			}
 			Chicken.userData.mineboostcharge++;
-			return ufmt.perkMessage('Perk', 'regurgitation',
+			return ufmt.perkMessage('Perk', 'Regurgitation',
 				`You burp but some extra stuff came up... *Gross*...\nOn the bright side, your mine boost has recieved an extra charge!`
 			);
 		}

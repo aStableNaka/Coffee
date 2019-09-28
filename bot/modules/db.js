@@ -472,9 +472,11 @@ getProfile({id:{$eq:"gem"}}, ( data )=>{
 }, 'global');
 
 function cleanup(){
+	modules.client.destroy();
 	let timeout = 5;
 	console.log(`[Cleanup] running, terminating in ${timeout} seconds...`);
 	saveDatabase();
+	
 	setTimeout(process.exit, timeout*1000);
 }
 

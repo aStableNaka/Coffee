@@ -169,7 +169,11 @@ function calcNextCost( Chicken ){
 
 // Temporary
 function getCurrentBPBal( Chicken ){
-	return calcCurrentBal(Chicken);
+	try{
+		return calcCurrentBal(Chicken);
+	}catch(e){
+		return new BigInt(0);
+	}
 }
 
 function calcPrestigeGoldReward( userData ){

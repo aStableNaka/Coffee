@@ -31,7 +31,7 @@ module.exports = function( Chicken, itemObject='', itemData='' ){
 			"value":ufmt.join(Object.keys(itemObject.recipies).map(( recipieName )=>{
 				let recipie = itemObject.recipies[recipieName];
 				return `> ${ufmt.itemName(recipieName, 1, "***")} ( *x${getAmountAvailable( recipieName )} Available* )\n> - ${ufmt.join(recipie.ingredients.map((ingredient)=>{
-					return ufmt.itemName( ingredient.key, ingredient.amount);
+					return ufmt.itemName( ingredient.key, `**${ingredient.amount}**/${(Chicken.userData.items[ingredient.key]||{amount:0}).amount}`);
 				}),'\n> - ')}`;
 			}),'\n\n')
 		});
