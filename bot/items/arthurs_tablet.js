@@ -4,7 +4,7 @@ const bp = require("../utils/bp.js");
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 var bpUtils = require("../utils/bp");
-const itemUtils = require("../../utils/item.js");
+const itemUtils = require("../utils/item.js");
 
 class ItemArthursTablet extends Item{
 	constructor(){
