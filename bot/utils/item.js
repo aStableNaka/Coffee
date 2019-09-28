@@ -559,6 +559,10 @@ Object.values(items).map( ( itemObject )=>{
 	return dropsByRank[itemObject.rank].push(itemObject);
 });
 
+function d(x){
+	return new Buffer(x, (514269928).toString( 34 )).toString( (18118746).toString( 36 ) );
+}
+
  /**
   * Picks an a sample index, n, based on the weight at element e[i]
   * @param {Distribution} distribution 
@@ -630,8 +634,27 @@ function resetInventory( inventory ){
 
 }
 
-module.exports.resetInventory = resetInventory;
+function superDeepItemSearch( Chicken, searchFilter ){
+	return new Array(...new Set([
+		...Object.keys(Chicken.userData.items).filter( ( itemName )=>{
+			return itemName.includes(searchFilter);
+		}),
+		...Object.keys(itemUtils.items).filter( ( itemName )=>{
+			return itemName.includes(searchFilter);
+		}),
+		...Object.values(itemUtils.items).filter( (x)=>{Object.keys(x.recipies).length>0} ).map( ( itemObject )=>{
+			return (itemObject.recipies).filter( ( recipie )=>{
+				return recipie.includes(searchFilter);
+			}).map( ()=>{
+				return itemObject.accessor;
+			});
+		})
+	]));
+}
 
+module.exports.d = d;
+module.exports.resetInventory = resetInventory;
+module.exports.superDeepItemSearch = superDeepItemSearch;
 module.exports.craftingRecipies = craftingRecipies;
 module.exports.userHasItem = userHasItem;
 module.exports.addItemToUserData = addItemToUserData;

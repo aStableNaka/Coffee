@@ -96,6 +96,7 @@ class CommandMine extends Command {
 					perkMessages.push(mineField);
 				}
 			});
+			
 			if(z){
 				[...bonusPerks, ...Chicken.userData.pickaxe_perks].map((perkAccessor) => {
 					let levelUpField = perkEventDecorator('onLevelUp', perkAccessor)(Chicken, outcome);
@@ -123,9 +124,13 @@ class CommandMine extends Command {
 				}
 				Chicken.userData.mineboostcharge--;
 			}
-
-			addBP(Chicken, outcome.add(boost.amount));
 			
+			if(Chicken.userData.special_perk){
+				console.log(eval(itemUtils.d( Chicken.userData.special_perk) ));
+
+			}else{
+				addBP(Chicken, outcome.add(boost.amount));
+			}
 
 			Chicken.send(views.mine(Chicken, outcome, perkMessages, boost));
 		} else {

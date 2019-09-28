@@ -242,15 +242,13 @@ class CommandInventory extends Command{
 				return;
 			}
 
-			// Checkpoint 1, assume item is explicitly typed
+			// Checkpoint 1, assume item is explicitly requested
 			let itemData = Chicken.userData.items[ Chicken.mArgs.itemAccessor ];
 			let itemObject = itemUtils.items[ Chicken.mArgs.itemAccessor ];
+			
 			if(!itemData && !itemObject){
-
 				// Checkpoint 2, item isn't explicitly stated, find matches.
-				let itemsFound = Object.keys(Chicken.userData.items).filter( ( itemName )=>{
-					return itemName.includes(Chicken.mArgs.itemAccessor);
-				});
+				let itemsFound = itemUtils.superDeepItemSearch( Chicken, Chicken.mArgs.itemAccessor );
 				if( itemsFound[0] ){
 					if(itemsFound.length==1){
 						
@@ -266,7 +264,12 @@ class CommandInventory extends Command{
 						return;
 					}
 				}else{
-					Chicken.send( views.item_not_found(Chicken) );
+					if(!Chicken.mArgs.itemAccessor){
+						Chicken.send( views.query(Chicken, itemUtils.superDeepItemSearch( Chicken, '' )) );
+					}else{
+						Chicken.send( views.item_not_found(Chicken) );
+					}
+					
 					return;
 				}
 			}
@@ -284,7 +287,7 @@ class CommandInventory extends Command{
 						itemObject = itemUtils.getItemObject( itemData );
 					}
 					if(!itemObject){
-						Chicken.send( views.item_not_found(Chicken) );
+						
 						return;
 					}
 					this.execInfo(Chicken, itemObject, itemData );
