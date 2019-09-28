@@ -120,7 +120,6 @@ class CommandMine extends Command {
 					boost.isDefault = false;
 				}else{
 					boost.amount = outcome.divide(100).multiply(Chicken.userData.mineboost);
-					addBP(Chicken, outcome.add(boost.amount));
 				}
 				Chicken.userData.mineboostcharge--;
 			}
