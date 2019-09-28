@@ -60,7 +60,7 @@ class CommandMine extends Command {
 			let income = calcIncome(Chicken);
 			let outcome = bp.calcPickaxeIncome(Chicken.userData);
 			let blessing;
-			let boost = {isDefault:true};
+			let boost = {isDefault:true, amount:0};
 			let perkMessages = [];
 			let bonusPerks = [];
 			let pickaxeLevel = bp.pickaxeLevelUD(Chicken.userData);
@@ -125,7 +125,7 @@ class CommandMine extends Command {
 				Chicken.userData.mineboostcharge--;
 			}
 
-			
+			addBP(Chicken, outcome.add(boost.amount));
 			
 
 			Chicken.send(views.mine(Chicken, outcome, perkMessages, boost));

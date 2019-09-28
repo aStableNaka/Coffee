@@ -78,7 +78,10 @@
 
     "changelogs":[
         [   
-            "0.1.29",
+            "0.1.30",
+            "FIXED",
+            "> ~ Massive bug where mining did not actually give any bp",
+            "\n0.1.29",
             "***NEW***",
             "> + [ Lootbox ] can now be crafted",
             "> + [ Box Box ] can now be crafted",
@@ -115,7 +118,7 @@
             "> ~ Fixed formatting issues with a few perks",
             "> ~ Fixed a few grammatical issues"
 
-           
+
         ]
     ],
     "secret_changelogs":[
