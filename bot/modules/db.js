@@ -142,7 +142,7 @@ function ensure(userID, ud) {
 	delete ud.bibptotal
 
 	if(!ud.orbs){ud.orbs = 0;}
-	
+	if(!ud.listings){ud.listings = [];}
 }
 
 async function remove(userID, callback = () => {}) {

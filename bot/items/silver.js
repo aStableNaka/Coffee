@@ -12,7 +12,7 @@ class ItemSilver extends Item{
 
 		this.consumable = true;
 		this.value = 1;
-		this.rank = 1;
+		this.rank = 0;
 		this.meta = {};
 
 		//this.icon = "https://i.imgur.com/506QOWO.png";
@@ -21,6 +21,23 @@ class ItemSilver extends Item{
 		this.canUseMulti = true;
 
 		this.increaseValue = 0.08;
+	}
+
+	get recipies(){
+		return {
+			"silver":{
+				ingredients:[
+					{
+						key:"gold",
+						amount:1
+					}
+				],
+				onCraft: (Chicken, amount=1) => { // returns itemData
+					return itemUtils.items.silver.createItemData(amount*75);
+				},
+				amount:75
+			}
+		}
 	}
 
 	

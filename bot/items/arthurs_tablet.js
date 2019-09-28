@@ -36,7 +36,10 @@ class ItemArthursTablet extends Item{
 						key:"silver",
 						amount:1
 					}
-				]
+				],
+				onCraft: (Chicken, amount=1) => { // returns itemData
+					return itemUtils.items.arthurs_tablet.createItemData(amount);
+				}
 			}
 		}
 	}

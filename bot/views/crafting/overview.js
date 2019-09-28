@@ -20,10 +20,9 @@ module.exports = function( Chicken, n, page ){
 			}).reduce( (a,b)=>{return a < b ? a : b;} );
 		}
 		return Object.keys(recipies).map(( recipieName )=>{
-			return {accessor:recipieName, amount:getAmountAvailable(recipieName)};
+			return {accessor:recipieName, amount:getAmountAvailable(recipieName), outputAmount:recipie.amount};
 		});
 	})).flat().sort((a,b)=>{return b.amount-a.amount;});
-
 	// TODO change to accomodate pages
 	let desc = ufmt.join([
 		'\n',
