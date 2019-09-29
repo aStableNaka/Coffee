@@ -3,6 +3,7 @@ const ufmt = require("../utils/fmt.js");
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 var bpUtils = require("../utils/bp");
+const itemUtils = require("../utils/item.js");
 
 class ItemOrbOfAlmanac extends Item{
 	constructor(){

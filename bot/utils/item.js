@@ -368,9 +368,9 @@ const pickPerks = {
 
 	"gold_digger":{
 		name:"Gold Digger",
-		desc:"Every 4 mines, you get a [ **Gold** ] x1",
+		desc:"Every 10 mines, you get a [ **Gold** ] x1",
 		onMine:( Chicken )=>{
-			if( !(Chicken.userData.pickaxe_exp%4) ){
+			if( !(Chicken.userData.pickaxe_exp%10) ){
 				let itemData = items.gold.createItemData(1);
 				addItemToUserData( Chicken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Gold Digger',

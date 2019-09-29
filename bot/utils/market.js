@@ -45,5 +45,5 @@ function createMarketListing( Chicken, itemData, requestAmount, onIDAssigned ){
 }
 
 module.exports = {
-	
+	createMarketListing:createMarketListing
 }
