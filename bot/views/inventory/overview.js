@@ -15,7 +15,7 @@ module.exports = function( Chicken, page, userData, numberOfItems, itemsPerPage,
 		embed = "You have no items in your inventory.";
 		return embed;
 	}
-	console.log(formattedInventory);
+	//console.log(formattedInventory);
 	embed.embed.description = formattedInventory;
 	return embed;
 };

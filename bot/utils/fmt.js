@@ -349,9 +349,9 @@ function inventory( inventoryObject, entriesPerPage=20, page=0, filter=()=>{retu
 		//  (${new Array( itemObject.rank+1 ).fill('⭐').join("")})
 		let output = `${ ufmt.item(itemData, itemData.amount, '**') } *${(itemUtils.rankNames[ itemObject.getUniqueRank( itemData ) ]||"Unranked").toLowerCase()}*`;
 		if(itemData.accessor=="pickaxe"){
-			console.log(itemData);
+			//console.log(itemData);
 			if(itemData.meta.perks[0]){
-				output+="\n"+(itemData.meta.perks.map((x)=>{return `> + ${x}`}).join("\n"));
+				output+="\n"+(itemData.meta.perks.map((x)=>{return `> *+ ${x}*`}).join("\n"));
 			}
 		};
 		return output;
