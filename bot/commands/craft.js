@@ -69,7 +69,7 @@ class CommandCraft extends Command {
 				})
 			];
 			if(search[0]){
-				if(search.length>0){
+				if(search.length>1){
 					Chicken.send(views.query(Chicken, search));
 					return;
 				}
