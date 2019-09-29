@@ -27,7 +27,7 @@ class ItemGold extends Item{
 	get recipies(){
 		return {
 			"gold":{
-				ingredients:[{key:'silver',amount:75}],
+				ingredients:[{key:'silver',amount:100}],
 				onCraft:(Chicken, amount=1)=>{
 					return itemUtils.items.gold.createItemData( amount );
 				}
