@@ -33,7 +33,7 @@ class ItemSilver extends Item{
 					}
 				],
 				onCraft: (Chicken, amount=1) => { // returns itemData
-					return itemUtils.items.silver.createItemData(amount*75);
+					return itemUtils.items.silver.createItemData(amount*100);
 				},
 				amount:100
 			}
