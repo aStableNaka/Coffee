@@ -63,7 +63,17 @@ class CommandCraft extends Command {
 		let amount = Math.abs( Chicken.numbers[0]||1 );
 		let userData = Chicken.userData;
 		if(itemAccessor){
-			if(recipies[itemAccessor]){
+			let search = [
+				...Object.keys(recipies).filter( ( itemName )=>{
+					return itemName.includes(itemAccessor);
+				})
+			];
+			if(search[0]){
+				if(search.length>0){
+					Chicken.send(views.query(Chicken, search));
+					return;
+				}
+				itemAccessor = search[0];
 				let recipie = recipies[itemAccessor];
 				// something here to check if the requested amount is available for crafting
 				let hasEnoughIngredients = recipie.ingredients.filter( (ingredient)=>{
