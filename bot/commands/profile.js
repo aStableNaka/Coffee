@@ -37,11 +37,11 @@ class CommandTemplate extends Command {
 		return 2;
 	}
 	modifyArgs(args) {
-		return {page:0,maxPages:2};
+		return {page:0,maxPages:2, maxPagesDefault:2};
 	}
 	async execute(Chicken) {
 		function decorator43( userData ){
-			return pages.ssfwbwpWrapper( Chicken, views.overview, [Chicken, userData], Chicken.mArgs.maxPages )();
+			return pages.ssfwbwpWrapper( Chicken, views.overview, [Chicken, userData] )();
 		}
 		if (Chicken.mentions[0]) {
 			Chicken.database.get(String(Chicken.mentions[0].id), (userData) => {

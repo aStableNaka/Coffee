@@ -8,21 +8,27 @@ const locale = require("../../data/EN_US.json");
 const pickaxe = itemUtils.items.pickaxe;
 module.exports = function( Chicken, userData ){
 	if(!userData){ userData = Chicken.userData; }
-
+	Chicken.mArgs.maxPages = Chicken.mArgs.maxPagesDefault
 	let firstUseDay = Math.floor((new Date().getTime() - userData.firstuse)/1000/60/60/24);
 	let badges = ([userData.tester?'Beta Tester':'', ...userData.tags]).map((tag)=>{ return ufmt.badge( tag ); }).join(" ");
-	if(userData.pickaxe_perks.length>5){
-		//Chicken.mArgs.maxPages+=Math.ceil(userData.pickaxe_perks.length/5)-1;
-	}
 	let pickaxeIncome = ufmt.bp( bp.calcPickaxeIncome( userData ) );
-	let perkDescriptions = userData.pickaxe_perks.map((x)=>{
-		let perk = itemUtils.pickPerks[ x ];
-		let desc = `\n- ${ufmt.block(perk.name, "***")}`;
-		if(userData.pickaxe_perks.length < 5){
-			desc+= `: *${perk.desc || "No description"}*`;
-		}
-		return desc;
-	}).join('');
+	let perkDescriptions = [];
+	let perksCopy = userData.pickaxe_perks.map((x)=>{return x;});
+	let i = 0;
+	const maxPerksPerPage = 7;
+	while(perksCopy.length > 0){
+		let subset = perksCopy.splice(0,maxPerksPerPage);
+		perkDescriptions.push([{
+			name:ufmt.block( `Pickaxe Perks ${i*maxPerksPerPage} - ${(i+1)*maxPerksPerPage}` ),
+			value:subset.map((x)=>{
+				let perk = itemUtils.pickPerks[ x ];
+				let desc = `\n- ${ufmt.block(perk.name, "***")}: *${perk.desc || "No description"}*`;
+				return desc;
+			}).join('')
+		}]);
+		i++;
+		Chicken.mArgs.maxPages++;
+	}
 
 	let activePickaxeItemData = pickaxe.getActivePickaxeItemData( userData );
 
@@ -62,13 +68,12 @@ module.exports = function( Chicken, userData ){
 					ufmt.denote('Exp', ufmt.progressBar( userData.pickaxe_exp%16, 16, `LvL ${pickaxeLevelUD( userData )}`, 16 ) ),
 					ufmt.denote('Cooldown', ufmt.block(userData.pickaxe_time*60) ),
 					ufmt.denote('Income', `+${pickaxeIncome} / mine`),
-					ufmt.denote('Perk Slots', `${userData.pickaxe_perks.length}/${itemUtils.items.pickaxe.getMaxPerkSlots( activePickaxeItemData )}`),
-					ufmt.denote('Perks', `${perkDescriptions.length > 0 ? `${perkDescriptions}` : "This pickaxe has no perks."}`)
+					ufmt.denote('Perk Slots', `${userData.pickaxe_perks.length}/${itemUtils.items.pickaxe.getMaxPerkSlots( activePickaxeItemData )}`)
 				].join("\n")
 			}
-		]
+			
+		],...perkDescriptions
 	]
-
 	return {
 		"embed": {
 			"color": 0xfec31b,

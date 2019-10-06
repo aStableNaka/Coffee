@@ -21,7 +21,8 @@ function createPageOperator( emojiName, callback ){
 
 // Super-Simple-Forward-Backward-Pages-Wrapper
 // Assumes the view uses Chicken.mArgs.page
-function ssfwbwpWrapper( Chicken, view, args, numberOfPages=1 ){
+function ssfwbwpWrapper( Chicken, view, args, numberOfPages ){
+	numberOfPages = numberOfPages || Chicken.mArgs.maxPages || 1;
 	const pages = module.exports;
 	function send(){
 		Chicken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, Chicken.mArgs.page||Chicken.numbers[0]-1||0) );
@@ -31,13 +32,13 @@ function ssfwbwpWrapper( Chicken, view, args, numberOfPages=1 ){
 	function pageThing( hookMsg ){
 		// Starting conditions
 		let pageOperators = [];
-
+		// In case the view decides it wants to change the max number of pages
+		numberOfPages = Chicken.mArgs.maxPages || numberOfPages || 1;
 		Chicken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, Chicken.mArgs.page||Chicken.numbers[0]-1||0) );
 		
 		if(Chicken.mArgs.page > 0){
 			pageOperators.push(
 				pages.createPageOperator( emojis.arrow_left, ()=>{
-
 					// Backwards operation
 					Chicken.mArgs.page--;
 					send();
@@ -48,7 +49,6 @@ function ssfwbwpWrapper( Chicken, view, args, numberOfPages=1 ){
 			pageOperators.push(
 				pages.createPageOperator( emojis.arrow_right,
 				()=>{
-
 					// Forewards operation
 					Chicken.mArgs.page++;
 					send();
