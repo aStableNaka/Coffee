@@ -1,3 +1,5 @@
+var emojis = require("./emojis");
+
 function createPageManager( Chicken, msg, pageOperators, lifetime=120000 ){
 	pageOperators.reverse();
 	function doTheThing(){
@@ -17,5 +19,48 @@ function createPageOperator( emojiName, callback ){
 	return {emojiName:emojiName, callback:callback}
 }
 
+// Super-Simple-Forward-Backward-Pages-Wrapper
+// Assumes the view uses Chicken.mArgs.page
+function ssfwbwpWrapper( Chicken, view, args, numberOfPages=1 ){
+	const pages = module.exports;
+	function send(){
+		Chicken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, Chicken.mArgs.page||Chicken.numbers[0]-1||0) );
+		Chicken.send(view(...args)).then(pageThing);
+	};
+
+	function pageThing( hookMsg ){
+		// Starting conditions
+		let pageOperators = [];
+
+		Chicken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, Chicken.mArgs.page||Chicken.numbers[0]-1||0) );
+		
+		if(Chicken.mArgs.page > 0){
+			pageOperators.push(
+				pages.createPageOperator( emojis.arrow_left, ()=>{
+
+					// Backwards operation
+					Chicken.mArgs.page--;
+					send();
+				} )
+			);
+		}
+		if( Chicken.mArgs.page < numberOfPages-1 ){
+			pageOperators.push(
+				pages.createPageOperator( emojis.arrow_right,
+				()=>{
+
+					// Forewards operation
+					Chicken.mArgs.page++;
+					send();
+				} )
+			)
+		}
+		
+		pages.createPageManager( Chicken, hookMsg, pageOperators );
+	}
+	return send;
+}
+
+module.exports.ssfwbwpWrapper = ssfwbwpWrapper;
 module.exports.createPageManager = createPageManager;
 module.exports.createPageOperator = createPageOperator;
