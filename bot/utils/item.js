@@ -201,7 +201,6 @@ function userHasItem( userData, itemKey, amount = 1 ){
 
 
 function perkTreasureHelper( userData ){
-	
 	let itemData = itemUtils.items.lootbox.createItemData(1, "box_box");
 	itemUtils.addItemToUserData( userData, itemData );
 	return itemData;
@@ -261,6 +260,8 @@ const pickPerks = {
 		name:"Determined Endurance",
 		desc:"Your mining cooldown reduces as your pickaxe gains experience. [ **-3.5 sec/lvl** ] with a hard cap of 120 seconds.",
 		onMine:( Chicken, outcome )=>{
+			// Hotfix for det and chrimson stacking
+			if(Chicken.userData.pickaxe_perks.indexOf('chrimson_king')>-1){return;}
 			let lvl = bp.pickaxeLevelExp(Chicken.userData.pickaxe_exp);
 			let reduction = Math.floor(Math.min( (Chicken.userData.pickaxe_time-2) * 60 * 1000, 3.5 * lvl * 1000 ));
 			Chicken.userData.lastmine-=reduction;
@@ -484,6 +485,18 @@ const pickPerks = {
 				);
 			}
 		}
+	},
+
+	"orchard":{
+		name:"Orchard",
+		desc:"You will recieve an apple every time you mine.",
+		onMine:(Chicken)=>{
+			let itemData = itemUtils.items.apple.createItemData(1);
+			addItemToUserData(Chicken.userData, itemData);
+			return ufmt.perkMessage('Perk', 'Orchard',
+				`You pluck an ${ufmt.item(itemData)} from your orchird.`
+			);
+		}
 	}
 };
 
@@ -520,15 +533,15 @@ const availablePerks = [
  */
 
 let dropProbabilities = [
-	60,
-	25,
-	10,
-	3,
-	0.9,
-	0.197,
-	0.03,
-	0.001
-]
+	60, // 0
+	25, // 1
+	10, // 2
+	3, // 3
+	0.9, // 4
+	0.197, // 5
+	0.03, // 6
+	0.001, // 7
+];
 
 let dropDistribution = dropProbabilities.map(x=>x*1000000);
 
@@ -636,7 +649,7 @@ function resetInventory( inventory ){
 
 function superDeepItemSearch( Chicken, searchFilter ){
 	return new Array(...new Set([
-		...Object.keys(Chicken.userData.items).filter( ( itemName )=>{
+		...Object.keys(Chicken.userData.items||{}).filter( ( itemName )=>{
 			return itemName.includes(searchFilter);
 		}),
 		...Object.keys(itemUtils.items).filter( ( itemName )=>{
