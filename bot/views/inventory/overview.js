@@ -6,11 +6,12 @@ module.exports = function( Chicken, page, userData, numberOfItems, itemsPerPage,
 		"embed":{
 			"title":`${ufmt.name( userData )}'s inventory`,
 			"description":"",
+			"color":0xa38673,
 			"footer":{text:`Page ${(page+1)}/${numberOfPages} - Showing ${itemsPerPage} items.${Chicken.keyPairs.filter?` Filtering for "${Chicken.keyPairs.filter}"`:''}`}
 		}
 	};
 	//console.log(page);
-	let formattedInventory = ufmt.inventory( userData.items, itemsPerPage, page, filter );
+	let formattedInventory = ufmt.inventory( userData.items, itemsPerPage, page, filter, (userData.pref||{}).inv );
 	if(!formattedInventory){ 
 		embed = "You have no items in your inventory.";
 		return embed;

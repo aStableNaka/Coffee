@@ -6,8 +6,8 @@ const ufmt = require("../utils/fmt.js");
  * WIP
  * I want to make it either change the name of a
  */
-class ItemNametag extends Item{
-	constructor(){
+class ItemNametag extends Item {
+	constructor() {
 		super();
 		this.name = "Nametag"; // Required
 		this.accessor = "nametag"; // Virtural
@@ -18,20 +18,20 @@ class ItemNametag extends Item{
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
-		
+
 		//this.isDroppedByLootbox = true;
 	}
 
-	
-	use( Chicken, itemData ){
+
+	use(Chicken, itemData) {
 		Chicken.send('Crafting is not available yet!');
 	}
 
-	desc( Chicken, itemData ){
+	desc(Chicken, itemData) {
 		return ufmt.itemDesc([
-				  `Use this to rename your currently equipped pickaxe!`,
-				  ufmt.denote('Usage', 'You will be prompted to pick a new name for your current pickaxe.')
-			]);
+			`Use this to rename your currently equipped pickaxe!`,
+			ufmt.denote('Usage', 'You will be prompted to pick a new name for your current pickaxe.')
+		]);
 	}
 }
 

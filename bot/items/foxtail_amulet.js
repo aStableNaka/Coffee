@@ -13,7 +13,7 @@ class ItemFoxtailAmulet extends Item{
 		this.value = 0;
 		this.rank = 5;
 		this.meta = {};
-
+		this.emoji = "<:foxtail:631407099846459392>";
 		this.icon = "https://i.imgur.com/RxQ29C6.png";
 		this.charge = 1;
 		this.boost = 18500;

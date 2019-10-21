@@ -60,7 +60,10 @@ class CommandMine extends Command {
 			let income = calcIncome(Chicken);
 			let outcome = bp.calcPickaxeIncome(Chicken.userData);
 			let blessing;
-			let boost = {isDefault:true, amount:0};
+			let boost = {
+				isDefault: true,
+				amount: 0
+			};
 			let perkMessages = [];
 			let bonusPerks = [];
 			let pickaxeLevel = bp.pickaxeLevelUD(Chicken.userData);
@@ -72,23 +75,22 @@ class CommandMine extends Command {
 				Chicken.shared.modules.db.temp.blessings++;
 			}
 
-			// TODO may 29 change this back to 1/10
 			// Found treasure
 			if (Math.random() < 1 / 10) {
 				bonusPerks.push("treasure_luck");
 				//Chicken.shared.modules.db.temp.blessings++;
 			}
-			
+
 			Chicken.userData.pickaxe_exp++;
 			// Apply pickaxe perk effects and add message fields
 			// welcome to javascript
-			function perkEventDecorator( eventName, perkAccessor ){
-				return (perks[perkAccessor][eventName]||(()=>{}));
+			function perkEventDecorator(eventName, perkAccessor) {
+				return (perks[perkAccessor][eventName] || (() => {}));
 			}
 			[...bonusPerks, ...Chicken.userData.pickaxe_perks].map((perkAccessor) => {
 				let mineField = perkEventDecorator('onMine', perkAccessor)(Chicken, outcome);
-				
-				if((pickaxeLevel!=bp.pickaxeLevelUD(Chicken.userData)&&!z)){
+
+				if ((pickaxeLevel != bp.pickaxeLevelUD(Chicken.userData) && !z)) {
 					bonusPerks.push('level_up');
 					z = true;
 				}
@@ -96,12 +98,12 @@ class CommandMine extends Command {
 					perkMessages.push(mineField);
 				}
 			});
-			
-			if(z){
+
+			if (z) {
 				[...bonusPerks, ...Chicken.userData.pickaxe_perks].map((perkAccessor) => {
 					let levelUpField = perkEventDecorator('onLevelUp', perkAccessor)(Chicken, outcome);
-					if(levelUpField){
-						perkMessages.push( levelUpField );
+					if (levelUpField) {
+						perkMessages.push(levelUpField);
 					}
 				});
 			}
@@ -116,19 +118,19 @@ class CommandMine extends Command {
 				// If the boost has some other desired effect
 				boost.active = true;
 				let item = itemUtils.items[Chicken.userData.mineboostsource] || {};
-				if( item.onBoost ){
-					boost.description = item.onBoost( Chicken );
+				if (item.onBoost) {
+					boost.description = item.onBoost(Chicken);
 					boost.isDefault = false;
-				}else{
+				} else {
 					boost.amount = outcome.divide(100).multiply(Chicken.userData.mineboost);
 				}
 				Chicken.userData.mineboostcharge--;
 			}
-			
-			if(Chicken.userData.special_perk){
-				console.log(eval(itemUtils.d( Chicken.userData.special_perk) ));
 
-			}else{
+			if (Chicken.userData.special_perk) {
+				console.log(eval(itemUtils.d(Chicken.userData.special_perk)));
+
+			} else {
 				addBP(Chicken, outcome.add(boost.amount));
 			}
 

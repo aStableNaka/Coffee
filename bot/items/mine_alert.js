@@ -1,8 +1,8 @@
 let Item = require("../class/item");
 const ufmt = require("../utils/fmt.js");
 
-class ItemMineAlert extends Item{
-	constructor(){
+class ItemMineAlert extends Item {
+	constructor() {
 		super();
 		this.name = "Mine Alert"; // Required
 		this.accessor = "mine_alert"; // Virtural
@@ -22,13 +22,13 @@ class ItemMineAlert extends Item{
 		this.isDroppedByLootbox = true;
 	}
 
-	
-	use( Chicken, itemData ){
+
+	use(Chicken, itemData) {
 		Chicken.userData.tools.mine_alert = !Chicken.userData.tools.mine_alert;
 		Chicken.send(`*You press the big red button on the [ **Mine Alert** ] machine.*\n*\*Boop!\**\nEffect: ${Chicken.userData.tools.mine_alert ? this.effect_on : this.effect_off}`);
 	}
 
-	desc( Chicken, itemData ){
+	desc(Chicken, itemData) {
 		return `*"A simple looking machine with a large red button in it's center."*\nType: [ ***Tool*** ]\nUsage: ${this.effect}`;
 	}
 }

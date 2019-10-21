@@ -22,7 +22,7 @@ const classes = loader("./bot/class", './class');
 
 // Message IDs will be used as identifiers
 let rawHooks = {
-	MESSAGE_REACTION_ADD:{}
+	MESSAGE_REACTION_ADD: {}
 }
 
 // Store commands by aliashash
@@ -45,8 +45,8 @@ function loadCommands() {
 	shared.modules = modules;
 	shared.sources = sources;
 	shared.views = loader("./bot/views", "./views");
-	console.log(`[Command Manager] ${ Object.keys( sources ).length } command groups loaded!`);
-	console.log(`[Command Manager] ${ Object.keys( commands ).length } ailiases loaded!`);
+	console.log(`[Command Manager] ${Object.keys(sources).length} command groups loaded!`);
+	console.log(`[Command Manager] ${Object.keys(commands).length} ailiases loaded!`);
 	console.log("[Command Manager] Ready to accept commands.");
 	ready = true;
 }
@@ -79,7 +79,7 @@ function tokenize(msg) {
  * - Chicken.isChicken ( A not-so-unique identifier for Chickens )
  * @param {DiscordjsMessage} msg 
  */
-function Chickenize(msg) {
+function Chickenize(msg, prompt) {
 	let preferences = modules.db.getGuildPreferences(msg.guild);
 	let tokens = tokenize(msg);
 	/*
@@ -95,7 +95,7 @@ function Chickenize(msg) {
 	}
 	if (mimics[tokens[0]]) {
 		tokens = [...mimics[tokens[0]].cmd.split(' '), ...tokens.slice(1)].filter((x) => {
-			return x!='' && !!x;
+			return x != '' && !!x;
 		});
 	}
 
@@ -103,7 +103,7 @@ function Chickenize(msg) {
 	return {
 		accessor: modules.ezhash(first.toLowerCase()),
 		flags: (tokens[0].split(':')[1] || "").split(';'),
-		args: tokens.slice(1),
+		args: prompt ? tokens : tokens.slice(1),
 		msg: msg,
 		mobile: mobile,
 		//max:max,
@@ -118,7 +118,7 @@ function Chickenize(msg) {
  * - Chicken.eArgsLen
  * @param {Chicken} Chicken 
  */
-function ChickenExpandPlaceholders(Chicken){
+function ChickenExpandPlaceholders(Chicken) {
 	let cmd = commands[Chicken.accessor];
 	Chicken.cmd = cmd;
 	Chicken.eArgsLen = 0;
@@ -133,7 +133,7 @@ function ChickenExpandPlaceholders(Chicken){
 
  * @param {Chicken} Chicken
  */
-function ChickenExpandOFlags(Chicken){
+function ChickenExpandOFlags(Chicken) {
 	Chicken.flags.map((flag) => {
 		var [key, value] = [...flag.split("="), true]
 		Chicken.oFlags[key] = value;
@@ -153,48 +153,51 @@ function ChickenExpandOFlags(Chicken){
  * @param {Chicken} Chicken 
  * @param {DiscordjsMessage} msg 
  */
-async function ChickenGroupArguments(Chicken, msg){ // jshint ignore:line
+async function ChickenGroupArguments(Chicken, msg) { // jshint ignore:line
 	Chicken.mentions = [...msg.mentions.users.values()];
 
 	// Searches for pattern: @[id], @1234592819341
-	(msg.content.match(/@\d{0,}/gi) || []).slice(0,4).map(async (idMention)=>{
-		let snowflake = idMention.replace("@",'');
-		let user = await Chicken.client.fetchUser( snowflake ); // jshint ignore:line
+	(msg.content.match(/@\d{0,}/gi) || []).slice(0, 4).map(async (idMention) => {
+		let snowflake = idMention.replace("@", '');
+		let user = await Chicken.client.fetchUser(snowflake); // jshint ignore:line
 
 		// If snowflake search fails (which it will because nodejs is suck ass at realizing fetchUser is an async function)
-		if(!user){
-			user = modules.db.global.leaderboards[snowflake];
+		if (!user) {
+			user = { search: true, id: snowflake };
 		}
 
-		if(!user){
+		if (!user) {
 			return;
 		}
 
-		Chicken.mentions.push( user );
+		Chicken.mentions.push(user);
 	});
 	Chicken.numbers = Chicken.args.filter((x) => {
 		return !Number.isNaN(parseFloat(x.replace(/,/gi, '')))
 	}).map((x) => {
 		return parseFloat(x.replace(/,/gi, ''));
 	});
-	
-	let text = msg.content;
+
+	let text = [Chicken.accessor, ...Chicken.args].join(' ');
 	let keyPairs = text.match(/\w+:".+"/gi) || [];
 	Chicken.keyPairs = {};
-	keyPairs.map( (kp)=>{
+	keyPairs.map((kp) => {
+		Chicken.args.splice(Chicken.args.indexOf(kp), 1);
 		text = text.replace(kp, '');
 		let m = kp.split(':');
 		Chicken.keyPairs[m[0]] = m[1].split('"')[1];
 	});
-	text = text.split(' ').filter( (x)=>{return x!='';} ).join(' ');
-	
+	text = text.split(' ').filter((x) => {
+		return x != '';
+	}).join(' ');
 
 	Chicken.words = text.match(/([A-z])\w+/gi);
+	Chicken.argwords = Chicken.args.join(' ').match(/([A-z])\w+/gi);
 	Chicken.quotes = text.match(/"[^"]*"/gi);
 	Chicken.max = Chicken.args.includes('max');
 	Chicken.wordsPlus = text.match(/(#?[A-z]?[0-9]?)\w+/gi);
 
-	if(text.indexOf("<@350823530377773057>") == 0){
+	if (text.indexOf("<@350823530377773057>") == 0) {
 		Chicken.mentions = Chicken.mentions.slice(1);
 	}
 }
@@ -209,7 +212,7 @@ async function ChickenGroupArguments(Chicken, msg){ // jshint ignore:line
  * @param {Chicken} Chicken 
  * @param {DiscordjsMessage} msg 
  */
-function ChickenFlattenMsgData(Chicken, msg){
+function ChickenFlattenMsgData(Chicken, msg) {
 	Chicken.channel = msg.channel;
 	Chicken.author = msg.author;
 	Chicken.guild = msg.guild;
@@ -223,7 +226,7 @@ function ChickenFlattenMsgData(Chicken, msg){
  * - Chicken.emulated ( True if the command uses emulation )
  * @param {Chicken} Chicken 
  */
-function ChickenHandleEmulation(Chicken){
+function ChickenHandleEmulation(Chicken) {
 	if (Chicken.oFlags['emulate']) {
 		Chicken.originalAuthor = Chicken.author;
 		Chicken.emulated = true;
@@ -244,7 +247,7 @@ function ChickenHandleEmulation(Chicken){
  * - Chicken.rawHooks
  * @param {Chicken} Chicken 
  */
-function ChickenIncludeGloals(Chicken){
+function ChickenIncludeGloals(Chicken) {
 	Chicken.bot = shared;
 	Chicken.shared = shared;
 	Chicken.cAccessors = commands;
@@ -263,7 +266,7 @@ function ChickenIncludeGloals(Chicken){
  * @param {Chicken} Chicken 
  * @param {DiscordjsMessage} msg 
  */
-function ChickenIncludeUserData(Chicken, msg){
+function ChickenIncludeUserData(Chicken, msg) {
 	Chicken.userData = {
 		name: msg.author.username,
 		discriminator: msg.author.discriminator,
@@ -280,7 +283,7 @@ function ChickenIncludeUserData(Chicken, msg){
  * - Chicken.usesDatabase ( true if a command needs to access database )
  * @param {Chicken} Chicken 
  */
-function ChickenParseArguments(Chicken){
+function ChickenParseArguments(Chicken) {
 	let cmd = commands[Chicken.accessor];
 	if (Chicken.cmd) {
 		Chicken.mArgs = cmd.modifyArgs(Chicken.args, Chicken);
@@ -298,7 +301,7 @@ function ChickenParseArguments(Chicken){
  * - Chicken.messageAdmin();
  * @param {*} Chicken 
  */
-function ChickenProvideResponseHelpers(Chicken){
+function ChickenProvideResponseHelpers(Chicken) {
 	// Sending a message
 	Chicken.send = (data, callback) => {
 		let msgSendPromise = Chicken.channel.send(data);
@@ -322,12 +325,12 @@ function ChickenProvideResponseHelpers(Chicken){
 		return Chicken.channel.send(data);
 	}
 
-	Chicken.messageAdmin = ( data )=>{
+	Chicken.messageAdmin = (data) => {
 		modules.client.users.find("id", "133169572923703296").send(data);
 	}
 }
 
-function ChickenProvideAdminHelpers(Chicken){
+function ChickenProvideAdminHelpers(Chicken) {
 	// If not bot admin, do not go past this point
 	if (!env.bot.admins[Chicken.author.id]) {
 		return;
@@ -348,29 +351,29 @@ function ChickenProvideAdminHelpers(Chicken){
  */
 function ChickenQueryUser(
 	Chicken, userQuery,
-	onFoundOne=console.log,
-	onFoundMany=console.log,
-	onFoundNone=console.log
-){
+	onFoundOne = console.log,
+	onFoundMany = console.log,
+	onFoundNone = console.log
+) {
 
 	// Search for userQuery matches in the leaderboards user cache
-	let results = Object.values( Chicken.shared.modules.db.global.leaderboards ).filter((ldata)=>{
-		return ldata.name.toLowerCase().includes( userQuery.toLowerCase() ) || ldata.id == userQuery.replace('@','');
+	let results = Object.values(Chicken.shared.modules.db.global.leaderboards).filter((ldata) => {
+		return ldata.name.toLowerCase().includes(userQuery.toLowerCase()) || ldata.id == userQuery.replace('@', '');
 	});
-	
+
 	// If there is only one query result...
-	if(results.length==1){
+	if (results.length == 1) {
 		let snowflake = results[0].id;
-		onFoundOne( snowflake );
+		onFoundOne(snowflake);
 		return true;
-	}else if(results.length){
+	} else if (results.length) {
 		// If there are multiple query results
-		onFoundMany( results );
+		onFoundMany(results);
 		return true;
-	}else if(Chicken.mentions[0]){
-		onFoundOne( Chicken.mentions[0].id );
+	} else if (Chicken.mentions[0]) {
+		onFoundOne(Chicken.mentions[0].id);
 		return true;
-	}else{
+	} else {
 		// No results found
 		onFoundNone();
 		return false;
@@ -384,14 +387,14 @@ function ChickenQueryUser(
  * - Chicken.queryUser()
  * @param {Chicken} Chicken 
  */
-function ChickenProvideQueryingHelpers(Chicken){
-	Chicken.queryUser = (userQuery, onFoundOne, onFoundMany, onFoundNone)=>{
-		return ChickenQueryUser( Chicken, userQuery, onFoundOne, onFoundMany, onFoundNone );
+function ChickenProvideQueryingHelpers(Chicken) {
+	Chicken.queryUser = (userQuery, onFoundOne, onFoundMany, onFoundNone) => {
+		return ChickenQueryUser(Chicken, userQuery, onFoundOne, onFoundMany, onFoundNone);
 	}
 }
 
 
-function createHookData_MESSAGE_REACTION_ADD( Chicken, msg, emojiName, callback, lifetime ){
+function createHookData_MESSAGE_REACTION_ADD(Chicken, msg, emojiName, callback, lifetime) {
 	//console.log(msg);
 	return {
 		msgID: msg.id.toString(),
@@ -403,39 +406,39 @@ function createHookData_MESSAGE_REACTION_ADD( Chicken, msg, emojiName, callback,
 	}
 }
 
-function createHookIdentifier_MESSAGE_REACTION_ADD( msgID, userID, emojiName ){
-	return `${ msgID }_${userID}_e${emojiName}`;
+function createHookIdentifier_MESSAGE_REACTION_ADD(msgID, userID, emojiName) {
+	return `${msgID}_${userID}_e${emojiName}`;
 }
 
-module.exports.handleRaw = async function( data ){
-	if(data.t=='MESSAGE_REACTION_ADD'){
+module.exports.handleRaw = async function (data) {
+	if (data.t == 'MESSAGE_REACTION_ADD') {
 		//console.log(data);
-		let hookIdentifier = createHookIdentifier_MESSAGE_REACTION_ADD( data.d.message_id, data.d.user_id, data.d.emoji.name );
+		let hookIdentifier = createHookIdentifier_MESSAGE_REACTION_ADD(data.d.message_id, data.d.user_id, data.d.emoji.name);
 		//console.log(`[Hook Catch ] ${hookIdentifier}`);
 		//console.log(rawHooks.MESSAGE_REACTION_ADD);
 		// If there's a hook with this specific identifier
-		if(rawHooks.MESSAGE_REACTION_ADD[ hookIdentifier ]){
-			let hook = rawHooks.MESSAGE_REACTION_ADD[ hookIdentifier ];
-			
+		if (rawHooks.MESSAGE_REACTION_ADD[hookIdentifier]) {
+			let hook = rawHooks.MESSAGE_REACTION_ADD[hookIdentifier];
+
 			// Handle dead hooks
-			if(hook.lifetime<new Date().getTime()){
+			if (hook.lifetime < new Date().getTime()) {
 				// Pray that GC will take care of this
-				delete rawHooks.MESSAGE_REACTION_ADD[ hookIdentifier ];
+				delete rawHooks.MESSAGE_REACTION_ADD[hookIdentifier];
 				return;
 			}
-			
-			hook.callback( hook.Chicken );
+
+			hook.callback(hook.Chicken);
 		}
 	}
 }
 
-function createMsgReactionHook( Chicken, msg, emojiName, callback, lifetime=120000 ){
-	let hookData = createHookData_MESSAGE_REACTION_ADD( Chicken, msg, emojiName, callback, new Date().getTime() + lifetime );
-	let hookIdentifier = createHookIdentifier_MESSAGE_REACTION_ADD( msg.id.toString(), Chicken.author.id.toString(), emojiName );
-	rawHooks.MESSAGE_REACTION_ADD[ hookIdentifier ] = hookData;
+function createMsgReactionHook(Chicken, msg, emojiName, callback, lifetime = 120000) {
+	let hookData = createHookData_MESSAGE_REACTION_ADD(Chicken, msg, emojiName, callback, new Date().getTime() + lifetime);
+	let hookIdentifier = createHookIdentifier_MESSAGE_REACTION_ADD(msg.id.toString(), Chicken.author.id.toString(), emojiName);
+	rawHooks.MESSAGE_REACTION_ADD[hookIdentifier] = hookData;
 	//console.log(`[Hook Create] ${hookIdentifier}`);
-	setTimeout( ()=>{
-		delete rawHooks.MESSAGE_REACTION_ADD[ hookIdentifier ];
+	setTimeout(() => {
+		delete rawHooks.MESSAGE_REACTION_ADD[hookIdentifier];
 	}, lifetime);
 	return hookData;
 }
@@ -447,9 +450,9 @@ function createMsgReactionHook( Chicken, msg, emojiName, callback, lifetime=1200
  * - Chicken.addReactionHook
  * @param {Chicken} Chicken 
  */
-function ChickenProvideMessageReactionHooks( Chicken ){
-	Chicken.addReactionHook = ( msg, emojiName, callback, lifetime=120000 )=>{
-		return createMsgReactionHook( Chicken, msg, emojiName, callback, lifetime );
+function ChickenProvideMessageReactionHooks(Chicken) {
+	Chicken.addReactionHook = (msg, emojiName, callback, lifetime = 120000) => {
+		return createMsgReactionHook(Chicken, msg, emojiName, callback, lifetime);
 	}
 }
 
@@ -460,7 +463,7 @@ function ChickenProvideMessageReactionHooks( Chicken ){
  * - Chicken.userIsBotAdmin
  * @param {*} Chicken 
  */
-function ChickenVerifyUserPermissions( Chicken ){
+function ChickenVerifyUserPermissions(Chicken) {
 	Chicken.userIsBotAdmin = !!env.bot.admins[Chicken.author.id];
 }
 
@@ -479,7 +482,7 @@ async function ChickenExpand(Chicken) {
 	ChickenProvideAdminHelpers(Chicken);
 	ChickenProvideQueryingHelpers(Chicken);
 	ChickenVerifyUserPermissions(Chicken);
-	ChickenProvideMessageReactionHooks( Chicken );
+	ChickenProvideMessageReactionHooks(Chicken);
 }
 
 /*
@@ -501,14 +504,14 @@ function containsPrefix(msg) {
 		guild
 	} = msg;
 	let preferences = modules.db.getGuildPreferences(guild);
-	return content.indexOf(preferences.prefix) == 0 || content.indexOf("<@350823530377773057>")==0;
+	return content.indexOf(preferences.prefix) == 0 || content.indexOf("<@350823530377773057>") == 0;
 }
 
 const layoutInvalidPerms = require("../views/invalid_perms");
 module.exports.handle = async function (msg, client) { // jshint ignore:line
 	// Test for beta access
-	if(env.beta){
-		if(env.whitelist.indexOf(msg.author.id.toString())==-1){
+	if (env.beta) {
+		if (env.whitelist.indexOf(msg.author.id.toString()) == -1) {
 			return;
 		}
 	}
@@ -522,7 +525,7 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 	var Chicken;
 	// Handle prompts
 	if (prompts[msg.author.id]) {
-		Chicken = Chickenize(msg);
+		Chicken = Chickenize(msg, true);
 		await ChickenExpand(Chicken);
 		prompts[msg.author.id](Chicken);
 		delete prompts[msg.author.id];
@@ -540,7 +543,7 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 			await ChickenExpand(Chicken);
 			//console.log(globalStates.isBotLocked());
 			// Global lock implemtation
-			if( globalStates.isBotLocked() && !Chicken.userIsBotAdmin ){
+			if (globalStates.isBotLocked() && !Chicken.userIsBotAdmin) {
 				Chicken.send("The bot is currently under lockdown. Please come back later!");
 				return;
 			}
@@ -559,7 +562,7 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 			// Differenciate between commands that use the database and those that don't
 			//msg.channel.startTyping()
 			executeChicken(Chicken);
-			
+
 		}
 	}
 }
@@ -582,25 +585,25 @@ function createMonitorEvent(Chicken) {
 	return data;
 }
 
-function notifyError( Chicken, e ){
+function notifyError(Chicken, e) {
 	const ufmt = require("../utils/fmt");
-	let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${ e.stack.slice(0,1000) }\`\`\` `;
+	let errorMessage = `\`\`\`diff\n- Error -\n${e.message}\`\`\`\n\`\`\`javascript\n${e.stack.slice(0, 1000)}\`\`\` `;
 	Chicken.send("Oh no... Something went wrong! I'll notify the bot admin.");
 	Chicken.messageAdmin(
 		ufmt.join([
-			ufmt.denote( 'Type', 'Command Execution Error' ),
-			ufmt.denote( 'User', ufmt.name(Chicken.userData) ),
-			ufmt.denote( 'ID', Chicken.msg.author.id),
+			ufmt.denote('Type', 'Command Execution Error'),
+			ufmt.denote('User', ufmt.name(Chicken.userData)),
+			ufmt.denote('ID', Chicken.msg.author.id),
 			ufmt.denote('Guild', Chicken.msg.guild.id),
 			ufmt.denote('Channel', Chicken.msg.channel.id),
-			ufmt.denote( 'Command', `\`${Chicken.msg.content}\``),
+			ufmt.denote('Command', `\`${Chicken.msg.content}\``),
 			errorMessage
 		])
 	)
 }
 
 function executeChicken(Chicken) {
-	
+
 	if (Chicken.usesDatabase) {
 		modules.db.get(Chicken.author.id, (userData) => {
 			// Temporary
@@ -610,7 +613,6 @@ function executeChicken(Chicken) {
 			}*/
 			// Temporary
 
-			// TODO guildData
 			Chicken.guildData = {};
 			Chicken.userData = userData;
 			Object.setPrototypeOf(Chicken.userData, classes.userdata.prototype);
@@ -618,8 +620,10 @@ function executeChicken(Chicken) {
 				Chicken.send(views.blacklist(Chicken));
 				return;
 			}
-			
-			Chicken.cmd.execute(Chicken).then(() => {}).catch( (e)=>{ return notifyError(Chicken, e); } );
+
+			Chicken.cmd.execute(Chicken).then(() => { }).catch((e) => {
+				return notifyError(Chicken, e);
+			});
 			Chicken.userData.cmdcount++;
 			Chicken.userData.lastuse = new Date().getTime();
 			if (userData.monitored) {
@@ -634,7 +638,9 @@ function executeChicken(Chicken) {
 			}
 		});
 	} else {
-		Chicken.cmd.execute(Chicken).then(() => {}).catch((e)=>{ return notifyError(Chicken, e);});
+		Chicken.cmd.execute(Chicken).then(() => { }).catch((e) => {
+			return notifyError(Chicken, e);
+		});
 	}
 }
 
@@ -647,9 +653,10 @@ module.exports.loadCommands = loadCommands;
 
 /*
  * Chicken Interface (v1.1.2)
- * 
+ *
  * - Chicken.cmd
  * - Chicken.eArgsLen
+ * - Chicken.keyPairs Ex: filter:"abcd"
  * - Chicken.accessor ( command accessor )
  * - Chicken.flags ( see @ChickenExpandOFlags )
  * - Chicken.args
@@ -680,4 +687,4 @@ module.exports.loadCommands = loadCommands;
  * - Chicken.rawHooks
  * - Chicken.messageAdmin()
  * - Chicken.guildData
-*/
+ */

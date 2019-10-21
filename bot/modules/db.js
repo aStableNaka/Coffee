@@ -1,32 +1,28 @@
 /**
  * Holy shit this entire module needs to be crucified
  */
-
 var mongoose = require("mongoose");
 const env = require("../env.js");
-
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 const stringSimilarity = require("string-similarity");
 const process = require("process");
-
 const bpUtils = require('../utils/bp');
-
 let nameUpdateStack = [];
 let lisaLoaded = false;
 const leaderboardsTimeout = 20;
 const leaderboardStatus = {
-	loaded:false,
-	zhuliOnline:false,
-	loadID:0
+	loaded: false,
+	zhuliOnline: false,
+	loadID: 0
 }
 
 const cache = {};
 const global = {
 	leaderboards: {},
 	pot: 0,
-	gem:{
-		loaded:false
+	gem: {
+		loaded: false
 	}
 };
 const temp = {
@@ -34,22 +30,32 @@ const temp = {
 	commandsTotal: 0,
 	rateLimits: 0,
 	blessings: 0,
-	inactive:0
+	inactive: 0
 };
 const stats = {};
 const PERSISTENCE_INTERVAL = 1000 * 60 * 30;
 const DATABASE_SAVE_INTERVAL = 1000 * 60 * 10;
 var modules = null;
-let {log, DBLog} = require("./logging");
+let {
+	log,
+	DBLog
+} = require("./logging");
+
 function et(e) {
 	if (e) {
 		throw e;
 	}
 }
+let mongodb = require("./mongodb");
+let {
+	getProfile,
+	insert,
+	updateProfile,
+	removeProfile
+} = mongodb;
 
-let {getProfile, insert, updateProfile, removeProfile} = require("./mongowrappers");
 var DATABASE_NEEDS_SAVE = true;
-
+const season = 0;
 
 /**
  * Wrappers
@@ -131,7 +137,7 @@ function ensure(userID, ud) {
 
 	// Make sure the currently equipped pickaxe's
 	// item data is labled as equipped
-	if(ud.items[ud.pickaxe_accessor]){
+	if (ud.items[ud.pickaxe_accessor]) {
 		ud.items[ud.pickaxe_accessor].equipped = true;
 	}
 
@@ -141,8 +147,16 @@ function ensure(userID, ud) {
 	delete ud.bibps;
 	delete ud.bibptotal
 
-	if(!ud.orbs){ud.orbs = 0;}
-	if(!ud.listings){ud.listings = [];}
+	if (!ud.orbs) {
+		ud.orbs = 0;
+	}
+	if (!ud.listings) {
+		ud.listings = [];
+	}
+	if(!ud.seasons){
+		ud.season = season;
+		ud.seasons = {};
+	}
 }
 
 async function remove(userID, callback = () => {}) {
@@ -183,10 +197,9 @@ async function getAllUsers(callback = (udCollection) => {}) {
 			$eq: 0
 		}
 	};
-	getProfile(query).then(callback).catch((e)=>{
-			console.log(`[Leaders] Error fetching leaderboards ${e}`)
-		}
-	);
+	getProfile(query).then(callback).catch((e) => {
+		console.log(`[Leaders] Error fetching leaderboards ${e}`)
+	});
 }
 
 
@@ -195,10 +208,10 @@ async function getAllUsers(callback = (udCollection) => {}) {
  */
 
 
-function loadLeaderboards( id=0 ) {
+function loadLeaderboards(id = 0) {
 	DBLog(`[Mongo] Loading Leaderboards, routine #${id}`)
 	getAllUsers((udCollection) => {
-		if(leaderboardStatus.loadID!=id){
+		if (leaderboardStatus.loadID != id) {
 			DBLog(`[Leaderboards] Loading took too long for routine #${id}`);
 		}
 		let ids = udCollection.map((userData) => {
@@ -212,11 +225,11 @@ function loadLeaderboards( id=0 ) {
 		leaderboardStatus.loaded = true;
 	})
 	doTheThingZhuLi();
-	setTimeout( ()=>{
-		if(!leaderboardStatus.loaded){
-			loadLeaderboards(id+1);
+	setTimeout(() => {
+		if (!leaderboardStatus.loaded) {
+			loadLeaderboards(id + 1);
 		}
-	}, leaderboardsTimeout*1000 );	
+	}, leaderboardsTimeout * 1000);
 }
 
 async function setLeaderboardAuthorFromID() {
@@ -226,7 +239,7 @@ async function setLeaderboardAuthorFromID() {
 // Zhu Li the lazy loader
 // Loads names if the cache hasn't stored the user's name
 function doTheThingZhuLi() {
-	if(leaderboardStatus.zhuliOnline){
+	if (leaderboardStatus.zhuliOnline) {
 		DBLog.log(`[Zhu Li] already online`);
 		return;
 	}
@@ -256,7 +269,7 @@ function doTheThingZhuLi() {
 				global.leaderboards[String(n.id)].name = user.username;
 				global.leaderboards[String(n.id)].discriminator = user.discriminator;
 
-			}).catch(( reason )=>{
+			}).catch((reason) => {
 				DBLog(`[Client] [FetchUser] [error] ${reason}`);
 			});;
 		}
@@ -292,7 +305,7 @@ function updateLeaderboards(userData) {
 	ldata = global.leaderboards[dbid];
 	global.pot = BigInt(global.pot).add(ldata.bal)
 	if (!ldata.name || lisaLoaded) {
-		if(!ldata.name){
+		if (!ldata.name) {
 			ldata.name = "Loading...";
 		}
 		nameUpdateStack.push({
@@ -325,20 +338,20 @@ function getLeaderboardsData(userData) {
 }
 
 // Find a name based on the inclusion of an input
-function queryLdbByName(nameQuery){
+function queryLdbByName(nameQuery) {
 	// Exact match search
-	let results = Object.values( global.leaderboards ).filter((ldata)=>{
-		return ldata.name.toLowerCase().includes( nameQuery.toLowerCase() );
+	let results = Object.values(global.leaderboards).filter((ldata) => {
+		return ldata.name.toLowerCase().includes(nameQuery.toLowerCase());
 	});
 	return results;
 }
 
 // Find a name based on a similarity of the input
-function queryLdbByNameSimilarity(nameQuery, minimumSimilarityThreshold = 0.6){
-	let results = Object.values( global.leaderboards ).filter((ldata)=>{
-		let bias = ldata.name.toLowerCase().includes( nameQuery.toLowerCase() ) ? 1 : 0;
-		let similarity = stringSimilarity.compareTwoStrings( ldata.name.toLowerCase(), nameQuery );
-		let product = similarity + bias*0.5;
+function queryLdbByNameSimilarity(nameQuery, minimumSimilarityThreshold = 0.6) {
+	let results = Object.values(global.leaderboards).filter((ldata) => {
+		let bias = ldata.name.toLowerCase().includes(nameQuery.toLowerCase()) ? 1 : 0;
+		let similarity = stringSimilarity.compareTwoStrings(ldata.name.toLowerCase(), nameQuery);
+		let product = similarity + bias * 0.5;
 		return product >= minimumSimilarityThreshold;
 	});
 	return results;
@@ -350,7 +363,7 @@ module.exports = {
 	log: log,
 	updateProfile: updateProfile,
 	getProfile: getProfile,
-	query:getProfile,
+	query: getProfile,
 	mongoInsert: insert,
 	temp: temp,
 	DBLog: DBLog,
@@ -400,6 +413,7 @@ module.exports.forceGCUnsafe = function () {
 
 
 module.exports.nameUpdateStack = nameUpdateStack;
+
 function saveDatabase(callback) {
 	if (!DATABASE_NEEDS_SAVE) {
 		gc_entries_cleared = 0;
@@ -435,15 +449,21 @@ function saveDatabase(callback) {
 				delete cache[key];
 			}
 			//DBLog( `s ${userID}` );
-		}).catch(( reason )=>{
+		}).catch((reason) => {
 			DBLog(`[Mongo] [update] [error] ${reason}`);
 		});
 	});
 
 	// Save globals
-	updateProfile( {id:{$eq:"gem"}}, {$set:global.gem}, 'global' ).then(()=>{
+	updateProfile({
+		id: {
+			$eq: "gem"
+		}
+	}, {
+		$set: global.gem
+	}, 'global').then(() => {
 		console.log(`[Database] [Saved] Gem data`);
-	}).catch((e)=>{
+	}).catch((e) => {
 		console.log(`[Database] [SaveError] Gem data, ${e.message}`);
 	});
 }
@@ -466,18 +486,24 @@ module.exports.updateLeaderboards = updateLeaderboards;
 module.exports.getLeaderboardsData = getLeaderboardsData;
 module.exports.saveDatabase = saveDatabase;
 module.exports.stats = stats;
+module.exports.api = mongodb;
 
-getProfile({id:{$eq:"gem"}}, ( data )=>{
+getProfile({
+	id: {
+		$eq: "gem"
+	}
+}, (data) => {
 	global.gem = data[0];
 }, 'global');
 
-function cleanup(){
+function cleanup() {
 	modules.client.destroy();
 	let timeout = 5;
 	console.log(`[Cleanup] running, terminating in ${timeout} seconds...`);
 	saveDatabase();
-	
-	setTimeout(process.exit, timeout*1000);
+
+	setTimeout(process.exit, timeout * 1000);
+
 }
 
 module.exports.cleanup = cleanup;

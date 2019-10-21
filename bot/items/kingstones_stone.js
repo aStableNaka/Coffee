@@ -5,8 +5,8 @@ const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 var bpUtils = require("../utils/bp");
 
-class ItemKingstonsStone extends Item{
-	constructor(){
+class ItemKingstonsStone extends Item {
+	constructor() {
 		super();
 		this.name = "Kingstone's Stone"; // Required
 		this.accessor = "kingstones_stone"; // Virtural
@@ -19,30 +19,30 @@ class ItemKingstonsStone extends Item{
 		this.icon = "https://i.imgur.com/690A2to.png";
 		this.isDroppedByLootbox = true;
 		this.canUseMulti = true;
-
+		this.emoji = "<:kingstone:631407101637427200>";
 		this.increaseValue = 1;
 		this.effect = `Using this will add ${ this.increaseValue } exp to your active pickaxe`;
 	}
-	
-	formatName( itemData ){
+
+	formatName(itemData) {
 		return "Kingstone's Stone";
 	}
 
-	
-	use( Chicken, itemData ){
+
+	use(Chicken, itemData) {
 		let amount = Chicken.mArgs.amount || 1;
-		let increase = amount*this.increaseValue;
+		let increase = amount * this.increaseValue;
 		let oldLevel = Chicken.userData.pickaxe_exp;
-		Chicken.userData.pickaxe_exp+=increase;
-		Chicken.send( ufmt.join(
-		[
-			`You hit yourself on the head with ${ufmt.block("Kingstone's Stone")} x${amount} and`,
-			`your ${ufmt.block( Chicken.userData.pickaxe_name )} gains exp!\n${ufmt.block( oldLevel )} -> ${ufmt.block( Chicken.userData.pickaxe_exp )}`
-		]
-	  ) );
+		Chicken.userData.pickaxe_exp += increase;
+		Chicken.send(ufmt.join(
+			[
+				`You hit yourself on the head with ${ufmt.block("Kingstone's Stone")} x${amount} and`,
+				`your ${ufmt.block( Chicken.userData.pickaxe_name )} gains exp!\n${ufmt.block( oldLevel )} -> ${ufmt.block( Chicken.userData.pickaxe_exp )}`
+			]
+		));
 	}
 
-	desc( Chicken, itemData ){
+	desc(Chicken, itemData) {
 		return ufmt.itemDesc([
 			"*A rock with embedded knowledge*",
 			ufmt.denote('Type', ufmt.block('Exp Modifier')),

@@ -7,7 +7,15 @@ const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 const locale = require("../data/EN_US.json");
 const {
-	dataShop, dataShopCatalogue, getItemByAlias, confirmBuy, calcIncome, getAmountOwned, calcMax, calcNextCost, getCurrentBPBal
+	dataShop,
+	dataShopCatalogue,
+	getItemByAlias,
+	confirmBuy,
+	calcIncome,
+	getAmountOwned,
+	calcMax,
+	calcNextCost,
+	getCurrentBPBal
 } = require("../utils/bp");
 const bpUtils = require("../utils/bp");
 const emojis = require("../utils/emojis");
@@ -17,18 +25,46 @@ class CommandBlobPoints extends Command {
 	constructor() {
 		super();
 	}
-	get usesDatabase() { return true; }
-	get accessors() { return ["bp", "blob", "bpoints", "blobpoints", "bal"]; }
-	get mimics() { return [
-		{ name: "shop", cmd: "bp shop" }, 
-		{ name: "buy", cmd: "bp buy" }, 
-		{ name: "store", cmd: "bp shop" }, 
-		{ name: "leaderboards", cmd: "bp leaderboards" }, 
-		{ name: "leaders", cmd: "bp leaderboards" }, 
-		{ name: "leaderboard", cmd: "bp leaderboards" },
-		{ name: "gens", cmd: "bp gens" }
-	];}
-	get modifiers() { return ['shop', 'leaderboards', 'buy', 'give', 'prestige', 'gens'] }
+	get usesDatabase() {
+		return true;
+	}
+	get accessors() {
+		return ["bp", "blob", "bpoints", "blobpoints", "bal"];
+	}
+	get mimics() {
+		return [{
+				name: "shop",
+				cmd: "bp shop"
+			},
+			{
+				name: "buy",
+				cmd: "bp buy"
+			},
+			{
+				name: "store",
+				cmd: "bp shop"
+			},
+			{
+				name: "leaderboards",
+				cmd: "bp leaderboards"
+			},
+			{
+				name: "leaders",
+				cmd: "bp leaderboards"
+			},
+			{
+				name: "leaderboard",
+				cmd: "bp leaderboards"
+			},
+			{
+				name: "gens",
+				cmd: "bp gens"
+			}
+		];
+	}
+	get modifiers() {
+		return ['shop', 'leaderboards', 'buy', 'give', 'prestige', 'gens']
+	}
 
 	get help() {
 		return locale.bp.help.field;
@@ -40,11 +76,15 @@ class CommandBlobPoints extends Command {
 			["shop", "< page >", locale.bp.help.summary.shop],
 			["buy", "<generator code> <amount | 'max'>", locale.bp.help.summary.buy],
 			//["donate", "< @person > < amount >", "Give away some of your bp!"],
-			["leaderboards", "< page >", locale.bp.help.summary.leaderboards ]
+			["leaderboards", "< page >", locale.bp.help.summary.leaderboards]
 		];
 	}
-	get helpName() { return "Blob-Points"; }
-	get helpGroup() { return "BlobPoints"; }
+	get helpName() {
+		return "Blob-Points";
+	}
+	get helpGroup() {
+		return "BlobPoints";
+	}
 
 	modifyArgs(args, Chicken) {
 		if (this.modifiers.includes(args[0])) {
@@ -57,72 +97,97 @@ class CommandBlobPoints extends Command {
 					amount: args[2] ? (Number.isNaN(parseInt(args[2])) ? 0 : Math.abs(parseInt(args[2]))) : 1
 				}
 			} else if (args[0] == 'shop') {
-				return { type: 'shop', page: Chicken.numbers[0] || 0 }
-			} else if ((args[0] == 'give' || args[0] == 'donate')&&false ) {
-				return { type: 'give', amount: Chicken.numbers[0], to: Chicken.mentions[0] }
-			}else if( args[0] == 'gens' ){
-				return{
-					type:'gens',
+				return {
+					type: 'shop',
+					page: Chicken.numbers[0] || 0
+				}
+			} else if ((args[0] == 'give' || args[0] == 'donate') && false) {
+				return {
+					type: 'give',
+					amount: Chicken.numbers[0],
+					to: Chicken.mentions[0]
+				}
+			} else if (args[0] == 'gens') {
+				return {
+					type: 'gens',
 					user: Chicken.mentions[0]
 				}
-			}else if( args[0]='leaderboards' ){
-				return {type:'leaderboards', local:Chicken.words.indexOf('local')>-1, page:Chicken.numbers[0]}
+			} else if (args[0] = 'leaderboards') {
+				return {
+					type: 'leaderboards',
+					local: Chicken.words.indexOf('local') > -1,
+					page: Chicken.numbers[0]
+				}
 			}
-			return { type: args[0] }
+			return {
+				type: args[0]
+			}
 		}
-		return { type: "overview", userQuery: args.join(" ") };
+		return {
+			type: "overview",
+			userQuery: args.join(" ")
+		};
 	}
 
-	execGens( Chicken ){
-		if(Chicken.mArgs.user){
-			Chicken.database.get( Chicken.mArgs.user.id, (userData)=>{
-				Chicken.send( views.gens( Chicken, userData ) )
+	execGens(Chicken) {
+		if (Chicken.mArgs.user) {
+			Chicken.database.get(Chicken.mArgs.user.id, (userData) => {
+				Chicken.send(views.gens(Chicken, userData))
 			});
-		}else{
-			Chicken.send( views.gens( Chicken, Chicken.userData ) )
+		} else {
+			Chicken.send(views.gens(Chicken, Chicken.userData))
 		}
 	}
 
 	// Display the overview
 	execOverview(Chicken, bal, income) {
 		var self = this;
-		function onFoundOne( snowflake ){
-			Chicken.database.get( snowflake, ( userData )=>{
+
+		function onFoundOne(snowflake) {
+			Chicken.database.get(snowflake, (userData) => {
 				Chicken.userData = userData;
 				let income = calcIncome(Chicken);
-				let bal = Math.floor(getCurrentBPBal(Chicken));  // BINTCONV
-				Chicken.shared.modules.db.updateLeaderboards( Chicken.userData );
-				self.sendOverview( Chicken, bal, income );
-			} );
+				let bal = Math.floor(getCurrentBPBal(Chicken)); // BINTCONV
+				Chicken.shared.modules.db.updateLeaderboards(Chicken.userData);
+				self.sendOverview(Chicken, bal, income);
+			});
 		}
 
-		function onFoundNone(){
-			self.sendOverview( Chicken, bal, income );
+		function onFoundNone() {
+			self.sendOverview(Chicken, bal, income);
 		}
-		
-		Chicken.queryUser( Chicken.mArgs.userQuery, onFoundOne, onFoundNone, onFoundNone )
+
+		Chicken.queryUser(Chicken.mArgs.userQuery, onFoundOne, onFoundNone, onFoundNone)
 		Chicken.author = Chicken.mentions[0];
 	}
 
-	sendOverview( Chicken, bal, income ){
+	sendOverview(Chicken, bal, income) {
 		let count = Chicken.oFlags.watch || String(Math.floor(income)).length * 3;
 		let initialCount = count;
-		let lastBal = getCurrentBPBal(Chicken);  // BINTCONV
+		let lastBal = getCurrentBPBal(Chicken); // BINTCONV
 		let newBal = lastBal;
 		let initialCmdcount = Chicken.userData.cmdcount;
 		Chicken.send(views.overview(Chicken, bal, income, count, initialCount)).then((msg) => {
 			Chicken.userData.lastbpcheckmsgid = msg.id;
-			if (income.lt(1)) { return; }
+			if (income.lt(1)) {
+				return;
+			}
 			let sameMsg = msg;
 			async function resend() {
-				if (count > 0) { count--; } else { return; }
-				let deltaCmdcount = Chicken.userData.cmdcount-initialCmdcount;
+				if (count > 0) {
+					count--;
+				} else {
+					return;
+				}
+				let deltaCmdcount = Chicken.userData.cmdcount - initialCmdcount;
 				setTimeout(() => {
 					lastBal = newBal;
-					newBal = getCurrentBPBal(Chicken);  // BINTCONV
+					newBal = getCurrentBPBal(Chicken); // BINTCONV
 					let currentIncome = calcIncome(Chicken);
 					if (sameMsg.id != Chicken.userData.lastbpcheckmsgid) {
-						msg.delete().catch((e)=>{console.log(`[DiscordMessage] [DeleteError] [bp@128] ${e}`);});
+						msg.delete().catch((e) => {
+							console.log(`[DiscordMessage] [DeleteError] [bp@128] ${e}`);
+						});
 						return;
 					}
 					msg.edit(
@@ -130,16 +195,16 @@ class CommandBlobPoints extends Command {
 					).then((n) => {
 						sameMsg = n;
 						// Only resend if the user can still see the overview
-						if(deltaCmdcount < 4){
+						if (deltaCmdcount < 4) {
 							resend();
 						}
-					}).catch((e)=>{
+					}).catch((e) => {
 						throw e;
 					});
-				}, Math.max(2200*Math.max(1,deltaCmdcount-3), 2500**Math.max(1,deltaCmdcount-3) - initialCount * 50));
+				}, Math.max(2200 * Math.max(1, deltaCmdcount - 3), 2500 ** Math.max(1, deltaCmdcount - 3) - initialCount * 50));
 			}
 
-			
+
 			resend();
 		});
 	}
@@ -147,57 +212,58 @@ class CommandBlobPoints extends Command {
 	// Display the shop
 	execShop(Chicken, bal) {
 		let view = views.shop;
-		function pageThing( hookMsg ){
+
+		function pageThing(hookMsg) {
 			// Starting conditions
 			Chicken.mArgs.page = Math.max(0, Chicken.mArgs.page);
 
 			let pageOperators = [];
-			if(Chicken.mArgs.page > 0){
+			if (Chicken.mArgs.page > 0) {
 				pageOperators.push(
-					pages.createPageOperator( emojis.arrow_backward, ()=>{
+					pages.createPageOperator(emojis.arrow_backward, () => {
 
 						// Backwards operation
-						Chicken.mArgs.page=0;
+						Chicken.mArgs.page = 0;
 
-						Chicken.send( view( Chicken, bal, Chicken.mArgs.page ) ).then(pageThing);	
-					} )
+						Chicken.send(view(Chicken, bal, Chicken.mArgs.page)).then(pageThing);
+					})
 				)
 				pageOperators.push(
-					pages.createPageOperator( emojis.arrow_left, ()=>{
+					pages.createPageOperator(emojis.arrow_left, () => {
 
 						// Backwards operation
 						Chicken.mArgs.page--;
 
-						Chicken.send( view( Chicken, bal, Chicken.mArgs.page ) ).then(pageThing);	
-					} )
+						Chicken.send(view(Chicken, bal, Chicken.mArgs.page)).then(pageThing);
+					})
 				)
 			}
 			pageOperators.push(
-				pages.createPageOperator( emojis.arrow_right,
-				()=>{
+				pages.createPageOperator(emojis.arrow_right,
+					() => {
 
-					// Forewards operation
-					Chicken.mArgs.page++;
+						// Forewards operation
+						Chicken.mArgs.page++;
 
-					Chicken.send( view( Chicken, bal, Chicken.mArgs.page ) ).then(pageThing);
-				} )
+						Chicken.send(view(Chicken, bal, Chicken.mArgs.page)).then(pageThing);
+					})
 			)
 
 			pageOperators.push(
-				pages.createPageOperator( emojis.arrow_forward,
-				()=>{
+				pages.createPageOperator(emojis.arrow_forward,
+					() => {
 
-					// Forewards operation
-					Chicken.mArgs.page=1000;
+						// Forewards operation
+						Chicken.mArgs.page = 1000;
 
-					Chicken.send( view( Chicken, bal, Chicken.mArgs.page ) ).then(pageThing);
-				} )
+						Chicken.send(view(Chicken, bal, Chicken.mArgs.page)).then(pageThing);
+					})
 			)
-			
-			pages.createPageManager( Chicken, hookMsg, pageOperators );
+
+			pages.createPageManager(Chicken, hookMsg, pageOperators);
 		}
 
-		Chicken.send( view( Chicken, bal, Chicken.mArgs.page ) ).then( pageThing );
+		Chicken.send(view(Chicken, bal, Chicken.mArgs.page)).then(pageThing);
 		//Chicken.send(views.shop(Chicken, bal, Chicken.mArgs.page));
 	}
 
@@ -210,7 +276,7 @@ class CommandBlobPoints extends Command {
 				Chicken.mArgs.amount = (Chicken.mArgs.amount || 1);
 			}
 			let nextCost = calcNextCost(Chicken);
-			if (bal.lt( nextCost )) {  // BINTCONV
+			if (bal.lt(nextCost)) { // BINTCONV
 				// Insufficent funds
 				Chicken.send(views.insufficient_funds(Chicken, bal, nextCost, getItemByAlias(Chicken.mArgs.itemAlias)));
 			} else {
@@ -230,113 +296,114 @@ class CommandBlobPoints extends Command {
 	// Remove later
 	execGive(Chicken, bal) {
 		return;
-		Chicken.send("This command is super broken. Bad math or something. I'll fix once repl stops lagging.\n-naka").then( (msg)=>{
-			setTimeout( ()=>{
+		Chicken.send("This command is super broken. Bad math or something. I'll fix once repl stops lagging.\n-naka").then((msg) => {
+			setTimeout(() => {
 				msg.delete();
 			}, 15000);
-		} );
+		});
 		return;
-		let amount = Math.abs( Chicken.numbers[0] ) || 1; 
+		let amount = Math.abs(Chicken.numbers[0]) || 1;
 		let to2 = Chicken.mentions[0];
-		if(Chicken.max){
+		if (Chicken.max) {
 			amount = bal;
 		}
-		if(new Date().getTime() - ((Chicken.userData.lastGive)||1) < 1000 * 60 * 5 ){
-			Chicken.send( `Nope. Wait ${ parseInt( 60 * 5 - (new Date().getTime() - ((Chicken.userData.lastGive)))/1000 )} seconds.` );
+		if (new Date().getTime() - ((Chicken.userData.lastGive) || 1) < 1000 * 60 * 5) {
+			Chicken.send(`Nope. Wait ${ parseInt( 60 * 5 - (new Date().getTime() - ((Chicken.userData.lastGive)))/1000 )} seconds.`);
 			return;
 		}
-		if( !amount || !to2 ){
-			Chicken.send( views.give_argm( Chicken ) );
+		if (!amount || !to2) {
+			Chicken.send(views.give_argm(Chicken));
 			return;
 		}
-		if( bal >= amount ){
-			Chicken.mentions.map( (to)=>{
-				Chicken.database.get( to.id, ( toUD )=>{
+		if (bal >= amount) {
+			Chicken.mentions.map((to) => {
+				Chicken.database.get(to.id, (toUD) => {
 					let fromUD = Chicken.userData;
 					let a = amount;
-					if(amount<toUD.bpbal){
+					if (amount < toUD.bpbal) {
 						a = toUD.bpbal;
 					}
-					bpUtils.transferBP( fromUD, toUD, a );
+					bpUtils.transferBP(fromUD, toUD, a);
 					// Give success layout goes nHere
-					Chicken.shared.modules.db.updateLeaderboards( fromUD );
-					Chicken.shared.modules.db.updateLeaderboards( toUD );
-					
+					Chicken.shared.modules.db.updateLeaderboards(fromUD);
+					Chicken.shared.modules.db.updateLeaderboards(toUD);
+
 					Chicken.userData.lastGive = new Date().getTime();
 				})
 			})
-			Chicken.send( views.give_success( Chicken, amount ) );
+			Chicken.send(views.give_success(Chicken, amount));
 		}
 	}
 
-	execLeaderboards( Chicken ) {
+	execLeaderboards(Chicken) {
 		let globals = Chicken.shared.modules.db.global;
-		if(Chicken.numbers[0]){
+		if (Chicken.numbers[0]) {
 			let view = views.lb_all;
-			function pageThing( hookMsg ){
+
+			function pageThing(hookMsg) {
 				// Starting conditions
 				Chicken.numbers[0] = Math.max(0, Chicken.numbers[0]);
 
 				let pageOperators = [];
-				if(Chicken.numbers[0] > 0){
+				if (Chicken.numbers[0] > 0) {
 					pageOperators.push(
-						pages.createPageOperator( emojis.arrow_backward, ()=>{
+						pages.createPageOperator(emojis.arrow_backward, () => {
 
 							// Backwards operation
-							Chicken.numbers[0]=0;
+							Chicken.numbers[0] = 0;
 
-							Chicken.send( view( Chicken, globals, Chicken.numbers[0] ) ).then(pageThing);	
-						} )
+							Chicken.send(view(Chicken, globals, Chicken.numbers[0])).then(pageThing);
+						})
 					)
 					pageOperators.push(
-						pages.createPageOperator( emojis.arrow_left, ()=>{
+						pages.createPageOperator(emojis.arrow_left, () => {
 
 							// Backwards operation
-							Chicken.numbers[0]-=2;
+							Chicken.numbers[0] -= 2;
 
-							Chicken.send( view( Chicken, globals, Chicken.numbers[0] ) ).then(pageThing);	
-						} )
+							Chicken.send(view(Chicken, globals, Chicken.numbers[0])).then(pageThing);
+						})
 					)
 				}
 				pageOperators.push(
-					pages.createPageOperator( emojis.arrow_right,
-					()=>{
+					pages.createPageOperator(emojis.arrow_right,
+						() => {
 
-						// Forewards operation
-						Chicken.numbers[0]+=2;
+							// Forewards operation
+							Chicken.numbers[0] += 2;
 
-						Chicken.send( view( Chicken, globals, Chicken.numbers[0] ) ).then(pageThing);
-					} )
+							Chicken.send(view(Chicken, globals, Chicken.numbers[0])).then(pageThing);
+						})
 				)
 
 				pageOperators.push(
-					pages.createPageOperator( emojis.arrow_forward,
-					()=>{
+					pages.createPageOperator(emojis.arrow_forward,
+						() => {
 
-						// Forewards operation
-						Chicken.numbers[0]=1000;
+							// Forewards operation
+							Chicken.numbers[0] = 1000;
 
-						Chicken.send( view( Chicken, globals, Chicken.numbers[0] ) ).then(pageThing);
-					} )
+							Chicken.send(view(Chicken, globals, Chicken.numbers[0])).then(pageThing);
+						})
 				)
-				
-				pages.createPageManager( Chicken, hookMsg, pageOperators );
+
+				pages.createPageManager(Chicken, hookMsg, pageOperators);
 			}
 
-			Chicken.send( view( Chicken, globals, Chicken.numbers[0] ) ).then( pageThing );
-			
+			Chicken.send(view(Chicken, globals, Chicken.numbers[0])).then(pageThing);
+
 			//Chicken.send(views.lb_all(Chicken, globals, Chicken.numbers[0]));
-		}else{
+		} else {
 			Chicken.send(views.leaderboards(Chicken, globals));
 		}
-		
+
 	}
 
 	async execute(Chicken) {
 		let income = calcIncome(Chicken);
-		let bal = getCurrentBPBal(Chicken);  // BINTCONV
+		let bal = getCurrentBPBal(Chicken); // BINTCONV
 		let type = Chicken.mArgs.type;
-		Chicken.shared.modules.db.updateLeaderboards( Chicken.userData );
+		Chicken.shared.modules.db.updateLeaderboards(Chicken.userData);
 		if (type == "overview") {
 			this.execOverview(Chicken, bal, income);
 		} else if (type == "shop") {
@@ -345,13 +412,13 @@ class CommandBlobPoints extends Command {
 			this.execBuy(Chicken, bal, income);
 		} else if (type == "give") {
 			this.execGive(Chicken, bal, income);
-		} else if (type=="leaderboards"){
-			this.execLeaderboards( Chicken );
-		}else if (type=="gens"){
-			this.execGens( Chicken );
+		} else if (type == "leaderboards") {
+			this.execLeaderboards(Chicken);
+		} else if (type == "gens") {
+			this.execGens(Chicken);
 		}
 		//console.log(Chicken.mArgs);
-		Chicken.shared.modules.db.updateLeaderboards( Chicken.userData );
+		Chicken.shared.modules.db.updateLeaderboards(Chicken.userData);
 	}
 }
 

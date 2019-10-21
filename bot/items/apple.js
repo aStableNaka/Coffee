@@ -2,8 +2,8 @@ let Item = require("../class/item");
 const ufmt = require("../utils/fmt.js");
 const locale = require("../data/EN_US");
 
-class ItemApple extends Item{
-	constructor(){
+class ItemApple extends Item {
+	constructor() {
 		super();
 		this.name = "Apple"; // Required
 		this.accessor = "apple"; // Virtural
@@ -12,7 +12,7 @@ class ItemApple extends Item{
 		this.value = 0;
 		this.rank = 1;
 		this.meta = {};
-
+		this.emoji = "<:apple:631407099888533515>";
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
 		this.charge = 3;
 		this.boost = 60;
@@ -22,15 +22,15 @@ class ItemApple extends Item{
 		this.isDroppedByLootbox = true;
 	}
 
-	
-	use( Chicken, itemData ){
+
+	use(Chicken, itemData) {
 		Chicken.userData.mineboost = this.boost; // Percent
 		Chicken.userData.mineboostcharge = this.charge;
 		Chicken.userData.mineboostsource = this.name;
-		Chicken.send(Item.fmtUseMsg( this.useDialogue,[ufmt.denote('Effect', this.effect)]));
+		Chicken.send(Item.fmtUseMsg(this.useDialogue, [ufmt.denote('Effect', this.effect)]));
 	}
 
-	desc( Chicken, itemData ){
+	desc(Chicken, itemData) {
 		return ufmt.itemDesc([
 			"*A healthy snack with sick benefits!*",
 			ufmt.denote('Type', ufmt.block('Mining Boost')),

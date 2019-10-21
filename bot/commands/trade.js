@@ -13,14 +13,14 @@ const trades = {};
  * @param {*} Chicken 
  * @param {*} state 
  */
-function promptTrade( Chicken ){
-	
-	
-	Chicken.prompt("What is your offer?", ( Chicken )=>{
+function promptTrade(Chicken) {
+
+
+	Chicken.prompt("What is your offer?", (Chicken) => {
 		console.log(Chicken);
 	});
-	
-	function doOffer(){
+
+	function doOffer() {
 		Chicken.prompt
 	}
 }
@@ -54,10 +54,10 @@ class CommandPrestige extends Command {
 		return null;
 	}
 	modifyArgs(args, Chicken) {
-		let mArgs = { 
+		let mArgs = {
 			valid: false,
-			offer:[],
-			want:[]
+			offer: [],
+			want: []
 
 		};
 		let tradeString = args.split(' ').slice(1).join(' ').join(" ").toLowerCase();
@@ -65,9 +65,11 @@ class CommandPrestige extends Command {
 		let reciever = Chicken.mentions[0];
 
 		// if the tradestring is invalid or the reciever isn't specified
-		if(sections.length!=2 || !reciever){return mArgs;}
+		if (sections.length != 2 || !reciever) {
+			return mArgs;
+		}
 
-		sections.map( ( sectionString, i )=>{
+		sections.map((sectionString, i) => {
 			const mapping = ['offer', 'want'];
 			mArgs[mapping[i]] = sectionString.split(", ");
 		});
@@ -75,17 +77,17 @@ class CommandPrestige extends Command {
 		return mArgs;
 	}
 	async execute(Chicken) {
-		if(Chicken.mentions[0]){
+		if (Chicken.mentions[0]) {
 			let tradeDetails = {
 				from: Chicken.userData.id,
 				to: Chicken.mentions[0],
-				offer: {},  // Inventory
+				offer: {}, // Inventory
 				want: {} // Inventory
 			};
 			console.log(Chicken.mArgs);
 			trades[Chicken.userData.id] = tradeDetails;
 
-			
+
 		}
 	}
 }

@@ -1,14 +1,18 @@
 const ufmt = require("../../utils/fmt.js");
+const itemUtils = require("../../utils/item.js");
 const bp = require("../../utils/bp.js");
 const pN = ufmt.numPretty;
 const fBP = ufmt.formatBP;
 var bpUtils = require("../../utils/bp");
 module.exports = function( Chicken, outcome, perkMessages, boost ){
+	let pickaxeObject = itemUtils.items.pickaxe;
+	let itemData = pickaxeObject.getActivePickaxeItemData(  Chicken.userData );
+	let skin = pickaxeObject.skin( itemData );
 	let message = {
 		"embed": {
 			"title": "\"Dig! Dig! Dig!\"",
 			"description": `*You dig with all your might!*\n\"For a fair day's work, I reward you this sum\"\n+ ${fBP( outcome )}`,
-			"color": 0x666666,
+			"color": skin.color || 0x666666,
 			"author":{
 				"name":"Mr. M. Iner",
 				"icon_url": "https://i.imgur.com/Uuo8HMu.png"
@@ -19,6 +23,7 @@ module.exports = function( Chicken, outcome, perkMessages, boost ){
 			}
 		}
 	}
+	message.embed.thumbnail = {url:skin.imageHR || skin.image}
 
 	if(boost.active){
 		if(boost.isDefault){

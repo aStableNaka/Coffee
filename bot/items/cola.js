@@ -2,8 +2,8 @@ let Item = require("../class/item");
 const ufmt = require("../utils/fmt.js");
 const locale = require("../data/EN_US");
 
-class ItemCola extends Item{
-	constructor(){
+class ItemCola extends Item {
+	constructor() {
 		super();
 		this.name = "Cola"; // Required
 		this.accessor = "cola"; // Virtural
@@ -12,7 +12,7 @@ class ItemCola extends Item{
 		this.value = 0;
 		this.rank = 3;
 		this.meta = {};
-
+		this.emoji = "<a:cola:631276351214714910>";
 		this.icon = "https://piskel-imgstore-b.appspot.com/img/76af36e1-94fc-11e9-bf7d-9722320997e8.gif";
 		this.charge = 1;
 		this.boost = 1600;
@@ -22,16 +22,16 @@ class ItemCola extends Item{
 		this.isDroppedByLootbox = true;
 	}
 
-	
-	use( Chicken, itemData ){
+
+	use(Chicken, itemData) {
 		Chicken.userData.mineboost = this.boost; // Percent
 		Chicken.userData.mineboostcharge = this.charge;
 		Chicken.userData.mineboostsource = this.name;
 		Chicken.userData.lastmine = 0; // Percent
-		Chicken.send(Item.fmtUseMsg( this.useDialogue,[ufmt.denote('Effect', this.effect)]));
+		Chicken.send(Item.fmtUseMsg(this.useDialogue, [ufmt.denote('Effect', this.effect)]));
 	}
 
-	desc( Chicken, itemData ){
+	desc(Chicken, itemData) {
 		return ufmt.itemDesc([
 			"*Made with real cocai- Sugar!*",
 			ufmt.denote('Type', [ufmt.block('Mining Boost'), ufmt.block('Cooldown Reduction')].join(' ')),

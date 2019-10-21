@@ -7,8 +7,8 @@ var bpUtils = require("../utils/bp");
 /**
  * Resets a generator, but the user keeps the income
  */
-class ItemGenReset extends Item{
-	constructor(){
+class ItemGenReset extends Item {
+	constructor() {
 		super();
 		this.name = "Gen Reset"; // Required
 		this.accessor = "genreset"; // Virtural
@@ -17,23 +17,27 @@ class ItemGenReset extends Item{
 		this.value = 1;
 		this.rank = 3;
 		this.meta = {};
-		this.usesMeta=true;
+		this.usesMeta = true;
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
 
 		this.increaseValue = 8;
-	  }
-	  
-	  createItemData( amount, meta ){
-			let name = `gr_${meta}`;
-			return {amount:amount, meta:meta, name:name}
-	  }
-
-	
-	use( Chicken, itemData ){
-		
 	}
 
-	desc( Chicken, itemData ){
+	createItemData(amount, meta) {
+		let name = `gr_${meta}`;
+		return {
+			amount: amount,
+			meta: meta,
+			name: name
+		}
+	}
+
+
+	use(Chicken, itemData) {
+
+	}
+
+	desc(Chicken, itemData) {
 		return `A shiny metal coin worth ${this.increaseValue}% of your current BP bal.`;
 	}
 }

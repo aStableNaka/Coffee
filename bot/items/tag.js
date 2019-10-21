@@ -5,8 +5,8 @@ const locale = require("../data/EN_US");
 /**
 Tags can only be handed out by admins
  */
-class ItemTag extends Item{
-	constructor(){
+class ItemTag extends Item {
+	constructor() {
 		super();
 		this.name = "Tag"; // Required
 		this.accessor = "tag"; // Virtural
@@ -21,12 +21,12 @@ class ItemTag extends Item{
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
 	}
 
-	
-	use( Chicken, itemData ){
+
+	use(Chicken, itemData) {
 
 	}
 
-	desc( Chicken, itemData ){
+	desc(Chicken, itemData) {
 		return ufmt.itemDesc([
 			"*A one-time use tag that appears on your profile!*",
 			ufmt.denote('Type', ufmt.block('cosmetic')),

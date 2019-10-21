@@ -28,7 +28,9 @@ class CommandInventory extends Command{
 		{name:"equip", cmd:"inv use"},
 		{name:"eat", cmd:"inv use"},
 		{name:"give", cmd:"inv give"},
-		{name:"daily", cmd:"inv daily"}
+		{name:"daily", cmd:"inv daily"},
+		{name:"pick", cmd:"inv info pickaxe"},
+		{name:"pickaxe", cmd:"inv info pickaxe"}
 	]; }
 
 	get help(){ return {
@@ -116,7 +118,6 @@ class CommandInventory extends Command{
 		
 		// For special items (ie. "MSPS Boost" which is a meta-form of "Item Boost")
 		// userData.items["msps_boost"] -> accessor=item_boost;
-		// TODO finish
 		if(!itemData){
 			Chicken.send( views.item_not_owned( Chicken, Chicken.mArgs.amount ) );
 			return;
@@ -137,7 +138,7 @@ class CommandInventory extends Command{
 				if(!itemData.used){
 					itemData.used=0;
 				}
-				itemData.used++;
+				itemData.used+=itemObject.canUseMulti?Chicken.mArgs.amount:1;
 			}
 
 		}else{
@@ -289,6 +290,9 @@ class CommandInventory extends Command{
 					if(!itemObject){
 						
 						return;
+					}
+					if(Chicken.mArgs.itemAccessor=="pickaxe"){
+						itemData = itemUtils.items.pickaxe.getActivePickaxeItemData(Chicken.userData);
 					}
 					this.execInfo(Chicken, itemObject, itemData );
 			}

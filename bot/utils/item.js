@@ -647,17 +647,17 @@ function resetInventory( inventory ){
 
 }
 
-function superDeepItemSearch( Chicken, searchFilter ){
+function superDeepItemSearch( Chicken, searchTerm ){
 	return new Array(...new Set([
 		...Object.keys(Chicken.userData.items||{}).filter( ( itemName )=>{
-			return itemName.includes(searchFilter);
+			return itemName.includes(searchTerm);
 		}),
 		...Object.keys(itemUtils.items).filter( ( itemName )=>{
-			return itemName.includes(searchFilter);
+			return itemName.includes(searchTerm);
 		}),
 		...Object.values(itemUtils.items).filter( (x)=>{Object.keys(x.recipies).length>0} ).map( ( itemObject )=>{
 			return (itemObject.recipies).filter( ( recipie )=>{
-				return recipie.includes(searchFilter);
+				return recipie.includes(searchTerm);
 			}).map( ()=>{
 				return itemObject.accessor;
 			});
@@ -665,6 +665,15 @@ function superDeepItemSearch( Chicken, searchFilter ){
 	]));
 }
 
+function inventorySearch( inventory, searchTerm ){
+	return new Array(...new Set([
+		...Object.keys(inventory||{}).filter( ( itemName )=>{
+			return itemName.includes(searchTerm);
+		})
+	]));
+}
+
+module.exports.inventorySearch = inventorySearch;
 module.exports.d = d;
 module.exports.resetInventory = resetInventory;
 module.exports.superDeepItemSearch = superDeepItemSearch;

@@ -14,7 +14,7 @@ class ItemGold extends Item{
 		this.value = 1;
 		this.rank = 3;
 		this.meta = {};
-
+		this.emoji = "<:gold:631407099871494144>";
 		this.icon = "https://i.imgur.com/506QOWO.png";
 		this.isSaleRestricted = true;
 		this.isDroppedByLootbox = true;

@@ -3,7 +3,6 @@ const loader = require("../loader");
 const locale = require("../data/EN_US");
 
 const hexCache = {};
-// todo add pages
 class CommandServer extends Command {
 	constructor() {
 		super();
@@ -141,7 +140,7 @@ class CommandServer extends Command {
 	}
 
 	executeQuote() {
-		
+
 	}
 
 	executeQuotes() {

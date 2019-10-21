@@ -1,6 +1,6 @@
 while true; do
 	  npm run test
 	  node ./index.js
-	  echo '[ Auto Restart ] 5 seconds...';
-	  sleep 5;
+	  echo '[ Auto Restart ] 2 seconds...';
+	  sleep 2;
 done

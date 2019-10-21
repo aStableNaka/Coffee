@@ -12,7 +12,16 @@
             "A poorly maintained pickaxe with its head barely held on to its body by a few pieces of duct tape.",
             "A pickaxe made for those who mean business! Artisan crafted with only the best materials.",
             "Not much is known about this pickaxe, other than its great condition the fine craftsmanship that went into making it.",
-            "Not much is known about this exotic pickaxe..."
+            "Not much is known about this exotic pickaxe...",
+            "Arguably the best pickaxe this world has to offer. The [ Holy Hole Maker ] is truly remarkable."
+        ],
+        "skins":[
+            {"i":0,"image":"https://i.imgur.com/miBhBjt.png","emoji":"<:pickaxe:631407099729018900>","name":"default", "unique":true, "default":true},
+            {"i":1,"color":11184810, "image":"https://i.imgur.com/oUez8OO.png","imageHR":"https://i.imgur.com/3AUap4x.png","unique":true,"emoji":"<:s1r1:631587508853014529>","name":"golden_ivory", "description":"Awarded to the Season 1 Rank 1 player.","time":"2hr"},
+            {"i":2,"color":11184810,"name":"impact_ivory","description":"Awarded to Season 1 Top 5","image":"https://i.imgur.com/QGVBklr.png","imageHR":"https://i.imgur.com/RsuomKz.png","unique":true,"emoji":"<:s1top5:631746999204708355>","time":"1hr"},
+            {"i":3,"color":11184810,"name":"shocking_luster","description":"Awardrd to Season 1 Top 20","image":"https://i.imgur.com/QGVBklr.png","imageHR":"https://i.imgur.com/RsuomKz.png","unique":true,"emoji":"<:s1top5:631746999204708355>","time":"2hr"},
+            {"i":4,"color":11184810,"name":"deep_inferno","description":"Finish setting this one up","image":"https://i.imgur.com/QGVBklr.png","imageHR":"https://i.imgur.com/RsuomKz.png","unique":true,"emoji":"<:s1top5:631746999204708355>","time":"2hr"},
+            {"i":2,"color":0,"name":"The 9th Divine", "description":"Flowing with glory"}
         ]
     },
     "notes": {
@@ -76,6 +85,23 @@
         ]
     },
 
+    "misc1":[
+        "Drunken Sailor:He keeps going on about some 'Moldy Duck'?",
+        "Day Old Latte:I can't get the smell out of my nose.",
+        "Recycled Mayo:In the fridge for 2 years, in my stomach in 2 minutes.",
+        "French Ukelele:Somewhere over the baguette.",
+        "Tyrone Nuggets:From the makers of Animal Chips",
+        "Useless Flying Lamp:Lights the way! Albiet it's the wrong way...",
+        "Anti-Matter Matter Gun:It'll go off if you look at it wrong.",
+        "Bone From Arizona:For some reason, I can't get hurt.",
+        "Gym Rat's Kakis:Barely fits and smells like burnt water.",
+        "Money Tree:Not really, it's just the name of this franchise.",
+        "Planetary Debt:Those Glibknobs are really bad with their cash.",
+        "Grass Justice:No mo' mow! We just wanna grow!",
+        "Robot Reeves:Has a knack for tazing people"
+    ],
+
+
     "changelogs": [
         [
             "0.1.30",
@@ -90,6 +116,7 @@
             "> + Crafting recipies can be located under item info using `~ii <itemType>`",
             "> + Crafting now displays how many of each item you can craft.",
             "> + [ ***Arthur's Tablet*** ] item added",
+            "> + `~inv` now shows pickaxe perks",
             "***UPDATED***",
             "> + Gold now can be crafted",
             "> + A few item icons have been updated",
@@ -103,6 +130,7 @@
             "> ~ now gives 1 exp instead of 2 lvls",
             "> ~ increased drop rate from boxes",
             "> ~ Nerfed [ ***PP Gold Digger*** ]",
+            "> ~ Lowered [ Legendary Pickbox ] crafting material cost",
             "***FIXED***",
             "> ~ Fixed formatting issues with a few perks",
             "> ~ Fixed a few grammatical issues",

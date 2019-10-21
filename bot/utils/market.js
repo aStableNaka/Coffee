@@ -15,21 +15,29 @@ function createListingId( Chicken ){
  * by having a callback for onIDAssigned
  * @param {Chicken} Chicken 
  * @param {*} itemData 
- * @param {number} requestAmount $ in silver 
+ * @param {number} price $ in silver 
  * @param {function} onIDAssigned 
  */
-function createMarketListing( Chicken, itemData, requestAmount, onIDAssigned ){
+function createMarketListing( Chicken, itemData, price, onIDAssigned ){
 	const date = new Date().getTime();
+	const deposit = 25/100; // To ensure users don't try to oversell, a deposit must be paid which will be returned once the transaction completes.
 	let listing = {
 		v:0,
-		owner: Chicken.id,
+		owner: Chicken.userData.id,
+		ownerName: Chicken.userData.name,
 		date: date,
 		id: undefined,
 		itemData: itemData,
-		requestAmount: requestAmount||10,
-		lifetime: calculateLifetime( inventory )
+		price: price||10,
+		deposit: 1,
+		priority:false,
+		sold:false,
+		soldDate:0,
+		recipient:null,
+		locked:false,
+		accessor:itemData.accessor
 	};
-
+	listing.deposit = Math.ceil( price * deposit );
 	function ensureIDIsUnique( id ){
 		Chicken.database.query( {id:{$eq:id}}, ( results )=>{
 			if(results.length>0){

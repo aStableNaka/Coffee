@@ -1,8 +1,8 @@
 let Item = require("../class/item");
 const ufmt = require("../utils/fmt.js");
 
-class ItemStarfruit extends Item{
-	constructor(){
+class ItemStarfruit extends Item {
+	constructor() {
 		super();
 		this.name = "Starfruit"; // Required
 		this.accessor = "starfruit"; // Virtural
@@ -11,8 +11,8 @@ class ItemStarfruit extends Item{
 		this.value = 1;
 		this.rank = 2;
 		this.meta = {};
-
-		this.icon = "https://i.imgur.com/fT8lZ9R.png";
+		this.emoji = "<:starfruitlul:631434469064048647>";
+		this.icon = "https://i.imgur.com/wg5Fnmc.png";
 		this.charge = 1;
 		this.boost = 45;
 		this.cdrs = 150; // Cooldown reduction in seconds
@@ -22,22 +22,22 @@ class ItemStarfruit extends Item{
 		this.isDroppedByLootbox = true;
 	}
 
-	
-	use( Chicken, itemData ){
+
+	use(Chicken, itemData) {
 		Chicken.userData.mineboost = this.boost; // Percent
 		Chicken.userData.mineboostcharge = this.charge;
 		Chicken.userData.mineboostsource = this.name;
-		Chicken.userData.lastmine -= 1000*this.cdrs;
-		Chicken.send(Item.fmtUseMsg( this.useDialogue,[
+		Chicken.userData.lastmine -= 1000 * this.cdrs;
+		Chicken.send(Item.fmtUseMsg(this.useDialogue, [
 			ufmt.denote('Cooldown Reduction', `Your current mining cooldown is reduced by ${ufmt.block(this.cdrs)} seconds.`),
 			ufmt.denote('Mining Boost', `Your next mine will produce ${ufmt.block(this.boost)} % more profit.`)
 		]));
 	}
 
-	desc( Chicken, itemData ){
+	desc(Chicken, itemData) {
 		return ufmt.itemDesc([
 			"*A bizzare tropical delicacy!*",
-			ufmt.denote('Type', [ufmt.block('Mining Boost'),ufmt.block('Cooldown Reduction')].join(' ')),
+			ufmt.denote('Type', [ufmt.block('Mining Boost'), ufmt.block('Cooldown Reduction')].join(' ')),
 			ufmt.denote('Usage', this.effect),
 			ufmt.denote('Warning', "Mining Boosts do NOT stack")
 		]);

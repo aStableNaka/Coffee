@@ -6,6 +6,8 @@ module.exports.linkModule = function( m ){
 var mongoose = require("mongoose");
 let {DBLog} = require("./logging");
 
+// DEPRECIATED
+
 /**
  * Created by Kpasta (kpostal10#9568)
  */
@@ -72,11 +74,11 @@ async function openCollection( collectionName='users', callback=()=>{} ){
  * Created by Kpasta (kpostal10#9568)
  * Modified by Naka
  */
-async function getProfile(query, callback, collectionName = 'users') {
+async function getProfile(query, callback, collectionName = 'users', selector="") {
 	DBLog("[Mango] query", query);
 	return new Promise(( resolve, reject )=>{
 		openCollection( collectionName, (collection, connection)=>{
-			collection.find(query).toArray(function (err, data) {
+			collection.find(query, selector).toArray(function (err, data) {
 				connection.close(true);
 				mongoose.disconnect(true);
 				instance = '';

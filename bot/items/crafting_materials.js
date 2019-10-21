@@ -1,8 +1,8 @@
 let Item = require("../class/item");
 const ufmt = require("../utils/fmt.js");
 
-class ItemCraftingMaterials extends Item{
-	constructor(){
+class ItemCraftingMaterials extends Item {
+	constructor() {
 		super();
 		this.name = "Crafting Materials"; // Required
 		this.accessor = "crafting_materials"; // Virtural
@@ -13,16 +13,16 @@ class ItemCraftingMaterials extends Item{
 		this.meta = {};
 
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
-		
+
 		this.isDroppedByLootbox = true;
 	}
 
-	
-	use( Chicken, itemData ){
+
+	use(Chicken, itemData) {
 		Chicken.send('Crafting is not available yet!');
 	}
 
-	desc( Chicken, itemData ){
+	desc(Chicken, itemData) {
 		return `This is used as an ingredient for crafting!`;
 	}
 }

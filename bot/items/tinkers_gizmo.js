@@ -13,6 +13,7 @@ class ItemTinkersGizmo extends Item {
 		this.rank = 6;
 		this.canUseMulti = true;
 		this.effect = "Increases amount of perk slots for your active pickaxe.";
+		this.emoji = "<:pp:631407099657715712>";
 		this.icon = "https://i.imgur.com/5jC8IIi.png";
 		this.isDroppedByLootbox = true;
 	}

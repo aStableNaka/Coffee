@@ -1,7 +1,7 @@
 const Hash = require("crypto").Hash;
 
-module.exports = function( data ){
+module.exports = function (data) {
 	let hash = new Hash("md5");
-	hash.update( data );
+	hash.update(data);
 	return hash.digest("hex").toString();
 }

@@ -4,7 +4,7 @@ const BigNum = require('bignumber.js');
 const itemUtils = require('./item.js');
 const dataShopCatalogue = {};
 Object.values( dataShop.catalogue ).map( (c, i)=>{ dataShopCatalogue[ c.alias ] = i; } );
-
+const growthCoefficient = 1.03;
 
 
 Math.logB = function( base, n ){
@@ -110,6 +110,7 @@ function getGenLevel_UD( userData, itemAlias ){
 }
 module.exports.getGenLevel_UD = getGenLevel_UD;
 
+// Enable this haha
 function calcGenMultiplier( level ){
 	//let item = getItemByAlias( itemAlias );
 	return new BigInt(1); //BigInt( 2 ).pow( level );
@@ -125,10 +126,10 @@ function getPersonalMultiplier( Chicken, itemAlias ){
 
 function calcCost( itemAlias, amount, owned ){
 	let item = getItemByAlias( itemAlias );
-	/*return Math.floor( item.baseCost * (  ( Math.pow(item.baseGrowth, amount ) - 1 ) * Math.pow(item.baseGrowth, owned  )
-			/ (item.baseGrowth - 1) ));*/
+	/*return Math.floor( item.baseCost * (  ( Math.pow(growthCoefficient, amount ) - 1 ) * Math.pow(growthCoefficient, owned  )
+			/ (growthCoefficient - 1) ));*/
 	let baseCost = item.baseCost;
-	return BigInt( BigNum( BigNum( baseCost ).times(  ( (BigNum( item.baseGrowth ).pow( amount ).minus( 1 ) ).times( BigNum( item.baseGrowth ).pow( owned )  ) ).div(item.baseGrowth - 1) )).integerValue().toString());
+	return BigInt( BigNum( BigNum( baseCost ).times(  ( (BigNum( growthCoefficient ).pow( amount ).minus( 1 ) ).times( BigNum( growthCoefficient ).pow( owned )  ) ).div(growthCoefficient - 1) )).integerValue().toString());
 }
 
 function pickaxeLevelUD( userData ){
@@ -149,7 +150,7 @@ module.exports.pickaxeExpProgress = pickaxeExpProgress;
 
 function calcMax( itemAlias, c, owned ){
 	let item = getItemByAlias( itemAlias );
-	let r = item.baseGrowth;
+	let r = growthCoefficient;
 	let b = item.baseCost;
 	let k = owned;
 	//return Math.floor( Math.logB( r, ( c * ( r - 1 ) ) / ( b * Math.pow(r,k) ) + 1 ) );
@@ -191,8 +192,9 @@ function calcPrestigeBoxReward( userData ){
 function calcPickaxeIncome( userData ){
 	let pickaxe = itemUtils.items.pickaxe;
 	let itemData = pickaxe.getActivePickaxeItemData( userData );
-	let tierModifier = pickaxe.getMultiplier(itemData);
-	return BigInt.max( 1, calcIncome_UD(userData) ).multiply(15).multiply(tierModifier);
+	let income = calcIncome_UD(userData);
+	let tierModifier = new BigInt(pickaxe.getMultiplier(itemData)).divide(Math.pow(Math.max(1,20-income.toString().length), itemData.meta.tier||0));
+	return BigInt.max( 1, income ).multiply(15).multiply(tierModifier);
 }
 
 module.exports.calcPickaxeIncome = calcPickaxeIncome;

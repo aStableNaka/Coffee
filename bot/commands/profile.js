@@ -14,7 +14,7 @@ class CommandTemplate extends Command {
 		return true;
 	}
 	get accessors() {
-		return ['profile', 'prof', `pick`, `pickaxe`];
+		return ['profile', 'prof'];
 	}
 	get mimics() {
 		return [ /*{name:"buy",cmd:"bp buy"}*/ ];
