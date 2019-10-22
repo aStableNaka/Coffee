@@ -63,7 +63,7 @@ const season = 0;
 
 const createNewDBEntry_v0 = require("./dbdefault");
 
-async function getByID(userID, callback = () => {}) {
+async function getByID(userID, callback = () => { }) {
 	return new Promise((resolve, reject) => {
 		var query = {
 			userID: {
@@ -81,12 +81,12 @@ async function getByID(userID, callback = () => {}) {
 	});
 }
 
-async function create(userID, callback = () => {}, ) {
+async function create(userID, callback = () => { }, ) {
 	let query = createNewDBEntry_v0(userID);
 	insert(query).then(callback).catch(et);
 }
 
-async function get(userID, callback = () => {}) {
+async function get(userID, callback = () => { }) {
 	DATABASE_NEEDS_SAVE = true;
 	if (typeof (cache[userID]) == "undefined") {
 		DBLog("[Mongo] get", userID)
@@ -153,13 +153,13 @@ function ensure(userID, ud) {
 	if (!ud.listings) {
 		ud.listings = [];
 	}
-	if(!ud.seasons){
+	if (!ud.seasons) {
 		ud.season = season;
 		ud.seasons = {};
 	}
 }
 
-async function remove(userID, callback = () => {}) {
+async function remove(userID, callback = () => { }) {
 	// callback(data)
 	//  data.deletedCount === 1
 	var query = {
@@ -170,7 +170,7 @@ async function remove(userID, callback = () => {}) {
 	removeProfile(query).then(callback).catch(et);
 }
 
-async function update(userID, newData, callback = () => {}) {
+async function update(userID, newData, callback = () => { }) {
 	var query = {
 		userID: {
 			$eq: String(userID)
@@ -191,7 +191,7 @@ async function update(userID, newData, callback = () => {}) {
 }
 
 
-async function getAllUsers(callback = (udCollection) => {}) {
+async function getAllUsers(callback = (udCollection) => { }) {
 	let query = {
 		version: {
 			$eq: 0
@@ -487,7 +487,9 @@ module.exports.getLeaderboardsData = getLeaderboardsData;
 module.exports.saveDatabase = saveDatabase;
 module.exports.stats = stats;
 module.exports.api = mongodb;
-
+module.exports.playerIsCached = function (id) {
+	return !!cache[id];
+}
 getProfile({
 	id: {
 		$eq: "gem"
