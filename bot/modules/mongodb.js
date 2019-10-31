@@ -108,13 +108,20 @@ async function updateProfile(query, newData, collectionName) {
 		})
 	})
 }
-async function removeProfile() { }
+async function remove() { 
+	return wrapper43(collectionName, (collection, close, resolve, reject) => {
+		collection.updateOne(query, newData, function (data) {
+			close();
+			resolve(data);
+		})
+	})
+}
 
 module.exports.getProfile = getProfile;
 module.exports.query = getProfile;
 module.exports.insert = insert;
 module.exports.updateProfile = updateProfile;
-module.exports.removeProfile = removeProfile;
+module.exports.removeProfile = ()=>{};
 module.exports.mongoose = {};
 module.exports.mongodb = mongodb;
 module.exports.openCollection = openCollection;

@@ -22,6 +22,8 @@ class ItemStrangeMatter extends Item {
 		this.meta = {};
 		this.emoji = "<:apple:631407099888533515>";
 		this.icon = "https://i.imgur.com/fT8lZ9R.png";
+		this.isDroppedByLootbox = true;
+		this.isDroppedByLunchbox = true;
 	}
 
 	pick() {

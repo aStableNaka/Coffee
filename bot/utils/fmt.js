@@ -22,6 +22,13 @@ let illionPrefixes = [
 	'un', 'duo'
 ]
 
+//`e`
+//let a = Object.values(db.global.leaderboards); db.api.wrapper43('users',( collection )=>{db.api.wrapper43('users_backup', (cb)=>{ collection.find({id:{$exists:true}}).toArray((data)=>{function ggg(){if(data.length){ cb.push(data.pop()) }}}) })})
+//`e`
+//`e`
+// db.api.wrapper43('users',( collection )=>{ collection.update({id:{$exists:true}}, {bpbal:"200",bpps:"0",bpitems:{}}); });
+// db.api.wrapper43('users',( collection )=>{ collection.find({id:{$exists:true}}).toArray((err,data)=>{collection.update({id:{$exists:true}}, {bpbal:"200",bpps:"0",bpitems:{}}); })});
+const radix = 36; // For compressing big integers
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 const ufmt = module.exports;

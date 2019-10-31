@@ -5,8 +5,8 @@ const locale = require("../data/EN_US");
 class ItemGnome extends Item {
 	constructor() {
 		super();
-		this.name = "Cola"; // Required
-		this.accessor = "cola"; // Virtural
+		this.name = "Gnome"; // Required
+		this.accessor = "gnome"; // Virtural
 
 		this.consumable = true;
 		this.value = 0;

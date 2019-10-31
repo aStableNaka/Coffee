@@ -5,8 +5,8 @@ const locale = require("../data/EN_US");
 class ItemApple extends Item {
 	constructor() {
 		super();
-		this.name = "Apple"; // Required
-		this.accessor = "apple"; // Virtural
+		this.name = "Reward"; // Required
+		this.accessor = "reward"; // Virtural
 
 		this.consumable = true;
 		this.value = 0;
@@ -18,8 +18,6 @@ class ItemApple extends Item {
 		this.boost = 60;
 		this.effect = `Your next ${ufmt.block(this.charge)} mines will produce ${ufmt.block(this.boost)} % more profit.`;
 		this.useDialogue = `You eat an apple!`;
-		this.isDroppedByLunchbox = true;
-		this.isDroppedByLootbox = true;
 	}
 
 

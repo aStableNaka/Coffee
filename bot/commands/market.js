@@ -12,7 +12,7 @@ class CommandMarket extends Command {
 		super();
 	}
 	get botAdminOnly() {
-		return true;
+		return false;
 	}
 	get usesDatabase() {
 		return true;
@@ -159,7 +159,7 @@ class CommandMarket extends Command {
 		}
 	}
 	async execute(Chicken) {
-		if(!Chicken.mArgs.valid){return;}
+		if(!Chicken.mArgs.valid){this.exec_catalogue(Chicken)}
 		this[`exec_${Chicken.mArgs.type}`](Chicken);
 		return null;
 	}

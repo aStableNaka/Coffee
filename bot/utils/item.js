@@ -34,7 +34,7 @@ function getItemObjectByAccessor( itemAccessor ){
 	return items[ itemAccessor ];
 }
 
-const trialDiscriminator = "_no.";
+const trialDiscriminator = "_no_";
 
 // Inventories are just object dictionaries
 function createInventory(){

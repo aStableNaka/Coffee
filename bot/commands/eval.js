@@ -47,7 +47,7 @@ class CommandEval extends Command {
 				Chicken.send(...args)
 			};
 
-			Chicken.mArgs = Chicken.mArgs.replace("```javascript\n", '\n').replace('```', '');
+			Chicken.mArgs = Chicken.msg.toString().split(' ').slice(1).join(' ').replace("```javascript\n", '\n').replace('```', '');
 			// Env protection
 			Chicken.mArgs = Chicken.mArgs.replace(/env/gi, '({})');
 			console.log(Chicken.mArgs);
