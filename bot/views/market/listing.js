@@ -1,7 +1,7 @@
 const itemUtils = require("../../utils/item.js");
 const ufmt = require("../../utils/fmt.js");
 module.exports = function(Chicken, listing, selling){
-	let itemData = Chicken.mArgs.item;
+	let itemData = listing.itemData;
 	let itemObject = itemUtils.getItemObject(listing.itemData);
 	let message = {
 		embed:{
