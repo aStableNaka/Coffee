@@ -33,6 +33,15 @@ class CommandMarket extends Command {
 		{
 			name: "sell",
 			cmd: "mark sell"
+		}
+		,
+		{
+			name: "mcat",
+			cmd: "mark catalogue"
+		},
+		{
+			name: "msell",
+			cmd: "mark sell"
 		},
 		{
 			name: "mbuy",
