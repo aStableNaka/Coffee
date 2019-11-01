@@ -56,7 +56,7 @@ class CommandMarket extends Command {
 		return "Market";
 	}
 	modifyArgs(args, Chicken) {
-		let validOptions = ['catalogue', 'sell', 'bid'];
+		let validOptions = ['catalogue', 'sell', 'buy'];
 		let mArgs = {
 			valid:validOptions.indexOf(args[0])>-1,
 			type:args[0],
@@ -77,13 +77,13 @@ class CommandMarket extends Command {
 	}
 
 	exec_buy(Chicken){
+		function nahBrother(){
+			Chicken.send(`Market code ${ufmt.block(Chicken.mArgs.marketCode||'None')} not available.`);
+		}
 		if(Chicken.mArgs.marketCode){
 			Chicken.database.api.wrapper43( 'market', (collection)=>{
-				console.log({id:Chicken.mArgs.marketCode,sold:false,locked:false})
 				collection.find({id:Chicken.mArgs.marketCode,sold:false,locked:false}).toArray((err,data)=>{
-					function nahBrother(){
-						Chicken.send(`Market code ${ufmt.block(Chicken.mArgs.marketCode||'None')} not available.`);
-					}
+					
 					let marketEntry = data[0];
 					if(marketEntry){
 						let pouch = Chicken.userData.items.silver || {amount:0};
@@ -109,8 +109,7 @@ class CommandMarket extends Command {
 				})
 			} )
 		}
-		console.log(Chicken.mArgs);
-		Chicken.send("Rip the native americans lmao")
+		nahBrother();
 	}
 	
 	exec_catalogue(Chicken) {
