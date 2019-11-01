@@ -3,7 +3,7 @@ module.exports = function( Chicken ){
 	let page = Math.min(3, Math.max(0, Chicken.numbers[0] || 1));
 	let embed = {
 		"embed": {
-			"description":`[ ***Help page ${page}/2*** ]`,
+			"description":`[ ***Help page ${page}/3*** ]`,
 			"color": 0xfec31b,
 			"fields": [],
 			"footer":{
@@ -18,7 +18,7 @@ module.exports = function( Chicken ){
 		if(cmd.help){
 			let s = cmd.wip?"[ **WIP** ] ":'';
 			let value = cmd.helpExamples.map( (arr)=>{
-				return `${s} ~**${arr[0]} ${arr[1]}** *${arr[3]}*`;
+				return `${s} ~**${arr[0]} ${arr[1]}** *${arr[2]}*`;
 			} ).join("\n");
 			if(cmd.wip){
 				wip.push( {
