@@ -108,7 +108,7 @@ class CommandMarket extends Command {
 							Chicken.database.get( marketEntry.owner, ( ownerUD )=>{
 								let silverItemData = itemUtils.items.silver.createItemData(marketEntry.price+marketEntry.deposit)
 								itemUtils.addItemToUserData( ownerUD, silverItemData );
-								itemUtils.addItemToUserData( Chicken.userData, marketEntry.itemData, silverItemData );
+								itemUtils.addItemToUserData( Chicken.userData, marketEntry.itemData );
 								marketEntry.sold = true;
 								marketEntry.recipient = Chicken.userData.id;
 								marketEntry.soldDate = new Date().getTime();
