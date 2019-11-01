@@ -107,7 +107,8 @@ class CommandMarket extends Command {
 				})
 			} )
 		}
-		return;
+		console.log(Chicken.mArgs);
+		Chicken.send("Rip the native americans lmao")
 	}
 	
 	exec_catalogue(Chicken) {
