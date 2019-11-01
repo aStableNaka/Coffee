@@ -44,6 +44,9 @@ class CommandStats extends Command {
 	get helpName() {
 		return null;
 	}
+	get helpPage() {
+		return 2;
+	}
 	get blacklist() {
 		return ['350823530377773057', '133169572923703296'];
 	}

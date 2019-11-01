@@ -80,7 +80,7 @@ class CommandBotinfo extends Command {
 		return "Botinfo";
 	}
 	get helpPage() {
-		return 2;
+		return 3;
 	}
 	modifyArgs(args) {
 		return args;
