@@ -34,7 +34,7 @@ class CommandTemplate extends Command {
 		return "Profile";
 	}
 	get helpPage() {
-		return 2;
+		return 1;
 	}
 	modifyArgs(args) {
 		return {page:0,maxPages:2, maxPagesDefault:2};

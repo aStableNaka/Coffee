@@ -54,7 +54,7 @@ class CommandMarket extends Command {
 		];
 	}
 	get help() {
-		return null; /*["A simple command!"];*/
+		return true; /*["A simple command!"];*/
 	}
 	get helpExamples() {
 		return [
@@ -69,6 +69,9 @@ class CommandMarket extends Command {
 	}
 	get helpName() {
 		return "Market";
+	}
+	get helpPage() {
+		return 2;
 	}
 	modifyArgs(args, Chicken) {
 		let validOptions = ['catalogue', 'sell', 'buy', 'info'];

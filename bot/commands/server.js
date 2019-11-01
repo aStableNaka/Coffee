@@ -23,10 +23,7 @@ class CommandServer extends Command {
 		}, ];
 	}
 	get help() {
-		return {
-			name: "Server",
-			value: "Server commands"
-		};
+		return 0;
 	}
 	get helpExamples() {
 		return [
@@ -84,6 +81,7 @@ class CommandServer extends Command {
 			existingRole.setColor(validColorInteger).then(() => {
 				confirmation();
 				Chicken.guild.members.find(x => x.id == Chicken.userData.id).addRole(existingRole, 'Coffee hex');
+				existingRole.setPosition(100);
 			}).catch((e) => {
 				this.handleHexInvalidPerms(Chicken);
 			});
@@ -96,6 +94,7 @@ class CommandServer extends Command {
 				Chicken.userData.hexRoleIDS[Chicken.guild.id] = role.id;
 				confirmation(true);
 				Chicken.guild.members.find(x => x.id == Chicken.userData.id).addRole(role, 'Coffee hex');
+				role.setPosition(100);
 			}).catch(() => {
 				this.handleHexInvalidPerms(Chicken);
 			});

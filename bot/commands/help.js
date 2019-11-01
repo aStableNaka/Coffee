@@ -30,7 +30,8 @@ class CommandHelp extends Command {
 
 			function pageThing(hookMsg) {
 				// Starting conditions
-				Chicken.numbers[0] = Math.min(2, Math.max(0, Chicken.numbers[0] || 1));
+				const maxPages = 3;
+				Chicken.numbers[0] = Math.min(maxPages, Math.max(0, Chicken.numbers[0] || 1));
 
 				let pageOperators = [];
 				if (Chicken.numbers[0] > 1) {
@@ -44,7 +45,7 @@ class CommandHelp extends Command {
 						})
 					)
 				}
-				if (Chicken.numbers[0] < 2) {
+				if (Chicken.numbers[0] < maxPages) {
 					pageOperators.push(
 						page.createPageOperator(emojis.arrow_right,
 							() => {

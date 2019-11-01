@@ -1,6 +1,6 @@
 module.exports = function( Chicken ){
 	let wip = [];
-	let page = Math.min(2, Math.max(0, Chicken.numbers[0] || 1));
+	let page = Math.min(3, Math.max(0, Chicken.numbers[0] || 1));
 	let embed = {
 		"embed": {
 			"description":`[ ***Help page ${page}/2*** ]`,
@@ -18,7 +18,7 @@ module.exports = function( Chicken ){
 		if(cmd.help){
 			let s = cmd.wip?"[ **WIP** ] ":'';
 			let value = cmd.helpExamples.map( (arr)=>{
-				return `${s} ~**${arr[0]} ${arr[1]}** *${arr[2]}*`;
+				return `${s} ~**${arr[0]} ${arr[1]}** *${arr[3]}*`;
 			} ).join("\n");
 			if(cmd.wip){
 				wip.push( {

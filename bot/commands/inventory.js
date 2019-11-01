@@ -48,7 +48,7 @@ class CommandInventory extends Command{
 
 	get helpName(){ return "Inventory/Items"; }
 	get helpGroup(){ return "Items"; }
-	get helpPage(){ return 1; /*Field for the help command*/ }
+	get helpPage(){ return 2; /*Field for the help command*/ }
 	modifyArgs( args, Chicken ){
 		let option = args[0];
 		let mArgs = {
