@@ -32,7 +32,7 @@ module.exports = function(Chicken, listing, selling){
 	if(selling){
 		message.embed.fields.push({
 			name:ufmt.block("Listing Cost"),
-			value:`You have paid ${ufmt.block(ufmt.currency(listing.deposit))} as a deposit for this listing. You will recieve this back once your listing has been sold or if you cancel this listing.`
+			value:`You have paid ${ufmt.currency(listing.deposit)} as a deposit for this listing. You will recieve this back once your listing has been sold or if you cancel this listing.`
 		});
 	}
 	return message;

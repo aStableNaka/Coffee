@@ -37,6 +37,10 @@ class CommandMarket extends Command {
 		{
 			name: "mbuy",
 			cmd: "mark buy"
+		},
+		{
+			name: "minfo",
+			cmd: "mark info"
 		}
 		];
 	}
@@ -47,7 +51,8 @@ class CommandMarket extends Command {
 		return [
 			["cat", "< itemName >", "View the market catalogue, or search for an item"],
 			["sell", "< itemName > <amount> <price>", "Sell an item on the market."],
-			["mbuy", "< marketCode >", "Buy an item on sale using its market code."]
+			["mbuy", "< marketCode >", "Buy an item on sale using its market code."],
+			["minfo", "< marketCode >", "View a market listing's info."]
 		]
 	}
 	get helpGroup() {
@@ -57,7 +62,7 @@ class CommandMarket extends Command {
 		return "Market";
 	}
 	modifyArgs(args, Chicken) {
-		let validOptions = ['catalogue', 'sell', 'buy'];
+		let validOptions = ['catalogue', 'sell', 'buy', 'info'];
 		let mArgs = {
 			valid:validOptions.indexOf(args[0])>-1,
 			type:args[0],
@@ -71,7 +76,7 @@ class CommandMarket extends Command {
 			}
 		}else if( args[0] == 'catalogue'){
 			mArgs.itemAccessor = Chicken.keyPairs.item || (args.slice(1).join(' ').match(/([^!@\d\s])[\d?\w?\.?]+/gi)||[]).join("_").toLowerCase() || false;
-		}else if( args[0] == 'buy'){
+		}else if( args[0] == 'buy' || args[0] == 'info'){
 			mArgs.marketCode = escape(Chicken.keyPairs.code || args[1].toLowerCase()) || null;
 		}
 		return mArgs;
@@ -105,6 +110,28 @@ class CommandMarket extends Command {
 						}else{
 							Chicken.send("Insufficient silver.");
 						}
+					}else{
+						nahBrother();
+					}
+				})
+			} )
+		}else{
+			nahBrother();
+		}
+	}
+
+	exec_info(Chicken){
+		function nahBrother(){
+			Chicken.send(`Market code ${ufmt.block(Chicken.mArgs.marketCode||'None')} not available.`);
+		}
+		console.log(Chicken.mArgs);
+		if(Chicken.mArgs.marketCode){
+			Chicken.database.api.wrapper43( 'market', (collection)=>{
+				collection.find({id:Chicken.mArgs.marketCode,sold:false,locked:false}).toArray((err,data)=>{
+					
+					let marketEntry = data[0];
+					if(marketEntry){
+						message.edit(views.listing(Chicken, marketEntry));
 					}else{
 						nahBrother();
 					}
