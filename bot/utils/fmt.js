@@ -219,7 +219,7 @@ function item(itemData, amount, styleString = '***', brackets = true, namePaddin
 
 // No logic, just the itemNameString
 function itemNameString(name, amount = 1, styleString = '***', brackets = true, emoji) {
-	return `${(emoji&&emoji!='none')?`[ ${emoji} ] `:''} ${brackets ?'[ ' : ''}${surround(name, styleString)}${brackets ? ' ]' : ''} ${amount ? `x${amount}` : ''}`;
+	return `${(emoji&&emoji!='none')?`[ ${emoji} ] `:''} ${brackets ?'[ ' : ''}${surround(name, styleString)}${brackets ? ' ]' : ''} ${amount ? `x${numPretty(amount)}` : ''}`;
 }
 
 // Creates mimic itemData and formats based on given name
@@ -445,7 +445,7 @@ function aoran(str, a = 'a', an = 'an') {
 
 // Change this to coffee emote later
 function currency(amount){
-	return `<a:s_:632110433490305046>x${amount}`;
+	return `<a:s_:632110433490305046>x${ufmt.numPretty(amount)}`;
 }
 
 const colors = {

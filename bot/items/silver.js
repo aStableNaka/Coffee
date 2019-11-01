@@ -15,7 +15,7 @@ class ItemSilver extends Item {
 		this.rank = 0;
 		this.meta = {};
 		this.emoji = "<a:s_:632110433490305046>";
-		this.icon = "https://i.imgur.com/vUTVhHa.png";
+		this.icon = "https://i.imgur.com/kSzeXtc.gif";
 		this.isSaleRestricted = true;
 		this.isDroppedByLootbox = true;
 		this.canUseMulti = true;

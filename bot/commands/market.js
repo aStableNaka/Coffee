@@ -190,11 +190,11 @@ class CommandMarket extends Command {
 										})
 									})
 								}else{
-									Chicken.send("You cannot sell this item, you don't have enough silver for the deposit.");
+									message.edit("You cannot sell this item, you don't have enough silver for the deposit.");
 									return;
 								}
 							}else{
-								Chicken.send("You cannot sell this item, you don't have enough silver for the deposit.");
+								message.edit("You cannot sell this item, you don't have enough silver for the deposit.");
 								return;
 							}
 						})
