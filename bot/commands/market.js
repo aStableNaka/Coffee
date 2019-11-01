@@ -85,7 +85,6 @@ class CommandMarket extends Command {
 					}
 					let marketEntry = data[0];
 					if(marketEntry){
-						
 						let pouch = Chicken.userData.items.silver || {amount:0};
 						if(pouch.amount>=marketEntry.price){
 							pouch.amount-=marketEntry.price;
@@ -100,6 +99,8 @@ class CommandMarket extends Command {
 									Chicken.send(views.buy(Chicken, marketEntry));
 								})
 							});
+						}else{
+							Chicken.send("Insufficient silver.");
 						}
 					}else{
 						nahBrother();
