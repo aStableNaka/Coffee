@@ -12,7 +12,7 @@ class CommandStats extends Command {
 		super();
 	}
 	get botAdminOnly() {
-		return true;
+		return false;
 	}
 	get usesDatabase() {
 		return true;

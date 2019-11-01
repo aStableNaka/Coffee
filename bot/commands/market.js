@@ -39,13 +39,17 @@ class CommandMarket extends Command {
 		return null; /*["A simple command!"];*/
 	}
 	get helpExamples() {
-		return null; /*[["command", "< parameters >", "desc"]];*/
+		return [
+			["cat", "< itemName >", "View the market catalogue, or search for an item"],
+			["sell", "< itemName > <amount> <price>", "Sell an item on the market."],
+			["mbuy", "< marketCode >", "Buy an item on sale using its market code."]
+		]
 	}
 	get helpGroup() {
-		return null;
+		return "Market";
 	}
 	get helpName() {
-		return null;
+		return "Market";
 	}
 	modifyArgs(args, Chicken) {
 		let validOptions = ['catalogue', 'sell', 'bid'];
@@ -62,8 +66,17 @@ class CommandMarket extends Command {
 			}
 		}else if( args[0] == 'catalogue'){
 			mArgs.itemAccessor = Chicken.keyPairs.item || (args.slice(1).join(' ').match(/([^!@\d\s])[\d?\w?\.?]+/gi)||[]).join("_").toLowerCase() || false;
+		}else if( args[0] == 'buy'){
+			mArgs.marketCode = Chicken.keyPairs.code || escape(args.slice(1).toUpperCaseCase()) || false;
 		}
 		return mArgs;
+	}
+
+	exec_buy(Chicken){
+		if(Chicken.mArgs.marketCode){
+			Chicken.send(ufmt.notDone());
+		}
+		return;
 	}
 	
 	exec_catalogue(Chicken) {
@@ -159,7 +172,7 @@ class CommandMarket extends Command {
 		}
 	}
 	async execute(Chicken) {
-		if(!Chicken.mArgs.valid){this.exec_catalogue(Chicken)}
+		if(!Chicken.mArgs.valid){return;}
 		this[`exec_${Chicken.mArgs.type}`](Chicken);
 		return null;
 	}

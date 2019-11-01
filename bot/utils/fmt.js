@@ -455,6 +455,12 @@ const colors = {
 	success:0x66ff66
 }
 
+// For stuff that is not done
+function notDone(){
+	return "Coming to a Discord server near you!";
+}
+
+module.exports.notDone = notDone;
 module.exports.defaultEmoji = defaultEmoji;
 module.exports.colors = colors;
 module.exports.currency = currency;
