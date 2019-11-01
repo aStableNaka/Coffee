@@ -72,7 +72,7 @@ class CommandMarket extends Command {
 		}else if( args[0] == 'catalogue'){
 			mArgs.itemAccessor = Chicken.keyPairs.item || (args.slice(1).join(' ').match(/([^!@\d\s])[\d?\w?\.?]+/gi)||[]).join("_").toLowerCase() || false;
 		}else if( args[0] == 'buy'){
-			mArgs.marketCode = escape(Chicken.keyPairs.code) || escape(args.slice(1).toLowerCase()) || false;
+			mArgs.marketCode = escape(Chicken.keyPairs.code) || escape(args[1].toLowerCase()) || false;
 		}
 		return mArgs;
 	}
@@ -98,7 +98,7 @@ class CommandMarket extends Command {
 								marketEntry.sold = true;
 								marketEntry.recipient = Chicken.userData.id;
 								marketEntry.soldDate = new Date().getTime();
-								collection.updateOne({id:Chicken.mArgs.marketCode}, marketEntry).then(()=>{
+								collection.update({id:Chicken.mArgs.marketCode}, marketEntry).then(()=>{
 									Chicken.send(views.buy(Chicken, marketEntry));
 								})
 							});
