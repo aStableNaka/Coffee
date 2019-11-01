@@ -99,7 +99,7 @@ class CommandMarket extends Command {
 								marketEntry.recipient = Chicken.userData.id;
 								marketEntry.soldDate = new Date().getTime();
 								collection.update({id:Chicken.mArgs.marketCode}, marketEntry).then(()=>{
-									Chicken.send(views.buy(Chicken, marketEntry));
+									Chicken.send(views.buy(Chicken, marketEntry, silverItemData));
 								})
 							});
 						}else{
@@ -119,9 +119,9 @@ class CommandMarket extends Command {
 		const limit = 25;
 		let query = null, options = {sort:{date:-1},limit:limit};
 		if(!Chicken.mArgs.itemAccessor){
-			query = {v:{$gte:0}};
+			query = {v:{$gte:0},sold:false,locked:false};
 		}else{
-			query = {accessor:{$regex:`.*${Chicken.mArgs.itemAccessor}.*`}};
+			query = {accessor:{$regex:`.*${Chicken.mArgs.itemAccessor}.*`},sold:false,locked:false};
 		}
 		Chicken.database.api.wrapper43('market', (collection)=>{
 			collection.find(query, options).toArray().then((results)=>{
