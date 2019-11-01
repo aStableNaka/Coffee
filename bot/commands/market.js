@@ -81,6 +81,7 @@ class CommandMarket extends Command {
 		function nahBrother(){
 			Chicken.send(`Market code ${ufmt.block(Chicken.mArgs.marketCode||'None')} not available.`);
 		}
+		console.log(Chicken.mArgs);
 		if(Chicken.mArgs.marketCode){
 			Chicken.database.api.wrapper43( 'market', (collection)=>{
 				collection.find({id:Chicken.mArgs.marketCode,sold:false,locked:false}).toArray((err,data)=>{
