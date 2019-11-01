@@ -131,7 +131,7 @@ class CommandMarket extends Command {
 					
 					let marketEntry = data[0];
 					if(marketEntry){
-						message.edit(views.listing(Chicken, marketEntry));
+						Chicken.send(views.listing(Chicken, marketEntry));
 					}else{
 						nahBrother();
 					}
