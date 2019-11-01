@@ -219,7 +219,7 @@ function item(itemData, amount, styleString = '***', brackets = true, namePaddin
 
 // No logic, just the itemNameString
 function itemNameString(name, amount = 1, styleString = '***', brackets = true, emoji) {
-	return `${(emoji&&emoji!='none')?`[ ${emoji} ] `:''} ${brackets ?'[ ' : ''}${surround(name, styleString)}${brackets ? ' ]' : ''} ${amount ? `x${numPretty(amount)}` : ''}`;
+	return `${(emoji&&emoji!='none')?`[ ${emoji} ] `:''} ${brackets ?'[ ' : ''}${surround(name, styleString)}${brackets ? ' ]' : ''} ${amount ? `x${typeof(amount)=="number"?numPretty(amount):amount}` : ''}`;
 }
 
 // Creates mimic itemData and formats based on given name
