@@ -5,6 +5,7 @@ const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');
 const marketUtils = require("../utils/market");
 const itemUtils = require("../utils/item");
+const ufmt = require("../utils/fmt.js");
 const views = loader("./bot/views/market", "./views/market");
 
 class CommandMarket extends Command {
