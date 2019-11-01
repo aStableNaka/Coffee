@@ -32,6 +32,10 @@ class CommandMarket extends Command {
 		{
 			name: "sell",
 			cmd: "mark sell"
+		},
+		{
+			name: "mbuy",
+			cmd: "mark buy"
 		}
 		];
 	}
@@ -67,14 +71,41 @@ class CommandMarket extends Command {
 		}else if( args[0] == 'catalogue'){
 			mArgs.itemAccessor = Chicken.keyPairs.item || (args.slice(1).join(' ').match(/([^!@\d\s])[\d?\w?\.?]+/gi)||[]).join("_").toLowerCase() || false;
 		}else if( args[0] == 'buy'){
-			mArgs.marketCode = Chicken.keyPairs.code || escape(args.slice(1).toUpperCaseCase()) || false;
+			mArgs.marketCode = escape(Chicken.keyPairs.code) || escape(args.slice(1).toLowerCase()) || false;
 		}
 		return mArgs;
 	}
 
 	exec_buy(Chicken){
 		if(Chicken.mArgs.marketCode){
-			Chicken.send(ufmt.notDone());
+			Chicken.database.api.wrapper43( 'market', (collection)=>{
+				collection.find({id:Chicken.mArgs.marketCode,sold:false,locked:false}).toArray((err,data)=>{
+					function nahBrother(){
+						Chicken.send(`Market code ${ufmt.block(Chicken.mArgs.marketCode||'None')} not available.`);
+					}
+					let marketEntry = data[0];
+					if(marketEntry){
+						
+						let pouch = Chicken.userData.items.silver || {amount:0};
+						if(pouch.amount>=marketEntry.price){
+							pouch.amount-=marketEntry.price;
+							Chicken.database.get( marketEntry.owner, ( ownerUD )=>{
+								let silverItemData = itemUtils.items.silver.createItemData(marketEntry.price+marketEntry.deposit)
+								itemUtils.addItemToUserData( ownerUD, silverItemData );
+								itemUtils.addItemToUserData( Chicken.userData, marketEntry.itemData, silverItemData );
+								marketEntry.sold = true;
+								marketEntry.recipient = Chicken.userData.id;
+								marketEntry.soldDate = new Date().getTime();
+								collection.updateOne({id:Chicken.mArgs.marketCode}, marketEntry).then(()=>{
+									Chicken.send(views.buy(Chicken, marketEntry));
+								})
+							});
+						}
+					}else{
+						nahBrother();
+					}
+				})
+			} )
 		}
 		return;
 	}
