@@ -304,6 +304,26 @@ function ChickenParseArguments(Chicken) {
 function ChickenProvideResponseHelpers(Chicken) {
 	// Sending a message
 	Chicken.send = (data, callback) => {
+		/**
+		 * This will prevent custom emojis from being used in servers that prevent custom emojis
+		 */
+		if(Chicken.guild.me.missingPermissions(["USE_EXTERNAL_EMOJIS"])){
+			function deepSearch(object){
+				Object.keys(object).map((key)=>{
+					if(typeof(object[key])=='string'){
+						object[key] = object[key].replace(/\[?\<.+:\w+\>\]?/gi, '');
+					}else if(typeof(object[key]=='object')){
+						deepSearch(object);
+					}
+				})
+			}
+			if(typeof(data)=='string'){
+				data = data[key].replace(/\[?\<.+:\w+\>\]?/gi, '');
+			}else{
+				deepSearch(data);
+			}
+		}
+		
 		let msgSendPromise = Chicken.channel.send(data);
 		msgSendPromise.catch((e) => {
 

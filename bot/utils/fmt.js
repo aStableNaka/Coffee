@@ -444,8 +444,8 @@ function aoran(str, a = 'a', an = 'an') {
 }
 
 // Change this to coffee emote later
-function currency(amount){
-	return `<a:s_:632110433490305046>x${ufmt.numPretty(amount)}`;
+function currency(amount, noEmoji=false){
+	return `${noEmoji?'Silver ':`<a:s_:632110433490305046>`}x${ufmt.numPretty(amount)}`;
 }
 
 const colors = {
