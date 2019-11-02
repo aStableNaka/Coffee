@@ -311,7 +311,7 @@ function ChickenProvideResponseHelpers(Chicken) {
 		 */
 		if(Chicken.cantUseEmojis){
 			function deepSearch(object, depth=7){
-				if(!depth){return;}
+				if(!depth||!object){return;}
 				let keys = Object.keys(object);
 				keys.map((key)=>{
 					if(typeof(object[key])=='string'){
