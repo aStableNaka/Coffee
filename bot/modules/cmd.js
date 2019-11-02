@@ -316,7 +316,7 @@ function ChickenProvideResponseHelpers(Chicken) {
 					if(typeof(object[key])=='string'){
 						object[key] = object[key].replace(/\[?\<.+:\w+\>\]?/gi, '');
 					}else if(typeof(object[key]=='object')){
-						deepSearch(object, depth-1);
+						deepSearch(object[key], depth-1);
 					}
 				})
 			}
