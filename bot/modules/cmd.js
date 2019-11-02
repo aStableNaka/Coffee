@@ -100,6 +100,7 @@ function Chickenize(msg, prompt) {
 	}
 
 	let first = tokens[0].split(':')[0];
+	
 	return {
 		accessor: modules.ezhash(first.toLowerCase()),
 		flags: (tokens[0].split(':')[1] || "").split(';'),
@@ -123,6 +124,7 @@ function ChickenExpandPlaceholders(Chicken) {
 	Chicken.cmd = cmd;
 	Chicken.eArgsLen = 0;
 	Chicken.oFlags = {};
+	Chicken.canUseEmojis = Chicken.guild ? !!Chicken.guild.me.missingPermissions(["USE_EXTERNAL_EMOJIS"])[0] || true;
 }
 
 /**
@@ -307,7 +309,7 @@ function ChickenProvideResponseHelpers(Chicken) {
 		/**
 		 * This will prevent custom emojis from being used in servers that prevent custom emojis
 		 */
-		if(Chicken.guild.me.missingPermissions(["USE_EXTERNAL_EMOJIS"])[0]){
+		if(Chicken.canUseEmojis){
 			function deepSearch(object, depth=7){
 				if(!depth){return;}
 				let keys = Object.keys(object);
