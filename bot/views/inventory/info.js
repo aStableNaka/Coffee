@@ -24,7 +24,7 @@ module.exports = function( Chicken, itemObject='', itemData='' ){
 		}
 		message.embed.footer = {
 			icon_url:skin.image,
-			text:`${ufmt.block(skin.name, '')} skin ${skin.description}`
+			text:`${ufmt.block(skin.name, '')} "${skin.description}"`
 		}
 	}
 	if(Object.keys(itemObject.recipies)[0]){
