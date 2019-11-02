@@ -124,7 +124,6 @@ function ChickenExpandPlaceholders(Chicken) {
 	Chicken.cmd = cmd;
 	Chicken.eArgsLen = 0;
 	Chicken.oFlags = {};
-	Chicken.cantUseEmojis = Chicken.guild ? !Chicken.guild.me.missingPermissions(["USE_EXTERNAL_EMOJIS"])[0] : false;
 }
 
 /**
@@ -218,6 +217,7 @@ function ChickenFlattenMsgData(Chicken, msg) {
 	Chicken.channel = msg.channel;
 	Chicken.author = msg.author;
 	Chicken.guild = msg.guild;
+	Chicken.cantUseEmojis = Chicken.guild ? !Chicken.guild.me.missingPermissions(["USE_EXTERNAL_EMOJIS"])[0] : false;
 }
 
 /**
