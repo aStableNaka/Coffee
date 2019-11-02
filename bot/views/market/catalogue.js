@@ -3,7 +3,7 @@ const ufmt = require("../../utils/fmt.js");
 module.exports = function(Chicken, results){
 	let desc = ufmt.join(results.map((x)=>{
 		let itemObject = itemUtils.getItemObject( x.itemData );
-		return `${ufmt.block(x.id.toUpperCase(), '** `')} ${ufmt.item(x.itemData)} - ${ufmt.currency(x.price, Chicken.canUseEmojis)}`
+		return `${ufmt.block(x.id.toUpperCase(), '** `')} ${ufmt.item(x.itemData)} - ${ufmt.currency(x.price, Chicken.cantUseEmojis)}`
 	}));
 	if(results.length == 0){
 		desc = "None";

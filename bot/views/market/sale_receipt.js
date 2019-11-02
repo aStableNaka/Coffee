@@ -7,7 +7,7 @@ module.exports = function(Chicken){
 			title:"Sale Recept",
 			description:ufmt.join([
 				ufmt.denote('Item', ufmt.item(itemData)),
-				ufmt.denote('Price', `${Chicken.mArgs.price?ufmt.currency(Chicken.mArgs.price, Chicken.canUseEmojis):'Undecided'}`)
+				ufmt.denote('Price', `${Chicken.mArgs.price?ufmt.currency(Chicken.mArgs.price, Chicken.cantUseEmojis):'Undecided'}`)
 			])
 		}
 	}
