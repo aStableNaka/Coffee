@@ -318,7 +318,7 @@ function ChickenProvideResponseHelpers(Chicken) {
 				})
 			}
 			if(typeof(data)=='string'){
-				data = data[key].replace(/\[?\<.+:\w+\>\]?/gi, '');
+				data = data.replace(/\[?\<.+:\w+\>\]?/gi, '');
 			}else{
 				deepSearch(data);
 			}
