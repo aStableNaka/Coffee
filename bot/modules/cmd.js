@@ -308,7 +308,7 @@ function ChickenProvideResponseHelpers(Chicken) {
 		 * This will prevent custom emojis from being used in servers that prevent custom emojis
 		 */
 		if(Chicken.guild.me.missingPermissions(["USE_EXTERNAL_EMOJIS"])){
-			function deepSearch(object, depth=4){
+			function deepSearch(object, depth=5){
 				if(!depth){return;}
 				Object.keys(object).map((key)=>{
 					if(typeof(object[key])=='string'){
