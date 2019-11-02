@@ -15,13 +15,64 @@
             "Not much is known about this exotic pickaxe...",
             "Arguably the best pickaxe this world has to offer. The [ Holy Hole Maker ] is truly remarkable."
         ],
-        "skins":[
-            {"i":0,"image":"https://i.imgur.com/miBhBjt.png","emoji":"<:pickaxe:631407099729018900>","name":"default", "unique":true, "default":true},
-            {"i":1,"color":11184810, "image":"https://i.imgur.com/oUez8OO.png","imageHR":"https://i.imgur.com/3AUap4x.png","unique":true,"emoji":"<:s1r1:631587508853014529>","name":"golden_ivory", "description":"Awarded to the Season 1 Rank 1 player.","time":"2hr"},
-            {"i":2,"color":11184810,"name":"impact_ivory","description":"Awarded to Season 1 Top 5","image":"https://i.imgur.com/QGVBklr.png","imageHR":"https://i.imgur.com/RsuomKz.png","unique":true,"emoji":"<:s1top5:631746999204708355>","time":"1hr"},
-            {"i":3,"color":11184810,"name":"shocking_luster","description":"Awardrd to Season 1 Top 20","image":"https://i.imgur.com/QGVBklr.png","imageHR":"https://i.imgur.com/RsuomKz.png","unique":true,"emoji":"<:s1top5:631746999204708355>","time":"2hr"},
-            {"i":4,"color":11184810,"name":"deep_inferno","description":"Finish setting this one up","image":"https://i.imgur.com/QGVBklr.png","imageHR":"https://i.imgur.com/RsuomKz.png","unique":true,"emoji":"<:s1top5:631746999204708355>","time":"2hr"},
-            {"i":2,"color":0,"name":"The 9th Divine", "description":"Flowing with glory"}
+        "skins": [{
+                "i": 0,
+                "image": "https://i.imgur.com/miBhBjt.png",
+                "emoji": "<:pickaxe:631407099729018900>",
+                "name": "default",
+                "unique": true,
+                "default": true
+            },
+            {
+                "i": 1,
+                "color": 11184810,
+                "image": "https://i.imgur.com/oUez8OO.png",
+                "imageHR": "https://i.imgur.com/3AUap4x.png",
+                "unique": true,
+                "emoji": "<:s1r1:631587508853014529>",
+                "name": "golden_ivory",
+                "description": "Awarded to the Season 1 Rank 1 player.",
+                "time": "2hr"
+            },
+            {
+                "i": 2,
+                "color": 11184810,
+                "name": "impact_ivory",
+                "description": "Awarded to Season 1 Top 5",
+                "image": "https://i.imgur.com/QGVBklr.png",
+                "imageHR": "https://i.imgur.com/RsuomKz.png",
+                "unique": true,
+                "emoji": "<:s1top5:631746999204708355>",
+                "time": "1hr"
+            },
+            {
+                "i": 3,
+                "color": 11184810,
+                "name": "shocking_luster",
+                "description": "Awardrd to Season 1 Top 20",
+                "image": "https://i.imgur.com/QGVBklr.png",
+                "imageHR": "https://i.imgur.com/RsuomKz.png",
+                "unique": true,
+                "emoji": "<:s1top5:631746999204708355>",
+                "time": "2hr"
+            },
+            {
+                "i": 4,
+                "color": 11142683,
+                "name": "deep_inferno",
+                "description": "Finish setting this one up",
+                "image": "https://i.imgur.com/Y5ep5Sc.png",
+                "imageHR": "https://i.imgur.com/jsSOJ1J.png",
+                "unique": false,
+                "emoji": "<:dpinf:632340300496502786>",
+                "time": "2hr"
+            },
+            {
+                "i": 2,
+                "color": 0,
+                "name": "The 9th Divine",
+                "description": "Flowing with glory"
+            }
         ]
     },
     "notes": {
@@ -85,7 +136,7 @@
         ]
     },
 
-    "misc1":[
+    "misc1": [
         "Drunken Sailor:He keeps going on about some 'Moldy Duck'?",
         "Day Old Latte:I can't get the smell out of my nose.",
         "Recycled Mayo:In the fridge for 2 years, in my stomach in 2 minutes.",
@@ -104,19 +155,19 @@
 
     "changelogs": [
         [
-           "0.2.1",
-           "***CHANGED***",
-           "> ~ Stuff",
-           "***PRESEASON***",
-           "Thank you for participating in Coffee season 1, Season 2 will start soonTM after all the bugs have been fixed.",
-           "***NEW***",
-           "> + Inventory icons",
-           "> + Skins",
-           "> + Market and Catalogue",
-           "> + [ ***Strange Matter*** ]",
-           "> + [ ***Pumpkin Spice Latte*** ] Available until DEC 1",
-           "***UPDATED***",
-           "> - Everyone's BP/Bal/Generators/ have been reset for the pre-season. They will be reset again once s2 starts"
+            "0.2.1",
+            "***CHANGED***",
+            "> ~ Stuff",
+            "***PRESEASON***",
+            "Thank you for participating in Coffee season 1, Season 2 will start soonTM after all the bugs have been fixed.",
+            "***NEW***",
+            "> + Inventory icons",
+            "> + Skins",
+            "> + Market and Catalogue",
+            "> + [ ***Strange Matter*** ]",
+            "> + [ ***Pumpkin Spice Latte*** ] Available until DEC 1",
+            "***UPDATED***",
+            "> - Everyone's BP/Bal/Generators/ have been reset for the pre-season. They will be reset again once s2 starts"
         ]
     ],
     "secret_changelogs": [

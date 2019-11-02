@@ -310,7 +310,7 @@ class ItemLootbox extends Item {
 		})
 		let dropItemData = itemUtils.items.crafting_materials.createItemData(outcome);
 		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
-		Chicken.send(Item.fmtUseMsg(useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]));
+		Chicken.send(Item.fmtUseMsg(useDialogue, [`\`${ufmt.item( dropItemData, null, '', null, null, null, false )}\``]));
 		itemUtils.addItemToUserData(Chicken.userData, dropItemData);
 	}
 
@@ -358,7 +358,7 @@ class ItemLootbox extends Item {
 		})
 		let dropItemData = itemUtils.items.gold.createItemData(outcome);
 		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
-		Chicken.send(Item.fmtUseMsg(useDialogue, [`\`${ufmt.item( dropItemData, null, '' )}\``]));
+		Chicken.send(Item.fmtUseMsg(useDialogue, [`\`${ufmt.item( dropItemData, null, '', null, null, null, false )}\``]));
 		itemUtils.addItemToUserData(Chicken.userData, dropItemData);
 	}
 
