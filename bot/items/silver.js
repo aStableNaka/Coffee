@@ -54,11 +54,9 @@ class ItemSilver extends Item {
 		}
 		let amount = itemData.amount || 0;
 		let bal = bpUtils.getCurrentBPBal(Chicken);
-		let outcome = new BigInt(new BigNum(bal.toString()).times(new BigNum(1 + this.increaseValue * 0.01).pow(itemData.amount)).integerValue().toString()).subtract(bal);
 		return ufmt.itemDesc([
 			desc,
 			ufmt.denote('Currently owned', amount),
-			ufmt.denote('Worth', ufmt.bp(outcome))
 		]);
 	}
 }
