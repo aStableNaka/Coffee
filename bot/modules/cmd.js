@@ -314,7 +314,7 @@ function ChickenProvideResponseHelpers(Chicken) {
 				console.log(keys);
 				keys.map((key)=>{
 					if(typeof(object[key])=='string'){
-						object[key] = object[key].replace(/\[?\<.+:\w+\>\]?/gi, '');
+						object[key] = object[key].replace(/\[?\s?\<.+:\w+\>\s?\]?/gi, '');
 					}else if(typeof(object[key]=='object')){
 						deepSearch(object[key], depth-1);
 					}
