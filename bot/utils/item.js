@@ -383,9 +383,11 @@ const pickPerks = {
 
 	"adaptable":{
 		name:"Adaptable",
-		desc:"Your pickaxe levels up 2x faster!",
+		desc:"Your pickaxe gains 2x more exp when mining!",
 		onMine:( Chicken )=>{
 			Chicken.userData.pickaxe_exp++;
+			// Hotfix for the adaptable bug on perks that use modular arithmetic
+			if(Chicken.userData.pickaxe_exp%2){Chicken.userData.pickaxe_exp--;}
 		}
 	},
 
