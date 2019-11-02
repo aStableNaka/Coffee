@@ -84,8 +84,9 @@ class ItemPickSkin extends Item {
 	desc(Chicken, itemData) {
 		let skin = this.skin(itemData);
 		return ufmt.itemDesc([
-			`*${skin.desc}*`,
+			`*${skin.description}*`,
 			ufmt.denote('Name', skin.name),
+			ufmt.denote('Type', ufmt.block('Pickaxe Skin')),
 			ufmt.denote('Usage', `Apply this skin to your current pickaxe`),
 			ufmt.denote('Warning', `Once you apply a new skin, any skin previously attached to your pickaxe will disappear FOREVER.`)
 		]);
