@@ -124,7 +124,7 @@ function ChickenExpandPlaceholders(Chicken) {
 	Chicken.cmd = cmd;
 	Chicken.eArgsLen = 0;
 	Chicken.oFlags = {};
-	Chicken.cantUseEmojis = Chicken.guild ? !Chicken.guild.me.missingPermissions(["USE_EXTERNAL_EMOJIS"])[0] : true;
+	Chicken.cantUseEmojis = Chicken.guild ? !Chicken.guild.me.missingPermissions(["USE_EXTERNAL_EMOJIS"])[0] : false;
 }
 
 /**
