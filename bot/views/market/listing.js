@@ -3,7 +3,7 @@ const ufmt = require("../../utils/fmt.js");
 module.exports = function(Chicken, listing, selling){
 	let itemData = listing.itemData;
 	let itemObject = itemUtils.getItemObject(listing.itemData);
-	let noEmoji = Chicken.guild.me.missingPermissions(["USE_EXTERNAL_EMOJIS"])[0];
+	let noEmoji = Chicken.canUseEmojis;
 	let message = {
 		embed:{
 			title:"Listing Info",
