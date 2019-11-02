@@ -309,7 +309,7 @@ function ChickenProvideResponseHelpers(Chicken) {
 		/**
 		 * This will prevent custom emojis from being used in servers that prevent custom emojis
 		 */
-		if(Chicken.canUseEmojis){
+		if(!Chicken.canUseEmojis){
 			function deepSearch(object, depth=7){
 				if(!depth){return;}
 				let keys = Object.keys(object);
