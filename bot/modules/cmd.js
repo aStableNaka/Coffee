@@ -311,7 +311,6 @@ function ChickenProvideResponseHelpers(Chicken) {
 			function deepSearch(object, depth=7){
 				if(!depth){return;}
 				let keys = Object.keys(object);
-				console.log(keys);
 				keys.map((key)=>{
 					if(typeof(object[key])=='string'){
 						object[key] = object[key].replace(/\[?\s?\<.+:\w+\>\s?\]?/gi, '');
