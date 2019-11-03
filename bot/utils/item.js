@@ -9,10 +9,10 @@ const locale = require("../data/EN_US");
 const items = loader( "./bot/items", "./items" );
 const Item = require("../class/item.js");
 const itemUtils = module.exports;
-const craftingRecipies = {}
+const craftingRecipes = {}
 
 Object.values(items).map( ( itemObject )=>{
-	Object.assign( craftingRecipies, itemObject.recipies );
+	Object.assign( craftingRecipes, itemObject.recipes );
 } )
 
 function lunchboxDropFilter(itemObject){
@@ -657,8 +657,8 @@ function superDeepItemSearch( Chicken, searchTerm ){
 		...Object.keys(itemUtils.items).filter( ( itemName )=>{
 			return itemName.includes(searchTerm);
 		}),
-		...Object.values(itemUtils.items).filter( (x)=>{Object.keys(x.recipies).length>0} ).map( ( itemObject )=>{
-			return (itemObject.recipies).filter( ( recipie )=>{
+		...Object.values(itemUtils.items).filter( (x)=>{Object.keys(x.recipes).length>0} ).map( ( itemObject )=>{
+			return (itemObject.recipes).filter( ( recipie )=>{
 				return recipie.includes(searchTerm);
 			}).map( ()=>{
 				return itemObject.accessor;
@@ -679,7 +679,7 @@ module.exports.inventorySearch = inventorySearch;
 module.exports.d = d;
 module.exports.resetInventory = resetInventory;
 module.exports.superDeepItemSearch = superDeepItemSearch;
-module.exports.craftingRecipies = craftingRecipies;
+module.exports.craftingRecipes = craftingRecipes;
 module.exports.userHasItem = userHasItem;
 module.exports.addItemToUserData = addItemToUserData;
 module.exports.addItemObjectToUserData = addItemObjectToUserData;

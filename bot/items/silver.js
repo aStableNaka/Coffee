@@ -23,7 +23,7 @@ class ItemSilver extends Item {
 		this.increaseValue = 0.08;
 	}
 
-	get recipies() {
+	get recipes() {
 		return {
 			"silver": {
 				ingredients: [{

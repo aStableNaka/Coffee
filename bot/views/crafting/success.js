@@ -4,7 +4,7 @@
 
 const itemUtils = require("../../utils/item.js");
 const ufmt = require("../../utils/fmt.js");
-const recipies = itemUtils.craftingRecipies;
+const recipes = itemUtils.craftingRecipes;
 
 module.exports = function( Chicken, itemData, ingredientsUsedInventory ){
 	  let desc = ufmt.join([

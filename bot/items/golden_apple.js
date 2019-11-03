@@ -20,7 +20,7 @@ class ItemGoldenApple extends Item {
 		this.useDialogue = `You eat a Golden Apple!`;
 	}
 
-	get recipies() {
+	get recipes() {
 		return {
 			"golden_apple": {
 				ingredients: [{

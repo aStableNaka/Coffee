@@ -139,7 +139,7 @@ class CommandMarket extends Command {
 		console.log(Chicken.mArgs);
 		if(Chicken.mArgs.marketCode){
 			Chicken.database.api.wrapper43( 'market', (collection)=>{
-				collection.find({id:Chicken.mArgs.marketCode,sold:false,locked:false}).toArray((err,data)=>{
+				collection.find({id:Chicken.mArgs.marketCode}).toArray((err,data)=>{
 					
 					let marketEntry = data[0];
 					if(marketEntry){

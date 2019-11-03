@@ -40,7 +40,7 @@ class ItemGildedSlurry extends Item {
 		], '');
 	}
 
-	get recipies() {
+	get recipes() {
 		return {
 			"gilded_slurry": {
 				ingredients: [{

@@ -5,7 +5,7 @@ const views = loader("./bot/views/crafting", "./views/crafting");
 const locale = require("../data/EN_US");
 const itemUtils = require("../utils/item.js");
 const ufmt = require("../utils/fmt.js");
-const recipies = itemUtils.craftingRecipies;
+const recipes = itemUtils.craftingRecipes;
 
 class CommandCraft extends Command {
 	constructor() {
@@ -46,9 +46,9 @@ class CommandCraft extends Command {
 	}
 	async execute(Chicken) {
 		function searchForAvailableCraftingOptions( userData ){
-			return Object.keys( recipies );
-			let availableOptions = Object.keys( recipies ).filter(( product )=>{
-				let ingredients = recipies[product].ingredients;
+			return Object.keys( recipes );
+			let availableOptions = Object.keys( recipes ).filter(( product )=>{
+				let ingredients = recipes[product].ingredients;
 				let available = ingredients.map( ( ingredientData )=>{
 					return itemUtils.userHasItem( userData, ingredientData.key, ingredientData.amount ) | 0;
 				}).reduce((p, t)=>{return p+t;}) == ingredients.length;
@@ -64,17 +64,17 @@ class CommandCraft extends Command {
 		let userData = Chicken.userData;
 		if(itemAccessor){
 			let search = [
-				...Object.keys(recipies).filter( ( itemName )=>{
+				...Object.keys(recipes).filter( ( itemName )=>{
 					return itemName.includes(itemAccessor);
 				})
 			];
 			if(search[0]){
-				if(search.length>1 && !recipies[search[0]]){
+				if(search.length>1 && !recipes[search[0]]){
 					Chicken.send(views.query(Chicken, search));
 					return;
 				}
 				itemAccessor = search[0];
-				let recipie = recipies[itemAccessor];
+				let recipie = recipes[itemAccessor];
 				// something here to check if the requested amount is available for crafting
 				let hasEnoughIngredients = recipie.ingredients.filter( (ingredient)=>{
 					return itemUtils.userHasItem( userData, ingredient.key, ingredient.amount*amount );

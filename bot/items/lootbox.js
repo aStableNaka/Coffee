@@ -71,7 +71,7 @@ class ItemLootbox extends Item {
 		}, this);
 	}
 
-	get recipies() {
+	get recipes() {
 		return {
 			"lootbox": {
 				ingredients: [{

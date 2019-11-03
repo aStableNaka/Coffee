@@ -24,7 +24,7 @@ class ItemGold extends Item{
 		this.increaseValue = 8;
 	}
 
-	get recipies(){
+	get recipes(){
 		return {
 			"gold":{
 				ingredients:[{key:'silver',amount:100}],

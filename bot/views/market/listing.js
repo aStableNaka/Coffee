@@ -12,7 +12,8 @@ module.exports = function(Chicken, listing, selling){
 				ufmt.denote('Item', ufmt.item(listing.itemData)),
 				ufmt.denote('Seller', ufmt.block(listing.ownerName, '`')),
 				ufmt.denote('Price', `${ufmt.currency(listing.price, noEmoji)}`),
-				ufmt.denote('Deposit', `${ufmt.currency(listing.deposit, noEmoji)}`)
+				ufmt.denote('Deposit', `${ufmt.currency(listing.deposit, noEmoji)}`),
+				ufmt.denote('Status', listing.locked?'Locked':listing.sold?`Sold to ${ufmt.block(Chicken.client.users.find((user)=>{return user.id==listing.recipient;}).name)}`:'Unsold')
 			]),
 			author:{
 				name:"Sale Listing",

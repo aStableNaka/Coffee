@@ -25,7 +25,7 @@ class ItemArthursTablet extends Item {
 		this.effect = `Using this will add ${ this.increaseValue } LvL to your active pickaxe`;
 	}
 
-	get recipies() {
+	get recipes() {
 		return {
 			"arthurs_tablet": {
 				ingredients: [{

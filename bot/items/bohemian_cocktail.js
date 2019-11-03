@@ -38,7 +38,7 @@ class ItemBohemianCocktail extends Item {
 		], '');
 	}
 
-	get recipies() {
+	get recipes() {
 		return {
 			"bohemian_cocktail": {
 				ingredients: [{

@@ -17,7 +17,7 @@ class Item{
 		this.instance = this.createItemData();
 	}
 
-	get recipies(){
+	get recipes(){
 		return {};
 	}
 

@@ -27,9 +27,9 @@ module.exports = function( Chicken, itemObject='', itemData='' ){
 			text:`${ufmt.block(skin.name, '')} "${skin.description}"`
 		}
 	}
-	if(Object.keys(itemObject.recipies)[0]){
+	if(Object.keys(itemObject.recipes)[0]){
 		function getAmountAvailable( recipieName ){
-			let recipie = itemObject.recipies[recipieName];
+			let recipie = itemObject.recipes[recipieName];
 			return recipie.ingredients.map( ( ingredient )=>{
 				let ownedItem = Chicken.userData.items[ingredient.key] || {amount:0}
 				return Math.floor( ownedItem.amount / ingredient.amount );
@@ -37,9 +37,9 @@ module.exports = function( Chicken, itemObject='', itemData='' ){
 		}
 		message.embed.fields = message.embed.fields||[];
 		message.embed.fields.push({
-			"name":"***Crafting Recipies***",
-			"value":ufmt.join(Object.keys(itemObject.recipies).map(( recipieName )=>{
-				let recipie = itemObject.recipies[recipieName];
+			"name":"***Crafting recipes***",
+			"value":ufmt.join(Object.keys(itemObject.recipes).map(( recipieName )=>{
+				let recipie = itemObject.recipes[recipieName];
 				return `${ufmt.itemName(recipieName, recipie.amount||1, "***")} ( *x${getAmountAvailable( recipieName )} Available* )\n> - ${ufmt.join(recipie.ingredients.map((ingredient)=>{
 					return ufmt.itemName( ingredient.key, `**${ingredient.amount}**/${(Chicken.userData.items[ingredient.key]||{amount:0}).amount}`);
 				}),'\n> - ')}`;

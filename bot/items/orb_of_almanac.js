@@ -25,7 +25,7 @@ class ItemOrbOfAlmanac extends Item {
 		//this.increaseValue = 8;
 	}
 
-	get recipies() {
+	get recipes() {
 		return {
 			"orb_of_almanac": {
 				ingredients: [{
