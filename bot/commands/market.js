@@ -172,13 +172,13 @@ class CommandMarket extends Command {
 		 * 
 		 * @param {Number} skip Skip index
 		 */
-		function createOptions(skip){
+		function createOptions(skip) {
 			return {
 				sort: {
 					date: -1
 				},
 				limit: limit,
-				skip:skip*limit
+				skip: skip * limit
 			};
 		}
 		let query = null;
@@ -205,23 +205,27 @@ class CommandMarket extends Command {
 					_id: "Market Stats",
 					unsoldCount: {
 						$sum: {
-							$toInt: "$sold"
+							$toInt: {
+								$and: ["$sold", {
+									$not: "$locked"
+								}]
+							}
 						}
 					}
 				}
-			}]).toArray((err,stats) => {
+			}]).toArray((err, stats) => {
 				let marketStatistics = stats[0];
-				let numberOfPages = Math.ceil(marketStatistics.unsoldCount/limit);
+				let numberOfPages = Math.ceil(marketStatistics.unsoldCount / limit);
 				Chicken.mArgs.maxPages = numberOfPages;
 
 				/*
 					Modified ssfwbwpWrapper for catalogue pages
 				*/
 
-				let send = pages.ssfwbwpWrapper(Chicken, ()=>{}, [], numberOfPages, ()=>{
+				let send = pages.ssfwbwpWrapper(Chicken, () => {}, [], numberOfPages, () => {
 					let options = createOptions(Chicken.mArgs.page);
 					collection.find(query, options).toArray().then((results) => {
-						Chicken.mArgs.page = Math.min(numberOfPages-1, Math.max(0, Chicken.mArgs.page||Chicken.numbers[0]-1||0) );
+						Chicken.mArgs.page = Math.min(numberOfPages - 1, Math.max(0, Chicken.mArgs.page || Chicken.numbers[0] - 1 || 0));
 						Chicken.send(views.catalogue(Chicken, results, marketStatistics)).then(send.pageThing);
 					});
 				});
@@ -238,7 +242,7 @@ class CommandMarket extends Command {
 			let itemAccessor = searchResults[0];
 			let itemData = items[itemAccessor];
 			let itemObject = itemUtils.getItemObject(itemData);
-			if(itemObject.isSaleRestricted){
+			if (itemObject.isSaleRestricted) {
 				Chicken.send("That item cannot be sold.");
 				return;
 			}
