@@ -236,11 +236,16 @@ class CommandMarket extends Command {
 		let searchResults = itemUtils.inventorySearch(items, Chicken.mArgs.itemAccessor);
 		if (searchResults[0]) {
 			let itemAccessor = searchResults[0];
-			if (items[itemAccessor].amount >= Chicken.mArgs.amount) {
+			let itemData = items[itemAccessor];
+			let itemObject = itemUtils.getItemObject(itemData);
+			if(itemObject.isSaleRestricted){
+				Chicken.send("That item cannot be sold.");
+				return;
+			}
+			if (itemData.amount >= Chicken.mArgs.amount) {
 				let tempInv = {};
-				itemUtils.transferItemToInventory(items, tempInv, items[itemAccessor], Chicken.mArgs.amount);
+				itemUtils.transferItemToInventory(items, tempInv, itemData, Chicken.mArgs.amount);
 				Chicken.mArgs.item = tempInv[itemAccessor];
-
 				/**
 				 * Continue the sale
 				 */
