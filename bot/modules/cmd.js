@@ -179,6 +179,15 @@ async function ChickenGroupArguments(Chicken, msg) { // jshint ignore:line
 		return parseFloat(x.replace(/,/gi, ''));
 	});
 
+	const shorthands = {
+		f:"filter",
+		i:"item",
+		p:"price",
+		a:"amount",
+		s:"sort"
+	}
+
+
 	let text = [Chicken.accessor, ...Chicken.args].join(' ');
 	let keyPairs = text.match(/\w+:".+"/gi) || [];
 	Chicken.keyPairs = {};
@@ -186,7 +195,12 @@ async function ChickenGroupArguments(Chicken, msg) { // jshint ignore:line
 		Chicken.args.splice(Chicken.args.indexOf(kp), 1);
 		text = text.replace(kp, '');
 		let m = kp.split(':');
-		Chicken.keyPairs[m[0]] = m[1].split('"')[1];
+		let g = m[1].split('"')[1];
+		if(shorthands[m[0]]){
+			Chicken.keyPairs[shorthands[m[0]]] = g;
+		}else{
+			Chicken.keyPairs[m[0]] = g;
+		}
 	});
 	text = text.split(' ').filter((x) => {
 		return x != '';
