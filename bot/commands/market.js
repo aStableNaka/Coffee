@@ -155,7 +155,7 @@ class CommandMarket extends Command {
 	}
 	
 	exec_catalogue(Chicken) {
-		const limit = 25;
+		const limit = 15;
 		let query = null, options = {sort:{date:-1},limit:limit};
 		if(!Chicken.mArgs.itemAccessor){
 			query = {v:{$gte:0},sold:false,locked:false};
