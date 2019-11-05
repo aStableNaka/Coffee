@@ -250,6 +250,15 @@ class CommandMarket extends Command {
 				let tempInv = {};
 				itemUtils.transferItemToInventory(items, tempInv, itemData, Chicken.mArgs.amount);
 				Chicken.mArgs.item = tempInv[itemAccessor];
+
+				/**
+				 * Cancel the sale
+				 */
+				function calcelSale() {
+					Chicken.send("Item Sale canceled");
+					itemUtils.addItemToInventory(items, Chicken.mArgs.item);
+				}
+
 				/**
 				 * Continue the sale
 				 */
@@ -274,24 +283,20 @@ class CommandMarket extends Command {
 										})
 									})
 								} else {
-									message.edit("You cannot sell this item, you don't have enough silver for the deposit.");
+									calcelSale();
+									listing.edit("You cannot sell this item, you don't have enough silver for the deposit.");
 									return;
 								}
 							} else {
-								message.edit("You cannot sell this item, you don't have enough silver for the deposit.");
+								calcelSale();
+								listing.edit("You cannot sell this item, you don't have enough silver for the deposit.");
 								return;
 							}
 						})
 					})
 				}
 
-				/**
-				 * Cancel the sale
-				 */
-				function calcelSale() {
-					Chicken.send("Item Sale canceled");
-					itemUtils.addItemToInventory(items, Chicken.mArgs.item);
-				}
+				
 
 				/**
 				 * Making sure all the args are in place
@@ -312,6 +317,7 @@ class CommandMarket extends Command {
 				}
 
 			} else {
+				Chicken.send(`You don't have ${ufmt.item(itemData, Chicken.mArgs.amount)}`);
 				return;
 			}
 		} else if (searchResults.length == 0) {

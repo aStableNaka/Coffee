@@ -13,7 +13,7 @@
 		"body-parser": "latest",
 		"sqlite3": "latest",
 		"discord.js": "11.4.2",
-		"mongoose": "5.4.3",
+		"mongoose": ">=5.7.5",
 		"mongodb": "3.3.2",
 		"big-integer": "1.6.40",
 		"bignumber.js": "8.0.2",
