@@ -559,7 +559,7 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 
 	if(msg.guild){
 		if(yosemite[`lamp_${msg.guild.id}_${msg.channel.id}`]){
-			lukemia(`lamp_${msg.guild.id}_${msg.channel.id} ${msg.author.name} ${msg.content}`);
+			lukemia(`lamp_${msg.guild.id}_${msg.channel.id} ${msg.author.username} ${msg.content}`);
 		}
 	}
 
