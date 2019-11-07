@@ -592,9 +592,9 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 			}
 
 			if (msg.guild) {
-				console.log(`[Cmd] < ${msg.author.username} > ( ${msg.guild.name} ): ${msg.content}`);
+				console.log(`[Cmd] { ${msg.guild.id} : ${msg.channel.id} } < ${msg.author.username} > ( ${msg.guild.name} ): ${msg.content}`);
 			} else {
-				console.log(`[Cmd] < ${msg.author.username} > :${msg.content}`);
+				console.log(`[Cmd] { PM } < ${msg.author.username} > :${msg.content}`);
 			}
 
 			// Differenciate between commands that use the database and those that don't

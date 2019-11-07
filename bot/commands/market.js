@@ -284,12 +284,12 @@ class CommandMarket extends Command {
 									})
 								} else {
 									calcelSale();
-									listing.edit("You cannot sell this item, you don't have enough silver for the deposit.");
+									message.edit("You cannot sell this item, you don't have enough silver for the deposit.");
 									return;
 								}
 							} else {
 								calcelSale();
-								listing.edit("You cannot sell this item, you don't have enough silver for the deposit.");
+								message.edit("You cannot sell this item, you don't have enough silver for the deposit.");
 								return;
 							}
 						})

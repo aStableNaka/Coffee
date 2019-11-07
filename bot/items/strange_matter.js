@@ -37,7 +37,7 @@ class ItemStrangeMatter extends Item {
 
 	use(Chicken, itemData) {
 		let outcomeData = this.pick();
-		let actions = ['break the', 'stomp on the', 'shatter the', 'graze the', 'look at the', 'taste the', 'hold the', 'throw the', 'eat the', 'ram the', 'sing to the', 'rendezvous with the', 'utilize the', 'extract the essence of', 'talk to the', 'shuffle the', 'yell at the poor', 'flinch at the', 'open the', 'close the', 'drill a hole into the', 'stare at the', 'cook the', 'poke at the', 'launch the', 'munch on the', 'trip over the', 'tell your mom about the', 'tell your dad about the', 'tell your dog about the', 'jump at the', 'release the', 'smooch the', 'read a bedtime story to the']
+		let actions = ['break the', 'stomp on the', 'shatter the', 'graze the', 'look at the', 'taste the', 'hold the', 'throw the', 'eat the', 'ram the', 'sing to the', 'rendezvous with the', 'utilize the', 'extract the essence of', 'talk to the', 'shuffle the', 'yell at the poor holding the', 'flinch at the', 'open the', 'close the', 'drill a hole into the', 'stare at the', 'cook the', 'poke at the', 'launch the', 'munch on the', 'trip over the', 'tell your mom about the', 'tell your dad about the', 'tell your dog about the', 'jump at the', 'release the', 'smooch the', 'read a bedtime story to the']
 		let descriptions = ['splurges', 'plops', 'poofs', 'spoops', 'churns', 'turns', 'flonks', 'floks', 'runks', 'trisks', 'fleks', 'yorshes', 'unggfhujhs']
 		Chicken.send(`You ${ufmt.pick(actions, 1)[0]} ${ufmt.block('Strange Matter')} and it ${ufmt.pick(descriptions, 1)[0]} into ${ufmt.aoran(outcomeData.accessor)} ${ufmt.item(outcomeData)}, which immediately activates!`).then(() => {
 			itemUtils.items[outcomeData.accessor].use(Chicken, outcomeData);
