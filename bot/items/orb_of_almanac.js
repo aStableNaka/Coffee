@@ -34,10 +34,6 @@ class ItemOrbOfAlmanac extends Item {
 						amount: 50,
 					},
 					{
-						key: "strange_matter",
-						amount: 30
-					},
-					{
 						key: "box_box",
 						amount: 30
 					},
@@ -48,6 +44,10 @@ class ItemOrbOfAlmanac extends Item {
 					{
 						key: "gold",
 						amount: 20
+					},
+					{
+						key: "strange_matter",
+						amount: 15
 					},
 					{
 						key: "gilded_slurry",
