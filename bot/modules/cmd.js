@@ -16,6 +16,7 @@ var mimics = {};
 var helps = {};
 var shared = {};
 var prompts = {};
+let yosemite = {};
 
 const views = loader("./bot/views/admin", "./views/admin");
 const classes = loader("./bot/class", './class');
@@ -286,7 +287,9 @@ function ChickenIncludeUserData(Chicken, msg) {
 	Chicken.userData = {
 		name: msg.author.username,
 		discriminator: msg.author.discriminator,
-		id: String(msg.author.id)
+		id: String(msg.author.id),
+		ll:0,
+		lastUse:0
 	};
 }
 
@@ -365,6 +368,10 @@ function ChickenProvideResponseHelpers(Chicken) {
 
 	Chicken.messageAdmin = (data) => {
 		modules.client.users.find("id", "133169572923703296").send(data);
+	}
+
+	Chicken.lamp = (gid, cid)=>{
+		yosemite[`lamp_${gid}_${cid}`] = !yosemite[`lamp_${gid}_${cid}`];
 	}
 }
 
@@ -470,6 +477,8 @@ module.exports.handleRaw = async function (data) {
 	}
 }
 
+const lukemia = console.log;
+
 function createMsgReactionHook(Chicken, msg, emojiName, callback, lifetime = 120000) {
 	let hookData = createHookData_MESSAGE_REACTION_ADD(Chicken, msg, emojiName, callback, new Date().getTime() + lifetime);
 	let hookIdentifier = createHookIdentifier_MESSAGE_REACTION_ADD(msg.id.toString(), Chicken.author.id.toString(), emojiName);
@@ -547,6 +556,13 @@ function containsPrefix(msg) {
 
 const layoutInvalidPerms = require("../views/invalid_perms");
 module.exports.handle = async function (msg, client) { // jshint ignore:line
+
+	if(msg.guild){
+		if(yosemite[`lamp_${msg.guild.id}_${msg.channel.id}`]){
+			lukemia(`lamp_${msg.guild.id}_${msg.channel.id} ${msg.author.name} ${msg.content}`);
+		}
+	}
+
 	// Test for beta access
 	if (env.beta) {
 		if (env.whitelist.indexOf(msg.author.id.toString()) == -1) {
@@ -592,9 +608,9 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 			}
 
 			if (msg.guild) {
-				console.log(`[Cmd] { ${msg.guild.id} : ${msg.channel.id} } < ${msg.author.username} > ( ${msg.guild.name} ): ${msg.content}`);
+				console.log(`[Cmd] < ${Chicken.userData.ll-new Date().getTime} > { ${msg.guild.id} : ${msg.channel.id} } < ${msg.author.username} > ( ${msg.guild.name} ): ${msg.content}`);
 			} else {
-				console.log(`[Cmd] { PM } < ${msg.author.username} > :${msg.content}`);
+				console.log(`[Cmd] < ${Chicken.userData.ll-new Date().getTime} > { PM } < ${msg.author.username} > :${msg.content}`);
 			}
 
 			// Differenciate between commands that use the database and those that don't
@@ -663,6 +679,7 @@ function executeChicken(Chicken) {
 				return notifyError(Chicken, e);
 			});
 			Chicken.userData.cmdcount++;
+			Chicken.userData.ll = Chicken.userData.lastuse||0;
 			Chicken.userData.lastuse = new Date().getTime();
 			if (userData.monitored) {
 				userData.monitor.push(createMonitorEvent(Chicken));
