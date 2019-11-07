@@ -28,17 +28,22 @@ class ItemOrbOfAlmanac extends Item {
 	get recipes() {
 		return {
 			"orb_of_almanac": {
-				ingredients: [{
+				ingredients: [
+					{
+						key: "kingstones_stone",
+						amount: 50,
+					},
+					{
+						key: "strange_matter",
+						amount: 30
+					},
+					{
 						key: "box_box",
 						amount: 30
 					},
 					{
 						key: "crafting_materials",
 						amount: 20
-					},
-					{
-						key: "kingstones_stone",
-						amount: 50,
 					},
 					{
 						key: "gold",
