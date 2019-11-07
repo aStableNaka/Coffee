@@ -608,9 +608,9 @@ module.exports.handle = async function (msg, client) { // jshint ignore:line
 			}
 
 			if (msg.guild) {
-				console.log(`[Cmd] < ${Chicken.userData.ll-new Date().getTime} > { ${msg.guild.id} : ${msg.channel.id} } < ${msg.author.username} > ( ${msg.guild.name} ): ${msg.content}`);
+				console.log(`[Cmd] < ${new Date().getTime() - Chicken.userData.ll} > { ${msg.guild.id} : ${msg.channel.id} } < ${msg.author.username} > ( ${msg.guild.name} ): ${msg.content}`);
 			} else {
-				console.log(`[Cmd] < ${Chicken.userData.ll-new Date().getTime} > { PM } < ${msg.author.username} > :${msg.content}`);
+				console.log(`[Cmd] < ${new Date().getTime() - Chicken.userData.ll} > { PM } < ${msg.author.username} > :${msg.content}`);
 			}
 
 			// Differenciate between commands that use the database and those that don't
