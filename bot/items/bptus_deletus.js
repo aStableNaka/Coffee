@@ -26,6 +26,7 @@ class ItemBPTusDeletus extends Item {
 		msg.embed.image = {url:url}
 		Chicken.userData.bpbal = "0";
 		Chicken.userData.bpps = "0";
+		Chicken.userData.bpitems = {};
 		Chicken.send(msg);
 	}
 
