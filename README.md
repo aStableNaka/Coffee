@@ -1,3 +1,4 @@
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) 
 [![Maintainability](https://api.codeclimate.com/v1/badges/d1eeb09874edfefefcee/maintainability)](https://codeclimate.com/github/aStableNaka/Coffee/maintainability)
 
 Join our Discord support server to try the bot live!
