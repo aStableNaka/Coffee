@@ -17,8 +17,8 @@ class ItemPumpkinSpiceLatte extends Item {
 
 		this.effect = "Resets your mining cooldown and lets you immediately mine again. Only use this after you've just mined.";
 		this.useDialogue = 'You drink some pumpkin spice latte';
-		this.isDroppedByLunchbox = true;
-		this.isDroppedByLootbox = true;
+		this.isDroppedByLunchbox = false;
+		this.isDroppedByLootbox = false;
 	}
 
 
