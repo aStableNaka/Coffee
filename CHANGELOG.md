@@ -1,9 +1,12 @@
 0.2.2
+
 ***FIXES***
 + Fixed the [ Gold Digger ] issue with items/perks that modify EXP incrimentation
 + Fixed changelog links
+
 ***CHANGES***
 + The changelog command now sends a link to this page.
+
 ***MINOR***
 + [ Stat Card ] now displays 'single use' in item description
 + using [ Crafting Material ] no longer displays "Crafting is not avaialble yet!"
@@ -11,22 +14,28 @@
 + Fixed "~bp give" responding with the leaderboards
 
 0.2.1
+
 ***CHANGED***
 ~ Stuff
+
 ***PRESEASON***
 Thank you for participating in Coffee season 1, Season 2 will start soonTM after all the bugs have been fixed.
+
 ***NEW***
 + Inventory icons
 + Skins
 + Market and Catalogue
 + [ ***Strange Matter*** ]
 + [ ***Pumpkin Spice Latte*** ] Available until DEC 1
+
 ***UPDATED***
 - Everyone's BP/Bal/Generators/ have been reset for the pre-season. They will be reset again once s2 starts
+
 ***ITEMS***
 ~ [ ***Orb of Almanac*** ] now requires an additional [ ***Strange Matter*** ] x15 to be crafted
 
 0.1.30
+
 ***NEW***
 + [ ***Orb of Almanac*** ] item added
 + [ ***Gilded Slurry*** ] item added
@@ -39,6 +48,7 @@ Thank you for participating in Coffee season 1, Season 2 will start soonTM after
 + Crafting now displays how many of each item you can craft.
 + [ ***Arthur's Tablet*** ] item added
 + `~inv` now shows pickaxe perks
+
 ***UPDATED***
 + Gold now can be crafted
 + A few item icons have been updated
@@ -53,6 +63,7 @@ Thank you for participating in Coffee season 1, Season 2 will start soonTM after
 ~ increased drop rate from boxes
 ~ Nerfed [ ***PP Gold Digger*** ]
 ~ Lowered [ Legendary Pickbox ] crafting material cost
+
 ***FIXED***
 ~ Fixed formatting issues with a few perks
 ~ Fixed a few grammatical issues
