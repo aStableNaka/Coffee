@@ -1,67 +1,67 @@
 0.2.2
 ***FIXES***
-> Fixed the [ Gold Digger ] issue with items/perks that modify EXP incrimentation
-> Fixed changelog links
++ Fixed the [ Gold Digger ] issue with items/perks that modify EXP incrimentation
++ Fixed changelog links
 ***CHANGES***
-> The changelog command now sends a link to this page.
++ The changelog command now sends a link to this page.
 ***MINOR***
-> [ Stat Card ] now displays 'single use' in item description
-> using [ Crafting Material ] no longer displays "Crafting is not avaialble yet!"
-> Fixed username markdown injection issue
-> Fixed "~bp give" responding with the leaderboards
++ [ Stat Card ] now displays 'single use' in item description
++ using [ Crafting Material ] no longer displays "Crafting is not avaialble yet!"
++ Fixed username markdown injection issue
++ Fixed "~bp give" responding with the leaderboards
 
 0.2.1
 ***CHANGED***
-> ~ Stuff
+~ Stuff
 ***PRESEASON***
 Thank you for participating in Coffee season 1, Season 2 will start soonTM after all the bugs have been fixed.
 ***NEW***
-> + Inventory icons
-> + Skins
-> + Market and Catalogue
-> + [ ***Strange Matter*** ]
-> + [ ***Pumpkin Spice Latte*** ] Available until DEC 1
++ Inventory icons
++ Skins
++ Market and Catalogue
++ [ ***Strange Matter*** ]
++ [ ***Pumpkin Spice Latte*** ] Available until DEC 1
 ***UPDATED***
-> - Everyone's BP/Bal/Generators/ have been reset for the pre-season. They will be reset again once s2 starts
+- Everyone's BP/Bal/Generators/ have been reset for the pre-season. They will be reset again once s2 starts
 ***ITEMS***
-> ~ [ ***Orb of Almanac*** ] now requires an additional [ ***Strange Matter*** ] x15 to be crafted
+~ [ ***Orb of Almanac*** ] now requires an additional [ ***Strange Matter*** ] x15 to be crafted
 
 0.1.30
 ***NEW***
-> + [ ***Orb of Almanac*** ] item added
-> + [ ***Gilded Slurry*** ] item added
-> + [ ***Bohemian Cocktail*** ] item added
-> + New 'Special Boosts' added
-> + [ ***Tinkers Gizmo*** ] item added
-> + [ ***Lootbox*** ] can now be crafted
-> + [ ***Box Box*** ] can now be crafted
-> + Crafting recipes can be located under item info using `~ii <itemType>`
-> + Crafting now displays how many of each item you can craft.
-> + [ ***Arthur's Tablet*** ] item added
-> + `~inv` now shows pickaxe perks
++ [ ***Orb of Almanac*** ] item added
++ [ ***Gilded Slurry*** ] item added
++ [ ***Bohemian Cocktail*** ] item added
++ New 'Special Boosts' added
++ [ ***Tinkers Gizmo*** ] item added
++ [ ***Lootbox*** ] can now be crafted
++ [ ***Box Box*** ] can now be crafted
++ Crafting recipes can be located under item info using `~ii <itemType>`
++ Crafting now displays how many of each item you can craft.
++ [ ***Arthur's Tablet*** ] item added
++ `~inv` now shows pickaxe perks
 ***UPDATED***
-> + Gold now can be crafted
-> + A few item icons have been updated
-> ~ Silver is now a common item
-> + We've recieved a new Wiki writer!
-> + Crafting menu has been changed
-> + Item recipes can now be viewed with the `~ii` command
-> ~ [ ***Gilded Slurry*** ] recipie now requires 7 [ ***Silver*** ] instead of 3
-> ~ [ ***Bohemian Cocktail*** ] now gives 1-2 [ ***Foxtail Amulets*** ] instead of [ ***Box Box*** ]
++ Gold now can be crafted
++ A few item icons have been updated
+~ Silver is now a common item
++ We've recieved a new Wiki writer!
++ Crafting menu has been changed
++ Item recipes can now be viewed with the `~ii` command
+~ [ ***Gilded Slurry*** ] recipie now requires 7 [ ***Silver*** ] instead of 3
+~ [ ***Bohemian Cocktail*** ] now gives 1-2 [ ***Foxtail Amulets*** ] instead of [ ***Box Box*** ]
 [ ***Kingstone's Stone*** ] Changes
-> ~ now gives 1 exp instead of 2 lvls
-> ~ increased drop rate from boxes
-> ~ Nerfed [ ***PP Gold Digger*** ]
-> ~ Lowered [ Legendary Pickbox ] crafting material cost
+~ now gives 1 exp instead of 2 lvls
+~ increased drop rate from boxes
+~ Nerfed [ ***PP Gold Digger*** ]
+~ Lowered [ Legendary Pickbox ] crafting material cost
 ***FIXED***
-> ~ Fixed formatting issues with a few perks
-> ~ Fixed a few grammatical issues
-> ~ [ ***Gilded slurry*** ] no longer causes mass panic
-> ~ ~~Fixed Coffee's infinite typing~~ ***Removed Coffees typing.***
-> ~ Fixed Coffee from hanging when `~bp give` is used (bp give was removed)
-> ~ [ ***PP Regurgitation*** ] odds fixed
-> ~ Massive bug where mining did not actually give any bp
-> ~ Minor formatting issues
+~ Fixed formatting issues with a few perks
+~ Fixed a few grammatical issues
+~ [ ***Gilded slurry*** ] no longer causes mass panic
+~ ~~Fixed Coffee's infinite typing~~ ***Removed Coffees typing.***
+~ Fixed Coffee from hanging when `~bp give` is used (bp give was removed)
+~ [ ***PP Regurgitation*** ] odds fixed
+~ Massive bug where mining did not actually give any bp
+~ Minor formatting issues
 
 0.1.26
 ~ Pickaxe changes
@@ -113,7 +113,7 @@ Buffed [ ***Golden Apple*** ]
 + Added 6 new ~shop generators
 
 0.1.15
-- Reduced [ Treasure Hunter ] perk's lootbox drop from 4 -> 3
+- Reduced [ Treasure Hunter ] perk's lootbox drop from 4 -3
 + Added 4 new ~shop generators
 
 0.1.13
