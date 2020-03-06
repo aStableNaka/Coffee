@@ -142,6 +142,9 @@ class CommandStats extends Command {
 	exec_item(Chicken) {
 		let self = this;
 		let itemAccessor = Chicken.mArgs.itemAccessor;
+		if(!Chicken.mArgs.itemAccessor){
+			return;
+		}
 
 		function sortByAmountOwnedDecending() { let sort = {}; sort[`items.${itemAccessor}.amount`] = -1; return sort; }
 		function sortByAmountOwnedAscending() { let sort = {}; sort[`items.${itemAccessor}.amount`] = 1; return sort; }
