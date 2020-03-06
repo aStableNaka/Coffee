@@ -18,7 +18,7 @@ module.exports = function( Chicken, userData ){
 				[
 					ufmt.name( userData ),
 					ufmt.surround(`Boost reward:`,'**'),
-					`+ ${ ufmt.numPretty( bp.calcPrestigeBonusReward( userData ) ) }% Income boost from all generators\n`,
+					`+ ${ bp.calcPrestigeBonusReward( userData ) }% Income boost from all generators\n`,
 					ufmt.surround(`Item rewards:`,'**'),
 					ufmt.inventory(inventoryObject),
 					...locale.prestige.warningSection,

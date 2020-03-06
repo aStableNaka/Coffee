@@ -6,6 +6,8 @@ const BigNum = require('bignumber.js');
 const itemUtils = require("../utils/item.js");
 const ufmt = require("../utils/fmt.js");
 const views = loader("./bot/views/stats", "./views/stats");
+const page = require("../utils/page");
+const emojis = require("../utils/emojis")
 
 class CommandStats extends Command {
 	constructor() {
@@ -134,6 +136,7 @@ class CommandStats extends Command {
 
 	/**
 	 * Item count statistics
+	 * Catalogues a single item
 	 * @param {Chicken} Chicken 
 	 */
 	exec_item(Chicken) {
@@ -162,6 +165,7 @@ class CommandStats extends Command {
 	/**
 	 * Item popularity statistics
 	 * Which items are used the most
+	 * catalogues every item
 	 * @param {*} Chicken 
 	 */
 	exec_itempop(Chicken) {
@@ -188,7 +192,10 @@ class CommandStats extends Command {
 				userDatas.map((userData) => {
 					let items = Object.values(userData.items || {});
 					items.map((itemData) => {
-						const accessor = itemData.accessor;
+						let accessor = itemData.accessor;
+						if(accessor == "lootbox"){
+							accessor = itemData.meta;
+						}
 						if (!itemSummations[accessor]) { itemSummations[accessor] = createItemSummation(accessor); }
 						let summation = itemSummations[accessor];
 						summation.amount += itemData.amount || 0;
@@ -196,7 +203,18 @@ class CommandStats extends Command {
 						summation.total += (itemData.amount || 0) + (itemData.used || 0);
 					});
 				});
-				sentMessage.edit(views.item_pop(Chicken, Object.values(itemSummations).sort(chosenSortingMethod)));
+
+				const data = Object.values(itemSummations).sort(chosenSortingMethod);
+
+				let numberOfPages = Math.ceil(data.length / 20);
+				Chicken.mArgs.maxPages = numberOfPages;
+				
+				const send = page.ssfwbwpWrapper( Chicken, views.item_pop, [Chicken, data], numberOfPages, ()=>{
+					Chicken.mArgs.page = Math.min(numberOfPages - 1, Math.max(0, Chicken.mArgs.page || Chicken.numbers[0] - 1 || 0));
+					Chicken.send(views.item_pop(Chicken, data)).then(send.pageThing);
+				});
+				send();
+				sentMessage.delete();
 			});
 		});
 	}

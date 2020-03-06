@@ -276,7 +276,7 @@ class ItemLootbox extends Item {
 	 */
 	meta_lunchbox(Chicken, itemData) {
 		let formattedTallies = this.processLootboxOutcomes(Chicken, itemUtils.dropDistribution, 2 * Chicken.mArgs.amount, itemUtils.lunchboxDropFilter);
-		let useDialogue = `You open up your home-made ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up your home-made ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [fmtLootboxOutcome(formattedTallies, Chicken.mobile)]));
 	}
 
@@ -287,13 +287,13 @@ class ItemLootbox extends Item {
 	 */
 	meta_lootbox(Chicken, itemData) {
 		let formattedTallies = this.processLootboxOutcomes(Chicken, itemUtils.dropDistribution, 3 * Chicken.mArgs.amount, itemUtils.lootboxDropFilter);
-		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [fmtLootboxOutcome(formattedTallies, Chicken.mobile)]));
 	}
 
 	meta_testbox(Chicken, itemData) {
 		let formattedTallies = this.processLootboxOutcomes(Chicken, itemUtils.dropDistribution, 10 * Chicken.mArgs.amount, itemUtils.testboxDropFilter);
-		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [fmtLootboxOutcome(formattedTallies, Chicken.mobile)]));
 	}
 
@@ -309,7 +309,7 @@ class ItemLootbox extends Item {
 			outcome += Math.ceil(Math.random() * 2);
 		})
 		let dropItemData = itemUtils.items.crafting_materials.createItemData(outcome);
-		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [`\`${ufmt.item( dropItemData, null, '', null, null, null, false )}\``]));
 		itemUtils.addItemToUserData(Chicken.userData, dropItemData);
 	}
@@ -329,7 +329,7 @@ class ItemLootbox extends Item {
 			itemUtils.addItemToUserData(Chicken.userData, outcomeItemData);
 		});
 
-		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [fmtLootboxOutcome(formattedTallies, Chicken.mobile)]));
 	}
 
@@ -357,7 +357,7 @@ class ItemLootbox extends Item {
 			outcome += Math.ceil(Math.random() * 1);
 		})
 		let dropItemData = itemUtils.items.gold.createItemData(outcome);
-		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [`\`${ufmt.item( dropItemData, null, '', null, null, null, false )}\``]));
 		itemUtils.addItemToUserData(Chicken.userData, dropItemData);
 	}
@@ -377,7 +377,7 @@ class ItemLootbox extends Item {
 			itemUtils.addItemToUserData(Chicken.userData, outcomeItemData);
 		});
 
-		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [fmtLootboxOutcome(formattedTallies, Chicken.mobile)]));
 	}
 
@@ -409,7 +409,7 @@ class ItemLootbox extends Item {
 			itemUtils.addItemToUserData(Chicken.userData, outcomeItemData);
 		});
 
-		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [fmtLootboxOutcome(formattedTallies, Chicken.mobile)]));
 	}
 
@@ -428,7 +428,7 @@ class ItemLootbox extends Item {
 			itemUtils.addItemToUserData(Chicken.userData, outcomeItemData);
 		});
 
-		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [fmtLootboxOutcome(formattedTallies, Chicken.mobile)]));
 	}
 
@@ -449,7 +449,7 @@ class ItemLootbox extends Item {
 			itemUtils.addItemToUserData(Chicken.userData, outcomeItemData);
 		});
 
-		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [fmtLootboxOutcome(formattedTallies, Chicken.mobile)]));
 	}
 
@@ -476,7 +476,7 @@ class ItemLootbox extends Item {
 			itemUtils.addItemToUserData(Chicken.userData, outcomeItemData);
 		});
 
-		let useDialogue = `You open up a ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside it, you find...`;
+		let useDialogue = `You open up ${ ufmt.item( itemData, Chicken.mArgs.amount ) }\nand inside you find...`;
 		Chicken.send(Item.fmtUseMsg(useDialogue, [fmtLootboxOutcome(formattedTallies, Chicken.mobile)]));
 	}
 

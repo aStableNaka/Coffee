@@ -63,7 +63,7 @@ class CommandBlobPoints extends Command {
 		];
 	}
 	get modifiers() {
-		return ['shop', 'leaderboards', 'buy', 'give', 'prestige', 'gens']
+		return ['shop', 'leaderboards', 'buy', 'prestige', 'gens']
 	}
 
 	get help() {

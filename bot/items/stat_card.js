@@ -24,7 +24,8 @@ class ItemStatCard extends Item {
 		return ufmt.itemDesc([
 			"*A card giving you access to statistics commands!*",
 			ufmt.denote('Type', ufmt.block('Command enabler')),
-			ufmt.denote('Transcript', 'Statistics are expensive. But I want them to be accessable to everybody. Owning this item will allow you to use the `~stat` command')
+			ufmt.denote('Transcript', 'Statistics are expensive. But I want them to be accessable to everybody. Owning this item will allow you to use the `~stat` command'),
+			ufmt.denote('Warning', `This is a single-use item. ${ufmt.itemName("stat card", 1)} will be consumed upon usage of the "~stat" command`)
 		]);
 	}
 }

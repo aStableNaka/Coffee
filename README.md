@@ -3,7 +3,7 @@
 
 Join our Discord support server to try the bot live!
 
-[![Discord Chat](https://img.shields.io/discord/530098686558994443.svg)](https://discord.gg/)  
+[![Discord Chat](https://img.shields.io/discord/530098686558994443.svg)](https://discord.gg/5caakFA)  
 
 # Coffee
 A charming idle game Discord bot.
@@ -11,7 +11,7 @@ A charming idle game Discord bot.
 ![Screenshot](https://i.imgur.com/xUxSmx2.png)
 
 ## Try it out
-Want to try Coffee? [Join our discord](https://discord.gg/m7XztD)!
+Want to try Coffee? [Join our discord](https://discord.gg/5caakFA)!
 
 # Gameplay
 ### BP

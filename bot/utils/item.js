@@ -281,7 +281,7 @@ const pickPerks = {
 	"chrimson_king":{
 		// is that a jojo refrence
 		name:"Chrimson King",
-		desc:"Your a portion of your mining cooldown gets deleted based on your pickaxe level. [ **-5 sec/lvl** ] with a hard cap of 120 seconds.",
+		desc:"A portion of your mining cooldown gets deleted based on your pickaxe level. [ **-5 sec/lvl** ] with a hard cap of 120 seconds.",
 		onMine:( Chicken, outcome )=>{
 			let lvl = bp.pickaxeLevelExp(Chicken.userData.pickaxe_exp);
 			let reduction = Math.floor(Math.min( (Chicken.userData.pickaxe_time-2) * 60 * 1000, 5 * lvl * 1000 ));
@@ -371,7 +371,9 @@ const pickPerks = {
 		name:"Gold Digger",
 		desc:"Every 10 mines, you get a [ **Gold** ] x1",
 		onMine:( Chicken )=>{
-			if( !(Chicken.userData.pickaxe_exp%10) ){
+			const ud = Chicken.userData;
+
+			if( !(ud.patch_374mc%10) ){
 				let itemData = items.gold.createItemData(1);
 				addItemToUserData( Chicken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Gold Digger',
@@ -479,7 +481,8 @@ const pickPerks = {
 		name:"Carb Scrapper",
 		desc:`If you have an active ${ufmt.block('Bread', '**')} mine boost, you are guaranteed to find ${ufmt.block('Crafting Materials', '**')} when mining!`,
 		onMine:(Chicken)=>{
-			if(Chicken.userData.mineboostsource.toLowerCase()=='bread' && Chicken.userData.mineboostcharge>0){
+			const cswl = ['bread', 'cookie'];
+			if(cswl.includes(Chicken.userData.mineboostsource.toLowerCase()) && Chicken.userData.mineboostcharge>0){
 				let itemData = itemUtils.items.crafting_materials.createItemData(1);
 				addItemToUserData( Chicken.userData, itemData );
 				return ufmt.perkMessage('Perk', 'Carb Scrapper',

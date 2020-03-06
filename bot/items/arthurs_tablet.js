@@ -56,8 +56,8 @@ class ItemArthursTablet extends Item {
 		Chicken.userData.pickaxe_exp += increase;
 		Chicken.send(ufmt.join(
 			[
-				`You hit yourself on the head with ${ufmt.plural(amount, '', 'a few')}${ufmt.block(ufmt.plural(amount,"Arthur's Tablet", "Arthur's Tablets"))} x${amount} and`,
-				`your ${ufmt.block( Chicken.userData.pickaxe_name )} magically levels up!\n${ufmt.block( oldLevel )} -> ${ufmt.block( oldLevel+this.increaseValue*amount )}`
+				`You hit yourself on the head with ${ufmt.plural(amount, '', 'a few')} ${ufmt.block(ufmt.plural(amount,"Arthur's Tablet", "Arthur's Tablets"))} x${amount} to enhance your ***KNOWLEDGE***`,
+				`Your ${ufmt.block( Chicken.userData.pickaxe_name )} magically levels up!\n${ufmt.block( oldLevel )} -> ${ufmt.block( oldLevel+this.increaseValue*amount )}`
 			]
 		));
 	}

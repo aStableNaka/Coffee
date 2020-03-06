@@ -1,5 +1,5 @@
 {
-	"name": "Coffee-Bot",
+	"name": "coffee-bot",
 	"version": "0.0.1",
 	"description": "A charming little idle game bot",
 	"main": "index.js",
@@ -9,15 +9,14 @@
 	"author": "Daniel Tran",
 	"license": "MIT",
 	"dependencies": {
-		"express": "latest",
-		"body-parser": "latest",
-		"sqlite3": "latest",
-		"discord.js": "11.4.2",
-		"mongoose": ">=5.7.5",
-		"mongodb": "3.3.2",
 		"big-integer": "1.6.40",
 		"bignumber.js": "8.0.2",
-		"string-similarity": "latest",
-		"jest": "latest"
+		"body-parser": "latest",
+		"discord.js": "^11.6.1",
+		"express": "latest",
+		"jest": "latest",
+		"mongodb": "3.3.2",
+		"sqlite3": "latest",
+		"string-similarity": "latest"
 	}
 }

@@ -68,7 +68,7 @@ class CommandBotinfo extends Command {
 			['src', '', 'Get the link to view my source code!'],
 			['support', '', 'Get the link to join the support server if you have further questions!'],
 			['contributors', '', 'People who\'ve worked on this bot!'],
-			['changelogs', '', 'View updates and changes'],
+			['changelogs', '', '[Click here to view the latest changelogs!](https://github.com/aStableNaka/Coffee/blob/master/CHANGELOG.md)'],
 			['patreon', '', '[Click here to become a Patron!](https://www.patreon.com/coffeedev)'],
 			['wiki', '', '[Click here to view the Wiki!](https://github.com/aStableNaka/Coffee/wiki/Quickstart)']
 		];
@@ -96,11 +96,11 @@ class CommandBotinfo extends Command {
 			Chicken.author.send(`Here's the link to my support server! ${serverURL}`);
 			Chicken.send("I've sent you an invite to my support server. Check your DMs.");
 		} else if (Chicken.args[0] == 'patreon') {
-			Chicken.send('[Click here to become a Patron!](https://www.patreon.com/coffeedev)');
+			Chicken.send('If you enjoy coffee, consider becoming a patron!\nhttps://www.patreon.com/coffeedev');
 		} else if (Chicken.args[0] == 'wiki') {
-			Chicken.send('[Click here to view the Wiki!](https://github.com/aStableNaka/Coffee/wiki/Quickstart)');
+			Chicken.send('View our wiki for more information about the game!\nhttps://github.com/aStableNaka/Coffee/wiki/Quickstart');
 		} else if (Chicken.args[0] == 'changelogs') {
-			Chicken.send(views.changelogs(locale.changelogs));
+			Chicken.send('View the latest changes\nhttps://github.com/aStableNaka/Coffee/blob/master/CHANGELOG.md');
 		} else {
 			Chicken.send(views.info(Chicken));
 		}

@@ -127,3 +127,4 @@ module.exports.mongodb = mongodb;
 module.exports.openCollection = openCollection;
 module.exports.client = client;
 module.exports.wrapper43 = wrapper43;
+module.exports.type = "MongoDB";

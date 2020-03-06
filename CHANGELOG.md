@@ -3,15 +3,20 @@
 ***FIXES***
 + Fixed the [ Gold Digger ] issue with items/perks that modify EXP incrimentation
 + Fixed changelog links
++ Fixed issues with emojis
 
 ***CHANGES***
 + The changelog command now sends a link to this page.
++ [ Carb scrapper ] perk now accepts cookies
++ Added stats for all variations of boxes
 
 ***MINOR***
 + [ Stat Card ] now displays 'single use' in item description
 + using [ Crafting Material ] no longer displays "Crafting is not avaialble yet!"
-+ Fixed username markdown injection issue
++ Fixed username markdown injection
 + Fixed "~bp give" responding with the leaderboards
++ Fixed "~patreon" and "~wiki" formatting
++ Fixed "null" on leaderboards
 
 # 0.2.1
 

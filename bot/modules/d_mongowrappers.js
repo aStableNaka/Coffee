@@ -12,7 +12,7 @@ var modules = {};
 module.exports.linkModule = function( m ){
 	modules = m;
 }
-var mongoose = require("mongoose");
+var mongoose = undefined;//require("mongoose");
 let {DBLog} = require("./logging");
 
 // DEPRECIATED

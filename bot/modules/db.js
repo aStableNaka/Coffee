@@ -1,7 +1,7 @@
 /**
  * Holy shit this entire module needs to be crucified
  */
-var mongoose = require("mongoose");
+//var mongoose = require("mongoose");
 const env = require("../env.js");
 const BigInt = require("big-integer");
 const BigNum = require('bignumber.js');

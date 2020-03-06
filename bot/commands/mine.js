@@ -55,7 +55,17 @@ class CommandMine extends Command {
 		let timeSinceLastMine = new Date().getTime() - Chicken.userData.lastmine;
 		if (timeSinceLastMine / 1000 / 60 >= Chicken.userData.pickaxe_time) {
 			Chicken.userData.lastmine = new Date().getTime();
+			const ud = Chicken.userData;
 			// Mine success
+
+			/**
+			 * ud.patch_374md
+			 * Fixes the issue with gold-digger relying on the variable incrimentation of EXP
+			 */
+			if(!ud.patch_374mc){ ud.patch_374mc = 0; }
+			ud.patch_374mc++;
+			
+			
 			var bal = getCurrentBPBal(Chicken);
 			let income = calcIncome(Chicken);
 			let outcome = bp.calcPickaxeIncome(Chicken.userData);

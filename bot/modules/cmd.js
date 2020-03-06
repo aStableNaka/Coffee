@@ -1,3 +1,8 @@
+// Debugging helpers
+const CATALOGUE = {
+	send: false, // Log every Chicken.send response
+}
+
 const loader = require("../loader.js");
 const env = require("../env.js");
 const globalStates = require("../utils/globalstates");
@@ -232,7 +237,7 @@ function ChickenFlattenMsgData(Chicken, msg) {
 	Chicken.channel = msg.channel;
 	Chicken.author = msg.author;
 	Chicken.guild = msg.guild;
-	Chicken.cantUseEmojis = Chicken.guild ? !!Chicken.guild.me.missingPermissions(["USE_EXTERNAL_EMOJIS"])[0] : false;
+	Chicken.cantUseEmojis = Chicken.guild.me.hasPermission("USE_EXTERNAL_EMOJIS");
 }
 
 /**
@@ -321,8 +326,15 @@ function ChickenParseArguments(Chicken) {
  * @param {*} Chicken 
  */
 function ChickenProvideResponseHelpers(Chicken) {
+	const emojiQueryRgxOld = /\[?[\s{0,1}]?\<.+:\w+\>\s[\s{0,1}]?\]?/gi;
+	const emojiQueryRgx = /\[\s\<((a)?:[\w\d]+:)?\w+\>\s{1}\]/gi;
 	// Sending a message
 	Chicken.send = (data, callback) => {
+
+		if(CATALOGUE.send){
+			console.log(data);
+		}
+
 		/**
 		 * This will prevent custom emojis from being used in servers that prevent custom emojis
 		 */
@@ -332,14 +344,14 @@ function ChickenProvideResponseHelpers(Chicken) {
 				let keys = Object.keys(object);
 				keys.map((key)=>{
 					if(typeof(object[key])=='string'){
-						object[key] = object[key].replace(/\[?\s?\<.+:\w+\>\s?\]?/gi, '');
+						object[key] = object[key].replace(emojiQueryRgx, '');
 					}else if(typeof(object[key]=='object')){
 						deepSearch(object[key], depth-1);
 					}
 				})
 			}
 			if(typeof(data)=='string'){
-				data = data.replace(/\[?\<.+:\w+\>\]?/gi, '');
+				data = data.replace(emojiQueryRgx, '').replace(/\s{2,}/gi,' ');
 			}else{
 				deepSearch(data);
 			}

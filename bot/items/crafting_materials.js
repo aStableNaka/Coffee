@@ -19,7 +19,7 @@ class ItemCraftingMaterials extends Item {
 
 
 	use(Chicken, itemData) {
-		Chicken.send('Crafting is not available yet!');
+		//Chicken.send('Crafting is not available yet!');
 	}
 
 	desc(Chicken, itemData) {

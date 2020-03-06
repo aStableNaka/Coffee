@@ -1,5 +1,5 @@
 const illionLabels = [
-	null, null, null, null,
+	null, null, null, 'Billion',
 	'Trillion', 'Quadrillion', 'Quintillion', 'Sextillion',
 	'Septillion', 'Octillion', 'Nonillion', 'Decillion',
 	'Undecillion', 'Duodecillion', 'Tredecillion', 'Quattordecillion',
@@ -154,7 +154,15 @@ function name(userData, options = { styleString: "**", length: 100 }) {
 	if (name.slice(0, options.length).length != name.length) {
 		name = name.slice(0, options.length - 3) + "...";
 	}
-	return `${surround(name, options.styleString)}`;
+
+	const anExp = /[a-zA-Z0-9\s]/gi;
+	const clearExp = /[\|\`\_\*\~\>`]/gi;
+	const cleanName = name.match(anExp);
+	const altName = "Please Change your name it's giving me a stroke";
+
+	const mdChars = ['|','`','_','*','~','>'];
+
+	return `${surround( name.replace( clearExp, '' ), options.styleString)}`;
 }
 
 // This was created because of the need to format a user's name based on a mention
@@ -339,6 +347,16 @@ function joinGrid(arr, sep = ',', cols) {
 	return out.join(sep + '\n');
 }
 
+/**
+ * Basic formatting for the inventory in list-format
+ * 
+ * 
+ * 
+ * @param {*} inventoryObject 
+ * @param {*} entriesPerPage 
+ * @param {*} page 
+ * @param {*} filter 
+ */
 function inventory(inventoryObject, entriesPerPage = 20, page = 0, filter = () => { return true; }) {
 	let itemUtils = require("./item.js");
 	let out = "";

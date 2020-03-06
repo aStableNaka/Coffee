@@ -19,8 +19,31 @@ function createPageOperator( emojiName, callback ){
 	return {emojiName:emojiName, callback:callback}
 }
 
-// Super-Simple-Forward-Backward-Pages-Wrapper
-// Assumes the view uses Chicken.mArgs.page
+// 
+/**
+ * Super-Simple-Forward-Backward-Pages-Wrapper
+ * Assumes the view uses Chicken.mArgs.page
+ * 
+ * Example usage
+
+	const data = Object.values(itemSummations).sort(chosenSortingMethod);
+
+	let numberOfPages = Math.ceil(data.length / 20);
+	Chicken.mArgs.maxPages = numberOfPages;
+
+	const send = page.ssfwbwpWrapper( Chicken, views.item_pop, [Chicken, data], numberOfPages, ()=>{
+		Chicken.mArgs.page = Math.min(numberOfPages - 1, Math.max(0, Chicken.mArgs.page || Chicken.numbers[0] - 1 || 0));
+		Chicken.send(views.item_pop(Chicken, data)).then(send.pageThing);
+	});
+	send();
+
+
+ * @param {*} Chicken 
+ * @param {*} view 
+ * @param {*} args 
+ * @param {*} numberOfPages 
+ * @param {*} send 
+ */
 function ssfwbwpWrapper( Chicken, view, args, numberOfPages, send ){
 	numberOfPages = numberOfPages || Chicken.mArgs.maxPages || 1;
 	const pages = module.exports;
