@@ -237,7 +237,7 @@ function ChickenFlattenMsgData(Chicken, msg) {
 	Chicken.channel = msg.channel;
 	Chicken.author = msg.author;
 	Chicken.guild = msg.guild;
-	Chicken.cantUseEmojis = Chicken.guild.me.hasPermission("USE_EXTERNAL_EMOJIS");
+	Chicken.cantUseEmojis = !Chicken.guild.me.hasPermission("USE_EXTERNAL_EMOJIS");
 }
 
 /**
