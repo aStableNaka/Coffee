@@ -518,7 +518,8 @@ const availablePerks = [
 	'chrimson_king',
 	'sculptor',
 	'regurgitation',
-	'carb_scrapper'
+	'carb_scrapper',
+	'orchard'
 ]
 
 /**
