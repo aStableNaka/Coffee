@@ -1,7 +1,7 @@
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) 
 [![Maintainability](https://api.codeclimate.com/v1/badges/d1eeb09874edfefefcee/maintainability)](https://codeclimate.com/github/aStableNaka/Coffee/maintainability)
 
-Join our Discord support server to try the bot live!
+# This bot is no longer maintained by me. Feel free to download it and run it yourself.
 
 [![Discord Chat](https://img.shields.io/discord/530098686558994443.svg)](https://discord.gg/5caakFA)  
 
@@ -11,7 +11,21 @@ A charming idle game Discord bot.
 ![Screenshot](https://i.imgur.com/xUxSmx2.png)
 
 ## Try it out
-Want to try Coffee? [Join our discord](https://discord.gg/5caakFA)!
+Download this repo and launch coffee locally!
+
+to run use
+
+```./start.sh```
+
+or
+
+```node index.js```
+
+## Requirements
+- NodeJS
+- Mongo Atlas
+- Discord Bot Token
+- A computer
 
 # Gameplay
 ### BP
@@ -26,5 +40,5 @@ Collectable items that help you get more BP
 - Tools
 - Cosmedics (WIP)
 - Lootboxes
-### Pickaxes (WIP)
-Used for mining
+### Pickaxes
+Custom unique items that enhance mining output with other benefits

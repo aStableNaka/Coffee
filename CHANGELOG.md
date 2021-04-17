@@ -1,3 +1,6 @@
+# 0.2.3
++ Coffee is now available to be hosted locally
+
 # 0.2.2
 
 ***FIXES***
