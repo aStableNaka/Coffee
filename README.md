@@ -23,7 +23,7 @@ or
 
 ## Requirements
 - NodeJS
-- Mongo Atlas
+- Mongo Atlas (see ./tutorials/mongo_atlas.md)
 - Discord Bot Token
 - A computer
 
