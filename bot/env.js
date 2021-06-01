@@ -41,9 +41,11 @@ function checkEnv(){
 			},
 			"bot":{
 				// A list of admins. DiscordUserSnowflake: true
+				// THIS IS AN EXAMPLE. REMOVE THESE TWO AND REPLACE WITH YOUR OWN
+				// DISCORD SNOWFLAKE
 				"admins":{
-					"133169572923703296":true,
-					"130548661892546560":true
+					"133169572923703296":false,
+					"130548661892546560":false
 				},
 
 				// A list of users able to use commands that have the beta flag
