@@ -1,22 +1,26 @@
 {
-	"name": "coffee-bot",
-	"version": "0.0.1",
-	"description": "A charming little idle game bot",
-	"main": "index.js",
-	"scripts": {
-		"test": "jest"
-	},
-	"author": "Daniel Tran",
-	"license": "MIT",
-	"dependencies": {
-		"big-integer": "1.6.40",
-		"bignumber.js": "8.0.2",
-		"body-parser": "latest",
-		"discord.js": "^11.6.1",
-		"express": "latest",
-		"jest": "latest",
-		"mongodb": "3.3.2",
-		"sqlite3": "latest",
-		"string-similarity": "latest"
-	}
+  "name": "coffee-bot",
+  "version": "0.0.1",
+  "description": "A charming little idle game bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
+  },
+  "author": "Daniel Tran",
+  "license": "MIT",
+  "dependencies": {
+    "big-integer": "1.6.40",
+    "bignumber.js": "8.0.2",
+    "body-parser": "latest",
+    "discord.js": "^11.6.1",
+    "express": "latest",
+    "jest": "latest",
+    "mongodb": "3.3.2",
+    "sqlite3": "latest",
+    "string-similarity": "latest",
+    "@snyk/protect": "latest"
+  },
+  "snyk": true
 }
